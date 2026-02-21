@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+::-webkit-scrollbar-thumb {
+	background: #3f3f46;
+	border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #52525b;
+}
+
+/* SVG tree animations */
+@keyframes node-pulse {
+	0%,
+	100% {
+		filter: brightness(1);
+	}
+	50% {
+		filter: brightness(1.3);
+	}
+}
+
+@keyframes node-appear {
+	from {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.fiber-node-added {
+	animation: node-appear 0.4s ease-out;
+}
+
+.fiber-node-highlight {
+	animation: node-pulse 1s ease-in-out infinite;
+}

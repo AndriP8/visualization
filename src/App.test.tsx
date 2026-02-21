@@ -8,6 +8,7 @@ describe("App", () => {
 		const Component = Route.options.component;
 		if (!Component) throw new Error("Component not found");
 		render(<Component />);
-		expect(screen.getByText("Welcome to Visualization UI")).toBeInTheDocument();
+		expect(screen.getByText(/React/)).toBeInTheDocument();
+		expect(screen.getByText(/Under the Hood/)).toBeInTheDocument();
 	});
 });
