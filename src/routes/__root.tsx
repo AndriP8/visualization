@@ -12,6 +12,16 @@ const NAV_GROUPS = [
 			{ to: "/reconciliation" as const, label: "Reconciliation", icon: "🌳" },
 		],
 	},
+	{
+		title: "Browser",
+		items: [
+			{
+				to: "/critical-rendering-path" as const,
+				label: "Critical Rendering Path",
+				icon: "🎨",
+			},
+		],
+	},
 ] as const;
 
 export const Route = createRootRoute({

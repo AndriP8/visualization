@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReconciliationRouteImport } from './routes/reconciliation'
+import { Route as CriticalRenderingPathRouteImport } from './routes/critical-rendering-path'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ReconciliationRoute = ReconciliationRouteImport.update({
   id: '/reconciliation',
   path: '/reconciliation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CriticalRenderingPathRoute = CriticalRenderingPathRouteImport.update({
+  id: '/critical-rendering-path',
+  path: '/critical-rendering-path',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/reconciliation': typeof ReconciliationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/reconciliation': typeof ReconciliationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/reconciliation': typeof ReconciliationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/reconciliation'
+  fullPaths: '/' | '/critical-rendering-path' | '/reconciliation'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/reconciliation'
-  id: '__root__' | '/' | '/reconciliation'
+  to: '/' | '/critical-rendering-path' | '/reconciliation'
+  id: '__root__' | '/' | '/critical-rendering-path' | '/reconciliation'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CriticalRenderingPathRoute: typeof CriticalRenderingPathRoute
   ReconciliationRoute: typeof ReconciliationRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/reconciliation'
       fullPath: '/reconciliation'
       preLoaderRoute: typeof ReconciliationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/critical-rendering-path': {
+      id: '/critical-rendering-path'
+      path: '/critical-rendering-path'
+      fullPath: '/critical-rendering-path'
+      preLoaderRoute: typeof CriticalRenderingPathRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CriticalRenderingPathRoute: CriticalRenderingPathRoute,
   ReconciliationRoute: ReconciliationRoute,
 }
 export const routeTree = rootRouteImport

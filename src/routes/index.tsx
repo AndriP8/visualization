@@ -22,6 +22,22 @@ const CONCEPT_GROUPS = [
 			},
 		],
 	},
+	{
+		title: "Browser",
+		description: "How browsers transform code into pixels on screen",
+		items: [
+			{
+				to: "/critical-rendering-path" as const,
+				title: "Critical Rendering Path",
+				icon: "🎨",
+				description:
+					"How the browser converts HTML & CSS into rendered pixels — parsing, CSSOM, layout, paint, and compositing.",
+				tags: ["DOM", "CSSOM", "Layout", "Paint"],
+				color: "from-amber-500/20 to-orange-500/20",
+				borderColor: "border-amber-500/30",
+			},
+		],
+	},
 ];
 
 function Index() {
