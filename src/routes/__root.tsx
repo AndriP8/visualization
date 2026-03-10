@@ -20,6 +20,11 @@ const NAV_GROUPS = [
 				label: "Critical Rendering Path",
 				icon: "🎨",
 			},
+			{
+				to: "/event-loop" as const,
+				label: "Event Loop",
+				icon: "🔄",
+			},
 		],
 	},
 ] as const;

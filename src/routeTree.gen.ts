@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReconciliationRouteImport } from './routes/reconciliation'
+import { Route as EventLoopRouteImport } from './routes/event-loop'
 import { Route as CriticalRenderingPathRouteImport } from './routes/critical-rendering-path'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ReconciliationRoute = ReconciliationRouteImport.update({
   id: '/reconciliation',
   path: '/reconciliation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventLoopRoute = EventLoopRouteImport.update({
+  id: '/event-loop',
+  path: '/event-loop',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CriticalRenderingPathRoute = CriticalRenderingPathRouteImport.update({
@@ -32,30 +38,43 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
+  '/event-loop': typeof EventLoopRoute
   '/reconciliation': typeof ReconciliationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
+  '/event-loop': typeof EventLoopRoute
   '/reconciliation': typeof ReconciliationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
+  '/event-loop': typeof EventLoopRoute
   '/reconciliation': typeof ReconciliationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/critical-rendering-path' | '/reconciliation'
+  fullPaths:
+    | '/'
+    | '/critical-rendering-path'
+    | '/event-loop'
+    | '/reconciliation'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/critical-rendering-path' | '/reconciliation'
-  id: '__root__' | '/' | '/critical-rendering-path' | '/reconciliation'
+  to: '/' | '/critical-rendering-path' | '/event-loop' | '/reconciliation'
+  id:
+    | '__root__'
+    | '/'
+    | '/critical-rendering-path'
+    | '/event-loop'
+    | '/reconciliation'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CriticalRenderingPathRoute: typeof CriticalRenderingPathRoute
+  EventLoopRoute: typeof EventLoopRoute
   ReconciliationRoute: typeof ReconciliationRoute
 }
 
@@ -66,6 +85,13 @@ declare module '@tanstack/react-router' {
       path: '/reconciliation'
       fullPath: '/reconciliation'
       preLoaderRoute: typeof ReconciliationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event-loop': {
+      id: '/event-loop'
+      path: '/event-loop'
+      fullPath: '/event-loop'
+      preLoaderRoute: typeof EventLoopRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/critical-rendering-path': {
@@ -88,6 +114,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CriticalRenderingPathRoute: CriticalRenderingPathRoute,
+  EventLoopRoute: EventLoopRoute,
   ReconciliationRoute: ReconciliationRoute,
 }
 export const routeTree = rootRouteImport

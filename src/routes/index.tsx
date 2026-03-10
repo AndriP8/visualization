@@ -36,6 +36,16 @@ const CONCEPT_GROUPS = [
 				color: "from-amber-500/20 to-orange-500/20",
 				borderColor: "border-amber-500/30",
 			},
+			{
+				to: "/event-loop" as const,
+				title: "Event Loop",
+				icon: "🔄",
+				description:
+					"How JavaScript handles async code with a single thread — call stack, task queues, microtasks, and rAF.",
+				tags: ["Call Stack", "Queues", "Microtasks", "rAF"],
+				color: "from-emerald-500/20 to-teal-500/20",
+				borderColor: "border-emerald-500/30",
+			},
 		],
 	},
 ];
