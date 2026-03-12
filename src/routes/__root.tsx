@@ -27,6 +27,16 @@ const NAV_GROUPS = [
 			},
 		],
 	},
+	{
+		title: "Database",
+		items: [
+			{
+				to: "/database-indexing" as const,
+				label: "Database Indexing",
+				icon: "🗄️",
+			},
+		],
+	},
 ] as const;
 
 export const Route = createRootRoute({
@@ -60,9 +70,11 @@ function RootLayout() {
 			>
 				<div className="p-5 border-b border-zinc-800">
 					<h1 className="text-lg font-bold bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-						🌐 Web Dev Visualized
+						⚡ Full-Stack Visualized
 					</h1>
-					<p className="text-xs text-zinc-500 mt-1">Learn by seeing it work</p>
+					<p className="text-xs text-zinc-500 mt-1">
+						See every layer come alive
+					</p>
 				</div>
 
 				<nav className="flex-1 p-3 space-y-6 overflow-y-auto">
@@ -119,7 +131,7 @@ function RootLayout() {
 						</svg>
 					</button>
 					<span className="text-sm font-semibold bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-						🌐 Web Dev Visualized
+						⚡ Full-Stack Visualized
 					</span>
 				</header>
 

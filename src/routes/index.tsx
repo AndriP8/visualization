@@ -48,6 +48,22 @@ const CONCEPT_GROUPS = [
 			},
 		],
 	},
+	{
+		title: "Database",
+		description: "How databases store and retrieve data efficiently",
+		items: [
+			{
+				to: "/database-indexing" as const,
+				title: "Database Indexing",
+				icon: "🗄️",
+				description:
+					"How B-Tree indexes work, clustered vs non-clustered, and when indexes hurt more than they help.",
+				tags: ["B-Tree", "Full Scan", "Clustered", "Non-Clustered"],
+				color: "from-teal-500/20 to-cyan-500/20",
+				borderColor: "border-teal-500/30",
+			},
+		],
+	},
 ];
 
 function Index() {
@@ -59,14 +75,15 @@ function Index() {
 				transition={{ duration: 0.5 }}
 			>
 				<h2 className="text-3xl font-bold mb-2">
-					Web Concepts{" "}
+					Full-Stack Concepts{" "}
 					<span className="bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
 						Under the Hood
 					</span>
 				</h2>
 				<p className="text-zinc-400 mb-8 text-lg">
-					Interactive visualizations to understand how web technologies actually
-					work.
+					Interactive visualizations to understand how the full stack actually
+					works — from browser internals and React to databases and system
+					design.
 				</p>
 			</motion.div>
 

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReconciliationRouteImport } from './routes/reconciliation'
 import { Route as EventLoopRouteImport } from './routes/event-loop'
+import { Route as DatabaseIndexingRouteImport } from './routes/database-indexing'
 import { Route as CriticalRenderingPathRouteImport } from './routes/critical-rendering-path'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -22,6 +23,11 @@ const ReconciliationRoute = ReconciliationRouteImport.update({
 const EventLoopRoute = EventLoopRouteImport.update({
   id: '/event-loop',
   path: '/event-loop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatabaseIndexingRoute = DatabaseIndexingRouteImport.update({
+  id: '/database-indexing',
+  path: '/database-indexing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CriticalRenderingPathRoute = CriticalRenderingPathRouteImport.update({
@@ -38,12 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
+  '/database-indexing': typeof DatabaseIndexingRoute
   '/event-loop': typeof EventLoopRoute
   '/reconciliation': typeof ReconciliationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
+  '/database-indexing': typeof DatabaseIndexingRoute
   '/event-loop': typeof EventLoopRoute
   '/reconciliation': typeof ReconciliationRoute
 }
@@ -51,6 +59,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
+  '/database-indexing': typeof DatabaseIndexingRoute
   '/event-loop': typeof EventLoopRoute
   '/reconciliation': typeof ReconciliationRoute
 }
@@ -59,14 +68,21 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/critical-rendering-path'
+    | '/database-indexing'
     | '/event-loop'
     | '/reconciliation'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/critical-rendering-path' | '/event-loop' | '/reconciliation'
+  to:
+    | '/'
+    | '/critical-rendering-path'
+    | '/database-indexing'
+    | '/event-loop'
+    | '/reconciliation'
   id:
     | '__root__'
     | '/'
     | '/critical-rendering-path'
+    | '/database-indexing'
     | '/event-loop'
     | '/reconciliation'
   fileRoutesById: FileRoutesById
@@ -74,6 +90,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CriticalRenderingPathRoute: typeof CriticalRenderingPathRoute
+  DatabaseIndexingRoute: typeof DatabaseIndexingRoute
   EventLoopRoute: typeof EventLoopRoute
   ReconciliationRoute: typeof ReconciliationRoute
 }
@@ -92,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/event-loop'
       fullPath: '/event-loop'
       preLoaderRoute: typeof EventLoopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/database-indexing': {
+      id: '/database-indexing'
+      path: '/database-indexing'
+      fullPath: '/database-indexing'
+      preLoaderRoute: typeof DatabaseIndexingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/critical-rendering-path': {
@@ -114,6 +138,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CriticalRenderingPathRoute: CriticalRenderingPathRoute,
+  DatabaseIndexingRoute: DatabaseIndexingRoute,
   EventLoopRoute: EventLoopRoute,
   ReconciliationRoute: ReconciliationRoute,
 }
