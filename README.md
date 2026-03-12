@@ -1,37 +1,52 @@
-# Web Development Concepts Visualizer
+# Full-Stack Concept Visualizer
 
-An interactive platform built to demonstrate and explain core web development and computer science concepts through engaging, interactive visualizations. From React's internal mechanisms to the browser's rendering phase and JavaScript execution environment, this project aims to make abstract technical processes easier to understand.
+An interactive platform for learning and internalizing core concepts across the full software engineering stack — from browser internals and React mechanics to database engines, system design patterns, and JavaScript runtime behavior. Every topic is taught through hands-on, animated visualizations rather than static text.
 
 ## 🎯 Purpose
 
-This project is designed to be a **general-purpose visualization hub**. Rather than focusing on a single feature, it is built with an extensible architecture that allows developers to easily add new interactive demos, educational modules, and technical deep-dives over time.
+This project is a **general-purpose visualization hub** for full-stack engineering concepts. It is built with an extensible, domain-organized architecture that makes it straightforward to add new interactive demos, educational modules, and technical deep-dives over time. The target audience is mid-to-senior engineers preparing for interviews or deepening their mental models.
 
-## ✨ Current Visualizations
+## ✨ Current & Planned Visualizations
 
-- **React Reconciliation**: Visualizing how React updates the DOM, including tree diffing, element type changes, and the importance of keys in list rendering.
-- **Critical Rendering Path (CRP)**: Interactive demos explaining how the browser parses HTML, CSS, and JavaScript, highlighting the impact of render-blocking resources.
-- **JavaScript Event Loop**: A step-by-step visualizer for the Call Stack, Web APIs, and Task Queues (Microtasks and Macrotasks).
-- *(More visualizations spanning algorithms, memory management, and network protocols to come...)*
+### 🌳 React
+- **React Reconciliation** — Tree diffing, element type changes, and the role of `key` in list rendering.
+- **State & Re-renders** — What triggers re-renders, how they propagate, batching in React 18, context traps, and `useMemo`/`useCallback` reference stability.
+
+### 🖥️ Browser
+- **Critical Rendering Path** — How the browser parses HTML, CSS, and JS; render-blocking resources and their impact.
+- **JavaScript Event Loop** — Step-by-step visualizer for the Call Stack, Web APIs, Microtask Queue, and Macrotask Queue.
+- **Closure & Scope** — Lexical scope chain lookup, closure snapshots, stale closure bugs in React, and the classic `var` loop bug.
+- **Memory & GC** — Stack vs. heap, mark-and-sweep, V8 generational GC, and React memory leak patterns.
+
+### 🗄️ Database
+- **Database Indexing** — Full table scan vs. B-Tree index lookup, B-Tree structure explorer with animated node splits, clustered vs. non-clustered indexes, and when NOT to index.
+- **Transactions & Isolation Levels** — ACID properties, dirty reads/phantom reads/non-repeatable reads, isolation level matrix, and deadlock visualization.
+- **SQL Execution Order** — Written order vs. actual execution order, data flow pipeline, common pitfalls quiz, and subquery/JOIN execution.
+- **Query Engine Flow** — Internal PostgreSQL-style pipeline: Parser → Planner → Optimizer → Execution Engine, including EXPLAIN ANALYZE output visualization.
+
+### 🏗️ System Design
+- **Caching Strategies** — Full caching layer stack (browser → CDN → Redis → DB), cache invalidation patterns, HTTP cache headers, and cache stampede mitigations.
+
+### 🌍 Web
+- **Rendering Strategies** — CSR, SSR, SSG, ISR, and PPR compared via animated timelines, trade-off matrix, and an interactive use-case matcher.
 
 ## 🛠️ Tech Stack
 
-This project is built using modern web development tools and best practices:
-
 - **Framework**: [React 19](https://react.dev/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/) for strong typing, avoiding `any` and explicit casting.
-- **Build Tool**: [Vite](https://vitejs.dev/) for fast development and optimized production builds.
-- **Routing**: [TanStack Router](https://tanstack.com/router/latest) for fully type-safe routing.
+- **Language**: [TypeScript](https://www.typescriptlang.org/) — strict typing, no `any`, minimal casting.
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Routing**: [TanStack Router](https://tanstack.com/router/latest) — fully type-safe, file-based.
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://motion.dev/) for fluid interactivity and transitions.
+- **Animations**: [Framer Motion](https://motion.dev/)
 - **Syntax Highlighting**: [Shiki](https://shiki.style/)
-- **Linting & Formatting**: [Biome](https://biomejs.dev/) for extremely fast, reliable checks.
-- **Testing environment**: [Vitest](https://vitest.dev/)
+- **Linting & Formatting**: [Biome](https://biomejs.dev/)
+- **Testing**: [Vitest](https://vitest.dev/)
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-We strictly use `pnpm` as the package manager for this project to ensure fast, deterministic installations.
+We strictly use `pnpm` as the package manager.
 
 ```bash
 npm install -g pnpm
@@ -51,48 +66,54 @@ npm install -g pnpm
 
 ### Development
 
-Start the development server with Hot Module Replacement (HMR):
-
 ```bash
 pnpm dev
 ```
 
 ### Other Commands
 
-- **Build for Production**: `pnpm build`
-- **Preview Production Build**: `pnpm preview`
-- **Run Linter & Formatter**: `pnpm lint`
+| Command | Description |
+|---|---|
+| `pnpm build` | Build for production |
+| `pnpm preview` | Preview the production build |
+| `pnpm lint` | Run Biome linter & formatter |
+| `pnpm test` | Run Vitest test suite |
 
-## 🏗️ Architecture & Project Structure
-
-The project is structured to easily scale and accommodate new visual domains:
+## 🏗️ Project Structure
 
 ```text
 src/
 ├── components/
-│   ├── critical-rendering-path/ # Demos for CRP
-│   ├── reconciliation/          # Demos for React rendering behavior
-│   ├── shared/                  # Reusable layout and demo wrapper components
-│   └── ...                      # [New visualization domains go here]
-├── routes/                      # Route definitions (auto-generated via TanStack Router)
-├── lib/                         # General utilities and types
+│   ├── database-indexing/       # B-Tree, scan vs. index
+│   ├── database-transactions/   # ACID, isolation levels, locking
+│   ├── sql-execution-order/     # Clause pipeline & pitfalls
+│   ├── database-query-flow/     # Parser → Optimizer → Executor
+│   ├── react-state/             # Re-render propagation, batching
+│   ├── rendering-strategies/    # CSR / SSR / SSG / ISR / PPR
+│   ├── closure-scope/           # Lexical scope & closures
+│   ├── js-memory/               # GC, heap, React memory leaks
+│   ├── caching-strategies/      # Cache layers & invalidation
+│   ├── critical-rendering-path/ # Browser CRP demos
+│   ├── reconciliation/          # React reconciliation demos
+│   ├── shared/                  # Reusable layout & demo wrappers
+│   └── ...
+├── routes/                      # TanStack Router file-based routes
+├── lib/                         # Utilities and shared types
 └── ...
 ```
 
-## 🧠 Development Philosophy & Rules
+## 🧠 Development Philosophy
 
-If you are expanding this project, please adhere to our strict guiding principles:
-
-1. **Package Manager**: Always use `pnpm`. Do not introduce `npm` or `yarn` lockfiles.
-2. **Strict TypeScript**: We enforce rigorous typing. Avoid using `any` and bypass type narrowing with explicit casting (`as`) only when absolutely unavoidable.
-3. **Correctness over Convenience**: Code should be written utilizing established best practices. If a proposed design pattern or architectural choice seems fragile or short-sighted, it should be challenged and revised before implementation.
-4. **Tooling**: Rely on Biome for linting and formatting, and Vitest for any unit/integration test suites.
+1. **Package Manager**: Always use `pnpm`.
+2. **Strict TypeScript**: No `any`; use explicit casting only when unavoidable.
+3. **Correctness over Convenience**: Challenge fragile patterns before implementing them.
+4. **Tooling**: Biome for linting/formatting, Vitest for tests.
 
 ## 🤝 Contributing New Visualizations
 
-To add a new feature or interactive demo:
-1. Create a new categorized directory under `src/components/` (e.g., `src/components/memory-management/`).
-2. Build isolated, reusable interactive components that illustrate your specific concept.
-3. Use the components from `src/components/shared/` to maintain a consistent look and feel across all demos.
-4. Define a new route in `src/routes/` to surface your visualization.
-5. Run `pnpm lint` to ensure code style compliance before committing.
+1. Create a new categorized directory under `src/components/` (e.g., `src/components/rate-limiting/`).
+2. Build isolated, reusable interactive components that illustrate the specific concept.
+3. Use components from `src/components/shared/` for consistent layout and styling.
+4. Define a new route in `src/routes/` using `createFileRoute`.
+5. Add the route to the appropriate nav group in `src/routes/__root.tsx`.
+6. Run `pnpm lint` before committing.
