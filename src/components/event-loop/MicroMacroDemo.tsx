@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useState } from "react";
 import { DemoSection } from "../shared/DemoSection";
+import { ShikiCode } from "../shared/ShikiCode";
 
 const CODE_LINES = [
 	"setTimeout(() => console.log('timeout'), 0);",
@@ -114,16 +115,7 @@ export function MicroMacroDemo() {
 				<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
 					What&apos;s the console output order?
 				</div>
-				<pre className="p-4 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono overflow-x-auto">
-					{CODE_LINES.map((line) => (
-						<div key={line} className="text-zinc-400 py-0.5">
-							<span className="inline-block w-5 text-right mr-3 text-zinc-600 select-none">
-								{CODE_LINES.indexOf(line) + 1}
-							</span>
-							{line}
-						</div>
-					))}
-				</pre>
+				<ShikiCode code={CODE_LINES.join("\n")} language="javascript" />
 			</div>
 
 			<div className="flex flex-col lg:flex-row gap-6">

@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { DemoSection } from "../shared/DemoSection";
+import { ShikiCode } from "../shared/ShikiCode";
 
 interface StackFrame {
 	id: string;
@@ -128,23 +129,11 @@ export function CallStackDemo() {
 					<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
 						Source Code
 					</div>
-					<pre className="p-4 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono overflow-x-auto">
-						{CODE_LINES.map((line, lineIdx) => (
-							<div
-								key={`${lineIdx}-${line || "empty"}`}
-								className={`px-2 py-0.5 rounded transition-colors ${
-									current.highlightLine === lineIdx
-										? "bg-violet-500/20 text-violet-300"
-										: "text-zinc-400"
-								}`}
-							>
-								<span className="inline-block w-6 text-right mr-3 text-zinc-600 select-none">
-									{lineIdx + 1}
-								</span>
-								{line || " "}
-							</div>
-						))}
-					</pre>
+					<ShikiCode
+						code={CODE_LINES.join("\n")}
+						language="javascript"
+						highlightLine={current.highlightLine}
+					/>
 				</div>
 
 				{/* Stack visualization */}

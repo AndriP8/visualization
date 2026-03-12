@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { DemoSection } from "../shared/DemoSection";
+import { ShikiCode } from "../shared/ShikiCode";
 import type { ActiveRegion, ExecutionStep } from "./types";
 
 interface Snippet {
@@ -409,20 +410,11 @@ export function EventLoopSimDemo() {
 						<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
 							Code
 						</div>
-						<pre className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono overflow-x-auto">
-							{snippet.lines.map((line) => (
-								<div
-									key={line}
-									className={`px-2 py-0.5 rounded transition-colors ${
-										current.highlightLine === snippet.lines.indexOf(line)
-											? "bg-violet-500/20 text-violet-300"
-											: "text-zinc-400"
-									}`}
-								>
-									{line}
-								</div>
-							))}
-						</pre>
+						<ShikiCode
+							code={snippet.code}
+							language="javascript"
+							highlightLine={current.highlightLine}
+						/>
 					</div>
 
 					<div>

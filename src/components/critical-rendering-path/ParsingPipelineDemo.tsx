@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { DemoSection } from "../shared/DemoSection";
+import { ShikiCode } from "../shared/ShikiCode";
 
 const HTML_SNIPPET = `<html>
   <head>
@@ -303,9 +304,9 @@ export function ParsingPipelineDemo() {
 							Click <strong className="text-amber-400">Start</strong> to begin
 							the parsing pipeline.
 						</p>
-						<pre className="mt-4 p-4 rounded-lg bg-zinc-900 border border-zinc-800 text-xs text-left text-zinc-400 font-mono overflow-x-auto">
-							{HTML_SNIPPET}
-						</pre>
+						<div className="mt-4 text-left">
+							<ShikiCode code={HTML_SNIPPET} language="html" />
+						</div>
 					</motion.div>
 				)}
 

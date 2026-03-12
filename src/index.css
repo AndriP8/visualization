@@ -45,3 +45,49 @@
 .fiber-node-highlight {
 	animation: node-pulse 1s ease-in-out infinite;
 }
+
+/* Shiki Customizations */
+.shiki-wrapper pre {
+	margin: 0;
+	background: transparent;
+}
+
+.shiki-wrapper code {
+	display: flex;
+	flex-direction: column;
+}
+
+.shiki-wrapper .line {
+	display: block;
+	min-height: 1.5rem;
+	padding: 0 0.5rem;
+	border-radius: 0.25rem;
+	transition:
+		background-color 0.2s,
+		opacity 0.2s;
+}
+
+/* Line Numbers with CSS Counters */
+.shiki-show-line-numbers {
+	counter-reset: shiki-line;
+}
+.shiki-show-line-numbers .line::before {
+	counter-increment: shiki-line;
+	content: counter(shiki-line);
+	display: inline-block;
+	width: 1.5rem;
+	text-align: right;
+	margin-right: 1rem;
+	color: rgb(82 82 91); /* zinc-600 */
+	user-select: none;
+}
+
+/* Active line logic */
+.shiki-has-highlight .line:not(.shiki-active-line) {
+	opacity: 0.4;
+	filter: grayscale(0.5);
+}
+
+.shiki-has-highlight .line.shiki-active-line {
+	background-color: rgb(139 92 246 / 0.2); /* violet-500/20 */
+}
