@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RenderingStrategiesRouteImport } from './routes/rendering-strategies'
 import { Route as ReconciliationRouteImport } from './routes/reconciliation'
 import { Route as EventLoopRouteImport } from './routes/event-loop'
 import { Route as DatabaseIndexingRouteImport } from './routes/database-indexing'
@@ -17,6 +18,12 @@ import { Route as ClosureScopeRouteImport } from './routes/closure-scope'
 
 import { Route as IndexRouteImport } from './routes/index'
 
+
+const RenderingStrategiesRoute = RenderingStrategiesRouteImport.update({
+  id: '/rendering-strategies',
+  path: '/rendering-strategies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReconciliationRoute = ReconciliationRouteImport.update({
   id: '/reconciliation',
   path: '/reconciliation',
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/database-indexing': typeof DatabaseIndexingRoute
   '/event-loop': typeof EventLoopRoute
   '/reconciliation': typeof ReconciliationRoute
+  '/rendering-strategies': typeof RenderingStrategiesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -65,6 +73,7 @@ export interface FileRoutesByTo {
   '/database-indexing': typeof DatabaseIndexingRoute
   '/event-loop': typeof EventLoopRoute
   '/reconciliation': typeof ReconciliationRoute
+  '/rendering-strategies': typeof RenderingStrategiesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -74,6 +83,7 @@ export interface FileRoutesById {
   '/database-indexing': typeof DatabaseIndexingRoute
   '/event-loop': typeof EventLoopRoute
   '/reconciliation': typeof ReconciliationRoute
+  '/rendering-strategies': typeof RenderingStrategiesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
     | '/database-indexing'
     | '/event-loop'
     | '/reconciliation'
+    | '/rendering-strategies'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -109,10 +120,19 @@ export interface RootRouteChildren {
   DatabaseIndexingRoute: typeof DatabaseIndexingRoute
   EventLoopRoute: typeof EventLoopRoute
   ReconciliationRoute: typeof ReconciliationRoute
+  RenderingStrategiesRoute: typeof RenderingStrategiesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+  
+    '/rendering-strategies': {
+      id: '/rendering-strategies'
+      path: '/rendering-strategies'
+      fullPath: '/rendering-strategies'
+      preLoaderRoute: typeof RenderingStrategiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reconciliation': {
       id: '/reconciliation'
       path: '/reconciliation'
@@ -172,6 +192,7 @@ const rootRouteChildren: RootRouteChildren = {
   DatabaseIndexingRoute: DatabaseIndexingRoute,
   EventLoopRoute: EventLoopRoute,
   ReconciliationRoute: ReconciliationRoute,
+  RenderingStrategiesRoute: RenderingStrategiesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

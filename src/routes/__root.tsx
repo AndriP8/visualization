@@ -32,7 +32,16 @@ const NAV_GROUPS = [
 			},
 		],
 	},
-	
+	{
+		title: "Web",
+		items: [
+			{
+				to: "/rendering-strategies" as const,
+				label: "Rendering Strategies",
+				icon: "🌍",
+			},
+		],
+	},
 	{
 		title: "Database",
 		items: [
