@@ -23,6 +23,22 @@ const CONCEPT_GROUPS = [
 		],
 	},
 	{
+		title: "JavaScript",
+		description: "Core language mechanics and common pitfalls",
+		items: [
+			{
+				to: "/closure-scope" as const,
+				title: "Closure & Lexical Scope",
+				icon: "🔍",
+				description:
+					"How JavaScript resolves variable names and the bugs that emerge when closures aren't fully understood.",
+				tags: ["Closures", "Scope Chain", "Stale Closures", "React"],
+				color: "from-cyan-500/20 to-blue-500/20",
+				borderColor: "border-cyan-500/30",
+			},
+		],
+	},
+	{
 		title: "Browser",
 		description: "How browsers transform code into pixels on screen",
 		items: [

@@ -13,6 +13,8 @@ import { Route as ReconciliationRouteImport } from './routes/reconciliation'
 import { Route as EventLoopRouteImport } from './routes/event-loop'
 import { Route as DatabaseIndexingRouteImport } from './routes/database-indexing'
 import { Route as CriticalRenderingPathRouteImport } from './routes/critical-rendering-path'
+import { Route as ClosureScopeRouteImport } from './routes/closure-scope'
+
 import { Route as IndexRouteImport } from './routes/index'
 
 const ReconciliationRoute = ReconciliationRouteImport.update({
@@ -35,6 +37,12 @@ const CriticalRenderingPathRoute = CriticalRenderingPathRouteImport.update({
   path: '/critical-rendering-path',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClosureScopeRoute = ClosureScopeRouteImport.update({
+  id: '/closure-scope',
+  path: '/closure-scope',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,6 +51,8 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+
+  '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
   '/event-loop': typeof EventLoopRoute
@@ -50,6 +60,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
   '/event-loop': typeof EventLoopRoute
@@ -58,6 +69,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
   '/event-loop': typeof EventLoopRoute
@@ -67,6 +79,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
     | '/event-loop'
@@ -74,6 +87,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
     | '/event-loop'
@@ -81,6 +95,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
     | '/event-loop'
@@ -89,6 +104,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClosureScopeRoute: typeof ClosureScopeRoute
   CriticalRenderingPathRoute: typeof CriticalRenderingPathRoute
   DatabaseIndexingRoute: typeof DatabaseIndexingRoute
   EventLoopRoute: typeof EventLoopRoute
@@ -125,6 +141,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CriticalRenderingPathRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/closure-scope': {
+      id: '/closure-scope'
+      path: '/closure-scope'
+      fullPath: '/closure-scope'
+      preLoaderRoute: typeof ClosureScopeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/caching-strategies': {
+      id: '/caching-strategies'
+      path: '/caching-strategies'
+      fullPath: '/caching-strategies'
+      preLoaderRoute: typeof CachingStrategiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -137,6 +167,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ClosureScopeRoute: ClosureScopeRoute,
   CriticalRenderingPathRoute: CriticalRenderingPathRoute,
   DatabaseIndexingRoute: DatabaseIndexingRoute,
   EventLoopRoute: EventLoopRoute,

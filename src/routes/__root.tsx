@@ -25,8 +25,14 @@ const NAV_GROUPS = [
 				label: "Event Loop",
 				icon: "🔄",
 			},
+			{
+				to: "/closure-scope" as const,
+				label: "Closure & Scope",
+				icon: "🔍",
+			},
 		],
 	},
+	
 	{
 		title: "Database",
 		items: [
