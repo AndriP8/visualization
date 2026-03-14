@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "motion/react";
 import { useState } from "react";
 import type { Strategy } from "../components/rendering-strategies/constants";
 import { SSRDeepDive } from "../components/rendering-strategies/SSRDeepDive";
@@ -8,6 +7,7 @@ import { TradeoffMatrixDemo } from "../components/rendering-strategies/TradeoffM
 import { UseCaseMatcherDemo } from "../components/rendering-strategies/UseCaseMatcherDemo";
 import { WorkLocationDemo } from "../components/rendering-strategies/WorkLocationDemo";
 import { DemoSection } from "../components/shared/DemoSection";
+import { PageHeader } from "../components/shared/PageHeader";
 
 export const Route = createFileRoute("/rendering-strategies")({
 	component: RenderingStrategiesPage,
@@ -19,39 +19,13 @@ function RenderingStrategiesPage() {
 	>(new Set());
 
 	return (
-		<div className="max-w-7xl mx-auto space-y-12 pb-20">
-			{/* Header */}
-			<header className="mb-12">
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 text-violet-400 text-sm font-medium mb-4"
-				>
-					<span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
-					Web Fundamentals
-				</motion.div>
-				<motion.h1
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.1 }}
-					className="text-4xl lg:text-5xl font-bold bg-linear-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent mb-4"
-				>
-					Rendering Strategies
-				</motion.h1>
-				<motion.p
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.2 }}
-					className="text-gray-400 text-lg max-w-3xl leading-relaxed"
-				>
-					CSR, SSR, SSG, ISR, Streaming SSR — every developer claims to know
-					these, but few can explain{" "}
-					<em className="text-zinc-300">when HTML is generated</em>,{" "}
-					<em className="text-zinc-300">where</em>, and{" "}
-					<em className="text-zinc-300">when the page becomes interactive</em>.
-					Watch the differences play out in real time.
-				</motion.p>
-			</header>
+		<div className="max-w-6xl mx-auto space-y-12 pb-20">
+			<PageHeader
+				topic={{ label: "Web Fundamentals", color: "violet" }}
+				title="Rendering Strategies"
+				subtitle="CSR, SSR, SSG, ISR, Streaming SSR — every developer claims to know these, but few can explain when HTML is generated, where, and when the page becomes interactive. Watch the differences play out in real time."
+				gradient={{ from: "violet-400", via: "fuchsia-400", to: "cyan-400" }}
+			/>
 
 			<div className="space-y-16">
 				{/* Demo 1: Timeline Comparison */}
