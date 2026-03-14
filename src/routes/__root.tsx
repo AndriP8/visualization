@@ -10,6 +10,23 @@ const NAV_GROUPS = [
 		title: "React",
 		items: [
 			{ to: "/reconciliation" as const, label: "Reconciliation", icon: "🌳" },
+			{ to: "/react-state" as const, label: "State & Re-renders", icon: "⚡" },
+		],
+	},
+	{
+		title: "JavaScript",
+		items: [
+			{
+				to: "/closure-scope" as const,
+				label: "Closure & Scope",
+				icon: "🔍",
+			},
+		
+			{
+				to: "/event-loop" as const,
+				label: "Event Loop",
+				icon: "🔄",
+			},
 		],
 	},
 	{

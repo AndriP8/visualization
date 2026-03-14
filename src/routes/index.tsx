@@ -20,6 +20,16 @@ const CONCEPT_GROUPS = [
 				color: "from-violet-500/20 to-purple-500/20",
 				borderColor: "border-violet-500/30",
 			},
+			{
+				to: "/react-state" as const,
+				title: "State & Re-renders",
+				icon: "⚡",
+				description:
+					"What triggers re-renders, how they cascade through the tree, and when memo/useCallback actually help.",
+				tags: ["Re-renders", "Batching", "Context", "Memoization"],
+				color: "from-orange-500/20 to-amber-500/20",
+				borderColor: "border-orange-500/30",
+			},
 		],
 	},
 	{
