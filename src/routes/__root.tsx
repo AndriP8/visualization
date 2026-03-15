@@ -69,6 +69,16 @@ const NAV_GROUPS = [
 			},
 		],
 	},
+	{
+		title: "System Design",
+		items: [
+			{
+				to: "/caching-strategies" as const,
+				label: "Caching Strategies",
+				icon: "🏗️",
+			},
+		],
+	},
 ] as const;
 
 export const Route = createRootRoute({
@@ -93,7 +103,7 @@ function RootLayout() {
 			{/* Sidebar */}
 			<aside
 				className={`
-					fixed lg:sticky top-0 left-0 z-40 h-screen w-64
+					fixed lg:sticky top-0 left-0 z-40 h-screen w-64 lg:shrink-0
 					bg-zinc-900 border-r border-zinc-800
 					flex flex-col
 					transition-transform duration-300

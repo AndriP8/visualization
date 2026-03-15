@@ -90,11 +90,27 @@ const CONCEPT_GROUPS = [
 			},
 		],
 	},
+	{
+		title: "System Design",
+		description: "Patterns for building scalable systems",
+		items: [
+		<div className="max-w-6xl mx-auto">
+				to: "/caching-strategies" as const,
+				title: "Caching Strategies",
+				icon: "🏗️",
+				description:
+					"Client-side, CDN, server, database — where to cache, when to invalidate, and the consistency trade-offs.",
+				tags: ["Client Cache", "CDN", "Redis", "Invalidation"],
+				color: "from-blue-500/20 to-indigo-500/20",
+				borderColor: "border-blue-500/30",
+			},
+		],
+	},
 ];
 
 function Index() {
 	return (
-		<div className="max-w-4xl mx-auto">
+		<div className="max-w-6xl mx-auto">
 			<motion.div
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}

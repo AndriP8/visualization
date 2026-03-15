@@ -16,7 +16,7 @@ import { Route as EventLoopRouteImport } from './routes/event-loop'
 import { Route as DatabaseIndexingRouteImport } from './routes/database-indexing'
 import { Route as CriticalRenderingPathRouteImport } from './routes/critical-rendering-path'
 import { Route as ClosureScopeRouteImport } from './routes/closure-scope'
-
+import { Route as CachingStrategiesRouteImport } from './routes/caching-strategies'
 import { Route as IndexRouteImport } from './routes/index'
 
 
@@ -56,7 +56,11 @@ const ClosureScopeRoute = ClosureScopeRouteImport.update({
   path: '/closure-scope',
   getParentRoute: () => rootRouteImport,
 } as any)
-
+const CachingStrategiesRoute = CachingStrategiesRouteImport.update({
+  id: '/caching-strategies',
+  path: '/caching-strategies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -65,7 +69,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-
+  '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
@@ -76,6 +80,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
@@ -87,6 +92,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
@@ -99,6 +105,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
@@ -109,6 +116,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
@@ -118,6 +126,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CachingStrategiesRoute: typeof CachingStrategiesRoute
   ClosureScopeRoute: typeof ClosureScopeRoute
   CriticalRenderingPathRoute: typeof CriticalRenderingPathRoute
   DatabaseIndexingRoute: typeof DatabaseIndexingRoute
