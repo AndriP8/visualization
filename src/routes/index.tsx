@@ -30,6 +30,16 @@ const CONCEPT_GROUPS = [
 				color: "from-orange-500/20 to-amber-500/20",
 				borderColor: "border-orange-500/30",
 			},
+			{
+				to: "/state-machines" as const,
+				title: "State Machines",
+				icon: "🤖",
+				description:
+					"Eliminate impossible states and race conditions with XState. See why explicit state machines prevent bugs that plague boolean-based approaches.",
+				tags: ["FSM", "XState", "Type Safety", "Concurrency"],
+				color: "from-violet-500/20 to-fuchsia-500/20",
+				borderColor: "border-violet-500/30",
+			},
 		],
 	},
 	{

@@ -11,6 +11,7 @@ const NAV_GROUPS = [
 		items: [
 			{ to: "/reconciliation" as const, label: "Reconciliation", icon: "🌳" },
 			{ to: "/react-state" as const, label: "State & Re-renders", icon: "⚡" },
+			{ to: "/state-machines" as const, label: "State Machines", icon: "🤖" },
 		],
 	},
 	{
