@@ -78,6 +78,11 @@ const NAV_GROUPS = [
 				label: "Caching Strategies",
 				icon: "🏗️",
 			},
+			{
+				to: "/api-patterns" as const,
+				label: "API Patterns",
+				icon: "🔌",
+			},
 		],
 	},
 ] as const;

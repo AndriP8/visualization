@@ -114,6 +114,16 @@ const CONCEPT_GROUPS = [
 				color: "from-blue-500/20 to-indigo-500/20",
 				borderColor: "border-blue-500/30",
 			},
+			{
+				to: "/api-patterns" as const,
+				title: "API Communication Patterns",
+				icon: "🔌",
+				description:
+					"REST, GraphQL, tRPC, WebSocket, SSE — how different patterns handle data fetching, updates, and real-time communication.",
+				tags: ["REST", "GraphQL", "WebSocket", "SSE"],
+				color: "from-blue-500/20 to-cyan-500/20",
+				borderColor: "border-blue-500/30",
+			},
 		],
 	},
 ];

@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+
+import { Route as StateMachinesRouteImport } from './routes/state-machines'
 import { Route as RenderingStrategiesRouteImport } from './routes/rendering-strategies'
 import { Route as ReconciliationRouteImport } from './routes/reconciliation'
 import { Route as ReactStateRouteImport } from './routes/react-state'
@@ -17,9 +19,15 @@ import { Route as DatabaseIndexingRouteImport } from './routes/database-indexing
 import { Route as CriticalRenderingPathRouteImport } from './routes/critical-rendering-path'
 import { Route as ClosureScopeRouteImport } from './routes/closure-scope'
 import { Route as CachingStrategiesRouteImport } from './routes/caching-strategies'
+import { Route as ApiPatternsRouteImport } from './routes/api-patterns'
 import { Route as IndexRouteImport } from './routes/index'
 
 
+const StateMachinesRoute = StateMachinesRouteImport.update({
+  id: '/state-machines',
+  path: '/state-machines',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RenderingStrategiesRoute = RenderingStrategiesRouteImport.update({
   id: '/rendering-strategies',
   path: '/rendering-strategies',
@@ -61,6 +69,12 @@ const CachingStrategiesRoute = CachingStrategiesRouteImport.update({
   path: '/caching-strategies',
   getParentRoute: () => rootRouteImport,
 } as any)
+
+const ApiPatternsRoute = ApiPatternsRouteImport.update({
+  id: '/api-patterns',
+  path: '/api-patterns',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -69,6 +83,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api-patterns': typeof ApiPatternsRoute
   '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
@@ -77,9 +92,12 @@ export interface FileRoutesByFullPath {
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
+  '/state-machines': typeof StateMachinesRoute
+
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api-patterns': typeof ApiPatternsRoute
   '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
@@ -88,10 +106,13 @@ export interface FileRoutesByTo {
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
+  '/state-machines': typeof StateMachinesRoute
+
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api-patterns': typeof ApiPatternsRoute
   '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
@@ -100,11 +121,14 @@ export interface FileRoutesById {
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
+  '/state-machines': typeof StateMachinesRoute
+  
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/api-patterns'
     | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
@@ -113,9 +137,12 @@ export interface FileRouteTypes {
     | '/react-state'
     | '/reconciliation'
     | '/rendering-strategies'
+    | '/state-machines'
+  
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/api-patterns'
     | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
@@ -123,9 +150,13 @@ export interface FileRouteTypes {
     | '/event-loop'
     | '/react-state'
     | '/reconciliation'
+    | '/rendering-strategies'
+    | '/state-machines'
+
   id:
     | '__root__'
     | '/'
+    | '/api-patterns'
     | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
@@ -137,6 +168,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPatternsRoute: typeof ApiPatternsRoute
   CachingStrategiesRoute: typeof CachingStrategiesRoute
   ClosureScopeRoute: typeof ClosureScopeRoute
   CriticalRenderingPathRoute: typeof CriticalRenderingPathRoute
@@ -145,11 +177,20 @@ export interface RootRouteChildren {
   ReactStateRoute: typeof ReactStateRoute
   ReconciliationRoute: typeof ReconciliationRoute
   RenderingStrategiesRoute: typeof RenderingStrategiesRoute
+  StateMachinesRoute: typeof StateMachinesRoute
+
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-  
+
+    '/state-machines': {
+      id: '/state-machines'
+      path: '/state-machines'
+      fullPath: '/state-machines'
+      preLoaderRoute: typeof StateMachinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/rendering-strategies': {
       id: '/rendering-strategies'
       path: '/rendering-strategies'
@@ -207,6 +248,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CachingStrategiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+
+    '/api-patterns': {
+      id: '/api-patterns'
+      path: '/api-patterns'
+      fullPath: '/api-patterns'
+      preLoaderRoute: typeof ApiPatternsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -219,6 +268,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPatternsRoute: ApiPatternsRoute,
+  CachingStrategiesRoute: CachingStrategiesRoute,
   ClosureScopeRoute: ClosureScopeRoute,
   CriticalRenderingPathRoute: CriticalRenderingPathRoute,
   DatabaseIndexingRoute: DatabaseIndexingRoute,
@@ -226,6 +277,8 @@ const rootRouteChildren: RootRouteChildren = {
   ReactStateRoute: ReactStateRoute,
   ReconciliationRoute: ReconciliationRoute,
   RenderingStrategiesRoute: RenderingStrategiesRoute,
+  StateMachinesRoute: StateMachinesRoute,
+
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
