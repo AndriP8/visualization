@@ -22,32 +22,37 @@ interface PageHeaderProps {
 
 const TOPIC_COLORS: Record<
 	TopicColor,
-	{ bg: string; text: string; dot: string }
+	{ bg: string; text: string; dot: string; border: string }
 > = {
 	orange: {
 		bg: "bg-orange-500/10",
 		text: "text-orange-400",
 		dot: "bg-orange-400",
+		border: "border-orange-500/20",
 	},
 	emerald: {
 		bg: "bg-emerald-500/10",
 		text: "text-emerald-400",
 		dot: "bg-emerald-400",
+		border: "border-emerald-500/20",
 	},
 	violet: {
 		bg: "bg-violet-500/10",
 		text: "text-violet-400",
 		dot: "bg-violet-400",
+		border: "border-violet-500/20",
 	},
 	amber: {
 		bg: "bg-amber-500/10",
 		text: "text-amber-400",
 		dot: "bg-amber-400",
+		border: "border-amber-500/20",
 	},
 	blue: {
 		bg: "bg-blue-500/10",
 		text: "text-blue-400",
 		dot: "bg-blue-400",
+		border: "border-blue-500/20",
 	},
 };
 
@@ -55,7 +60,9 @@ const TOPIC_COLORS: Record<
 const COLOR_MAP: Record<string, string> = {
 	"amber-400": "#fbbf24",
 	"orange-400": "#fb923c",
+	"red-400": "#f87171",
 	"rose-400": "#fb7185",
+	"pink-400": "#f472b6",
 	"violet-400": "#a78bfa",
 	"purple-400": "#c084fc",
 	"fuchsia-400": "#e879f9",
@@ -98,7 +105,7 @@ export function PageHeader({
 				className="mb-6"
 			>
 				<div
-					className={`inline-flex items-center gap-2 px-4 py-2 ${colors.bg} ${colors.text} rounded-full text-sm font-medium border border-${topic.color}-500/20`}
+					className={`inline-flex items-center gap-2 px-4 py-2 ${colors.bg} ${colors.text} rounded-full text-sm font-medium border ${colors.border}`}
 				>
 					<span
 						className={`w-2 h-2 ${colors.dot} rounded-full animate-pulse`}

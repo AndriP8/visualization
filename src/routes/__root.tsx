@@ -85,6 +85,16 @@ const NAV_GROUPS = [
 			},
 		],
 	},
+	{
+		title: "Web Security",
+		items: [
+			{
+				to: "/auth-flows" as const,
+				label: "Auth Flows",
+				icon: "🔐",
+			},
+		],
+	},
 ] as const;
 
 export const Route = createRootRoute({

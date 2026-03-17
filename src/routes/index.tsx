@@ -101,10 +101,26 @@ const CONCEPT_GROUPS = [
 		],
 	},
 	{
+		title: "Web Security",
+		description: "Authentication, authorization, and security patterns",
+		items: [
+			{
+				to: "/auth-flows" as const,
+				title: "Authentication Flows",
+				icon: "🔐",
+				description:
+					"Session-based, JWT, and OAuth 2.0 + PKCE — how modern web apps verify identity and delegate authorization.",
+				tags: ["Sessions", "JWT", "OAuth 2.0", "PKCE"],
+				color: "from-red-500/20 to-rose-500/20",
+				borderColor: "border-red-500/30",
+			},
+		],
+	},
+	{
 		title: "System Design",
 		description: "Patterns for building scalable systems",
 		items: [
-		<div className="max-w-6xl mx-auto">
+			{
 				to: "/caching-strategies" as const,
 				title: "Caching Strategies",
 				icon: "🏗️",
