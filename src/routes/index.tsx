@@ -44,7 +44,7 @@ const CONCEPT_GROUPS = [
 	},
 	{
 		title: "JavaScript",
-		description: "Core language mechanics and common pitfalls",
+		description: "Core language mechanics and runtime internals",
 		items: [
 			{
 				to: "/closure-scope" as const,
@@ -55,6 +55,26 @@ const CONCEPT_GROUPS = [
 				tags: ["Closures", "Scope Chain", "Stale Closures", "React"],
 				color: "from-cyan-500/20 to-blue-500/20",
 				borderColor: "border-cyan-500/30",
+			},
+			{
+				to: "/js-memory" as const,
+				title: "Memory & Garbage Collection",
+				icon: "🧠",
+				description:
+					"How V8 allocates memory, traces live objects from GC roots, and why memory leaks are just unintended references.",
+				tags: ["Stack", "Heap", "Mark-and-Sweep", "Memory Leaks"],
+				color: "from-emerald-500/20 to-teal-500/20",
+				borderColor: "border-emerald-500/30",
+			},
+			{
+				to: "/event-loop" as const,
+				title: "Event Loop",
+				icon: "🔄",
+				description:
+					"How JavaScript handles async code with a single thread — call stack, task queues, microtasks, and rAF.",
+				tags: ["Call Stack", "Queues", "Microtasks", "rAF"],
+				color: "from-rose-500/20 to-pink-500/20",
+				borderColor: "border-rose-500/30",
 			},
 		],
 	},
@@ -72,15 +92,21 @@ const CONCEPT_GROUPS = [
 				color: "from-amber-500/20 to-orange-500/20",
 				borderColor: "border-amber-500/30",
 			},
+		],
+	},
+	{
+		title: "Web",
+		description: "Full-stack rendering approaches and patterns",
+		items: [
 			{
-				to: "/event-loop" as const,
-				title: "Event Loop",
-				icon: "🔄",
+				to: "/rendering-strategies" as const,
+				title: "Rendering Strategies",
+				icon: "🌍",
 				description:
-					"How JavaScript handles async code with a single thread — call stack, task queues, microtasks, and rAF.",
-				tags: ["Call Stack", "Queues", "Microtasks", "rAF"],
-				color: "from-emerald-500/20 to-teal-500/20",
-				borderColor: "border-emerald-500/30",
+					"CSR, SSR, SSG, ISR, Streaming SSR — when HTML is generated, where, and when the page becomes interactive.",
+				tags: ["CSR", "SSR", "SSG", "ISR"],
+				color: "from-violet-500/20 to-fuchsia-500/20",
+				borderColor: "border-violet-500/30",
 			},
 		],
 	},

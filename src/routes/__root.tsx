@@ -22,7 +22,11 @@ const NAV_GROUPS = [
 				label: "Closure & Scope",
 				icon: "🔍",
 			},
-		
+			{
+				to: "/js-memory" as const,
+				label: "Memory & GC",
+				icon: "🧠",
+			},
 			{
 				to: "/event-loop" as const,
 				label: "Event Loop",
