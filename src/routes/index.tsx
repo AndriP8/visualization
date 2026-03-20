@@ -76,6 +76,21 @@ const CONCEPT_GROUPS = [
 				color: "from-rose-500/20 to-pink-500/20",
 				borderColor: "border-rose-500/30",
 			},
+			{
+				to: "/async-patterns" as const,
+				title: "Async Patterns & Promises",
+				icon: "⏳",
+				description:
+					"How async/await, Promise combinators, race conditions, and error handling actually work under the hood.",
+				tags: [
+					"async/await",
+					"Promise.all",
+					"Race Conditions",
+					"Error Handling",
+				],
+				color: "from-cyan-500/20 to-blue-500/20",
+				borderColor: "border-cyan-500/30",
+			},
 		],
 	},
 	{
