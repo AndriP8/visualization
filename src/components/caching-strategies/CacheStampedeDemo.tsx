@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { match } from "ts-pattern";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type Scenario = "stampede" | "early-expiry" | "single-flight";
@@ -186,9 +187,11 @@ export function CacheStampedeDemo() {
 	}, [reset, schedule]);
 
 	const runScenario = useCallback(() => {
-		if (selected === "stampede") runStampede();
-		else if (selected === "early-expiry") runEarlyExpiry();
-		else runSingleFlight();
+		match(selected)
+			.with("stampede", () => runStampede())
+			.with("early-expiry", () => runEarlyExpiry())
+			.with("single-flight", () => runSingleFlight())
+			.exhaustive();
 	}, [selected, runStampede, runEarlyExpiry, runSingleFlight]);
 
 	useEffect(() => {
@@ -199,37 +202,58 @@ export function CacheStampedeDemo() {
 
 	const scenario = SCENARIOS.find((s) => s.id === selected) ?? SCENARIOS[0];
 
-	const dbLoadColor =
-		dbLoad >= 90
-			? "bg-rose-500"
-			: dbLoad >= 60
-				? "bg-amber-500"
-				: dbLoad >= 30
-					? "bg-yellow-500"
-					: "bg-green-500";
+	const dbLoadColor = match(dbLoad)
+		.when(
+			(load) => load >= 90,
+			() => "bg-rose-500",
+		)
+		.when(
+			(load) => load >= 60,
+			() => "bg-amber-500",
+		)
+		.when(
+			(load) => load >= 30,
+			() => "bg-yellow-500",
+		)
+		.otherwise(() => "bg-green-500");
 
 	return (
 		<div className="space-y-6">
 			{/* Tabs */}
 			<div className="flex flex-wrap gap-2">
-				{SCENARIOS.map((s) => (
-					<button
-						key={s.id}
-						type="button"
-						onClick={() => setSelected(s.id)}
-						className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
-							selected === s.id
-								? s.color === "rose"
-									? "bg-rose-500/15 text-rose-300 border-rose-500/40"
-									: s.color === "amber"
-										? "bg-amber-500/15 text-amber-300 border-amber-500/40"
-										: "bg-green-500/15 text-green-300 border-green-500/40"
-								: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600"
-						}`}
-					>
-						{s.icon} {s.label}
-					</button>
-				))}
+				{SCENARIOS.map((s) => {
+					const className = match({
+						isSelected: selected === s.id,
+						color: s.color,
+					})
+						.with(
+							{ isSelected: true, color: "rose" },
+							() => "bg-rose-500/15 text-rose-300 border-rose-500/40",
+						)
+						.with(
+							{ isSelected: true, color: "amber" },
+							() => "bg-amber-500/15 text-amber-300 border-amber-500/40",
+						)
+						.with(
+							{ isSelected: true, color: "green" },
+							() => "bg-green-500/15 text-green-300 border-green-500/40",
+						)
+						.otherwise(
+							() =>
+								"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+						);
+
+					return (
+						<button
+							key={s.id}
+							type="button"
+							onClick={() => setSelected(s.id)}
+							className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${className}`}
+						>
+							{s.icon} {s.label}
+						</button>
+					);
+				})}
 			</div>
 
 			<div>

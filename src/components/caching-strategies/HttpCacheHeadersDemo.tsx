@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { match } from "ts-pattern";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type Scenario = "max-age" | "no-cache" | "no-store" | "s-maxage";
@@ -265,7 +266,10 @@ function NetworkDiagram({
 							key={`step-${step.label}`}
 							initial={{ opacity: 0 }}
 							animate={{
-								opacity: isPast ? 0.4 : isCurrent ? 1 : 0.15,
+								opacity: match({ isPast, isCurrent })
+									.with({ isPast: true }, () => 0.4)
+									.with({ isCurrent: true }, () => 1)
+									.otherwise(() => 0.15),
 							}}
 							transition={{ duration: 0.3 }}
 							className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
@@ -399,7 +403,11 @@ export function HttpCacheHeadersDemo() {
 								: "bg-violet-600 hover:bg-violet-500 text-white"
 						}`}
 					>
-						{running ? "⏹ Stop" : activeStep >= 0 ? "↺ Replay" : "▶ Animate"}
+						{match({ running, hasPlayed: activeStep >= 0 })
+							.with({ running: true }, () => "⏹ Stop")
+							.with({ running: false, hasPlayed: true }, () => "↺ Replay")
+							.with({ running: false, hasPlayed: false }, () => "▶ Animate")
+							.exhaustive()}
 					</button>
 				</div>
 

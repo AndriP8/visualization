@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { match } from "ts-pattern";
 
 interface CacheLayer {
 	id: string;
@@ -221,7 +222,11 @@ export function CachingLayerStackDemo() {
 							: "bg-violet-600 hover:bg-violet-500 text-white"
 					}`}
 				>
-					{sim.running ? "⏹ Stop" : sim.done ? "↺ Replay" : "▶ Send Request"}
+					{match({ running: sim.running, done: sim.done })
+						.with({ running: true }, () => "⏹ Stop")
+						.with({ running: false, done: true }, () => "↺ Replay")
+						.with({ running: false, done: false }, () => "▶ Send Request")
+						.exhaustive()}
 				</motion.button>
 				{sim.done && (
 					<motion.div
