@@ -220,7 +220,7 @@ export function LeastConnectionsDemo() {
 									</div>
 
 									{/* Connection Pills */}
-									<div className="min-h-[40px] space-y-1">
+									<div className="min-h-10 space-y-1">
 										<AnimatePresence>
 											{serverConnections.slice(0, 3).map((conn) => {
 												const elapsed = Date.now() - conn.startTime;

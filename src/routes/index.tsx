@@ -92,6 +92,16 @@ const CONCEPT_GROUPS = [
 				color: "from-amber-500/20 to-orange-500/20",
 				borderColor: "border-amber-500/30",
 			},
+			{
+				to: "/web-performance-metrics" as const,
+				title: "Web Performance Metrics",
+				icon: "📊",
+				description:
+					"Core Web Vitals measure real-world user experience. LCP, CLS, INP, FCP, and TTFB — what they measure and how to optimize.",
+				tags: ["LCP", "CLS", "INP", "FCP", "TTFB"],
+				color: "from-blue-500/20 to-cyan-500/20",
+				borderColor: "border-blue-500/30",
+			},
 		],
 	},
 	{

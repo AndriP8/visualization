@@ -32,6 +32,16 @@ const NAV_GROUPS = [
 				label: "Event Loop",
 				icon: "🔄",
 			},
+			{
+				to: "/web-workers" as const,
+				label: "Web Workers",
+				icon: "⚡",
+			},
+			{
+				to: "/async-patterns" as const,
+				label: "Async Patterns",
+				icon: "⏳",
+			},
 		],
 	},
 	{
@@ -43,14 +53,9 @@ const NAV_GROUPS = [
 				icon: "🎨",
 			},
 			{
-				to: "/event-loop" as const,
-				label: "Event Loop",
-				icon: "🔄",
-			},
-			{
-				to: "/closure-scope" as const,
-				label: "Closure & Scope",
-				icon: "🔍",
+				to: "/web-performance-metrics" as const,
+				label: "Web Performance Metrics",
+				icon: "⚡",
 			},
 		],
 	},
