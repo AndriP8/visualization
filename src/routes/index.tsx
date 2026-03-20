@@ -166,6 +166,21 @@ const CONCEPT_GROUPS = [
 				color: "from-blue-500/20 to-cyan-500/20",
 				borderColor: "border-blue-500/30",
 			},
+			{
+				to: "/load-balancing" as const,
+				title: "Load Balancing Strategies",
+				icon: "⚖️",
+				description:
+					"Round-robin, least connections, weighted, and consistent hashing — how distributed systems route requests across servers to maximize throughput.",
+				tags: [
+					"Round-Robin",
+					"Least Connections",
+					"Consistent Hashing",
+					"Weighted",
+				],
+				color: "from-amber-500/20 to-orange-500/20",
+				borderColor: "border-amber-500/30",
+			},
 		],
 	},
 ];

@@ -87,6 +87,11 @@ const NAV_GROUPS = [
 				label: "API Patterns",
 				icon: "🔌",
 			},
+			{
+				to: "/load-balancing" as const,
+				label: "Load Balancing",
+				icon: "⚖️",
+			},
 		],
 	},
 	{
