@@ -77,6 +77,16 @@ const CONCEPT_GROUPS = [
 				borderColor: "border-rose-500/30",
 			},
 			{
+				to: "/web-workers" as const,
+				title: "Web Workers",
+				icon: "⚙️",
+				description:
+					"How JavaScript achieves true parallelism — running code on separate threads without blocking the UI.",
+				tags: ["Threads", "postMessage", "Transferable", "SharedWorker"],
+				color: "from-emerald-500/20 to-teal-500/20",
+				borderColor: "border-emerald-500/30",
+			},
+			{
 				to: "/async-patterns" as const,
 				title: "Async Patterns & Promises",
 				icon: "⏳",
