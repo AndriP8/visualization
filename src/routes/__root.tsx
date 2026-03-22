@@ -100,6 +100,16 @@ const NAV_GROUPS = [
 		],
 	},
 	{
+		title: "Network",
+		items: [
+			{
+				to: "/http-versions" as const,
+				label: "HTTP/1.1 vs HTTP/2",
+				icon: "🌐",
+			},
+		],
+	},
+	{
 		title: "Web Security",
 		items: [
 			{

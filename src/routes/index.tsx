@@ -94,6 +94,22 @@ const CONCEPT_GROUPS = [
 		],
 	},
 	{
+		title: "Network",
+		description: "How browsers and servers communicate over the wire",
+		items: [
+			{
+				to: "/http-versions" as const,
+				title: "HTTP/1.1 vs HTTP/2",
+				icon: "🌐",
+				description:
+					"How HTTP/2 multiplexing, header compression, and binary framing solve the fundamental performance bottlenecks of HTTP/1.1.",
+				tags: ["Multiplexing", "HPACK", "HOL Blocking", "Server Push"],
+				color: "from-blue-500/20 to-cyan-500/20",
+				borderColor: "border-blue-500/30",
+			},
+		],
+	},
+	{
 		title: "Browser",
 		description: "How browsers transform code into pixels on screen",
 		items: [
