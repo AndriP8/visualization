@@ -69,6 +69,7 @@ const COLOR_MAP: Record<string, string> = {
 	"cyan-400": "#22d3ee",
 	"emerald-400": "#34d399",
 	"blue-400": "#60a5fa",
+	"indigo-400": "#818cf8",
 	"teal-400": "#2dd4bf",
 };
 

@@ -175,6 +175,16 @@ const CONCEPT_GROUPS = [
 				color: "from-teal-500/20 to-cyan-500/20",
 				borderColor: "border-teal-500/30",
 			},
+			{
+				to: "/sql-execution-order" as const,
+				title: "SQL Execution Order",
+				icon: "📋",
+				description:
+					"How SQL engines actually process queries — FROM before SELECT, WHERE before HAVING, and why execution order differs from written order.",
+				tags: ["FROM", "WHERE", "GROUP BY", "SELECT"],
+				color: "from-indigo-500/20 to-blue-500/20",
+				borderColor: "border-indigo-500/30",
+			},
 		],
 	},
 	{

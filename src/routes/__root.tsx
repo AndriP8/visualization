@@ -77,6 +77,13 @@ const NAV_GROUPS = [
 				label: "Database Indexing",
 				icon: "🗄️",
 			},
+	
+			{
+				to: "/sql-execution-order" as const,
+				label: "SQL Execution Order",
+				icon: "📊",
+			},
+			
 		],
 	},
 	{
