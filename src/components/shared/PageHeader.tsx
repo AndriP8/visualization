@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
 
-type TopicColor = "orange" | "emerald" | "violet" | "amber" | "blue";
+type TopicColor = "orange" | "emerald" | "violet" | "amber" | "blue" | "rose";
 
 interface PageHeaderProps {
 	topic: {
@@ -54,6 +54,12 @@ const TOPIC_COLORS: Record<
 		dot: "bg-blue-400",
 		border: "border-blue-500/20",
 	},
+	rose: {
+		bg: "bg-rose-500/10",
+		text: "text-rose-400",
+		dot: "bg-rose-400",
+		border: "border-rose-500/20",
+	},
 };
 
 // Map Tailwind color names to hex values for gradients
@@ -71,6 +77,7 @@ const COLOR_MAP: Record<string, string> = {
 	"blue-400": "#60a5fa",
 	"indigo-400": "#818cf8",
 	"teal-400": "#2dd4bf",
+	"yellow-400": "#facc15",
 };
 
 export function PageHeader({

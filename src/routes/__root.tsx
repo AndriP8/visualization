@@ -57,6 +57,11 @@ const NAV_GROUPS = [
 				label: "Web Performance Metrics",
 				icon: "⚡",
 			},
+			{
+				to: "/resource-priority" as const,
+				label: "Resource Priority",
+				icon: "🚦",
+			},
 		],
 	},
 	{

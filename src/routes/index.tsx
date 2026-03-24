@@ -143,6 +143,16 @@ const CONCEPT_GROUPS = [
 				color: "from-blue-500/20 to-cyan-500/20",
 				borderColor: "border-blue-500/30",
 			},
+			{
+				to: "/resource-priority" as const,
+				title: "Resource Loading Priority",
+				icon: "🚦",
+				description:
+					"How browsers prioritize resources and how developer hints (preload, prefetch, async, defer) affect the loading waterfall.",
+				tags: ["Preload", "Prefetch", "async", "defer", "Priority"],
+				color: "from-amber-500/20 to-orange-500/20",
+				borderColor: "border-amber-500/30",
+			},
 		],
 	},
 	{
