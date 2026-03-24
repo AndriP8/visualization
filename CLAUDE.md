@@ -102,7 +102,31 @@ src/components/
   - `layoutId` for shared element transitions
 - Use `motion.div`, `motion.button`, etc.
 
-### 5. TypeScript Conventions
+### 5. Conditional Rendering with ts-pattern
+
+**Use `ts-pattern` for complex conditional logic instead of ternaries or switch statements:**
+```tsx
+import { match } from "ts-pattern";
+
+// Deriving values from state
+const color = match(status)
+  .with("success", () => "text-green-400")
+  .with("error", () => "text-red-400")
+  .with("loading", () => "text-yellow-400")
+  .otherwise(() => "text-zinc-400");
+
+// Rendering JSX based on multiple conditions
+const content = match({ status, role })
+  .with({ status: "loading" }, () => <Spinner />)
+  .with({ status: "error" }, () => <ErrorMessage />)
+  .with({ status: "success", role: "admin" }, () => <AdminPanel />)
+  .otherwise(() => <DefaultView />);
+```
+- Prefer `match()` over nested ternaries or verbose switch/case
+- Use `.with()` for pattern matching, `.otherwise()` as the fallback
+- Match on objects for multi-condition logic (e.g., `{ status, role }`)
+
+### 6. TypeScript Conventions
 
 **Strict mode enabled:**
 - No `any` types (use `unknown` if truly needed, then narrow)
@@ -111,7 +135,7 @@ src/components/
 - Interface over type for object shapes
 - Type parameters use `T` convention
 
-### 6. Styling with Tailwind v4
+### 7. Styling with Tailwind v4
 
 **Utility-first approach:**
 - Dark theme as default (`bg-zinc-950`, `text-gray-100`)
@@ -126,6 +150,45 @@ src/components/
 - Borders: `border-zinc-700`, `border-zinc-800`
 - Text: `text-zinc-400` (secondary), `text-white` (primary)
 - Accents: `text-violet-300`, `text-amber-300`, etc.
+
+## Content Structure Guidelines
+
+**Topic types and their structure:**
+
+### Type A: Explanatory/Internals
+*Examples: Event Loop, Critical Rendering Path, B-Trees, Memory Management*
+
+Structure:
+- **What** - Define concept (1-2 sentences)
+- **Why it matters** - Real-world relevance
+- **Show** - Interactive visualization
+- **How** - Mechanics/implementation details
+
+### Type B: Patterns/Solutions
+*Examples: Caching Strategies, Database Indexing, API Patterns*
+
+Structure:
+- **What** - Define pattern/approach
+- **Why it matters** - Problem it solves
+- **Show** - Interactive visualization
+- **How** - Implementation details
+- **When** - Trade-offs, when to use X vs Y
+
+### Type C: Debugging/Analysis
+*Examples: React Re-renders, Memory Leaks, Performance Bottlenecks*
+
+Structure:
+- **What** - The problem/symptom
+- **Why it happens** - Root cause
+- **Show** - Visualization of the issue
+- **How to fix** - Solution steps
+- **When to apply** - Recognition patterns
+
+**Principles:**
+- Not all sections required - adapt to topic needs
+- "What" always comes before "Why"
+- Use `PageHeader` for What/Why context
+- Use `DemoSection` for each Show/How/When segment
 
 ## Code Quality Standards
 
