@@ -185,6 +185,17 @@ const CONCEPT_GROUPS = [
 				color: "from-indigo-500/20 to-blue-500/20",
 				borderColor: "border-indigo-500/30",
 			},
+			{
+				to: "/database-transactions" as const,
+				title: "Database Transactions & Isolation",
+				icon: "🔒",
+				description:
+					"ACID properties, concurrency anomalies, isolation levels, and how MVCC prevents data corruption without blocking readers.",
+				tags: ["ACID", "MVCC", "Isolation Levels", "Concurrency"],
+				color: "from-violet-500/20 to-indigo-500/20",
+				borderColor: "border-violet-500/30",
+			},
+			
 		],
 	},
 	{
