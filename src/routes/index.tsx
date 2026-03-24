@@ -201,6 +201,16 @@ const CONCEPT_GROUPS = [
 				color: "from-red-500/20 to-rose-500/20",
 				borderColor: "border-red-500/30",
 			},
+			{
+				to: "/xss-csrf" as const,
+				title: "XSS & CSRF Attacks",
+				icon: "🛡️",
+				description:
+					"How cross-site scripting and forged requests exploit browser trust — reflected XSS, stored XSS, CSRF, and how to stop them.",
+				tags: ["XSS", "CSRF", "CSP", "SameSite", "CORS"],
+				color: "from-rose-500/20 to-red-500/20",
+				borderColor: "border-rose-500/30",
+			},
 		],
 	},
 	{

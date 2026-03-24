@@ -124,6 +124,11 @@ const NAV_GROUPS = [
 				label: "Auth Flows",
 				icon: "🔐",
 			},
+			{
+				to: "/xss-csrf" as const,
+				label: "XSS & CSRF",
+				icon: "🛡️",
+			},
 		],
 	},
 ] as const;
