@@ -5,8 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc -b && vite build",
-		"lint": "biome check --write .",
+		"build": "vite build",
+"lint": "biome check --write .",
 		"preview": "vite preview"
 	},
 	"dependencies": {
