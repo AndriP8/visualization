@@ -12,7 +12,7 @@ export const Route = createFileRoute("/xss-csrf")({
 
 function XssCsrfPage() {
 	return (
-		<div className="space-y-8">
+		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
 				topic={{ label: "Web Security", color: "rose" }}
 				title="XSS & CSRF Attacks"

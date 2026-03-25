@@ -13,7 +13,7 @@ export const Route = createFileRoute("/api-patterns")({
 
 function ApiPatternsPage() {
 	return (
-		<div className="max-w-7xl mx-auto space-y-8">
+		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
 				topic={{ label: "System Design", color: "blue" }}
 				title="API Communication Patterns"

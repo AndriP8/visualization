@@ -13,15 +13,13 @@ export const Route = createFileRoute("/load-balancing")({
 
 function LoadBalancingPage() {
 	return (
-		<div className="min-h-screen bg-zinc-950 text-gray-100 pb-20">
+		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
 				topic={{ label: "System Design", color: "amber" }}
 				title="Load Balancing Strategies"
 				subtitle="How distributed systems route requests across multiple servers to maximize throughput and reliability."
 				gradient={{ from: "amber-400", via: "orange-400", to: "rose-400" }}
 			/>
-
-			<div className="max-w-7xl mx-auto px-6 space-y-16">
 				<DemoSection
 					title="Round-Robin Algorithm"
 					description="Distributes requests sequentially across servers in rotation. Simple and fair, but treats all servers equally regardless of current load."
@@ -56,7 +54,6 @@ function LoadBalancingPage() {
 				>
 					<ComparisonDemo />
 				</DemoSection>
-			</div>
 		</div>
 	);
 }

@@ -13,15 +13,13 @@ export const Route = createFileRoute("/web-performance-metrics")({
 
 function WebPerformanceMetricsPage() {
 	return (
-		<div className="min-h-screen bg-zinc-950 text-gray-100">
+		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
 				topic={{ label: "Browser", color: "blue" }}
 				title="Web Performance Metrics"
 				subtitle="Core Web Vitals measure real-world user experience. Understanding these metrics helps you identify bottlenecks, prioritize optimizations, and build faster web applications that keep users engaged."
 				gradient={{ from: "blue-400", via: "cyan-400", to: "violet-400" }}
 			/>
-
-			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
 				<DemoSection
 					title="LCP - Largest Contentful Paint"
 					description="Measures loading performance. LCP marks when the largest visible element renders. Good: ≤2.5s, Poor: >4s. Optimize with preload, priority hints, and SSR."
@@ -56,7 +54,6 @@ function WebPerformanceMetricsPage() {
 				>
 					<TTFBDemo />
 				</DemoSection>
-			</main>
 		</div>
 	);
 }

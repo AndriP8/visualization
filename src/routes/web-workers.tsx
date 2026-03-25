@@ -13,7 +13,7 @@ export const Route = createFileRoute("/web-workers")({
 
 function WebWorkersPage() {
 	return (
-		<div className="min-h-screen bg-zinc-950 text-gray-100">
+		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
 				topic={{ label: "JavaScript Internals", color: "emerald" }}
 				title="Web Workers"
@@ -48,8 +48,6 @@ function WebWorkersPage() {
 					),
 				}}
 			/>
-
-			<div className="max-w-7xl mx-auto px-6 py-12 space-y-16">
 				<DemoSection
 					title="Main Thread Blocking"
 					description="See the difference between running heavy computations on the main thread vs a worker thread. The FPS counter shows real-time UI responsiveness."
@@ -84,7 +82,6 @@ function WebWorkersPage() {
 				>
 					<SharedWorkerDemo />
 				</DemoSection>
-			</div>
 		</div>
 	);
 }

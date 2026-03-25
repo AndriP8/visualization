@@ -12,7 +12,7 @@ export const Route = createFileRoute("/auth-flows")({
 
 function AuthFlowsPage() {
 	return (
-		<div className="max-w-7xl mx-auto space-y-12">
+		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
 				topic={{ label: "Web Security", color: "orange" }}
 				title="Authentication Flows"
