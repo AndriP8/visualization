@@ -9,23 +9,57 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-
+import { Route as XssCsrfRouteImport } from './routes/xss-csrf'
+import { Route as WebWorkersRouteImport } from './routes/web-workers'
+import { Route as WebPerformanceMetricsRouteImport } from './routes/web-performance-metrics'
 import { Route as StateMachinesRouteImport } from './routes/state-machines'
+import { Route as SqlExecutionOrderRouteImport } from './routes/sql-execution-order'
+import { Route as ResourcePriorityRouteImport } from './routes/resource-priority'
 import { Route as RenderingStrategiesRouteImport } from './routes/rendering-strategies'
 import { Route as ReconciliationRouteImport } from './routes/reconciliation'
 import { Route as ReactStateRouteImport } from './routes/react-state'
+import { Route as LoadBalancingRouteImport } from './routes/load-balancing'
+import { Route as JsMemoryRouteImport } from './routes/js-memory'
+import { Route as HttpVersionsRouteImport } from './routes/http-versions'
 import { Route as EventLoopRouteImport } from './routes/event-loop'
+import { Route as DatabaseTransactionsRouteImport } from './routes/database-transactions'
 import { Route as DatabaseIndexingRouteImport } from './routes/database-indexing'
 import { Route as CriticalRenderingPathRouteImport } from './routes/critical-rendering-path'
 import { Route as ClosureScopeRouteImport } from './routes/closure-scope'
 import { Route as CachingStrategiesRouteImport } from './routes/caching-strategies'
+import { Route as AuthFlowsRouteImport } from './routes/auth-flows'
+import { Route as AsyncPatternsRouteImport } from './routes/async-patterns'
 import { Route as ApiPatternsRouteImport } from './routes/api-patterns'
 import { Route as IndexRouteImport } from './routes/index'
 
-
+const XssCsrfRoute = XssCsrfRouteImport.update({
+  id: '/xss-csrf',
+  path: '/xss-csrf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WebWorkersRoute = WebWorkersRouteImport.update({
+  id: '/web-workers',
+  path: '/web-workers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WebPerformanceMetricsRoute = WebPerformanceMetricsRouteImport.update({
+  id: '/web-performance-metrics',
+  path: '/web-performance-metrics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StateMachinesRoute = StateMachinesRouteImport.update({
   id: '/state-machines',
   path: '/state-machines',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SqlExecutionOrderRoute = SqlExecutionOrderRouteImport.update({
+  id: '/sql-execution-order',
+  path: '/sql-execution-order',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcePriorityRoute = ResourcePriorityRouteImport.update({
+  id: '/resource-priority',
+  path: '/resource-priority',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RenderingStrategiesRoute = RenderingStrategiesRouteImport.update({
@@ -43,10 +77,29 @@ const ReactStateRoute = ReactStateRouteImport.update({
   path: '/react-state',
   getParentRoute: () => rootRouteImport,
 } as any)
-
+const LoadBalancingRoute = LoadBalancingRouteImport.update({
+  id: '/load-balancing',
+  path: '/load-balancing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JsMemoryRoute = JsMemoryRouteImport.update({
+  id: '/js-memory',
+  path: '/js-memory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HttpVersionsRoute = HttpVersionsRouteImport.update({
+  id: '/http-versions',
+  path: '/http-versions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventLoopRoute = EventLoopRouteImport.update({
   id: '/event-loop',
   path: '/event-loop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatabaseTransactionsRoute = DatabaseTransactionsRouteImport.update({
+  id: '/database-transactions',
+  path: '/database-transactions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DatabaseIndexingRoute = DatabaseIndexingRouteImport.update({
@@ -69,7 +122,16 @@ const CachingStrategiesRoute = CachingStrategiesRouteImport.update({
   path: '/caching-strategies',
   getParentRoute: () => rootRouteImport,
 } as any)
-
+const AuthFlowsRoute = AuthFlowsRouteImport.update({
+  id: '/auth-flows',
+  path: '/auth-flows',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AsyncPatternsRoute = AsyncPatternsRouteImport.update({
+  id: '/async-patterns',
+  path: '/async-patterns',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPatternsRoute = ApiPatternsRouteImport.update({
   id: '/api-patterns',
   path: '/api-patterns',
@@ -84,111 +146,218 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api-patterns': typeof ApiPatternsRoute
+  '/async-patterns': typeof AsyncPatternsRoute
+  '/auth-flows': typeof AuthFlowsRoute
   '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
+  '/database-transactions': typeof DatabaseTransactionsRoute
   '/event-loop': typeof EventLoopRoute
+  '/http-versions': typeof HttpVersionsRoute
+  '/js-memory': typeof JsMemoryRoute
+  '/load-balancing': typeof LoadBalancingRoute
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
+  '/resource-priority': typeof ResourcePriorityRoute
+  '/sql-execution-order': typeof SqlExecutionOrderRoute
   '/state-machines': typeof StateMachinesRoute
-
+  '/web-performance-metrics': typeof WebPerformanceMetricsRoute
+  '/web-workers': typeof WebWorkersRoute
+  '/xss-csrf': typeof XssCsrfRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api-patterns': typeof ApiPatternsRoute
+  '/async-patterns': typeof AsyncPatternsRoute
+  '/auth-flows': typeof AuthFlowsRoute
   '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
+  '/database-transactions': typeof DatabaseTransactionsRoute
   '/event-loop': typeof EventLoopRoute
+  '/http-versions': typeof HttpVersionsRoute
+  '/js-memory': typeof JsMemoryRoute
+  '/load-balancing': typeof LoadBalancingRoute
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
+  '/resource-priority': typeof ResourcePriorityRoute
+  '/sql-execution-order': typeof SqlExecutionOrderRoute
   '/state-machines': typeof StateMachinesRoute
-
+  '/web-performance-metrics': typeof WebPerformanceMetricsRoute
+  '/web-workers': typeof WebWorkersRoute
+  '/xss-csrf': typeof XssCsrfRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api-patterns': typeof ApiPatternsRoute
+  '/async-patterns': typeof AsyncPatternsRoute
+  '/auth-flows': typeof AuthFlowsRoute
   '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
+  '/database-transactions': typeof DatabaseTransactionsRoute
   '/event-loop': typeof EventLoopRoute
+  '/http-versions': typeof HttpVersionsRoute
+  '/js-memory': typeof JsMemoryRoute
+  '/load-balancing': typeof LoadBalancingRoute
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
+  '/resource-priority': typeof ResourcePriorityRoute
+  '/sql-execution-order': typeof SqlExecutionOrderRoute
   '/state-machines': typeof StateMachinesRoute
-  
+  '/web-performance-metrics': typeof WebPerformanceMetricsRoute
+  '/web-workers': typeof WebWorkersRoute
+  '/xss-csrf': typeof XssCsrfRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/api-patterns'
+    | '/async-patterns'
+    | '/auth-flows'
     | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
+    | '/database-transactions'
     | '/event-loop'
+    | '/http-versions'
+    | '/js-memory'
+    | '/load-balancing'
     | '/react-state'
     | '/reconciliation'
     | '/rendering-strategies'
+    | '/resource-priority'
+    | '/sql-execution-order'
     | '/state-machines'
-  
+    | '/web-performance-metrics'
+    | '/web-workers'
+    | '/xss-csrf'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/api-patterns'
+    | '/async-patterns'
+    | '/auth-flows'
     | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
+    | '/database-transactions'
     | '/event-loop'
+    | '/http-versions'
+    | '/js-memory'
+    | '/load-balancing'
     | '/react-state'
     | '/reconciliation'
     | '/rendering-strategies'
+    | '/resource-priority'
+    | '/sql-execution-order'
     | '/state-machines'
-
+    | '/web-performance-metrics'
+    | '/web-workers'
+    | '/xss-csrf'
   id:
     | '__root__'
     | '/'
     | '/api-patterns'
+    | '/async-patterns'
+    | '/auth-flows'
     | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
+    | '/database-transactions'
     | '/event-loop'
+    | '/http-versions'
+    | '/js-memory'
+    | '/load-balancing'
     | '/react-state'
     | '/reconciliation'
+    | '/rendering-strategies'
+    | '/resource-priority'
+    | '/sql-execution-order'
+    | '/state-machines'
+    | '/web-performance-metrics'
+    | '/web-workers'
+    | '/xss-csrf'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiPatternsRoute: typeof ApiPatternsRoute
+  AsyncPatternsRoute: typeof AsyncPatternsRoute
+  AuthFlowsRoute: typeof AuthFlowsRoute
   CachingStrategiesRoute: typeof CachingStrategiesRoute
   ClosureScopeRoute: typeof ClosureScopeRoute
   CriticalRenderingPathRoute: typeof CriticalRenderingPathRoute
   DatabaseIndexingRoute: typeof DatabaseIndexingRoute
+  DatabaseTransactionsRoute: typeof DatabaseTransactionsRoute
   EventLoopRoute: typeof EventLoopRoute
+  HttpVersionsRoute: typeof HttpVersionsRoute
+  JsMemoryRoute: typeof JsMemoryRoute
+  LoadBalancingRoute: typeof LoadBalancingRoute
   ReactStateRoute: typeof ReactStateRoute
   ReconciliationRoute: typeof ReconciliationRoute
   RenderingStrategiesRoute: typeof RenderingStrategiesRoute
+  ResourcePriorityRoute: typeof ResourcePriorityRoute
+  SqlExecutionOrderRoute: typeof SqlExecutionOrderRoute
   StateMachinesRoute: typeof StateMachinesRoute
-
+  WebPerformanceMetricsRoute: typeof WebPerformanceMetricsRoute
+  WebWorkersRoute: typeof WebWorkersRoute
+  XssCsrfRoute: typeof XssCsrfRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-
+    '/xss-csrf': {
+      id: '/xss-csrf'
+      path: '/xss-csrf'
+      fullPath: '/xss-csrf'
+      preLoaderRoute: typeof XssCsrfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/web-workers': {
+      id: '/web-workers'
+      path: '/web-workers'
+      fullPath: '/web-workers'
+      preLoaderRoute: typeof WebWorkersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/web-performance-metrics': {
+      id: '/web-performance-metrics'
+      path: '/web-performance-metrics'
+      fullPath: '/web-performance-metrics'
+      preLoaderRoute: typeof WebPerformanceMetricsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/state-machines': {
       id: '/state-machines'
       path: '/state-machines'
       fullPath: '/state-machines'
       preLoaderRoute: typeof StateMachinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sql-execution-order': {
+      id: '/sql-execution-order'
+      path: '/sql-execution-order'
+      fullPath: '/sql-execution-order'
+      preLoaderRoute: typeof SqlExecutionOrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource-priority': {
+      id: '/resource-priority'
+      path: '/resource-priority'
+      fullPath: '/resource-priority'
+      preLoaderRoute: typeof ResourcePriorityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/rendering-strategies': {
@@ -212,12 +381,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReactStateRouteImport
       parentRoute: typeof rootRouteImport
     }
-
+    '/load-balancing': {
+      id: '/load-balancing'
+      path: '/load-balancing'
+      fullPath: '/load-balancing'
+      preLoaderRoute: typeof LoadBalancingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/js-memory': {
+      id: '/js-memory'
+      path: '/js-memory'
+      fullPath: '/js-memory'
+      preLoaderRoute: typeof JsMemoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/http-versions': {
+      id: '/http-versions'
+      path: '/http-versions'
+      fullPath: '/http-versions'
+      preLoaderRoute: typeof HttpVersionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/event-loop': {
       id: '/event-loop'
       path: '/event-loop'
       fullPath: '/event-loop'
       preLoaderRoute: typeof EventLoopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/database-transactions': {
+      id: '/database-transactions'
+      path: '/database-transactions'
+      fullPath: '/database-transactions'
+      preLoaderRoute: typeof DatabaseTransactionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/database-indexing': {
@@ -248,7 +444,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CachingStrategiesRouteImport
       parentRoute: typeof rootRouteImport
     }
-
+    '/auth-flows': {
+      id: '/auth-flows'
+      path: '/auth-flows'
+      fullPath: '/auth-flows'
+      preLoaderRoute: typeof AuthFlowsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/async-patterns': {
+      id: '/async-patterns'
+      path: '/async-patterns'
+      fullPath: '/async-patterns'
+      preLoaderRoute: typeof AsyncPatternsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api-patterns': {
       id: '/api-patterns'
       path: '/api-patterns'
@@ -269,16 +478,26 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiPatternsRoute: ApiPatternsRoute,
+  AsyncPatternsRoute: AsyncPatternsRoute,
+  AuthFlowsRoute: AuthFlowsRoute,
   CachingStrategiesRoute: CachingStrategiesRoute,
   ClosureScopeRoute: ClosureScopeRoute,
   CriticalRenderingPathRoute: CriticalRenderingPathRoute,
   DatabaseIndexingRoute: DatabaseIndexingRoute,
+  DatabaseTransactionsRoute: DatabaseTransactionsRoute,
   EventLoopRoute: EventLoopRoute,
+  HttpVersionsRoute: HttpVersionsRoute,
+  JsMemoryRoute: JsMemoryRoute,
+  LoadBalancingRoute: LoadBalancingRoute,
   ReactStateRoute: ReactStateRoute,
   ReconciliationRoute: ReconciliationRoute,
   RenderingStrategiesRoute: RenderingStrategiesRoute,
+  ResourcePriorityRoute: ResourcePriorityRoute,
+  SqlExecutionOrderRoute: SqlExecutionOrderRoute,
   StateMachinesRoute: StateMachinesRoute,
-
+  WebPerformanceMetricsRoute: WebPerformanceMetricsRoute,
+  WebWorkersRoute: WebWorkersRoute,
+  XssCsrfRoute: XssCsrfRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
