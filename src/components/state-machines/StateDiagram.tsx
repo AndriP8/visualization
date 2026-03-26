@@ -53,9 +53,9 @@ export function StateDiagram({
 	return (
 		<div className="w-full flex flex-col items-center gap-4">
 			{/* Accessibility: announce state changes to screen readers */}
-			<div role="status" aria-live="polite" className="sr-only">
+			<output aria-live="polite" className="sr-only">
 				Current state: {currentState}
-			</div>
+			</output>
 
 			<svg
 				viewBox="0 0 800 500"

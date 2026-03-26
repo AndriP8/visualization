@@ -145,6 +145,7 @@ export function HeadOfLineDemo() {
 	}, []);
 
 	// Recompute on mode/delay change
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <To reset animation when mode or delay changes>
 	useEffect(() => {
 		stopAnimation();
 	}, [mode, slowDelay, stopAnimation]);

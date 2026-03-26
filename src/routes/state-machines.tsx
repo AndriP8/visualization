@@ -293,8 +293,8 @@ function FetchComponent() {
 								<li className="flex items-start gap-2">
 									<span className="text-green-400 mt-1">•</span>
 									<div>
-										<strong>Self-documenting behavior:</strong> State chart serves
-										as visual documentation
+										<strong>Self-documenting behavior:</strong> State chart
+										serves as visual documentation
 									</div>
 								</li>
 								<li className="flex items-start gap-2">
@@ -307,8 +307,8 @@ function FetchComponent() {
 								<li className="flex items-start gap-2">
 									<span className="text-green-400 mt-1">•</span>
 									<div>
-										<strong>Testing critical paths:</strong> Explicit transitions
-										make edge cases testable
+										<strong>Testing critical paths:</strong> Explicit
+										transitions make edge cases testable
 									</div>
 								</li>
 							</ul>
@@ -333,15 +333,15 @@ function FetchComponent() {
 								<li className="flex items-start gap-2">
 									<span className="text-amber-400 mt-1">•</span>
 									<div>
-										<strong>No invalid states possible:</strong> If booleans can't
-										conflict, keep it simple
+										<strong>No invalid states possible:</strong> If booleans
+										can't conflict, keep it simple
 									</div>
 								</li>
 								<li className="flex items-start gap-2">
 									<span className="text-amber-400 mt-1">•</span>
 									<div>
-										<strong>Continuous values:</strong> Sliders, scroll positions
-										- not discrete states
+										<strong>Continuous values:</strong> Sliders, scroll
+										positions - not discrete states
 									</div>
 								</li>
 								<li className="flex items-start gap-2">
@@ -401,7 +401,9 @@ function FetchComponent() {
 									</tr>
 									<tr className="border-b border-zinc-800">
 										<td className="py-3 px-3">Multi-step checkout flow</td>
-										<td className="py-3 px-3 text-red-400">Impossible states</td>
+										<td className="py-3 px-3 text-red-400">
+											Impossible states
+										</td>
 										<td className="py-3 px-3 text-green-400">
 											✓ Self-documenting
 										</td>
@@ -414,8 +416,12 @@ function FetchComponent() {
 										<td className="py-3 px-3 font-medium">Boolean</td>
 									</tr>
 									<tr>
-										<td className="py-3 px-3">WebSocket connection lifecycle</td>
-										<td className="py-3 px-3 text-red-400">Reconnection bugs</td>
+										<td className="py-3 px-3">
+											WebSocket connection lifecycle
+										</td>
+										<td className="py-3 px-3 text-red-400">
+											Reconnection bugs
+										</td>
 										<td className="py-3 px-3 text-green-400">
 											✓ Handles retries
 										</td>

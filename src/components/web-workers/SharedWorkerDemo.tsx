@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ShikiCode } from "../shared/ShikiCode";
 
 interface Tab {
@@ -19,6 +19,14 @@ export function SharedWorkerDemo() {
 	const tabIdRef = useRef(`Tab-${Math.random().toString(36).substring(2, 11)}`);
 	const heartbeatRef = useRef<ReturnType<typeof setInterval> | null>(null);
 	const knownTabsRef = useRef<Map<string, number>>(new Map());
+
+	const updateTabsList = useCallback(() => {
+		const tabsList: Tab[] = [];
+		for (const [id] of knownTabsRef.current.entries()) {
+			tabsList.push({ id, name: id });
+		}
+		setTabs(tabsList);
+	}, []);
 
 	useEffect(() => {
 		const channel = new BroadcastChannel("shared-worker-demo");
@@ -77,15 +85,7 @@ export function SharedWorkerDemo() {
 			channel.close();
 			if (heartbeatRef.current) clearInterval(heartbeatRef.current);
 		};
-	}, []);
-
-	function updateTabsList() {
-		const tabsList: Tab[] = [];
-		for (const [id] of knownTabsRef.current.entries()) {
-			tabsList.push({ id, name: id });
-		}
-		setTabs(tabsList);
-	}
+	}, [updateTabsList]);
 
 	const handleIncrement = () => {
 		const newCount = localCount + 1;

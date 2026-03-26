@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
@@ -34,15 +34,33 @@ export function ConcurrentRenderingDemo() {
 	const [mode, setMode] = useState<Mode>("synchronous");
 
 	const deferredQuery = useDeferredValue(query);
+
+	// In deferred mode, compute from deferredQuery so the heavy work runs
+	// in the deferred render pass, not the urgent input render pass.
+	// In sync mode, compute immediately from query.
 	const activeQuery = mode === "deferred" ? deferredQuery : query;
 
-	const { items: filtered, elapsed: renderTime } = useMemo(() => {
+	// isStale is true while deferredQuery hasn't caught up to query yet.
+	// This correctly reflects React scheduling: the urgent re-render (input update)
+	// has committed but the deferred re-render hasn't started yet.
+	const isStale = mode === "deferred" && query !== deferredQuery;
+
+	// Track render time using a ref so we don't trigger extra renders
+	const renderTimeRef = useRef(0);
+	const [renderTime, setRenderTime] = useState(0);
+
+	const filtered = useMemo(() => {
 		const start = performance.now();
 		const items = heavyFilter(ALL_ITEMS, activeQuery);
-		return { items, elapsed: performance.now() - start };
+		renderTimeRef.current = performance.now() - start;
+		return items;
 	}, [activeQuery]);
 
-	const isStale = mode === "deferred" && query !== deferredQuery;
+	// Sync renderTimeRef → state after each committed render
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <For sync renderTimeRef → state after each committed render>
+	useEffect(() => {
+		setRenderTime(renderTimeRef.current);
+	}, [filtered]);
 
 	return (
 		<DemoSection
@@ -88,7 +106,7 @@ export function ConcurrentRenderingDemo() {
 							</motion.span>
 						)}
 						<span className="text-xs text-zinc-500">
-							Render: {renderTime.toFixed(0)}ms
+							Last render: {renderTime.toFixed(0)}ms
 						</span>
 					</div>
 				</div>

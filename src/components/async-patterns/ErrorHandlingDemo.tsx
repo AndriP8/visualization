@@ -10,12 +10,7 @@ interface AttemptState {
 	waitMs: number;
 }
 
-const CHAIN_STAGES = [
-	"fetch",
-	"parse",
-	"validate",
-	"transform",
-] as const;
+const CHAIN_STAGES = ["fetch", "parse", "validate", "transform"] as const;
 
 const STAGE_CODE: Record<ErrorStage, string> = {
 	none: `// Happy path — no errors injected
@@ -268,8 +263,10 @@ export function ErrorHandlingDemo() {
 
 				<div className="text-xs text-zinc-500">
 					Simulating:{" "}
-					<span className="text-amber-400 font-mono">transient network error</span>
-					{" "}— e.g. timeout, 503
+					<span className="text-amber-400 font-mono">
+						transient network error
+					</span>{" "}
+					— e.g. timeout, 503
 				</div>
 
 				<button

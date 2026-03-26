@@ -9,36 +9,36 @@ export function MVCCAndLockingVisualizerDemo() {
 
 	return (
 		<div className="flex flex-col gap-6">
-				{/* Tabs */}
-				<div className="flex flex-wrap gap-2 border-b border-zinc-800 pb-4">
-					<TabButton
-						active={activeTab === "traditional"}
-						onClick={() => setActiveTab("traditional")}
-					>
-						Traditional Locking
-					</TabButton>
-					<TabButton
-						active={activeTab === "mvcc"}
-						onClick={() => setActiveTab("mvcc")}
-					>
-						MVCC (Modern Snapshot)
-					</TabButton>
-					<TabButton
-						active={activeTab === "deadlock"}
-						onClick={() => setActiveTab("deadlock")}
-					>
-						Deadlocks
-					</TabButton>
-				</div>
+			{/* Tabs */}
+			<div className="flex flex-wrap gap-2 border-b border-zinc-800 pb-4">
+				<TabButton
+					active={activeTab === "traditional"}
+					onClick={() => setActiveTab("traditional")}
+				>
+					Traditional Locking
+				</TabButton>
+				<TabButton
+					active={activeTab === "mvcc"}
+					onClick={() => setActiveTab("mvcc")}
+				>
+					MVCC (Modern Snapshot)
+				</TabButton>
+				<TabButton
+					active={activeTab === "deadlock"}
+					onClick={() => setActiveTab("deadlock")}
+				>
+					Deadlocks
+				</TabButton>
+			</div>
 
-				{/* Content area */}
-				<div className="bg-zinc-900/40 border border-zinc-800 rounded-lg p-5 min-h-90 flex flex-col justify-center relative overflow-hidden">
-					<AnimatePresence mode="wait">
-						{activeTab === "traditional" && <TraditionalKey key="trad" />}
-						{activeTab === "mvcc" && <MVCCDemo key="mvcc" />}
-						{activeTab === "deadlock" && <DeadlockDemo key="deadlock" />}
-					</AnimatePresence>
-				</div>
+			{/* Content area */}
+			<div className="bg-zinc-900/40 border border-zinc-800 rounded-lg p-5 min-h-90 flex flex-col justify-center relative overflow-hidden">
+				<AnimatePresence mode="wait">
+					{activeTab === "traditional" && <TraditionalKey key="trad" />}
+					{activeTab === "mvcc" && <MVCCDemo key="mvcc" />}
+					{activeTab === "deadlock" && <DeadlockDemo key="deadlock" />}
+				</AnimatePresence>
+			</div>
 		</div>
 	);
 }

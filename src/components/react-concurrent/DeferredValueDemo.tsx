@@ -49,7 +49,7 @@ export function DeferredValueDemo() {
 
 	// Track input events
 	function handleInput(value: string) {
-		if (events.length === 0) {
+		if (timelineStartRef.current === 0) {
 			timelineStartRef.current = performance.now();
 		}
 		const id = ++eventIdRef.current;
@@ -86,7 +86,7 @@ export function DeferredValueDemo() {
 		}
 	}, [query]);
 
-	const maxTime = Math.max(...events.map((e) => e.timestamp), 1);
+	const maxTime = events.reduce((max, e) => Math.max(max, e.timestamp), 1);
 
 	return (
 		<DemoSection

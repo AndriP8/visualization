@@ -425,36 +425,36 @@ function DurabilityDemo() {
 export function ACIDPropertiesDemo() {
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-				<Card
-					title="Atomicity"
-					description='The "All or Nothing" rule. If a transaction fails halfway through, all partial changes are completely undone (rolled back) so the database is never left in an invalid middle state.'
-				>
-					<AtomicityDemo />
-				</Card>
+			<Card
+				title="Atomicity"
+				description='The "All or Nothing" rule. If a transaction fails halfway through, all partial changes are completely undone (rolled back) so the database is never left in an invalid middle state.'
+			>
+				<AtomicityDemo />
+			</Card>
 
-				<Card
-					title="Consistency"
-					description="Transactions must only transition the database from one valid state to another valid state, respecting all defined rules."
-					tooltip="Unlike Atomicity/Durability which are hard DB system properties, Consistency is generally considered an application-level responsibility enforced via CHECK constraints, Triggers, or Application logic."
-				>
-					<ConsistencyDemo />
-				</Card>
+			<Card
+				title="Consistency"
+				description="Transactions must only transition the database from one valid state to another valid state, respecting all defined rules."
+				tooltip="Unlike Atomicity/Durability which are hard DB system properties, Consistency is generally considered an application-level responsibility enforced via CHECK constraints, Triggers, or Application logic."
+			>
+				<ConsistencyDemo />
+			</Card>
 
-				<Card
-					title="Isolation"
-					description="Concurrent transactions executing at the same time must behave as if they were executing strictly sequentially one after another. No stepping on toes."
-					tooltip="Isolation is deeply linked to Concurrency Anomalies and Isolation Levels (explored below). True 'Serializable' isolation is rarely used perfectly due to performance costs."
-				>
-					<IsolationDemo />
-				</Card>
+			<Card
+				title="Isolation"
+				description="Concurrent transactions executing at the same time must behave as if they were executing strictly sequentially one after another. No stepping on toes."
+				tooltip="Isolation is deeply linked to Concurrency Anomalies and Isolation Levels (explored below). True 'Serializable' isolation is rarely used perfectly due to performance costs."
+			>
+				<IsolationDemo />
+			</Card>
 
-				<Card
-					title="Durability"
-					description="Once a transaction is committed, it stays committed. Even in the event of a power loss, crash, or fatal error, the data is safe on non-volatile storage."
-					tooltip="Typically achieved using a Write-Ahead Log (WAL). Changes are quickly appended to the WAL on disk before the slower process of modifying the actual database files."
-				>
-					<DurabilityDemo />
-				</Card>
+			<Card
+				title="Durability"
+				description="Once a transaction is committed, it stays committed. Even in the event of a power loss, crash, or fatal error, the data is safe on non-volatile storage."
+				tooltip="Typically achieved using a Write-Ahead Log (WAL). Changes are quickly appended to the WAL on disk before the slower process of modifying the actual database files."
+			>
+				<DurabilityDemo />
+			</Card>
 		</div>
 	);
 }

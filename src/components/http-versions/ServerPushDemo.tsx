@@ -202,6 +202,7 @@ export function ServerPushDemo() {
 		};
 	}, []);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <To reset animation when mode or latency changes>
 	useEffect(() => {
 		stopAnimation();
 	}, [mode, latency, stopAnimation]);

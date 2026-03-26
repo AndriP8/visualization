@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ACIDPropertiesDemo } from "../components/database-transactions/ACIDPropertiesDemo";
-import { DemoSection } from "../components/shared/DemoSection";
 import { AnomaliesSimulatorDemo } from "../components/database-transactions/AnomaliesSimulatorDemo";
 import { IsolationLevelsDemo } from "../components/database-transactions/IsolationLevelsDemo";
 import { MVCCAndLockingVisualizerDemo } from "../components/database-transactions/MVCCAndLockingVisualizerDemo";
+import { DemoSection } from "../components/shared/DemoSection";
 import { PageHeader } from "../components/shared/PageHeader";
 
 export const Route = createFileRoute("/database-transactions")({

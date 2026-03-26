@@ -48,40 +48,40 @@ function WebWorkersPage() {
 					),
 				}}
 			/>
-				<DemoSection
-					title="Main Thread Blocking"
-					description="See the difference between running heavy computations on the main thread vs a worker thread. The FPS counter shows real-time UI responsiveness."
-				>
-					<BlockingDemo />
-				</DemoSection>
+			<DemoSection
+				title="Main Thread Blocking"
+				description="See the difference between running heavy computations on the main thread vs a worker thread. The FPS counter shows real-time UI responsiveness."
+			>
+				<BlockingDemo />
+			</DemoSection>
 
-				<DemoSection
-					title="postMessage Communication"
-					description="How the main thread and worker threads communicate through message passing. Structured cloning determines what data can cross thread boundaries."
-				>
-					<PostMessageDemo />
-				</DemoSection>
+			<DemoSection
+				title="postMessage Communication"
+				description="How the main thread and worker threads communicate through message passing. Structured cloning determines what data can cross thread boundaries."
+			>
+				<PostMessageDemo />
+			</DemoSection>
 
-				<DemoSection
-					title="Transferable Objects (Zero-Copy)"
-					description="Transfer ownership of ArrayBuffers without copying - critical for performance when working with large datasets."
-				>
-					<TransferableDemo />
-				</DemoSection>
+			<DemoSection
+				title="Transferable Objects (Zero-Copy)"
+				description="Transfer ownership of ArrayBuffers without copying - critical for performance when working with large datasets."
+			>
+				<TransferableDemo />
+			</DemoSection>
 
-				<DemoSection
-					title="Real-World Use Cases"
-					description="Practical examples showing when to use Web Workers: image processing, data parsing, and cryptographic operations."
-				>
-					<UseCasesDemo />
-				</DemoSection>
+			<DemoSection
+				title="Real-World Use Cases"
+				description="Practical examples showing when to use Web Workers: image processing, data parsing, and cryptographic operations."
+			>
+				<UseCasesDemo />
+			</DemoSection>
 
-				<DemoSection
-					title="Shared Workers (Cross-Tab Communication)"
-					description="Unlike Dedicated Workers, Shared Workers can be accessed from multiple browser tabs/windows - useful for shared state and coordination."
-				>
-					<SharedWorkerDemo />
-				</DemoSection>
+			<DemoSection
+				title="Shared Workers (Cross-Tab Communication)"
+				description="Unlike Dedicated Workers, Shared Workers can be accessed from multiple browser tabs/windows - useful for shared state and coordination."
+			>
+				<SharedWorkerDemo />
+			</DemoSection>
 		</div>
 	);
 }

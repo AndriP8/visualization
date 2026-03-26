@@ -83,11 +83,15 @@ export function TransitionDemo() {
 			setPendingTab(tab);
 			startTransition(() => {
 				setActiveTab(tab);
-				setPendingTab(null);
 			});
 		} else {
 			setActiveTab(tab);
 		}
+	}
+
+	// Clear pendingTab once the transition completes
+	if (!isPending && pendingTab !== null) {
+		setPendingTab(null);
 	}
 
 	return (

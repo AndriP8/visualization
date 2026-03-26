@@ -54,7 +54,7 @@ const NAV_GROUPS = [
 			},
 			{
 				to: "/web-performance-metrics" as const,
-				label: "Web Performance Metrics",
+				label: "Web Perf Metrics",
 				icon: "⚡",
 			},
 			{

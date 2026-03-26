@@ -130,9 +130,7 @@ export function GenerationalGCDemo() {
 				`✅ ${collectedCount} collected, ${promotedCount} promoted to Old space.`,
 			);
 		} else {
-			addLog(
-				`✅ ${collectedCount} collected. Survivors bump survival count.`,
-			);
+			addLog(`✅ ${collectedCount} collected. Survivors bump survival count.`);
 		}
 
 		await sleep(700);

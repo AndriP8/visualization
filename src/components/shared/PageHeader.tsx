@@ -1,7 +1,14 @@
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
 
-type TopicColor = "orange" | "emerald" | "violet" | "amber" | "blue" | "rose";
+type TopicColor =
+	| "orange"
+	| "emerald"
+	| "violet"
+	| "amber"
+	| "blue"
+	| "rose"
+	| "purple";
 
 interface PageHeaderProps {
 	topic: {
@@ -59,6 +66,12 @@ const TOPIC_COLORS: Record<
 		text: "text-rose-400",
 		dot: "bg-rose-400",
 		border: "border-rose-500/20",
+	},
+	purple: {
+		bg: "bg-purple-500/10",
+		text: "text-purple-400",
+		dot: "bg-purple-400",
+		border: "border-purple-500/20",
 	},
 };
 
