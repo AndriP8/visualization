@@ -18,11 +18,13 @@ import { Route as ResourcePriorityRouteImport } from './routes/resource-priority
 import { Route as RenderingStrategiesRouteImport } from './routes/rendering-strategies'
 import { Route as ReconciliationRouteImport } from './routes/reconciliation'
 import { Route as ReactStateRouteImport } from './routes/react-state'
+import { Route as ReactConcurrentRouteImport } from './routes/react-concurrent'
 import { Route as LoadBalancingRouteImport } from './routes/load-balancing'
 import { Route as JsMemoryRouteImport } from './routes/js-memory'
 import { Route as HttpVersionsRouteImport } from './routes/http-versions'
 import { Route as EventLoopRouteImport } from './routes/event-loop'
 import { Route as DatabaseTransactionsRouteImport } from './routes/database-transactions'
+import { Route as DatabaseQueryFlowRouteImport } from './routes/database-query-flow'
 import { Route as DatabaseIndexingRouteImport } from './routes/database-indexing'
 import { Route as CriticalRenderingPathRouteImport } from './routes/critical-rendering-path'
 import { Route as ClosureScopeRouteImport } from './routes/closure-scope'
@@ -77,6 +79,11 @@ const ReactStateRoute = ReactStateRouteImport.update({
   path: '/react-state',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReactConcurrentRoute = ReactConcurrentRouteImport.update({
+  id: '/react-concurrent',
+  path: '/react-concurrent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoadBalancingRoute = LoadBalancingRouteImport.update({
   id: '/load-balancing',
   path: '/load-balancing',
@@ -100,6 +107,11 @@ const EventLoopRoute = EventLoopRouteImport.update({
 const DatabaseTransactionsRoute = DatabaseTransactionsRouteImport.update({
   id: '/database-transactions',
   path: '/database-transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatabaseQueryFlowRoute = DatabaseQueryFlowRouteImport.update({
+  id: '/database-query-flow',
+  path: '/database-query-flow',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DatabaseIndexingRoute = DatabaseIndexingRouteImport.update({
@@ -152,11 +164,13 @@ export interface FileRoutesByFullPath {
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
+  '/database-query-flow': typeof DatabaseQueryFlowRoute
   '/database-transactions': typeof DatabaseTransactionsRoute
   '/event-loop': typeof EventLoopRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
   '/load-balancing': typeof LoadBalancingRoute
+  '/react-concurrent': typeof ReactConcurrentRoute
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
@@ -176,11 +190,13 @@ export interface FileRoutesByTo {
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
+  '/database-query-flow': typeof DatabaseQueryFlowRoute
   '/database-transactions': typeof DatabaseTransactionsRoute
   '/event-loop': typeof EventLoopRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
   '/load-balancing': typeof LoadBalancingRoute
+  '/react-concurrent': typeof ReactConcurrentRoute
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
@@ -201,11 +217,13 @@ export interface FileRoutesById {
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
+  '/database-query-flow': typeof DatabaseQueryFlowRoute
   '/database-transactions': typeof DatabaseTransactionsRoute
   '/event-loop': typeof EventLoopRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
   '/load-balancing': typeof LoadBalancingRoute
+  '/react-concurrent': typeof ReactConcurrentRoute
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
@@ -227,11 +245,13 @@ export interface FileRouteTypes {
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
+    | '/database-query-flow'
     | '/database-transactions'
     | '/event-loop'
     | '/http-versions'
     | '/js-memory'
     | '/load-balancing'
+    | '/react-concurrent'
     | '/react-state'
     | '/reconciliation'
     | '/rendering-strategies'
@@ -251,11 +271,13 @@ export interface FileRouteTypes {
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
+    | '/database-query-flow'
     | '/database-transactions'
     | '/event-loop'
     | '/http-versions'
     | '/js-memory'
     | '/load-balancing'
+    | '/react-concurrent'
     | '/react-state'
     | '/reconciliation'
     | '/rendering-strategies'
@@ -275,11 +297,13 @@ export interface FileRouteTypes {
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
+    | '/database-query-flow'
     | '/database-transactions'
     | '/event-loop'
     | '/http-versions'
     | '/js-memory'
     | '/load-balancing'
+    | '/react-concurrent'
     | '/react-state'
     | '/reconciliation'
     | '/rendering-strategies'
@@ -300,11 +324,13 @@ export interface RootRouteChildren {
   ClosureScopeRoute: typeof ClosureScopeRoute
   CriticalRenderingPathRoute: typeof CriticalRenderingPathRoute
   DatabaseIndexingRoute: typeof DatabaseIndexingRoute
+  DatabaseQueryFlowRoute: typeof DatabaseQueryFlowRoute
   DatabaseTransactionsRoute: typeof DatabaseTransactionsRoute
   EventLoopRoute: typeof EventLoopRoute
   HttpVersionsRoute: typeof HttpVersionsRoute
   JsMemoryRoute: typeof JsMemoryRoute
   LoadBalancingRoute: typeof LoadBalancingRoute
+  ReactConcurrentRoute: typeof ReactConcurrentRoute
   ReactStateRoute: typeof ReactStateRoute
   ReconciliationRoute: typeof ReconciliationRoute
   RenderingStrategiesRoute: typeof RenderingStrategiesRoute
@@ -381,6 +407,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReactStateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/react-concurrent': {
+      id: '/react-concurrent'
+      path: '/react-concurrent'
+      fullPath: '/react-concurrent'
+      preLoaderRoute: typeof ReactConcurrentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/load-balancing': {
       id: '/load-balancing'
       path: '/load-balancing'
@@ -414,6 +447,13 @@ declare module '@tanstack/react-router' {
       path: '/database-transactions'
       fullPath: '/database-transactions'
       preLoaderRoute: typeof DatabaseTransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/database-query-flow': {
+      id: '/database-query-flow'
+      path: '/database-query-flow'
+      fullPath: '/database-query-flow'
+      preLoaderRoute: typeof DatabaseQueryFlowRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/database-indexing': {
@@ -484,11 +524,13 @@ const rootRouteChildren: RootRouteChildren = {
   ClosureScopeRoute: ClosureScopeRoute,
   CriticalRenderingPathRoute: CriticalRenderingPathRoute,
   DatabaseIndexingRoute: DatabaseIndexingRoute,
+  DatabaseQueryFlowRoute: DatabaseQueryFlowRoute,
   DatabaseTransactionsRoute: DatabaseTransactionsRoute,
   EventLoopRoute: EventLoopRoute,
   HttpVersionsRoute: HttpVersionsRoute,
   JsMemoryRoute: JsMemoryRoute,
   LoadBalancingRoute: LoadBalancingRoute,
+  ReactConcurrentRoute: ReactConcurrentRoute,
   ReactStateRoute: ReactStateRoute,
   ReconciliationRoute: ReconciliationRoute,
   RenderingStrategiesRoute: RenderingStrategiesRoute,

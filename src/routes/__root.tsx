@@ -11,6 +11,11 @@ const NAV_GROUPS = [
 		items: [
 			{ to: "/reconciliation" as const, label: "Reconciliation", icon: "🌳" },
 			{ to: "/react-state" as const, label: "State & Re-renders", icon: "⚡" },
+			{
+				to: "/react-concurrent" as const,
+				label: "Concurrent Features",
+				icon: "⚛️",
+			},
 			{ to: "/state-machines" as const, label: "State Machines", icon: "🤖" },
 		],
 	},
@@ -35,7 +40,7 @@ const NAV_GROUPS = [
 			{
 				to: "/web-workers" as const,
 				label: "Web Workers",
-				icon: "⚡",
+				icon: "⚙️",
 			},
 			{
 				to: "/async-patterns" as const,
@@ -55,7 +60,7 @@ const NAV_GROUPS = [
 			{
 				to: "/web-performance-metrics" as const,
 				label: "Web Perf Metrics",
-				icon: "⚡",
+				icon: "📊",
 			},
 			{
 				to: "/resource-priority" as const,
@@ -90,9 +95,13 @@ const NAV_GROUPS = [
 			{
 				to: "/sql-execution-order" as const,
 				label: "SQL Execution Order",
-				icon: "📊",
+				icon: "📋",
 			},
-			
+			{
+				to: "/database-query-flow" as const,
+				label: "Query Engine Flow",
+				icon: "⚙️",
+			},
 		],
 	},
 	{

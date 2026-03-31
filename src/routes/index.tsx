@@ -31,6 +31,16 @@ const CONCEPT_GROUPS = [
 				borderColor: "border-orange-500/30",
 			},
 			{
+				to: "/react-concurrent" as const,
+				title: "Concurrent Features",
+				icon: "⚛️",
+				description:
+					"How React 18 transitions, deferred values, and Suspense keep UIs responsive by interleaving work and prioritizing urgent updates.",
+				tags: ["useTransition", "useDeferredValue", "Suspense", "Scheduler"],
+				color: "from-violet-500/20 to-fuchsia-500/20",
+				borderColor: "border-violet-500/30",
+			},
+			{
 				to: "/state-machines" as const,
 				title: "State Machines",
 				icon: "🤖",
@@ -100,22 +110,6 @@ const CONCEPT_GROUPS = [
 				],
 				color: "from-cyan-500/20 to-blue-500/20",
 				borderColor: "border-cyan-500/30",
-			},
-		],
-	},
-	{
-		title: "Network",
-		description: "How browsers and servers communicate over the wire",
-		items: [
-			{
-				to: "/http-versions" as const,
-				title: "HTTP/1.1 vs HTTP/2",
-				icon: "🌐",
-				description:
-					"How HTTP/2 multiplexing, header compression, and binary framing solve the fundamental performance bottlenecks of HTTP/1.1.",
-				tags: ["Multiplexing", "HPACK", "HOL Blocking", "Server Push"],
-				color: "from-blue-500/20 to-cyan-500/20",
-				borderColor: "border-blue-500/30",
 			},
 		],
 	},
@@ -205,32 +199,15 @@ const CONCEPT_GROUPS = [
 				color: "from-violet-500/20 to-indigo-500/20",
 				borderColor: "border-violet-500/30",
 			},
-			
-		],
-	},
-	{
-		title: "Web Security",
-		description: "Authentication, authorization, and security patterns",
-		items: [
 			{
-				to: "/auth-flows" as const,
-				title: "Authentication Flows",
-				icon: "🔐",
+				to: "/database-query-flow" as const,
+				title: "Query Engine Flow",
+				icon: "⚙️",
 				description:
-					"Session-based, JWT, and OAuth 2.0 + PKCE — how modern web apps verify identity and delegate authorization.",
-				tags: ["Sessions", "JWT", "OAuth 2.0", "PKCE"],
-				color: "from-red-500/20 to-rose-500/20",
-				borderColor: "border-red-500/30",
-			},
-			{
-				to: "/xss-csrf" as const,
-				title: "XSS & CSRF Attacks",
-				icon: "🛡️",
-				description:
-					"How cross-site scripting and forged requests exploit browser trust — reflected XSS, stored XSS, CSRF, and how to stop them.",
-				tags: ["XSS", "CSRF", "CSP", "SameSite", "CORS"],
-				color: "from-rose-500/20 to-red-500/20",
-				borderColor: "border-rose-500/30",
+					"How a SQL query travels from raw text through parsing, planning, optimization, and execution to return a result set.",
+				tags: ["Parser", "Planner", "Optimizer", "Executor"],
+				color: "from-teal-500/20 to-cyan-500/20",
+				borderColor: "border-teal-500/30",
 			},
 		],
 	},
@@ -272,6 +249,48 @@ const CONCEPT_GROUPS = [
 				],
 				color: "from-amber-500/20 to-orange-500/20",
 				borderColor: "border-amber-500/30",
+			},
+		],
+	},
+	{
+		title: "Network",
+		description: "How browsers and servers communicate over the wire",
+		items: [
+			{
+				to: "/http-versions" as const,
+				title: "HTTP/1.1 vs HTTP/2",
+				icon: "🌐",
+				description:
+					"How HTTP/2 multiplexing, header compression, and binary framing solve the fundamental performance bottlenecks of HTTP/1.1.",
+				tags: ["Multiplexing", "HPACK", "HOL Blocking", "Server Push"],
+				color: "from-blue-500/20 to-cyan-500/20",
+				borderColor: "border-blue-500/30",
+			},
+		],
+	},
+	{
+		title: "Web Security",
+		description: "Authentication, authorization, and security patterns",
+		items: [
+			{
+				to: "/auth-flows" as const,
+				title: "Authentication Flows",
+				icon: "🔐",
+				description:
+					"Session-based, JWT, and OAuth 2.0 + PKCE — how modern web apps verify identity and delegate authorization.",
+				tags: ["Sessions", "JWT", "OAuth 2.0", "PKCE"],
+				color: "from-red-500/20 to-rose-500/20",
+				borderColor: "border-red-500/30",
+			},
+			{
+				to: "/xss-csrf" as const,
+				title: "XSS & CSRF Attacks",
+				icon: "🛡️",
+				description:
+					"How cross-site scripting and forged requests exploit browser trust — reflected XSS, stored XSS, CSRF, and how to stop them.",
+				tags: ["XSS", "CSRF", "CSP", "SameSite", "CORS"],
+				color: "from-rose-500/20 to-red-500/20",
+				borderColor: "border-rose-500/30",
 			},
 		],
 	},
