@@ -68,9 +68,9 @@ const SCENARIOS: ScenarioConfig[] = [
 ];
 
 const getThresholdColor = (value: number): string => {
-	if (value <= 800) return "text-green-400";
-	if (value <= 1800) return "text-yellow-400";
-	return "text-rose-400";
+	if (value <= 800) return "text-accent-green-soft";
+	if (value <= 1800) return "text-accent-yellow-soft";
+	return "text-accent-rose-soft";
 };
 
 export default function TTFBDemo() {
@@ -162,8 +162,8 @@ export default function TTFBDemo() {
 							}}
 							className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
 								isSelected
-									? "bg-violet-500/20 text-violet-300 border-violet-500/30"
-									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
+									? "bg-violet-500/20 text-accent-violet border-violet-500/30"
+									: "bg-surface-secondary text-text-tertiary border-border-secondary hover:text-text-secondary"
 							}`}
 						>
 							{scenario.label}
@@ -174,7 +174,9 @@ export default function TTFBDemo() {
 
 			{/* Description */}
 			{currentScenario && (
-				<p className="text-sm text-zinc-400">{currentScenario.description}</p>
+				<p className="text-sm text-text-tertiary">
+					{currentScenario.description}
+				</p>
 			)}
 
 			{/* Control button */}
@@ -182,16 +184,16 @@ export default function TTFBDemo() {
 				type="button"
 				onClick={running ? reset : runScenario}
 				disabled={running}
-				className="px-6 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
+				className="px-6 py-2 rounded-lg bg-violet-500 text-text-primary font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
 			>
 				{running ? "Running..." : "Run Scenario"}
 			</button>
 
 			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-6">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6 space-y-6">
 				{/* Layer stack */}
 				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						Request Journey
 					</h4>
 					<div
@@ -199,9 +201,11 @@ export default function TTFBDemo() {
 						style={{ maxWidth: "400px", margin: "0 auto" }}
 					>
 						{/* Browser (starting point) */}
-						<div className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-center">
-							<div className="text-sm font-semibold text-white">Browser</div>
-							<div className="text-xs text-zinc-500 mt-1">
+						<div className="w-full px-4 py-3 bg-surface-secondary border border-border-secondary rounded-lg text-center">
+							<div className="text-sm font-semibold text-text-primary">
+								Browser
+							</div>
+							<div className="text-xs text-text-muted mt-1">
 								Request initiated
 							</div>
 						</div>
@@ -214,7 +218,7 @@ export default function TTFBDemo() {
 							return (
 								<div key={`${layer.name}-${idx}`} className="w-full relative">
 									{/* Connection line */}
-									<div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-3 -mt-3 bg-zinc-700" />
+									<div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-3 -mt-3 bg-surface-tertiary" />
 
 									{/* Traveling ball */}
 									<AnimatePresence>
@@ -247,10 +251,10 @@ export default function TTFBDemo() {
 									>
 										<div className="flex items-center justify-between">
 											<div>
-												<div className="text-sm font-semibold text-white">
+												<div className="text-sm font-semibold text-text-primary">
 													{layer.name}
 												</div>
-												<div className="text-xs text-zinc-500 mt-1">
+												<div className="text-xs text-text-muted mt-1">
 													{layer.duration}ms
 												</div>
 											</div>
@@ -258,7 +262,7 @@ export default function TTFBDemo() {
 												<motion.div
 													initial={{ scale: 0 }}
 													animate={{ scale: 1 }}
-													className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white text-xs"
+													className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-text-primary text-xs"
 												>
 													✓
 												</motion.div>
@@ -282,7 +286,7 @@ export default function TTFBDemo() {
 
 						{/* Final connection line */}
 						{currentScenario && currentLayer >= 0 && (
-							<div className="w-1 h-3 bg-zinc-700" />
+							<div className="w-1 h-3 bg-surface-tertiary" />
 						)}
 
 						{/* First byte indicator */}
@@ -293,10 +297,10 @@ export default function TTFBDemo() {
 									animate={{ scale: 1, opacity: 1 }}
 									className="w-full px-4 py-3 bg-green-500/20 border border-green-500/30 rounded-lg text-center"
 								>
-									<div className="text-sm font-semibold text-green-400">
+									<div className="text-sm font-semibold text-accent-green-soft">
 										First Byte Received! 🎉
 									</div>
-									<div className="text-xs text-green-300 mt-1">
+									<div className="text-xs text-accent-green mt-1">
 										{ttfbTime}ms
 									</div>
 								</motion.div>
@@ -308,10 +312,10 @@ export default function TTFBDemo() {
 				{/* Accumulated time */}
 				{accumulatedTime > 0 && phase !== "first-byte" && phase !== "done" && (
 					<div className="text-center">
-						<div className="text-2xl font-bold text-violet-400">
+						<div className="text-2xl font-bold text-accent-violet-soft">
 							{accumulatedTime}ms
 						</div>
-						<div className="text-xs text-zinc-500 mt-1">
+						<div className="text-xs text-text-muted mt-1">
 							Accumulated latency
 						</div>
 					</div>
@@ -322,13 +326,13 @@ export default function TTFBDemo() {
 					<motion.div
 						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
-						className="flex items-center justify-between p-4 bg-zinc-800 rounded-lg"
+						className="flex items-center justify-between p-4 bg-surface-secondary rounded-lg"
 					>
 						<div>
-							<div className="text-sm font-semibold text-zinc-300">
+							<div className="text-sm font-semibold text-text-secondary">
 								Time to First Byte
 							</div>
-							<div className="text-xs text-zinc-500 mt-1">
+							<div className="text-xs text-text-muted mt-1">
 								Total time from request to first response byte
 							</div>
 						</div>
@@ -338,7 +342,7 @@ export default function TTFBDemo() {
 							>
 								{ttfbTime}ms
 							</div>
-							<div className="text-xs text-zinc-500 mt-1">
+							<div className="text-xs text-text-muted mt-1">
 								{ttfbTime <= 800
 									? "Good"
 									: ttfbTime <= 1800
@@ -353,15 +357,17 @@ export default function TTFBDemo() {
 				<div className="flex gap-4 text-xs">
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-green-500" />
-						<span className="text-zinc-400">Good: ≤800ms</span>
+						<span className="text-text-tertiary">Good: ≤800ms</span>
 					</div>
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-yellow-500" />
-						<span className="text-zinc-400">Needs Improvement: 800-1800ms</span>
+						<span className="text-text-tertiary">
+							Needs Improvement: 800-1800ms
+						</span>
 					</div>
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-rose-500" />
-						<span className="text-zinc-400">Poor: &gt;1800ms</span>
+						<span className="text-text-tertiary">Poor: &gt;1800ms</span>
 					</div>
 				</div>
 			</div>
@@ -369,7 +375,9 @@ export default function TTFBDemo() {
 			{/* Code examples */}
 			<div className="grid md:grid-cols-2 gap-4">
 				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">Before (Slow)</h4>
+					<h4 className="text-sm font-semibold text-text-tertiary">
+						Before (Slow)
+					</h4>
 					<ShikiCode
 						language="javascript"
 						code={`// Serverless cold start
@@ -389,7 +397,7 @@ export default async (req, res) => {
 					/>
 				</div>
 				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						After (Optimized)
 					</h4>
 					<ShikiCode

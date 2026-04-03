@@ -21,7 +21,7 @@ const TABS: Record<Tab, TabConfig> = {
 		count: 50,
 		burnPerItem: 10,
 		activeBg: "bg-emerald-500/20",
-		activeText: "text-emerald-400",
+		activeText: "text-accent-emerald-soft",
 		activeBorder: "border-emerald-500/30",
 	},
 	photos: {
@@ -29,7 +29,7 @@ const TABS: Record<Tab, TabConfig> = {
 		count: 500,
 		burnPerItem: 50,
 		activeBg: "bg-blue-500/20",
-		activeText: "text-blue-400",
+		activeText: "text-accent-blue-soft",
 		activeBorder: "border-blue-500/30",
 	},
 	charts: {
@@ -37,7 +37,7 @@ const TABS: Record<Tab, TabConfig> = {
 		count: 2000,
 		burnPerItem: 100,
 		activeBg: "bg-amber-500/20",
-		activeText: "text-amber-400",
+		activeText: "text-accent-amber-soft",
 		activeBorder: "border-amber-500/30",
 	},
 };
@@ -59,11 +59,11 @@ function HeavyContent({ tab }: { tab: Tab }) {
 	}, [config.count, config.burnPerItem, config.label]);
 
 	return (
-		<div className="h-52 overflow-y-auto rounded-lg bg-zinc-800/50 border border-zinc-700/50">
+		<div className="h-52 overflow-y-auto rounded-lg bg-surface-secondary/50 border border-border-secondary/50">
 			{items.map((item) => (
 				<div
 					key={item}
-					className="px-3 py-1.5 text-sm text-zinc-300 border-b border-zinc-800/50 last:border-b-0"
+					className="px-3 py-1.5 text-sm text-text-secondary border-b border-border-primary/50 last:border-b-0"
 				>
 					{item}
 				</div>
@@ -102,14 +102,14 @@ export function TransitionDemo() {
 			<div className="space-y-6">
 				{/* Mode Toggle */}
 				<div className="flex items-center justify-between">
-					<div className="flex bg-zinc-800 rounded-lg p-1">
+					<div className="flex bg-surface-secondary rounded-lg p-1">
 						<button
 							type="button"
 							onClick={() => setMode("without")}
 							className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 								mode === "without"
-									? "bg-red-500/20 text-red-400"
-									: "text-zinc-400 hover:text-white"
+									? "bg-red-500/20 text-accent-red-soft"
+									: "text-text-tertiary hover:text-text-primary"
 							}`}
 						>
 							Without useTransition
@@ -119,8 +119,8 @@ export function TransitionDemo() {
 							onClick={() => setMode("with")}
 							className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 								mode === "with"
-									? "bg-emerald-500/20 text-emerald-400"
-									: "text-zinc-400 hover:text-white"
+									? "bg-emerald-500/20 text-accent-emerald-soft"
+									: "text-text-tertiary hover:text-text-primary"
 							}`}
 						>
 							With useTransition
@@ -131,7 +131,7 @@ export function TransitionDemo() {
 						<motion.span
 							initial={{ opacity: 0, scale: 0.8 }}
 							animate={{ opacity: 1, scale: 1 }}
-							className="px-2 py-1 rounded text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30"
+							className="px-2 py-1 rounded text-xs bg-amber-500/20 text-accent-amber-soft border border-amber-500/30"
 						>
 							isPending: true
 						</motion.span>
@@ -139,8 +139,8 @@ export function TransitionDemo() {
 				</div>
 
 				{/* Timeline Visualization */}
-				<div className="bg-zinc-800/50 rounded-lg p-4 space-y-3">
-					<h4 className="text-sm font-medium text-zinc-300">
+				<div className="bg-surface-secondary/50 rounded-lg p-4 space-y-3">
+					<h4 className="text-sm font-medium text-text-secondary">
 						What happens when you click "Charts"
 					</h4>
 					<AnimatePresence mode="wait">
@@ -152,21 +152,21 @@ export function TransitionDemo() {
 								exit={{ opacity: 0 }}
 								className="space-y-2"
 							>
-								<div className="flex items-center gap-2 text-xs text-zinc-400">
+								<div className="flex items-center gap-2 text-xs text-text-tertiary">
 									<span className="w-20 shrink-0">Without</span>
 									<div className="flex-1 flex h-8 rounded overflow-hidden">
-										<div className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300 w-[10%]">
+										<div className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-accent-violet w-[10%]">
 											Click
 										</div>
 										<motion.div
-											className="bg-red-500/30 border border-red-500/50 flex items-center justify-center text-[10px] text-red-300 w-[75%]"
+											className="bg-red-500/30 border border-red-500/50 flex items-center justify-center text-[10px] text-accent-red w-[75%]"
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
 											transition={{ duration: 0.5 }}
 										>
 											Render 2000 items (frozen)
 										</motion.div>
-										<div className="bg-zinc-600/50 flex items-center justify-center text-[10px] text-zinc-400 w-[15%]">
+										<div className="bg-surface-tertiary/50 flex items-center justify-center text-[10px] text-text-tertiary w-[15%]">
 											Done
 										</div>
 									</div>
@@ -180,14 +180,14 @@ export function TransitionDemo() {
 								exit={{ opacity: 0 }}
 								className="space-y-2"
 							>
-								<div className="flex items-center gap-2 text-xs text-zinc-400">
+								<div className="flex items-center gap-2 text-xs text-text-tertiary">
 									<span className="w-20 shrink-0">With</span>
 									<div className="flex-1 flex h-8 rounded overflow-hidden gap-0.5">
-										<div className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300 w-[10%]">
+										<div className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-accent-violet w-[10%]">
 											Click
 										</div>
 										<motion.div
-											className="bg-amber-500/30 border border-amber-500/50 flex items-center justify-center text-[10px] text-amber-300 w-[25%]"
+											className="bg-amber-500/30 border border-amber-500/50 flex items-center justify-center text-[10px] text-accent-amber w-[25%]"
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
 											transition={{ duration: 0.3, delay: 0.1 }}
@@ -195,7 +195,7 @@ export function TransitionDemo() {
 											isPending
 										</motion.div>
 										<motion.div
-											className="bg-emerald-500/30 border border-emerald-500/50 flex items-center justify-center text-[10px] text-emerald-300 w-[50%]"
+											className="bg-emerald-500/30 border border-emerald-500/50 flex items-center justify-center text-[10px] text-accent-emerald w-[50%]"
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
 											transition={{ duration: 0.4, delay: 0.3 }}
@@ -203,7 +203,7 @@ export function TransitionDemo() {
 											Low-priority render (can yield to input)
 										</motion.div>
 										<motion.div
-											className="bg-zinc-600/50 flex items-center justify-center text-[10px] text-zinc-400 w-[15%]"
+											className="bg-surface-tertiary/50 flex items-center justify-center text-[10px] text-text-tertiary w-[15%]"
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
 											transition={{ duration: 0.2, delay: 0.6 }}
@@ -227,14 +227,14 @@ export function TransitionDemo() {
 							className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
 								activeTab === key
 									? `${config.activeBg} ${config.activeText} border ${config.activeBorder}`
-									: "bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-700"
+									: "bg-surface-secondary text-text-tertiary hover:text-text-primary border border-border-secondary"
 							}`}
 						>
 							{isPending && mode === "with" && pendingTab === key && (
 								<span className="absolute -top-1 -right-1 w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
 							)}
 							{config.label}
-							<span className="ml-2 text-xs text-zinc-500">
+							<span className="ml-2 text-xs text-text-muted">
 								({config.count})
 							</span>
 						</button>
@@ -252,7 +252,7 @@ export function TransitionDemo() {
 
 				{/* Distinction callout */}
 				<div className="bg-violet-500/5 border border-violet-500/20 rounded-lg p-4">
-					<p className="text-sm text-violet-300">
+					<p className="text-sm text-accent-violet">
 						<span className="font-semibold">useTransition</span> wraps the{" "}
 						<em>state update</em>.{" "}
 						<span className="font-semibold">useDeferredValue</span> wraps the{" "}

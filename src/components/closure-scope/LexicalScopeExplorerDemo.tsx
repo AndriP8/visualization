@@ -201,7 +201,7 @@ export function LexicalScopeExplorerDemo() {
 												background: isTarget
 													? `${scope.color}22`
 													: "transparent",
-												color: isTarget ? scope.color : "#a1a1aa",
+												color: isTarget ? scope.color : "var(--svg-text)",
 											}}
 										>
 											{v}
@@ -216,7 +216,7 @@ export function LexicalScopeExplorerDemo() {
 
 			{/* Lookup trigger buttons */}
 			<div className="space-y-3">
-				<p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
+				<p className="text-xs text-text-muted uppercase tracking-wider font-semibold">
 					Inside inner() — click a variable reference to look it up:
 				</p>
 				<div className="flex flex-wrap gap-2">
@@ -235,19 +235,19 @@ export function LexicalScopeExplorerDemo() {
 											background: "rgba(34,211,238,0.1)",
 										}
 									: {
-											color: "#a1a1aa",
-											borderColor: "#3f3f46",
+											color: "var(--svg-text)",
+											borderColor: "var(--svg-border)",
 											background: "transparent",
 										}
 							}
 						>
 							{name}
 							{scopeId === "NOT_FOUND" && (
-								<span className="ml-1 text-red-400">?</span>
+								<span className="ml-1 text-accent-red-soft">?</span>
 							)}
 							{isShadowed && (
 								<span
-									className="ml-1 text-violet-400"
+									className="ml-1 text-accent-violet-soft"
 									title="Shadows outer scope"
 								>
 									🔒
@@ -312,13 +312,15 @@ export function LexicalScopeExplorerDemo() {
 								</p>
 								{phase.isShadowed && (
 									<p className="mt-2 text-xs bg-violet-500/10 border border-violet-500/30 rounded p-2">
-										<strong className="text-violet-300">🔒 Shadowing: </strong>
+										<strong className="text-accent-violet">
+											🔒 Shadowing:{" "}
+										</strong>
 										There's also an <code className="font-mono">x</code> in the
 										outer scope, but it's invisible from inside{" "}
 										<code className="font-mono">inner()</code> because the
 										lookup stopped at the first match. The outer{" "}
 										<code className="font-mono">x</code> is{" "}
-										<em className="text-violet-300">shadowed</em>.
+										<em className="text-accent-violet">shadowed</em>.
 									</p>
 								)}
 							</>
@@ -343,23 +345,23 @@ export function LexicalScopeExplorerDemo() {
 				<button
 					type="button"
 					onClick={reset}
-					className="mt-3 px-4 py-2 rounded-lg text-sm bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+					className="mt-3 px-4 py-2 rounded-lg text-sm bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 				>
 					↺ Reset
 				</button>
 			)}
 
 			{/* Key insight */}
-			<div className="mt-6 p-4 rounded-lg bg-zinc-800/40 border border-zinc-700/40 text-xs text-zinc-500 space-y-1">
+			<div className="mt-6 p-4 rounded-lg bg-surface-secondary/40 border border-border-secondary/40 text-xs text-text-muted space-y-1">
 				<p>
-					<strong className="text-zinc-300">Lexical scoping</strong> means the
-					scope is determined by where a function is{" "}
+					<strong className="text-text-secondary">Lexical scoping</strong> means
+					the scope is determined by where a function is{" "}
 					<em>written in source code</em>, not where it is called. The nested
 					boxes above represent the scope chain as it exists at{" "}
-					<strong className="text-violet-400">parse time</strong>.
+					<strong className="text-accent-violet-soft">parse time</strong>.
 				</p>
 				<p>
-					<strong className="text-zinc-300">Shadowing:</strong> when{" "}
+					<strong className="text-text-secondary">Shadowing:</strong> when{" "}
 					<code className="font-mono">inner()</code> declares its own{" "}
 					<code className="font-mono">x</code>, the lookup stops there — the
 					outer <code className="font-mono">x</code> becomes <em>shadowed</em>{" "}

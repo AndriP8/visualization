@@ -9,7 +9,7 @@ interface TreeEdgeProps {
 }
 
 const STATUS_STROKE: Record<string, string> = {
-	unchanged: "#3f3f46",
+	unchanged: "var(--svg-border)",
 	updated: "#ca8a04",
 	added: "#16a34a",
 	removed: "#dc2626",

@@ -114,8 +114,8 @@ export function StoredXSSDemo() {
 					onClick={() => setSafeMode(false)}
 					className={`px-4 py-2 rounded text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
 						!safeMode
-							? "bg-red-500/20 text-red-400 border border-red-500"
-							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-zinc-600"
+							? "bg-red-500/20 text-accent-red-soft border border-red-500"
+							: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:border-border-tertiary"
 					}`}
 				>
 					innerHTML (Vulnerable)
@@ -126,24 +126,28 @@ export function StoredXSSDemo() {
 					onClick={() => setSafeMode(true)}
 					className={`px-4 py-2 rounded text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
 						safeMode
-							? "bg-emerald-500/20 text-emerald-400 border border-emerald-500"
-							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-zinc-600"
+							? "bg-emerald-500/20 text-accent-emerald-soft border border-emerald-500"
+							: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:border-border-tertiary"
 					}`}
 				>
 					textContent (Safe)
 				</button>
 				{phase !== "idle" && (
-					<span className="text-xs text-zinc-500 italic">
+					<span className="text-xs text-text-muted italic">
 						Reset to change mode
 					</span>
 				)}
 			</div>
 
 			{/* Comment board — all comments rendered via React string children, never innerHTML */}
-			<div className="bg-zinc-800 rounded-lg border border-zinc-700 overflow-hidden">
-				<div className="px-4 py-3 border-b border-zinc-700 flex items-center justify-between">
-					<p className="text-sm font-semibold text-zinc-300">Comment Board</p>
-					<span className="text-xs text-zinc-500">blog.example.com/post/1</span>
+			<div className="bg-surface-secondary rounded-lg border border-border-secondary overflow-hidden">
+				<div className="px-4 py-3 border-b border-border-secondary flex items-center justify-between">
+					<p className="text-sm font-semibold text-text-secondary">
+						Comment Board
+					</p>
+					<span className="text-xs text-text-muted">
+						blog.example.com/post/1
+					</span>
 				</div>
 				<div className="p-4 space-y-3">
 					{comments.map((c) => (
@@ -156,33 +160,33 @@ export function StoredXSSDemo() {
 									? isVulnerable
 										? "bg-red-500/10 border-red-500/40"
 										: "bg-emerald-500/10 border-emerald-500/30"
-									: "bg-zinc-900 border-zinc-700"
+									: "bg-surface-primary border-border-secondary"
 							}`}
 						>
 							<div className="flex items-center gap-2 mb-1">
 								<span
-									className={`text-xs font-semibold ${c.isAttacker ? "text-rose-400" : "text-sky-400"}`}
+									className={`text-xs font-semibold ${c.isAttacker ? "text-accent-rose-soft" : "text-sky-400"}`}
 								>
 									{c.author}
 								</span>
 								{c.isAttacker && (
-									<span className="text-xs text-zinc-500">
+									<span className="text-xs text-text-muted">
 										(attacker payload)
 									</span>
 								)}
 							</div>
 							{/* Always rendered via React children — tags shown as literal text */}
-							<p className="text-zinc-300 text-xs font-mono break-all">
+							<p className="text-text-secondary text-xs font-mono break-all">
 								{c.text}
 							</p>
 							{c.isAttacker && isVulnerable && (
-								<p className="mt-1 text-xs text-red-400">
+								<p className="mt-1 text-xs text-accent-red-soft">
 									⚠ Simulated: with innerHTML, this payload executes for every
 									visitor
 								</p>
 							)}
 							{c.isAttacker && !isVulnerable && (
-								<p className="mt-1 text-xs text-emerald-400">
+								<p className="mt-1 text-xs text-accent-emerald-soft">
 									✓ Rendered as text — HTML tags not parsed
 								</p>
 							)}
@@ -196,7 +200,7 @@ export function StoredXSSDemo() {
 						<button
 							type="button"
 							onClick={postMaliciousComment}
-							className="px-3 py-1.5 bg-rose-500/20 text-rose-400 border border-rose-500 rounded text-xs font-medium hover:bg-rose-500/30 transition-colors"
+							className="px-3 py-1.5 bg-rose-500/20 text-accent-rose-soft border border-rose-500 rounded text-xs font-medium hover:bg-rose-500/30 transition-colors"
 						>
 							Post Malicious Comment (as Attacker)
 						</button>
@@ -213,7 +217,7 @@ export function StoredXSSDemo() {
 					<button
 						type="button"
 						onClick={reset}
-						className="px-3 py-1.5 bg-zinc-700 text-zinc-400 rounded text-xs font-medium hover:bg-zinc-600 transition-colors"
+						className="px-3 py-1.5 bg-surface-tertiary text-text-tertiary rounded text-xs font-medium hover:bg-surface-tertiary transition-colors"
 					>
 						Reset
 					</button>
@@ -237,13 +241,13 @@ export function StoredXSSDemo() {
 							page
 						</p>
 						{isVulnerable ? (
-							<p className="text-red-400 text-xs">
+							<p className="text-accent-red-soft text-xs">
 								🔴 {stolenSessions} session{stolenSessions !== 1 ? "s" : ""}{" "}
 								stolen — payload fires for every visitor automatically from a
 								single malicious post
 							</p>
 						) : (
-							<p className="text-emerald-400 text-xs">
+							<p className="text-accent-emerald-soft text-xs">
 								✓ All {victimCount} visitor{victimCount !== 1 ? "s" : ""} saw
 								the text safely — no script execution
 							</p>
@@ -254,22 +258,24 @@ export function StoredXSSDemo() {
 
 			{/* Key insight */}
 			<div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 text-sm">
-				<p className="text-amber-400 font-semibold mb-1">Key Insight</p>
-				<p className="text-zinc-300 text-xs">
+				<p className="text-accent-amber-soft font-semibold mb-1">Key Insight</p>
+				<p className="text-text-secondary text-xs">
 					React JSX escapes by default — XSS risk appears when developers bypass
 					this with{" "}
-					<code className="text-red-400 font-mono">
+					<code className="text-accent-red-soft font-mono">
 						dangerouslySetInnerHTML
 					</code>{" "}
 					or direct{" "}
-					<code className="text-red-400 font-mono">element.innerHTML</code>{" "}
+					<code className="text-accent-red-soft font-mono">
+						element.innerHTML
+					</code>{" "}
 					assignment outside React.
 				</p>
 			</div>
 
 			{/* Code — reflects current toggle for reference */}
 			<div>
-				<p className="text-xs text-zinc-400 mb-2 font-semibold uppercase tracking-wider">
+				<p className="text-xs text-text-tertiary mb-2 font-semibold uppercase tracking-wider">
 					{isVulnerable ? "Vulnerable Pattern" : "Safe Pattern"}
 				</p>
 				<ShikiCode

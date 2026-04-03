@@ -1,5 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useRef, useState } from "react";
+import { useColorScheme } from "../../hooks/useColorScheme";
+import { THEME_COLORS } from "../../theme/tokens";
 import { DemoSection } from "../shared/DemoSection";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -50,7 +52,12 @@ function ConsumerNode({ consumer, rerenderTarget, mode }: ConsumerNodeProps) {
 			? { bg: "#042f2e", border: "#10b981", text: "#34d399" }
 			: { bg: "#431407", border: "#f97316", text: "#fb923c" };
 
-	const stableColor = { bg: "#18181b", border: "#3f3f46", text: "#71717a" };
+	const t = THEME_COLORS[useColorScheme()];
+	const stableColor = {
+		bg: t.svgBg,
+		border: t.svgBorder,
+		text: t.svgTextMuted,
+	};
 
 	const active = willRerender && rerenderTarget !== null;
 	const colors = active ? flashColor : stableColor;
@@ -66,7 +73,7 @@ function ConsumerNode({ consumer, rerenderTarget, mode }: ConsumerNodeProps) {
 		>
 			<span
 				className="text-xs font-bold"
-				style={{ color: active ? colors.text : "#a1a1aa" }}
+				style={{ color: active ? colors.text : t.svgText }}
 			>
 				{consumer.label}
 			</span>
@@ -94,7 +101,7 @@ function ConsumerNode({ consumer, rerenderTarget, mode }: ConsumerNodeProps) {
 				<motion.span
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
-					className="text-[10px] text-zinc-600"
+					className="text-[10px] text-text-faint"
 				>
 					✓ skipped
 				</motion.span>
@@ -122,22 +129,23 @@ function ProviderBox({
 	isActive,
 	children,
 }: ProviderBoxProps) {
+	const t = THEME_COLORS[useColorScheme()];
 	return (
 		<motion.div
 			className="rounded-xl border-2 p-3 space-y-2"
-			animate={{ borderColor: isActive ? borderColor : "#3f3f46" }}
+			animate={{ borderColor: isActive ? borderColor : t.svgBorder }}
 			transition={{ duration: 0.2 }}
 			style={{ backgroundColor: bgColor }}
 		>
 			<div className="flex items-center gap-2">
 				<motion.span
 					className="w-2 h-2 rounded-full"
-					animate={{ backgroundColor: isActive ? borderColor : "#52525b" }}
+					animate={{ backgroundColor: isActive ? borderColor : t.svgTextMuted }}
 					transition={{ duration: 0.2 }}
 				/>
 				<span
 					className="text-xs font-mono font-semibold"
-					style={{ color: isActive ? textColor : "#71717a" }}
+					style={{ color: isActive ? textColor : t.svgTextMuted }}
 				>
 					{label}
 				</span>
@@ -160,6 +168,7 @@ function ProviderBox({
 // ─── Main Demo ────────────────────────────────────────────────────────────────
 
 export function ContextRerenderDemo() {
+	const t = THEME_COLORS[useColorScheme()];
 	const [mode, setMode] = useState<ContextMode>("trap");
 	const [rerenderTarget, setRerenderTarget] = useState<"theme" | "user" | null>(
 		null,
@@ -203,9 +212,9 @@ export function ContextRerenderDemo() {
 										border: `1px solid ${m === "trap" ? "#dc2626" : "#10b981"}`,
 									}
 								: {
-										backgroundColor: "#27272a",
-										color: "#71717a",
-										border: "1px solid #3f3f46",
+										backgroundColor: t.svgBg,
+										color: t.svgTextMuted,
+										border: `1px solid ${t.svgBorder}`,
 									}
 						}
 					>
@@ -221,14 +230,14 @@ export function ContextRerenderDemo() {
 				<button
 					type="button"
 					onClick={() => triggerUpdate("user")}
-					className="px-3 py-1.5 rounded-md text-xs font-semibold bg-teal-500/10 text-teal-400 border border-teal-500/30 hover:bg-teal-500/20 transition-colors"
+					className="px-3 py-1.5 rounded-md text-xs font-semibold bg-teal-500/10 text-accent-teal-soft border border-teal-500/30 hover:bg-teal-500/20 transition-colors"
 				>
 					Change user field
 				</button>
 				<button
 					type="button"
 					onClick={() => triggerUpdate("theme")}
-					className="px-3 py-1.5 rounded-md text-xs font-semibold bg-orange-500/10 text-orange-400 border border-orange-500/30 hover:bg-orange-500/20 transition-colors"
+					className="px-3 py-1.5 rounded-md text-xs font-semibold bg-orange-500/10 text-accent-orange-soft border border-orange-500/30 hover:bg-orange-500/20 transition-colors"
 				>
 					Change theme field
 				</button>
@@ -262,10 +271,13 @@ export function ContextRerenderDemo() {
 							<strong>{rerenderedCount}</strong> of {CONSUMERS.length} consumers
 							re-rendered
 							{mode === "fix" && (
-								<span className="text-zinc-500 font-normal">
+								<span className="text-text-muted font-normal">
 									{" "}
 									(only those that read{" "}
-									<code className="text-teal-400">{rerenderTarget}</code>)
+									<code className="text-accent-teal-soft">
+										{rerenderTarget}
+									</code>
+									)
 								</span>
 							)}
 						</span>
@@ -329,24 +341,28 @@ export function ContextRerenderDemo() {
 			)}
 
 			{/* Key insight */}
-			<div className="mt-4 p-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-xs text-zinc-400 space-y-1.5">
+			<div className="mt-4 p-3 rounded-lg bg-surface-secondary/50 border border-border-secondary/50 text-xs text-text-tertiary space-y-1.5">
 				<p>
-					<span className="text-red-400 font-semibold">🪤 The Trap:</span> When
-					you pass an object like{" "}
-					<code className="text-orange-300">{"{ theme, user }"}</code> as
+					<span className="text-accent-red-soft font-semibold">
+						🪤 The Trap:
+					</span>{" "}
+					When you pass an object like{" "}
+					<code className="text-accent-orange">{"{ theme, user }"}</code> as
 					context value, a new object reference is created on every render of
 					the Provider's parent. React compares by reference (not deep
 					equality), so every consumer sees a "new" value and re-renders — even
 					those that only care about{" "}
-					<code className="text-orange-300">theme</code>.
+					<code className="text-accent-orange">theme</code>.
 				</p>
 				<p>
-					<span className="text-green-400 font-semibold">✅ The Fix:</span>{" "}
+					<span className="text-accent-green-soft font-semibold">
+						✅ The Fix:
+					</span>{" "}
 					Split into separate contexts. Each Provider only carries the value its
 					consumers actually need. You can also stabilise the value with{" "}
-					<code className="text-cyan-300">useMemo</code> to prevent unnecessary
-					re-renders when the parent re-renders but the context data hasn't
-					changed.
+					<code className="text-accent-cyan">useMemo</code> to prevent
+					unnecessary re-renders when the parent re-renders but the context data
+					hasn't changed.
 				</p>
 			</div>
 		</DemoSection>

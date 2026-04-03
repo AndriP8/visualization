@@ -76,19 +76,19 @@ export function TradeoffMatrix() {
 			<div className="overflow-x-auto">
 				<table className="w-full text-sm border-collapse">
 					<thead>
-						<tr className="border-b border-zinc-700">
-							<th className="text-left p-3 text-zinc-400 font-semibold text-xs uppercase tracking-wider">
+						<tr className="border-b border-border-secondary">
+							<th className="text-left p-3 text-text-tertiary font-semibold text-xs uppercase tracking-wider">
 								Strategy
 							</th>
 							{TRADEOFF_METRICS.map((metric) => (
 								<th
 									key={metric.label}
-									className="text-center p-3 text-zinc-400 font-semibold text-xs"
+									className="text-center p-3 text-text-tertiary font-semibold text-xs"
 									title={metric.description}
 								>
 									<div className="flex flex-col items-center gap-1">
 										<span>{metric.label}</span>
-										<span className="text-[10px] text-zinc-600 font-normal normal-case">
+										<span className="text-[10px] text-text-faint font-normal normal-case">
 											{metric.description.split(" - ")[0]}
 										</span>
 									</div>
@@ -103,9 +103,9 @@ export function TradeoffMatrix() {
 								initial={{ opacity: 0, x: -20 }}
 								animate={{ opacity: 1, x: 0 }}
 								transition={{ delay: idx * 0.1 }}
-								className="border-b border-zinc-800 hover:bg-zinc-800/30"
+								className="border-b border-border-primary hover:bg-surface-secondary/30"
 							>
-								<td className="p-3 font-medium text-white">
+								<td className="p-3 font-medium text-text-primary">
 									{strategyData.strategy}
 								</td>
 								{TRADEOFF_METRICS.map((metric) => {
@@ -137,14 +137,14 @@ export function TradeoffMatrix() {
 											onMouseLeave={() => setHoveredCell(null)}
 										>
 											{/* Rating Bar */}
-											<div className="relative h-6 bg-zinc-800 rounded-full overflow-hidden">
+											<div className="relative h-6 bg-surface-secondary rounded-full overflow-hidden">
 												<motion.div
 													initial={{ width: 0 }}
 													animate={{ width: getRatingWidth(displayValue) }}
 													transition={{ delay: idx * 0.1, duration: 0.5 }}
 													className={`h-full ${getRatingColor(displayValue)}`}
 												/>
-												<div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-white mix-blend-difference">
+												<div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-text-primary mix-blend-difference">
 													{displayValue}/5
 												</div>
 											</div>
@@ -154,9 +154,9 @@ export function TradeoffMatrix() {
 												<motion.div
 													initial={{ opacity: 0, y: 10 }}
 													animate={{ opacity: 1, y: 0 }}
-													className="absolute z-10 bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 rounded-lg bg-zinc-900 border border-zinc-700 text-xs text-zinc-300 shadow-xl"
+													className="absolute z-10 bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 rounded-lg bg-surface-primary border border-border-secondary text-xs text-text-secondary shadow-xl"
 												>
-													<div className="font-semibold text-violet-300 mb-1">
+													<div className="font-semibold text-accent-violet mb-1">
 														{strategyData.strategy} - {metric.label}
 													</div>
 													<div>
@@ -176,8 +176,8 @@ export function TradeoffMatrix() {
 			</div>
 
 			{/* Legend */}
-			<div className="mt-6 flex items-center gap-6 text-xs text-zinc-400">
-				<span className="font-semibold text-zinc-300">Rating:</span>
+			<div className="mt-6 flex items-center gap-6 text-xs text-text-tertiary">
+				<span className="font-semibold text-text-secondary">Rating:</span>
 				<div className="flex items-center gap-2">
 					<div className="w-3 h-3 rounded-full bg-green-500" />
 					<span>Excellent (4-5)</span>

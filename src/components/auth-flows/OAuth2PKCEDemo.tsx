@@ -314,7 +314,7 @@ export function OAuth2PKCEDemo() {
 					<button
 						type="button"
 						onClick={handleStart}
-						className="px-6 py-2.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white font-medium transition-colors flex items-center gap-2"
+						className="px-6 py-2.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-text-primary font-medium transition-colors flex items-center gap-2"
 					>
 						<span className="text-lg">🔐</span>
 						<span>Login with Google</span>
@@ -324,7 +324,7 @@ export function OAuth2PKCEDemo() {
 					<button
 						type="button"
 						onClick={handleReset}
-						className="px-6 py-2.5 rounded-lg bg-violet-500 hover:bg-violet-600 text-white font-medium transition-colors"
+						className="px-6 py-2.5 rounded-lg bg-violet-500 hover:bg-violet-600 text-text-primary font-medium transition-colors"
 					>
 						Reset Demo
 					</button>
@@ -336,7 +336,7 @@ export function OAuth2PKCEDemo() {
 				<motion.div
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
-					className="bg-zinc-900 border border-zinc-800 rounded-lg p-4"
+					className="bg-surface-primary border border-border-primary rounded-lg p-4"
 				>
 					<div className="flex items-center gap-3">
 						<div className="flex items-center gap-1.5">
@@ -344,8 +344,8 @@ export function OAuth2PKCEDemo() {
 							<div className="w-3 h-3 rounded-full bg-amber-500" />
 							<div className="w-3 h-3 rounded-full bg-emerald-500" />
 						</div>
-						<div className="flex-1 bg-zinc-800 rounded px-3 py-2">
-							<div className="font-mono text-xs text-zinc-300 truncate">
+						<div className="flex-1 bg-surface-secondary rounded px-3 py-2">
+							<div className="font-mono text-xs text-text-secondary truncate">
 								{urlBar}
 							</div>
 						</div>
@@ -406,19 +406,19 @@ export function OAuth2PKCEDemo() {
 											? isCurrent
 												? colors.bgActive
 												: colors.bg
-											: "#27272a",
+											: "var(--svg-bg)",
 									borderColor:
 										isPast || isCurrent
 											? isCurrent
 												? colors.borderActive
 												: colors.border
-											: "#3f3f46",
+											: "var(--svg-border)",
 									color:
 										isPast || isCurrent
 											? isCurrent
 												? colors.textActive
 												: colors.text
-											: "#71717a",
+											: "var(--svg-text-muted)",
 								}}
 							>
 								{step.label}
@@ -433,37 +433,37 @@ export function OAuth2PKCEDemo() {
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
-					className="bg-zinc-900 border border-zinc-800 rounded-lg p-4"
+					className="bg-surface-primary border border-border-primary rounded-lg p-4"
 				>
-					<h4 className="text-sm font-semibold text-amber-300 mb-3 flex items-center gap-2">
+					<h4 className="text-sm font-semibold text-accent-amber mb-3 flex items-center gap-2">
 						<span>PKCE Parameters</span>
 						<button
 							type="button"
 							onClick={() => setInspecting(true)}
-							className="text-xs text-amber-400 hover:text-amber-300 underline"
+							className="text-xs text-accent-amber-soft hover:text-accent-amber underline"
 						>
 							Inspect
 						</button>
 					</h4>
 					<div className="space-y-3">
-						<div className="bg-zinc-800 border border-amber-500/30 rounded p-3">
-							<div className="text-xs text-zinc-500 mb-1">code_verifier</div>
-							<div className="font-mono text-xs text-amber-300 break-all">
+						<div className="bg-surface-secondary border border-amber-500/30 rounded p-3">
+							<div className="text-xs text-text-muted mb-1">code_verifier</div>
+							<div className="font-mono text-xs text-accent-amber break-all">
 								{CODE_VERIFIER}
 							</div>
-							<div className="text-xs text-zinc-600 mt-1">
+							<div className="text-xs text-text-faint mt-1">
 								Random string (stored in browser)
 							</div>
 						</div>
 						<div className="flex items-center justify-center">
-							<div className="text-cyan-400">↓ SHA256</div>
+							<div className="text-accent-cyan-soft">↓ SHA256</div>
 						</div>
-						<div className="bg-zinc-800 border border-cyan-500/30 rounded p-3">
-							<div className="text-xs text-zinc-500 mb-1">code_challenge</div>
-							<div className="font-mono text-xs text-cyan-300 break-all">
+						<div className="bg-surface-secondary border border-cyan-500/30 rounded p-3">
+							<div className="text-xs text-text-muted mb-1">code_challenge</div>
+							<div className="font-mono text-xs text-accent-cyan break-all">
 								{CODE_CHALLENGE}
 							</div>
-							<div className="text-xs text-zinc-600 mt-1">
+							<div className="text-xs text-text-faint mt-1">
 								Sent to OAuth provider (S256 method)
 							</div>
 						</div>
@@ -476,24 +476,24 @@ export function OAuth2PKCEDemo() {
 				<motion.div
 					initial={{ opacity: 0, scale: 0.95 }}
 					animate={{ opacity: 1, scale: 1 }}
-					className="bg-zinc-900 border-2 border-rose-500/30 rounded-lg p-6 max-w-md mx-auto"
+					className="bg-surface-primary border-2 border-rose-500/30 rounded-lg p-6 max-w-md mx-auto"
 				>
 					<div className="text-center mb-4">
 						<div className="text-4xl mb-2">G</div>
-						<h3 className="text-lg font-semibold text-white">
+						<h3 className="text-lg font-semibold text-text-primary">
 							Sign in with Google
 						</h3>
 					</div>
-					<div className="bg-zinc-800 border border-zinc-700 rounded p-4 mb-4">
-						<div className="text-xs text-zinc-500 mb-2">
+					<div className="bg-surface-secondary border border-border-secondary rounded p-4 mb-4">
+						<div className="text-xs text-text-muted mb-2">
 							YourApp wants to access:
 						</div>
 						<div className="space-y-1.5 text-sm">
-							<div className="flex items-center gap-2 text-zinc-300">
+							<div className="flex items-center gap-2 text-text-secondary">
 								<span>✓</span>
 								<span>View your email address</span>
 							</div>
-							<div className="flex items-center gap-2 text-zinc-300">
+							<div className="flex items-center gap-2 text-text-secondary">
 								<span>✓</span>
 								<span>View your basic profile info</span>
 							</div>
@@ -502,14 +502,14 @@ export function OAuth2PKCEDemo() {
 					<div className="flex gap-3">
 						<button
 							type="button"
-							className="flex-1 px-4 py-2 rounded bg-zinc-700 text-zinc-400 text-sm"
+							className="flex-1 px-4 py-2 rounded bg-surface-tertiary text-text-tertiary text-sm"
 							disabled
 						>
 							Cancel
 						</button>
 						<button
 							type="button"
-							className="flex-1 px-4 py-2 rounded bg-rose-500 text-white text-sm font-medium animate-pulse"
+							className="flex-1 px-4 py-2 rounded bg-rose-500 text-text-primary text-sm font-medium animate-pulse"
 							disabled
 						>
 							Allow
@@ -523,7 +523,7 @@ export function OAuth2PKCEDemo() {
 				<motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
-					className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden"
+					className="bg-surface-primary border border-border-primary rounded-lg overflow-hidden"
 				>
 					<AuthFlowSequence
 						steps={getSteps()}
@@ -550,7 +550,7 @@ export function OAuth2PKCEDemo() {
 				>
 					<div className="text-center">
 						<div className="text-4xl mb-3">✓</div>
-						<h3 className="text-lg font-semibold text-emerald-300 mb-2">
+						<h3 className="text-lg font-semibold text-accent-emerald mb-2">
 							Authentication Complete
 						</h3>
 						<p className="text-sm text-emerald-200">
@@ -563,7 +563,7 @@ export function OAuth2PKCEDemo() {
 			{/* Security Callouts */}
 			<div className="space-y-3">
 				<div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-					<h4 className="text-sm font-semibold text-emerald-300 mb-2">
+					<h4 className="text-sm font-semibold text-accent-emerald mb-2">
 						✓ PKCE Security
 					</h4>
 					<p className="text-sm text-emerald-200">
@@ -573,7 +573,7 @@ export function OAuth2PKCEDemo() {
 					</p>
 				</div>
 				<div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4">
-					<h4 className="text-sm font-semibold text-cyan-300 mb-2">
+					<h4 className="text-sm font-semibold text-accent-cyan mb-2">
 						State Parameter
 					</h4>
 					<p className="text-sm text-cyan-200">
@@ -585,7 +585,7 @@ export function OAuth2PKCEDemo() {
 
 			{/* Code Example */}
 			<div>
-				<h4 className="text-sm font-semibold text-white mb-3">
+				<h4 className="text-sm font-semibold text-text-primary mb-3">
 					OAuth 2.0 + PKCE Implementation
 				</h4>
 				<ShikiCode

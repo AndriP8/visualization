@@ -200,20 +200,24 @@ const scenarioButtonClasses: Record<
 	{ active: string; inactive: string }
 > = {
 	green: {
-		active: "bg-green-500/15 text-green-300 border-green-500/40",
-		inactive: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+		active: "bg-green-500/15 text-accent-green border-green-500/40",
+		inactive:
+			"bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary",
 	},
 	amber: {
-		active: "bg-amber-500/15 text-amber-300 border-amber-500/40",
-		inactive: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+		active: "bg-amber-500/15 text-accent-amber border-amber-500/40",
+		inactive:
+			"bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary",
 	},
 	rose: {
-		active: "bg-rose-500/15 text-rose-300 border-rose-500/40",
-		inactive: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+		active: "bg-rose-500/15 text-accent-rose border-rose-500/40",
+		inactive:
+			"bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary",
 	},
 	sky: {
 		active: "bg-sky-500/15 text-sky-300 border-sky-500/40",
-		inactive: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+		inactive:
+			"bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary",
 	},
 };
 
@@ -239,14 +243,14 @@ function NetworkDiagram({
 						<motion.div
 							key={nodeId}
 							animate={{
-								borderColor: isActive ? "#a78bfa" : "#3f3f46",
+								borderColor: isActive ? "#a78bfa" : "var(--svg-border)",
 								backgroundColor: isActive ? "#a78bfa15" : "#27272a99",
 							}}
 							transition={{ duration: 0.3 }}
 							className="flex flex-col items-center gap-1.5 p-3 rounded-xl border"
 						>
 							<span className="text-xl">{n.icon}</span>
-							<span className="text-xs text-zinc-400 font-medium">
+							<span className="text-xs text-text-tertiary font-medium">
 								{n.label}
 							</span>
 						</motion.div>
@@ -273,21 +277,25 @@ function NetworkDiagram({
 							}}
 							transition={{ duration: 0.3 }}
 							className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
-								isCurrent ? "bg-zinc-800/80 ring-1 ring-zinc-600" : ""
+								isCurrent
+									? "bg-surface-secondary/80 ring-1 ring-border-tertiary"
+									: ""
 							}`}
 						>
-							<span className="text-xs text-zinc-600 w-4 shrink-0">
+							<span className="text-xs text-text-faint w-4 shrink-0">
 								{idx + 1}.
 							</span>
 							{!isSelf && (
-								<span className="text-xs text-zinc-500 shrink-0">
+								<span className="text-xs text-text-muted shrink-0">
 									{NODE_LABELS[step.from].icon}→{NODE_LABELS[step.to].icon}
 								</span>
 							)}
 							{isSelf && (
-								<span className="text-xs text-zinc-500 shrink-0">🔁</span>
+								<span className="text-xs text-text-muted shrink-0">🔁</span>
 							)}
-							<span className="text-xs text-zinc-300 flex-1">{step.label}</span>
+							<span className="text-xs text-text-secondary flex-1">
+								{step.label}
+							</span>
 							{step.badge && (
 								<AnimatePresence>
 									{isCurrent && (
@@ -296,16 +304,16 @@ function NetworkDiagram({
 											animate={{ scale: 1, opacity: 1 }}
 											className={`px-2 py-0.5 rounded-full text-xs font-bold ${
 												step.badgeColor === "green"
-													? "bg-green-500/20 text-green-400 border border-green-500/30"
+													? "bg-green-500/20 text-accent-green-soft border border-green-500/30"
 													: step.badgeColor === "orange"
-														? "bg-orange-500/20 text-orange-400 border border-orange-500/30"
+														? "bg-orange-500/20 text-accent-orange-soft border border-orange-500/30"
 														: step.badgeColor === "amber"
-															? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+															? "bg-amber-500/20 text-accent-amber-soft border border-amber-500/30"
 															: step.badgeColor === "rose"
-																? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
+																? "bg-rose-500/20 text-accent-rose-soft border border-rose-500/30"
 																: step.badgeColor === "sky"
 																	? "bg-sky-500/20 text-sky-400 border border-sky-500/30"
-																	: "bg-zinc-700 text-zinc-300 border border-zinc-600"
+																	: "bg-surface-tertiary text-text-secondary border border-border-tertiary"
 											}`}
 										>
 											{step.badge}
@@ -388,7 +396,7 @@ export function HttpCacheHeadersDemo() {
 				})}
 			</div>
 
-			<p className="text-sm text-zinc-400">{scenario.tagline}</p>
+			<p className="text-sm text-text-tertiary">{scenario.tagline}</p>
 
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 				{/* Animation */}
@@ -399,8 +407,8 @@ export function HttpCacheHeadersDemo() {
 						onClick={running ? reset : runFlow}
 						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
 							running
-								? "bg-zinc-700 text-zinc-300"
-								: "bg-violet-600 hover:bg-violet-500 text-white"
+								? "bg-surface-tertiary text-text-secondary"
+								: "bg-violet-600 hover:bg-violet-500 text-text-primary"
 						}`}
 					>
 						{match({ running, hasPlayed: activeStep >= 0 })
@@ -413,7 +421,7 @@ export function HttpCacheHeadersDemo() {
 
 				{/* Headers */}
 				<div className="space-y-2">
-					<p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+					<p className="text-xs font-semibold text-text-muted uppercase tracking-wider">
 						HTTP Headers
 					</p>
 					<ShikiCode
@@ -422,27 +430,29 @@ export function HttpCacheHeadersDemo() {
 						showLineNumbers={false}
 						className="text-xs"
 					/>
-					<div className="mt-3 p-3 rounded-lg bg-zinc-800/50 border border-zinc-700 text-xs text-zinc-400 space-y-1">
-						<strong className="text-zinc-300 text-xs">Quick reference:</strong>
+					<div className="mt-3 p-3 rounded-lg bg-surface-secondary/50 border border-border-secondary text-xs text-text-tertiary space-y-1">
+						<strong className="text-text-secondary text-xs">
+							Quick reference:
+						</strong>
 						<ul className="space-y-1 mt-1">
 							<li>
-								<code className="text-amber-300">max-age</code> — browser TTL
+								<code className="text-accent-amber">max-age</code> — browser TTL
 							</li>
 							<li>
 								<code className="text-sky-300">s-maxage</code> — CDN/shared
 								cache TTL (overrides max-age for CDNs)
 							</li>
 							<li>
-								<code className="text-rose-300">no-cache</code> — must
+								<code className="text-accent-rose">no-cache</code> — must
 								revalidate before serving
 							</li>
 							<li>
-								<code className="text-rose-300">no-store</code> — never cache
+								<code className="text-accent-rose">no-store</code> — never cache
 								(even in memory)
 							</li>
 							<li>
-								<code className="text-violet-300">ETag</code> — fingerprint for
-								conditional requests
+								<code className="text-accent-violet">ETag</code> — fingerprint
+								for conditional requests
 							</li>
 						</ul>
 					</div>

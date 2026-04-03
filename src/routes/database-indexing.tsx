@@ -20,23 +20,24 @@ function DatabaseIndexingPage() {
 				gradient={{ from: "teal-400", to: "cyan-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="text-sm text-text-muted space-y-2">
 							<p>
-								<strong className="text-zinc-300">The problem:</strong> A
+								<strong className="text-text-secondary">The problem:</strong> A
 								database table with millions of rows is just a file on disk.
 								Without an index, every query must scan every row —{" "}
-								<strong className="text-red-400">O(n)</strong>. With a{" "}
-								<strong className="text-teal-400">B-Tree index</strong>, the
-								database can navigate a balanced tree to find any value in{" "}
-								<strong className="text-teal-400">O(log n)</strong> comparisons.
+								<strong className="text-accent-red-soft">O(n)</strong>. With a{" "}
+								<strong className="text-accent-teal-soft">B-Tree index</strong>,
+								the database can navigate a balanced tree to find any value in{" "}
+								<strong className="text-accent-teal-soft">O(log n)</strong>{" "}
+								comparisons.
 							</p>
 							<p>
-								<strong className="text-zinc-300">Why B-Trees?</strong> They're
-								optimized for disk I/O — each node maps to a disk page, keeping
-								the number of reads minimal. A B-Tree of order 100 on 1 million
-								rows needs only 3 levels: log₁₀₀(1,000,000) ≈ 3.
+								<strong className="text-text-secondary">Why B-Trees?</strong>{" "}
+								They're optimized for disk I/O — each node maps to a disk page,
+								keeping the number of reads minimal. A B-Tree of order 100 on 1
+								million rows needs only 3 levels: log₁₀₀(1,000,000) ≈ 3.
 							</p>
-							<p className="text-zinc-500">
+							<p className="text-text-muted">
 								Used by PostgreSQL, MySQL (InnoDB), SQLite, MongoDB, and most
 								production databases as the default index structure.
 							</p>

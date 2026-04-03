@@ -86,7 +86,7 @@ export function PhasesDemo() {
 					type="button"
 					onClick={advance}
 					disabled={step >= PHASES.length - 1 && !paused}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-violet-300 border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-accent-violet border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					{step === -1
 						? "▶ Start"
@@ -97,7 +97,7 @@ export function PhasesDemo() {
 				<button
 					type="button"
 					onClick={reset}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 				>
 					↺ Reset
 				</button>
@@ -120,10 +120,10 @@ export function PhasesDemo() {
 							transition={{ duration: 0.3 }}
 							className={`p-4 rounded-lg border relative overflow-hidden ${
 								isActive
-									? "border-white/20 bg-zinc-800"
+									? "border-white/20 bg-surface-secondary"
 									: isPast
-										? "border-zinc-700/50 bg-zinc-800/30"
-										: "border-zinc-800 bg-zinc-900/30"
+										? "border-border-secondary/50 bg-surface-secondary/30"
+										: "border-border-primary bg-surface-primary/30"
 							}`}
 						>
 							{/* Glow line for active phase */}
@@ -141,23 +141,26 @@ export function PhasesDemo() {
 										<span
 											className="text-sm font-semibold"
 											style={{
-												color: isActive || isPast ? phase.color : "#71717a",
+												color:
+													isActive || isPast
+														? phase.color
+														: "var(--svg-text-muted)",
 											}}
 										>
 											{phase.label}
 										</span>
 										{phase.interruptible && (
-											<span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+											<span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-accent-blue-soft border border-blue-500/20">
 												INTERRUPTIBLE
 											</span>
 										)}
 										{!phase.interruptible && isActive && (
-											<span className="text-[10px] px-1.5 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20">
+											<span className="text-[10px] px-1.5 py-0.5 rounded bg-red-500/10 text-accent-red-soft border border-red-500/20">
 												SYNCHRONOUS
 											</span>
 										)}
 									</div>
-									<p className="text-xs text-zinc-400 mt-1">
+									<p className="text-xs text-text-tertiary mt-1">
 										{phase.description}
 									</p>
 								</div>
@@ -191,7 +194,7 @@ export function PhasesDemo() {
 								<motion.div
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
-									className="mt-3 pl-3 text-xs text-blue-400 flex items-center gap-2"
+									className="mt-3 pl-3 text-xs text-accent-blue-soft flex items-center gap-2"
 								>
 									<span className="inline-block w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
 									Paused — browser can handle events & paint frames here

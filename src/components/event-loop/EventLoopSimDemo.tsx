@@ -300,7 +300,7 @@ function RegionBox({
 		<motion.div
 			className="rounded-lg border p-3 min-h-25 transition-all"
 			animate={{
-				borderColor: isActive ? color : "#27272a",
+				borderColor: isActive ? color : "var(--svg-bg)",
 				boxShadow: isActive ? `0 0 20px ${color}33` : "0 0 0px transparent",
 			}}
 			style={{ backgroundColor: `${color}08` }}
@@ -318,7 +318,7 @@ function RegionBox({
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
-						className="text-xs text-zinc-600 font-mono"
+						className="text-xs text-text-faint font-mono"
 					>
 						{emptyText}
 					</motion.div>
@@ -394,8 +394,8 @@ export function EventLoopSimDemo() {
 						}}
 						className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors border ${
 							i === snippetIndex
-								? "bg-violet-500/20 text-violet-300 border-violet-500/30"
-								: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
+								? "bg-violet-500/20 text-accent-violet border-violet-500/30"
+								: "bg-surface-secondary text-text-tertiary border-border-secondary hover:text-text-secondary"
 						}`}
 					>
 						{s.name}
@@ -407,7 +407,7 @@ export function EventLoopSimDemo() {
 				{/* Left: Code + Output */}
 				<div className="xl:w-1/3 space-y-4">
 					<div>
-						<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+						<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 							Code
 						</div>
 						<ShikiCode
@@ -418,25 +418,25 @@ export function EventLoopSimDemo() {
 					</div>
 
 					<div>
-						<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+						<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 							Console Output
 						</div>
-						<div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 min-h-15">
+						<div className="p-3 rounded-lg bg-surface-primary border border-border-primary min-h-15">
 							<AnimatePresence>
 								{current.output.map((out) => (
 									<motion.div
 										key={out}
 										initial={{ opacity: 0, x: -5 }}
 										animate={{ opacity: 1, x: 0 }}
-										className="text-xs font-mono text-emerald-400"
+										className="text-xs font-mono text-accent-emerald-soft"
 									>
-										<span className="text-zinc-600 mr-2">{">"}</span>
+										<span className="text-text-faint mr-2">{">"}</span>
 										{out}
 									</motion.div>
 								))}
 							</AnimatePresence>
 							{current.output.length === 0 && (
-								<span className="text-xs text-zinc-600 font-mono">
+								<span className="text-xs text-text-faint font-mono">
 									(no output yet)
 								</span>
 							)}
@@ -478,8 +478,8 @@ export function EventLoopSimDemo() {
 			</div>
 
 			{/* Event Loop Decision Logic */}
-			<div className="mt-5 p-3 rounded-lg bg-zinc-800/30 border border-zinc-800">
-				<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+			<div className="mt-5 p-3 rounded-lg bg-surface-secondary/30 border border-border-primary">
+				<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 					Event Loop Decision
 				</div>
 				<div className="flex flex-wrap gap-2 items-center">
@@ -488,8 +488,8 @@ export function EventLoopSimDemo() {
 							key={ls.label}
 							className={`px-2 py-1 rounded text-xs font-mono transition-all ${
 								ls.active(current.activeRegion)
-									? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 scale-105"
-									: "text-zinc-500 border border-zinc-800"
+									? "bg-emerald-500/20 text-accent-emerald border border-emerald-500/30 scale-105"
+									: "text-text-muted border border-border-primary"
 							}`}
 						>
 							{ls.label}
@@ -504,7 +504,7 @@ export function EventLoopSimDemo() {
 					type="button"
 					onClick={prev}
 					disabled={step <= 0}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					← Back
 				</button>
@@ -512,18 +512,18 @@ export function EventLoopSimDemo() {
 					type="button"
 					onClick={next}
 					disabled={step >= snippet.steps.length - 1}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-violet-300 border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-accent-violet border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					Next →
 				</button>
 				<button
 					type="button"
 					onClick={reset}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 				>
 					↺ Reset
 				</button>
-				<span className="text-xs text-zinc-600 ml-auto">
+				<span className="text-xs text-text-faint ml-auto">
 					Step {step + 1} / {snippet.steps.length}
 				</span>
 			</div>
@@ -533,7 +533,7 @@ export function EventLoopSimDemo() {
 				key={`${snippetIndex}-${step}`}
 				initial={{ opacity: 0, y: 5 }}
 				animate={{ opacity: 1, y: 0 }}
-				className="mt-4 p-3 rounded-lg bg-violet-500/5 border border-violet-500/20 text-sm text-violet-300"
+				className="mt-4 p-3 rounded-lg bg-violet-500/5 border border-violet-500/20 text-sm text-accent-violet"
 			>
 				{current.description}
 			</motion.div>

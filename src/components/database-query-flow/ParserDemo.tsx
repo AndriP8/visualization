@@ -115,13 +115,13 @@ function ASTNodeVisualizer({
 					${
 						node.type === "Query"
 							? "bg-violet-500/20 border-violet-500 text-violet-200"
-							: "bg-zinc-800 border-zinc-600 text-zinc-200"
+							: "bg-surface-secondary border-border-tertiary text-text-secondary"
 					}
 				`}
 			>
 				<span className="font-bold text-sm tracking-wide">{node.type}</span>
 				{node.tokens && node.tokens.length > 0 && (
-					<div className="text-xs font-mono text-cyan-400 mt-1">
+					<div className="text-xs font-mono text-accent-cyan-soft mt-1">
 						{node.tokens.join(" ")}
 					</div>
 				)}
@@ -129,15 +129,15 @@ function ASTNodeVisualizer({
 
 			{node.children && node.children.length > 0 && (
 				<div className="flex gap-8 relative mt-2 pt-4">
-					<div className="absolute top-0 left-[50%] right-[50%] h-4 border-l border-zinc-600 -translate-y-4" />
-					<div className="absolute top-0 left-[10%] right-[10%] border-t border-zinc-600" />
+					<div className="absolute top-0 left-[50%] right-[50%] h-4 border-l border-border-tertiary -translate-y-4" />
+					<div className="absolute top-0 left-[10%] right-[10%] border-t border-border-tertiary" />
 
 					{node.children.map((child: ASTNode, idx: number) => (
 						<div
 							key={`${child.type}-${idx}`}
 							className="relative flex flex-col items-center"
 						>
-							<div className="absolute top-0 w-px h-4 bg-zinc-600 -translate-y-4" />
+							<div className="absolute top-0 w-px h-4 bg-surface-tertiary -translate-y-4" />
 							<ASTNodeVisualizer node={child} level={level + 1} />
 						</div>
 					))}
@@ -163,8 +163,8 @@ export function ParserDemo() {
 							onClick={() => setQuery(t.query)}
 							className={`text-xs px-3 py-1.5 rounded-full transition-colors border ${
 								query === t.query
-									? "bg-violet-500/20 border-violet-500/50 text-violet-300"
-									: "bg-zinc-800/50 border-zinc-700 text-zinc-400 hover:text-zinc-200"
+									? "bg-violet-500/20 border-violet-500/50 text-accent-violet"
+									: "bg-surface-secondary/50 border-border-secondary text-text-tertiary hover:text-text-secondary"
 							}`}
 						>
 							{t.label}
@@ -176,20 +176,20 @@ export function ParserDemo() {
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
 				<div className="space-y-3">
 					<div className="flex justify-between items-center text-sm">
-						<span className="text-zinc-400 font-medium">SQL Input</span>
+						<span className="text-text-tertiary font-medium">SQL Input</span>
 						{error ? (
-							<span className="text-red-400 text-xs px-2 py-0.5 rounded-md bg-red-500/10 border border-red-500/20">
+							<span className="text-accent-red-soft text-xs px-2 py-0.5 rounded-md bg-red-500/10 border border-red-500/20">
 								Syntax Error
 							</span>
 						) : (
-							<span className="text-green-400 text-xs px-2 py-0.5 rounded-md bg-green-500/10 border border-green-500/20">
+							<span className="text-accent-green-soft text-xs px-2 py-0.5 rounded-md bg-green-500/10 border border-green-500/20">
 								Valid Syntax
 							</span>
 						)}
 					</div>
 
 					{/* Fake Syntax Highlighting Input */}
-					<div className="relative font-mono text-sm leading-relaxed overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950">
+					<div className="relative font-mono text-sm leading-relaxed overflow-hidden rounded-xl border border-border-primary bg-surface-base">
 						<textarea
 							value={query}
 							onChange={(e) => setQuery(e.target.value)}
@@ -208,7 +208,7 @@ export function ParserDemo() {
 									return (
 										<span
 											key={`err-${i}-${token}`}
-											className="text-red-400 bg-red-500/20 border-b border-red-500 rounded-sm"
+											className="text-accent-red-soft bg-red-500/20 border-b border-red-500 rounded-sm"
 										>
 											{token}
 										</span>
@@ -232,7 +232,9 @@ export function ParserDemo() {
 									<span
 										key={`tok-${i}-${token}`}
 										className={
-											isKeyword ? "text-violet-400 font-bold" : "text-cyan-200"
+											isKeyword
+												? "text-accent-violet-soft font-bold"
+												: "text-cyan-200"
 										}
 									>
 										{token}
@@ -246,11 +248,11 @@ export function ParserDemo() {
 						<motion.div
 							initial={{ opacity: 0, y: -10 }}
 							animate={{ opacity: 1, y: 0 }}
-							className="text-xs text-red-400 mt-2 p-3 bg-red-500/5 rounded-lg border border-red-500/10"
+							className="text-xs text-accent-red-soft mt-2 p-3 bg-red-500/5 rounded-lg border border-red-500/10"
 						>
 							{error}
 							<br />
-							<span className="text-zinc-500 mt-1 block">
+							<span className="text-text-muted mt-1 block">
 								Database engines immediately reject invalid queries at the
 								Parser stage before any execution planning begins.
 							</span>
@@ -258,8 +260,8 @@ export function ParserDemo() {
 					)}
 				</div>
 
-				<div className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl flex flex-col min-h-75 overflow-x-auto">
-					<h4 className="text-sm font-medium text-zinc-400 mb-6 text-center">
+				<div className="bg-surface-primary border border-border-primary p-6 rounded-xl flex flex-col min-h-75 overflow-x-auto">
+					<h4 className="text-sm font-medium text-text-tertiary mb-6 text-center">
 						Abstract Syntax Tree (AST)
 					</h4>
 
@@ -279,7 +281,7 @@ export function ParserDemo() {
 								key="error"
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
-								className="text-zinc-600 text-sm flex flex-col items-center gap-2"
+								className="text-text-faint text-sm flex flex-col items-center gap-2"
 							>
 								<span className="text-3xl">🛑</span>
 								<span>Parse Tree cannot be generated</span>

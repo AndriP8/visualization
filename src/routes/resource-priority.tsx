@@ -20,15 +20,17 @@ function ResourcePriorityPage() {
 				gradient={{ from: "orange-400", via: "amber-400", to: "yellow-400" }}
 			/>
 
-			<div className="flex items-center gap-3 p-4 bg-zinc-900 rounded-lg border border-zinc-800">
-				<span className="text-sm font-medium text-zinc-400">Protocol:</span>
+			<div className="flex items-center gap-3 p-4 bg-surface-primary rounded-lg border border-border-primary">
+				<span className="text-sm font-medium text-text-tertiary">
+					Protocol:
+				</span>
 				<button
 					type="button"
 					onClick={() => setProtocol("http1")}
 					className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 						protocol === "http1"
-							? "bg-violet-500 text-white"
-							: "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+							? "bg-violet-500 text-text-primary"
+							: "bg-surface-secondary text-text-tertiary hover:bg-surface-tertiary"
 					}`}
 				>
 					HTTP/1.1 (6 connections)
@@ -38,8 +40,8 @@ function ResourcePriorityPage() {
 					onClick={() => setProtocol("http2")}
 					className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 						protocol === "http2"
-							? "bg-violet-500 text-white"
-							: "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+							? "bg-violet-500 text-text-primary"
+							: "bg-surface-secondary text-text-tertiary hover:bg-surface-tertiary"
 					}`}
 				>
 					HTTP/2 (multiplexing)

@@ -209,8 +209,8 @@ export function CombinatorsDemo() {
 						}}
 						className={`px-4 py-2 rounded-lg text-sm font-mono font-medium border transition-colors ${
 							combinator === c
-								? "bg-cyan-500/20 text-cyan-300 border-cyan-500/30"
-								: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-200"
+								? "bg-cyan-500/20 text-accent-cyan border-cyan-500/30"
+								: "bg-surface-secondary text-text-tertiary border-border-secondary hover:text-text-secondary"
 						}`}
 					>
 						Promise.{c}()
@@ -218,21 +218,23 @@ export function CombinatorsDemo() {
 				))}
 			</div>
 
-			<p className="text-sm text-zinc-400">{desc.summary}</p>
+			<p className="text-sm text-text-tertiary">{desc.summary}</p>
 
 			{/* Promise configs */}
 			<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
 				{promises.map((p, i) => (
 					<div
 						key={p.label}
-						className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 space-y-3"
+						className="p-3 rounded-lg bg-surface-primary border border-border-primary space-y-3"
 					>
-						<div className="text-sm font-semibold text-zinc-300">{p.label}</div>
+						<div className="text-sm font-semibold text-text-secondary">
+							{p.label}
+						</div>
 						<div className="space-y-2">
 							<div>
 								<label
 									htmlFor={`delay-${i}`}
-									className="text-xs text-zinc-500 block mb-1"
+									className="text-xs text-text-muted block mb-1"
 								>
 									Delay: {p.delay}s
 								</label>
@@ -263,8 +265,8 @@ export function CombinatorsDemo() {
 									}}
 									className={`text-xs px-2 py-1 rounded border transition-colors ${
 										p.succeeds
-											? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-											: "bg-rose-500/10 text-rose-400 border-rose-500/20"
+											? "bg-emerald-500/10 text-accent-emerald-soft border-emerald-500/20"
+											: "bg-rose-500/10 text-accent-rose-soft border-rose-500/20"
 									}`}
 								>
 									{p.succeeds ? "✓ Fulfills" : "✗ Rejects"}
@@ -274,14 +276,14 @@ export function CombinatorsDemo() {
 
 						{/* Progress bar */}
 						{result && (
-							<div className="h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+							<div className="h-1.5 rounded-full bg-surface-secondary overflow-hidden">
 								<motion.div
 									className={`h-full rounded-full ${
 										result.settled[i]
 											? promises[i].succeeds
 												? "bg-emerald-500"
 												: "bg-rose-500"
-											: "bg-zinc-600"
+											: "bg-surface-tertiary"
 									}`}
 									initial={{ width: 0 }}
 									animate={{ width: result.settled[i] ? "100%" : "0%" }}
@@ -298,7 +300,7 @@ export function CombinatorsDemo() {
 				type="button"
 				onClick={run}
 				disabled={running}
-				className="px-5 py-2.5 rounded-lg text-sm font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+				className="px-5 py-2.5 rounded-lg text-sm font-medium bg-cyan-500/20 text-accent-cyan border border-cyan-500/30 hover:bg-cyan-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
 			>
 				{running ? "Running..." : "▶ Run"}
 			</button>
@@ -312,8 +314,8 @@ export function CombinatorsDemo() {
 						exit={{ opacity: 0 }}
 						className={`p-4 rounded-lg border text-sm font-mono ${
 							result.status === "done"
-								? "bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
-								: "bg-rose-500/10 border-rose-500/20 text-rose-300"
+								? "bg-emerald-500/10 border-emerald-500/20 text-accent-emerald"
+								: "bg-rose-500/10 border-rose-500/20 text-accent-rose"
 						}`}
 					>
 						<span className="font-semibold">
@@ -331,15 +333,15 @@ export function CombinatorsDemo() {
 			<div className="overflow-x-auto">
 				<table className="w-full text-xs text-left border-collapse">
 					<thead>
-						<tr className="border-b border-zinc-800">
-							<th className="pb-2 pr-4 text-zinc-500 font-medium">Method</th>
-							<th className="pb-2 pr-4 text-zinc-500 font-medium">
+						<tr className="border-b border-border-primary">
+							<th className="pb-2 pr-4 text-text-muted font-medium">Method</th>
+							<th className="pb-2 pr-4 text-text-muted font-medium">
 								Resolves when
 							</th>
-							<th className="pb-2 text-zinc-500 font-medium">Rejects when</th>
+							<th className="pb-2 text-text-muted font-medium">Rejects when</th>
 						</tr>
 					</thead>
-					<tbody className="divide-y divide-zinc-800/50">
+					<tbody className="divide-y divide-border-primary/50">
 						{(
 							Object.entries(COMBINATOR_DESCRIPTIONS) as [
 								Combinator,
@@ -350,11 +352,11 @@ export function CombinatorsDemo() {
 								key={key}
 								className={combinator === key ? "bg-cyan-500/5" : ""}
 							>
-								<td className="py-2 pr-4 font-mono text-cyan-400">
+								<td className="py-2 pr-4 font-mono text-accent-cyan-soft">
 									Promise.{key}()
 								</td>
-								<td className="py-2 pr-4 text-zinc-400">{d.resolves}</td>
-								<td className="py-2 text-zinc-400">{d.rejects}</td>
+								<td className="py-2 pr-4 text-text-tertiary">{d.resolves}</td>
+								<td className="py-2 text-text-tertiary">{d.rejects}</td>
 							</tr>
 						))}
 					</tbody>

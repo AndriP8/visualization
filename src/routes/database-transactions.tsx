@@ -21,24 +21,29 @@ function DatabaseTransactionsPage() {
 				gradient={{ from: "violet-400", to: "indigo-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="text-sm text-text-muted space-y-2">
 							<p>
-								<strong className="text-zinc-300">The problem:</strong> When
-								multiple users read and write to a database at the same time,
-								their queries can interleave and step on each other's toes,
-								leading to things like{" "}
-								<strong className="text-red-400">Lost Updates</strong> or{" "}
-								<strong className="text-red-400">Phantom Reads</strong>.
+								<strong className="text-text-secondary">The problem:</strong>{" "}
+								When multiple users read and write to a database at the same
+								time, their queries can interleave and step on each other's
+								toes, leading to things like{" "}
+								<strong className="text-accent-red-soft">Lost Updates</strong>{" "}
+								or{" "}
+								<strong className="text-accent-red-soft">Phantom Reads</strong>.
 							</p>
 							<p>
-								<strong className="text-zinc-300">The solution:</strong>{" "}
+								<strong className="text-text-secondary">The solution:</strong>{" "}
 								Databases use{" "}
-								<strong className="text-violet-400">Transactions</strong> (ACID)
-								and{" "}
-								<strong className="text-violet-400">Isolation Levels</strong> to
-								provide concurrency control. Modern databases like PostgreSQL
+								<strong className="text-accent-violet-soft">
+									Transactions
+								</strong>{" "}
+								(ACID) and{" "}
+								<strong className="text-accent-violet-soft">
+									Isolation Levels
+								</strong>{" "}
+								to provide concurrency control. Modern databases like PostgreSQL
 								use{" "}
-								<strong className="text-violet-400">
+								<strong className="text-accent-violet-soft">
 									MVCC (Multi-Version Concurrency Control)
 								</strong>{" "}
 								to give each transaction a consistent snapshot of the data

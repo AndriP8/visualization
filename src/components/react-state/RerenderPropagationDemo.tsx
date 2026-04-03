@@ -1,5 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useRef, useState } from "react";
+import { useColorScheme } from "../../hooks/useColorScheme";
+import { THEME_COLORS } from "../../theme/tokens";
 import { DemoSection } from "../shared/DemoSection";
 
 // ─── Tree Definition ──────────────────────────────────────────────────────────
@@ -155,6 +157,7 @@ function SvgNode({
 	isSkipped,
 	onClickSetState,
 }: SvgNodeProps) {
+	const t = THEME_COLORS[useColorScheme()];
 	const { x, y, id, label } = layout;
 	const rx = x - NODE_W / 2;
 	const ry = y - NODE_H / 2;
@@ -166,7 +169,7 @@ function SvgNode({
 			? "#3b82f6"
 			: isMemoized
 				? "#6366f1"
-				: "#3f3f46";
+				: t.svgBorder;
 
 	const bgColor = isFlashing
 		? "#431407"
@@ -174,7 +177,7 @@ function SvgNode({
 			? "#1e3a5f"
 			: isMemoized
 				? "#1e1b4b"
-				: "#18181b";
+				: t.svgBg;
 
 	const textColor = isFlashing
 		? "#fb923c"
@@ -182,7 +185,7 @@ function SvgNode({
 			? "#60a5fa"
 			: isMemoized
 				? "#a5b4fc"
-				: "#a1a1aa";
+				: t.svgText;
 
 	const scale = isHovered ? 1.05 : 1;
 
@@ -350,7 +353,7 @@ export function RerenderPropagationDemo() {
 		>
 			{/* How to Use */}
 			<div className="mb-4 p-3 rounded-lg bg-violet-500/10 border border-violet-500/30">
-				<div className="text-xs font-semibold text-violet-300 mb-2 flex items-center gap-2">
+				<div className="text-xs font-semibold text-accent-violet mb-2 flex items-center gap-2">
 					<span>💡</span>
 					How to Use
 				</div>
@@ -369,8 +372,8 @@ export function RerenderPropagationDemo() {
 			</div>
 
 			{/* Memo Control Panel */}
-			<div className="mb-4 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700/50">
-				<div className="text-xs font-semibold text-zinc-300 mb-3">
+			<div className="mb-4 p-4 rounded-lg bg-surface-secondary/50 border border-border-secondary/50">
+				<div className="text-xs font-semibold text-text-secondary mb-3">
 					React.memo Controls
 				</div>
 				<div className="flex flex-wrap gap-3">
@@ -379,20 +382,20 @@ export function RerenderPropagationDemo() {
 							key={node.id}
 							className={`flex items-center gap-2 px-3 py-2 rounded-md border transition-all cursor-pointer ${
 								memoized.has(node.id)
-									? "bg-indigo-500/10 border-indigo-500/50 text-indigo-300"
-									: "bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-600"
+									? "bg-indigo-500/10 border-indigo-500/50 text-accent-indigo"
+									: "bg-surface-primary/50 border-border-secondary text-text-tertiary hover:border-border-tertiary"
 							}`}
 						>
 							<input
 								type="checkbox"
 								checked={memoized.has(node.id)}
 								onChange={() => handleToggleMemo(node.id)}
-								className="w-3.5 h-3.5 rounded border-zinc-600 bg-zinc-900 checked:bg-indigo-500 checked:border-indigo-500 cursor-pointer"
+								className="w-3.5 h-3.5 rounded border-border-tertiary bg-surface-primary checked:bg-indigo-500 checked:border-indigo-500 cursor-pointer"
 							/>
 							<span className="text-xs font-mono font-semibold">
 								{node.label}
 								{node.id !== node.label && (
-									<span className="text-zinc-600 ml-1">#{node.id}</span>
+									<span className="text-text-faint ml-1">#{node.id}</span>
 								)}
 							</span>
 						</label>
@@ -401,8 +404,8 @@ export function RerenderPropagationDemo() {
 			</div>
 
 			{/* Legend */}
-			<div className="mb-4 p-3 rounded-lg bg-zinc-900/30 border border-zinc-800">
-				<div className="text-[10px] font-semibold text-zinc-400 mb-2 uppercase tracking-wide">
+			<div className="mb-4 p-3 rounded-lg bg-surface-primary/30 border border-border-primary">
+				<div className="text-[10px] font-semibold text-text-tertiary mb-2 uppercase tracking-wide">
 					Legend
 				</div>
 				<div className="flex flex-wrap gap-4 text-xs">
@@ -413,7 +416,7 @@ export function RerenderPropagationDemo() {
 					].map(({ color, label }) => (
 						<div
 							key={label}
-							className="flex items-center gap-1.5 text-zinc-400"
+							className="flex items-center gap-1.5 text-text-tertiary"
 						>
 							<span
 								className="w-3 h-3 rounded-sm border-2"
@@ -450,7 +453,7 @@ export function RerenderPropagationDemo() {
 								y1={parent.y + NODE_H / 2}
 								x2={n.x}
 								y2={n.y - NODE_H / 2}
-								stroke="#3f3f46"
+								stroke="var(--svg-border)"
 								strokeWidth={1.5}
 							/>
 						);
@@ -478,13 +481,13 @@ export function RerenderPropagationDemo() {
 						initial={{ opacity: 0, y: 6 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0 }}
-						className="mt-4 p-3 rounded-lg bg-orange-500/10 border border-orange-500/30 text-sm text-orange-300"
+						className="mt-4 p-3 rounded-lg bg-orange-500/10 border border-orange-500/30 text-sm text-accent-orange"
 					>
 						<strong>Re-rendering: </strong>
 						{flashingIds.size} component{flashingIds.size !== 1 ? "s" : ""}{" "}
 						re-render
 						{skippedIds.size > 0 && (
-							<span className="ml-2 text-blue-300">
+							<span className="ml-2 text-accent-blue">
 								· <strong>{skippedIds.size}</strong> memo-skipped
 							</span>
 						)}
@@ -493,16 +496,18 @@ export function RerenderPropagationDemo() {
 			</AnimatePresence>
 
 			{/* Key insight */}
-			<div className="mt-4 p-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-xs text-zinc-400 space-y-1">
+			<div className="mt-4 p-3 rounded-lg bg-surface-secondary/50 border border-border-secondary/50 text-xs text-text-tertiary space-y-1">
 				<p>
-					<span className="text-orange-400 font-semibold">
+					<span className="text-accent-orange-soft font-semibold">
 						Default (no memo):
 					</span>{" "}
 					When a parent re-renders, React re-executes every child component
 					function in its subtree — regardless of whether props changed.
 				</p>
 				<p>
-					<span className="text-indigo-400 font-semibold">React.memo:</span>{" "}
+					<span className="text-accent-indigo-soft font-semibold">
+						React.memo:
+					</span>{" "}
 					Wraps a component in a shallow prop comparison. If none of the props
 					changed since last render, React reuses the previous output and skips
 					the re-render.

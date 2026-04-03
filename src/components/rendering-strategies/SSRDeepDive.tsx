@@ -152,14 +152,14 @@ export function SSRDeepDive() {
 					type="button"
 					onClick={handlePlay}
 					disabled={isPlaying}
-					className="px-4 py-2 rounded-lg bg-violet-500 text-white text-sm font-semibold hover:bg-violet-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg bg-violet-500 text-text-primary text-sm font-semibold hover:bg-violet-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
 				>
 					{isPlaying ? "Playing..." : "▶️ Play Animation"}
 				</button>
 				<button
 					type="button"
 					onClick={handleReset}
-					className="px-4 py-2 rounded-lg bg-zinc-800 text-zinc-300 text-sm font-medium hover:bg-zinc-700 transition-colors border border-zinc-700"
+					className="px-4 py-2 rounded-lg bg-surface-secondary text-text-secondary text-sm font-medium hover:bg-surface-tertiary transition-colors border border-border-secondary"
 				>
 					Reset
 				</button>
@@ -168,11 +168,11 @@ export function SSRDeepDive() {
 			{/* Architecture Visualization */}
 			<div className="grid grid-cols-3 gap-4 mb-6 min-h-[400px]">
 				{/* Browser Column */}
-				<div className="p-4 rounded-xl border border-zinc-700 bg-zinc-800/30">
+				<div className="p-4 rounded-xl border border-border-secondary bg-surface-secondary/30">
 					<div className="text-center mb-4">
 						<div className="text-3xl mb-2">💻</div>
-						<h4 className="text-sm font-semibold text-white">Browser</h4>
-						<p className="text-xs text-zinc-500">Client-side</p>
+						<h4 className="text-sm font-semibold text-text-primary">Browser</h4>
+						<p className="text-xs text-text-muted">Client-side</p>
 					</div>
 					<div className="space-y-2">
 						{SSR_STEPS.filter((s) => s.location === "browser").map((step) => {
@@ -192,17 +192,17 @@ export function SSRDeepDive() {
 									className={`p-3 rounded-lg border-2 cursor-pointer ${
 										isActive
 											? "border-violet-500 bg-violet-500/10"
-											: "border-zinc-700 bg-zinc-900/50"
+											: "border-border-secondary bg-surface-primary/50"
 									}`}
 									style={{
 										borderColor: isActive ? step.color : undefined,
 									}}
 									onClick={() => handleStepClick(globalIndex)}
 								>
-									<div className="text-xs font-semibold text-white mb-1">
+									<div className="text-xs font-semibold text-text-primary mb-1">
 										{step.label}
 									</div>
-									<div className="text-[10px] text-zinc-400">
+									<div className="text-[10px] text-text-tertiary">
 										{step.description}
 									</div>
 								</motion.div>
@@ -212,11 +212,11 @@ export function SSRDeepDive() {
 				</div>
 
 				{/* Network Column */}
-				<div className="p-4 rounded-xl border border-zinc-700 bg-zinc-800/30 flex flex-col justify-center">
+				<div className="p-4 rounded-xl border border-border-secondary bg-surface-secondary/30 flex flex-col justify-center">
 					<div className="text-center mb-4">
 						<div className="text-3xl mb-2">🌐</div>
-						<h4 className="text-sm font-semibold text-white">Network</h4>
-						<p className="text-xs text-zinc-500">Internet transit</p>
+						<h4 className="text-sm font-semibold text-text-primary">Network</h4>
+						<p className="text-xs text-text-muted">Internet transit</p>
 					</div>
 					<div className="space-y-2">
 						{SSR_STEPS.filter((s) => s.location === "network").map((step) => {
@@ -233,17 +233,17 @@ export function SSRDeepDive() {
 									}}
 									className={`p-3 rounded-lg border-2 cursor-pointer ${
 										isActive
-											? "border-gray-500 bg-gray-500/10"
-											: "border-zinc-700 bg-zinc-900/50"
+											? "border-text-muted bg-text-muted/10"
+											: "border-border-secondary bg-surface-primary/50"
 									}`}
 									onClick={() => handleStepClick(globalIndex)}
 								>
-									<div className="text-xs font-semibold text-white mb-1">
+									<div className="text-xs font-semibold text-text-primary mb-1">
 										{step.label}
 									</div>
 									{isActive && (
 										<motion.div
-											className="mt-2 h-1 bg-gray-400 rounded-full"
+											className="mt-2 h-1 bg-text-tertiary rounded-full"
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
 											transition={{ duration: step.duration }}
@@ -256,11 +256,11 @@ export function SSRDeepDive() {
 				</div>
 
 				{/* Server Column */}
-				<div className="p-4 rounded-xl border border-zinc-700 bg-zinc-800/30">
+				<div className="p-4 rounded-xl border border-border-secondary bg-surface-secondary/30">
 					<div className="text-center mb-4">
 						<div className="text-3xl mb-2">🖥️</div>
-						<h4 className="text-sm font-semibold text-white">Server</h4>
-						<p className="text-xs text-zinc-500">Origin backend</p>
+						<h4 className="text-sm font-semibold text-text-primary">Server</h4>
+						<p className="text-xs text-text-muted">Origin backend</p>
 					</div>
 					<div className="space-y-2">
 						{SSR_STEPS.filter((s) => s.location === "server").map((step) => {
@@ -280,17 +280,17 @@ export function SSRDeepDive() {
 									className={`p-3 rounded-lg border-2 cursor-pointer ${
 										isActive
 											? "border-blue-500 bg-blue-500/10"
-											: "border-zinc-700 bg-zinc-900/50"
+											: "border-border-secondary bg-surface-primary/50"
 									}`}
 									style={{
 										borderColor: isActive ? step.color : undefined,
 									}}
 									onClick={() => handleStepClick(globalIndex)}
 								>
-									<div className="text-xs font-semibold text-white mb-1">
+									<div className="text-xs font-semibold text-text-primary mb-1">
 										{step.label}
 									</div>
-									<div className="text-[10px] text-zinc-400">
+									<div className="text-[10px] text-text-tertiary">
 										{step.description}
 									</div>
 								</motion.div>
@@ -301,7 +301,7 @@ export function SSRDeepDive() {
 			</div>
 
 			{/* Timeline Progress */}
-			<div className="relative h-16 bg-zinc-800/50 rounded-lg border border-zinc-700/50 p-2">
+			<div className="relative h-16 bg-surface-secondary/50 rounded-lg border border-border-secondary/50 p-2">
 				<div className="relative h-full">
 					{SSR_STEPS.map((step, idx) => {
 						const position = (idx / (SSR_STEPS.length - 1)) * 100;
@@ -321,7 +321,7 @@ export function SSRDeepDive() {
 									}`}
 									style={{
 										backgroundColor:
-											isPast || isActive ? step.color : "#3f3f46",
+											isPast || isActive ? step.color : "var(--svg-border)",
 										borderColor: step.color,
 									}}
 									animate={{
@@ -332,7 +332,7 @@ export function SSRDeepDive() {
 						);
 					})}
 					{/* Progress Line */}
-					<div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-0.5 bg-zinc-700">
+					<div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-0.5 bg-surface-tertiary">
 						<motion.div
 							className="h-full bg-violet-500"
 							style={{

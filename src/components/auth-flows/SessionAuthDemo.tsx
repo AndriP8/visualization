@@ -216,10 +216,10 @@ export function SessionAuthDemo() {
 
 	const expiryColor =
 		sessionExpiry > 20
-			? "text-emerald-400"
+			? "text-accent-emerald-soft"
 			: sessionExpiry > 10
-				? "text-amber-400"
-				: "text-rose-400";
+				? "text-accent-amber-soft"
+				: "text-accent-rose-soft";
 
 	return (
 		<div className="space-y-8">
@@ -229,7 +229,7 @@ export function SessionAuthDemo() {
 					type="button"
 					onClick={handleAction}
 					disabled={phase === "logging-in" || phase === "making-request"}
-					className="px-6 py-2.5 rounded-lg bg-violet-500 hover:bg-violet-600 disabled:bg-zinc-700 disabled:text-zinc-500 text-white font-medium transition-colors"
+					className="px-6 py-2.5 rounded-lg bg-violet-500 hover:bg-violet-600 disabled:bg-surface-tertiary disabled:text-text-muted text-text-primary font-medium transition-colors"
 				>
 					{getButtonLabel()}
 				</button>
@@ -239,7 +239,7 @@ export function SessionAuthDemo() {
 						initial={{ opacity: 0, scale: 0.9 }}
 						animate={{ opacity: 1, scale: 1 }}
 						onClick={handleLogout}
-						className="px-6 py-2.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white font-medium transition-colors"
+						className="px-6 py-2.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-text-primary font-medium transition-colors"
 					>
 						Logout
 					</motion.button>
@@ -254,20 +254,20 @@ export function SessionAuthDemo() {
 					className="grid md:grid-cols-2 gap-4"
 				>
 					{/* Browser Cookie */}
-					<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
-						<h4 className="text-sm font-semibold text-violet-300 mb-3">
+					<div className="bg-surface-primary border border-border-primary rounded-lg p-4">
+						<h4 className="text-sm font-semibold text-accent-violet mb-3">
 							Browser (Cookie Storage)
 						</h4>
 						<button
 							type="button"
 							onClick={() => setInspecting(true)}
-							className="w-full text-left bg-zinc-800 border border-violet-500/30 rounded p-3 hover:border-violet-500/50 transition-colors"
+							className="w-full text-left bg-surface-secondary border border-violet-500/30 rounded p-3 hover:border-violet-500/50 transition-colors"
 						>
-							<div className="text-xs text-zinc-500 mb-1">Cookie</div>
-							<div className="font-mono text-sm text-violet-300 break-all">
+							<div className="text-xs text-text-muted mb-1">Cookie</div>
+							<div className="font-mono text-sm text-accent-violet break-all">
 								sessionId={SESSION_ID}
 							</div>
-							<div className="text-xs text-zinc-600 mt-2 space-x-2">
+							<div className="text-xs text-text-faint mt-2 space-x-2">
 								<span>HttpOnly</span>
 								<span>•</span>
 								<span>Secure</span>
@@ -275,19 +275,19 @@ export function SessionAuthDemo() {
 								<span>SameSite=Strict</span>
 							</div>
 						</button>
-						<p className="text-xs text-zinc-500 mt-2">
+						<p className="text-xs text-text-muted mt-2">
 							Click to inspect cookie flags
 						</p>
 					</div>
 
 					{/* Server Session */}
-					<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
-						<h4 className="text-sm font-semibold text-cyan-300 mb-3">
+					<div className="bg-surface-primary border border-border-primary rounded-lg p-4">
+						<h4 className="text-sm font-semibold text-accent-cyan mb-3">
 							Server (Session Store)
 						</h4>
-						<div className="bg-zinc-800 border border-cyan-500/30 rounded p-3">
-							<div className="text-xs text-zinc-500 mb-1">Session Data</div>
-							<div className="font-mono text-sm text-cyan-300 space-y-1">
+						<div className="bg-surface-secondary border border-cyan-500/30 rounded p-3">
+							<div className="text-xs text-text-muted mb-1">Session Data</div>
+							<div className="font-mono text-sm text-accent-cyan space-y-1">
 								<div>sessionId: {SESSION_ID}</div>
 								<div>userId: {USER_ID}</div>
 								<div className="flex items-center gap-2">
@@ -300,7 +300,7 @@ export function SessionAuthDemo() {
 												duration: 1,
 												repeat: Number.POSITIVE_INFINITY,
 											}}
-											className="text-rose-400"
+											className="text-accent-rose-soft"
 										>
 											⚠️
 										</motion.span>
@@ -319,7 +319,7 @@ export function SessionAuthDemo() {
 				<motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
-					className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden"
+					className="bg-surface-primary border border-border-primary rounded-lg overflow-hidden"
 				>
 					<AuthFlowSequence
 						steps={getSteps()}
@@ -331,7 +331,7 @@ export function SessionAuthDemo() {
 
 			{/* Security Callout */}
 			<div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-				<h4 className="text-sm font-semibold text-emerald-300 mb-2">
+				<h4 className="text-sm font-semibold text-accent-emerald mb-2">
 					✓ Security Benefits
 				</h4>
 				<p className="text-sm text-emerald-200">
@@ -343,7 +343,7 @@ export function SessionAuthDemo() {
 
 			{/* Code Example */}
 			<div>
-				<h4 className="text-sm font-semibold text-white mb-3">
+				<h4 className="text-sm font-semibold text-text-primary mb-3">
 					Server Implementation
 				</h4>
 				<ShikiCode

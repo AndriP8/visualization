@@ -146,14 +146,14 @@ export function WeightedRoundRobinDemo() {
 				<button
 					type="button"
 					onClick={reset}
-					className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg font-medium transition-colors"
+					className="px-4 py-2 bg-surface-tertiary hover:bg-surface-tertiary rounded-lg font-medium transition-colors"
 				>
 					Reset
 				</button>
 			</div>
 
 			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-8">
+			<div className="bg-surface-primary border border-border-primary rounded-xl p-8">
 				<div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
 					{servers.map((server) => {
 						const activeRequests = requests.filter(
@@ -169,8 +169,8 @@ export function WeightedRoundRobinDemo() {
 
 						return (
 							<div key={server.id} className="relative">
-								<motion.div className="border-2 border-zinc-700 rounded-lg p-4 bg-zinc-800">
-									<h4 className="font-semibold text-white mb-3">
+								<motion.div className="border-2 border-border-secondary rounded-lg p-4 bg-surface-secondary">
+									<h4 className="font-semibold text-text-primary mb-3">
 										{server.name}
 									</h4>
 
@@ -178,7 +178,7 @@ export function WeightedRoundRobinDemo() {
 										{/* Capacity/Weight Control */}
 										<div>
 											<div className="flex items-center justify-between mb-2">
-												<span className="text-xs text-zinc-400">
+												<span className="text-xs text-text-tertiary">
 													Capacity Weight
 												</span>
 												<div className="flex items-center gap-1">
@@ -186,24 +186,24 @@ export function WeightedRoundRobinDemo() {
 														type="button"
 														onClick={() => updateWeight(server.id, -1)}
 														disabled={server.weight <= 1}
-														className="w-6 h-6 bg-zinc-700 hover:bg-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed rounded text-sm font-bold"
+														className="w-6 h-6 bg-surface-tertiary hover:bg-surface-tertiary disabled:opacity-30 disabled:cursor-not-allowed rounded text-sm font-bold"
 													>
 														−
 													</button>
-													<span className="w-8 text-center font-mono text-rose-400 font-bold">
+													<span className="w-8 text-center font-mono text-accent-rose-soft font-bold">
 														{server.weight}
 													</span>
 													<button
 														type="button"
 														onClick={() => updateWeight(server.id, 1)}
 														disabled={server.weight >= 5}
-														className="w-6 h-6 bg-zinc-700 hover:bg-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed rounded text-sm font-bold"
+														className="w-6 h-6 bg-surface-tertiary hover:bg-surface-tertiary disabled:opacity-30 disabled:cursor-not-allowed rounded text-sm font-bold"
 													>
 														+
 													</button>
 												</div>
 											</div>
-											<div className="h-2 bg-zinc-900 rounded-full overflow-hidden">
+											<div className="h-2 bg-surface-primary rounded-full overflow-hidden">
 												<div
 													className="h-full bg-rose-500"
 													style={{ width: `${(server.weight / 5) * 100}%` }}
@@ -212,20 +212,20 @@ export function WeightedRoundRobinDemo() {
 										</div>
 
 										{/* Request Count */}
-										<div className="flex justify-between text-sm text-zinc-400">
+										<div className="flex justify-between text-sm text-text-tertiary">
 											<span>Requests:</span>
-											<span className="text-white font-mono">
+											<span className="text-text-primary font-mono">
 												{server.requestCount}
 											</span>
 										</div>
 
 										{/* Distribution Bar */}
 										<div>
-											<div className="flex justify-between text-xs text-zinc-500 mb-1">
+											<div className="flex justify-between text-xs text-text-muted mb-1">
 												<span>Actual</span>
 												<span>{actualRatio.toFixed(1)}%</span>
 											</div>
-											<div className="h-3 bg-zinc-900 rounded-full overflow-hidden">
+											<div className="h-3 bg-surface-primary rounded-full overflow-hidden">
 												<motion.div
 													className="h-full bg-rose-400"
 													initial={{ width: 0 }}
@@ -238,7 +238,7 @@ export function WeightedRoundRobinDemo() {
 										</div>
 
 										{/* Expected Ratio */}
-										<div className="text-xs text-zinc-500">
+										<div className="text-xs text-text-muted">
 											Expected: {expectedRatio.toFixed(1)}%
 										</div>
 									</div>
@@ -263,8 +263,8 @@ export function WeightedRoundRobinDemo() {
 				</div>
 
 				{/* Weight Sequence Visualization */}
-				<div className="mt-6 pt-6 border-t border-zinc-800">
-					<div className="text-sm text-zinc-400 mb-3">
+				<div className="mt-6 pt-6 border-t border-border-primary">
+					<div className="text-sm text-text-tertiary mb-3">
 						Request Distribution Sequence (Total Weight: {totalWeight}):
 					</div>
 					<div className="flex flex-wrap gap-2">
@@ -277,8 +277,8 @@ export function WeightedRoundRobinDemo() {
 									key={item.key}
 									className={`px-3 py-1 rounded text-sm font-medium transition-all ${
 										isCurrent
-											? "bg-rose-500 text-white ring-2 ring-rose-400"
-											: "bg-zinc-800 text-zinc-400"
+											? "bg-rose-500 text-text-primary ring-2 ring-rose-400"
+											: "bg-surface-secondary text-text-tertiary"
 									}`}
 									animate={{
 										scale: isCurrent ? 1.1 : 1,
@@ -336,26 +336,30 @@ const balancer = new WeightedRoundRobinBalancer(servers);
 			/>
 
 			{/* Use Case Callout */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-				<h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6">
+				<h4 className="font-semibold text-text-primary mb-3 flex items-center gap-2">
 					<span>🎯</span>
 					When to Use Weighted Round-Robin
 				</h4>
-				<div className="space-y-3 text-sm text-zinc-300">
+				<div className="space-y-3 text-sm text-text-secondary">
 					<p>
-						<span className="font-medium text-rose-400">Ideal for:</span>{" "}
+						<span className="font-medium text-accent-rose-soft">
+							Ideal for:
+						</span>{" "}
 						Heterogeneous server capacities where you know the relative
 						performance of each server ahead of time.
 					</p>
 					<p>
-						<span className="font-medium text-rose-400">Example:</span> A
-						cluster with mixed instance types (e.g., 2 large instances, 3 medium
-						instances, 1 small instance). Assign weights proportional to CPU/RAM
-						capacity.
+						<span className="font-medium text-accent-rose-soft">Example:</span>{" "}
+						A cluster with mixed instance types (e.g., 2 large instances, 3
+						medium instances, 1 small instance). Assign weights proportional to
+						CPU/RAM capacity.
 					</p>
 					<p>
-						<span className="font-medium text-rose-400">Trade-off:</span> Better
-						than simple round-robin for heterogeneous clusters, but still
+						<span className="font-medium text-accent-rose-soft">
+							Trade-off:
+						</span>{" "}
+						Better than simple round-robin for heterogeneous clusters, but still
 						doesn't adapt to real-time load like Least Connections.
 					</p>
 				</div>

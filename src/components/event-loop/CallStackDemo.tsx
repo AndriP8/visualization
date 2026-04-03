@@ -126,7 +126,7 @@ export function CallStackDemo() {
 			<div className="flex flex-col lg:flex-row gap-6">
 				{/* Code panel */}
 				<div className="flex-1 min-w-0">
-					<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+					<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 						Source Code
 					</div>
 					<ShikiCode
@@ -138,10 +138,10 @@ export function CallStackDemo() {
 
 				{/* Stack visualization */}
 				<div className="flex-1 min-w-0">
-					<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+					<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 						Call Stack
 					</div>
-					<div className="p-4 rounded-lg bg-zinc-900 border border-zinc-800">
+					<div className="p-4 rounded-lg bg-surface-primary border border-border-primary">
 						<svg
 							width="100%"
 							viewBox={`0 0 ${STACK_WIDTH} ${SVG_HEIGHT}`}
@@ -156,14 +156,14 @@ export function CallStackDemo() {
 								y1={SVG_HEIGHT - 10}
 								x2={STACK_WIDTH - 10}
 								y2={SVG_HEIGHT - 10}
-								stroke="#3f3f46"
+								stroke="var(--svg-border)"
 								strokeWidth={2}
 							/>
 							<text
 								x={STACK_WIDTH / 2}
 								y={SVG_HEIGHT}
 								textAnchor="middle"
-								fill="#52525b"
+								fill="var(--svg-text-muted)"
 								fontSize={10}
 								fontFamily="monospace"
 							>
@@ -215,7 +215,7 @@ export function CallStackDemo() {
 									x={STACK_WIDTH / 2}
 									y={SVG_HEIGHT / 2}
 									textAnchor="middle"
-									fill="#52525b"
+									fill="var(--svg-text-muted)"
 									fontSize={12}
 									fontFamily="monospace"
 								>
@@ -233,7 +233,7 @@ export function CallStackDemo() {
 					type="button"
 					onClick={prev}
 					disabled={step <= 0}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					← Back
 				</button>
@@ -241,18 +241,18 @@ export function CallStackDemo() {
 					type="button"
 					onClick={next}
 					disabled={step >= STEPS.length - 1}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-violet-300 border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-accent-violet border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					Next →
 				</button>
 				<button
 					type="button"
 					onClick={reset}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 				>
 					↺ Reset
 				</button>
-				<span className="text-xs text-zinc-600 ml-auto">
+				<span className="text-xs text-text-faint ml-auto">
 					Step {step + 1} / {STEPS.length}
 				</span>
 			</div>
@@ -262,7 +262,7 @@ export function CallStackDemo() {
 				key={step}
 				initial={{ opacity: 0, y: 5 }}
 				animate={{ opacity: 1, y: 0 }}
-				className="mt-4 p-3 rounded-lg bg-violet-500/5 border border-violet-500/20 text-sm text-violet-300"
+				className="mt-4 p-3 rounded-lg bg-violet-500/5 border border-violet-500/20 text-sm text-accent-violet"
 			>
 				{current.description}
 			</motion.div>

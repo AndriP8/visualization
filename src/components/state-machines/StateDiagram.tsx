@@ -59,7 +59,7 @@ export function StateDiagram({
 
 			<svg
 				viewBox="0 0 800 500"
-				className="w-full max-w-3xl border border-zinc-700 rounded-lg bg-zinc-900/50"
+				className="w-full max-w-3xl border border-border-secondary rounded-lg bg-surface-primary/50"
 			>
 				<title>State machine diagram showing states and transitions</title>
 				{/* Draw transitions */}
@@ -80,7 +80,7 @@ export function StateDiagram({
 								y1={from.y}
 								x2={to.x}
 								y2={to.y}
-								stroke={isActive ? "#fb923c" : "#52525b"}
+								stroke={isActive ? "#fb923c" : "var(--svg-text-muted)"}
 								strokeWidth={isActive ? 2 : 1}
 								initial={{ pathLength: 0 }}
 								animate={{ pathLength: 1 }}
@@ -91,7 +91,7 @@ export function StateDiagram({
 							<text
 								x={midX}
 								y={midY - 10}
-								fill={isActive ? "#fb923c" : "#71717a"}
+								fill={isActive ? "#fb923c" : "var(--svg-text-muted)"}
 								fontSize="12"
 								textAnchor="middle"
 								className="font-mono"
@@ -112,7 +112,7 @@ export function StateDiagram({
 						refY="3"
 						orient="auto"
 					>
-						<polygon points="0 0, 10 3, 0 6" fill="#52525b" />
+						<polygon points="0 0, 10 3, 0 6" fill="var(--svg-text-muted)" />
 					</marker>
 				</defs>
 
@@ -136,7 +136,13 @@ export function StateDiagram({
 											? "rgba(52, 211, 153, 0.2)"
 											: "rgba(39, 39, 42, 1)"
 								}
-								stroke={isCurrent ? "#fb923c" : isFinal ? "#34d399" : "#52525b"}
+								stroke={
+									isCurrent
+										? "#fb923c"
+										: isFinal
+											? "#34d399"
+											: "var(--svg-text-muted)"
+								}
 								strokeWidth={isCurrent ? 3 : 2}
 								initial={{ scale: 0 }}
 								animate={{
@@ -174,7 +180,13 @@ export function StateDiagram({
 							<text
 								x={pos.x}
 								y={pos.y}
-								fill={isCurrent ? "#fb923c" : isFinal ? "#34d399" : "#a1a1aa"}
+								fill={
+									isCurrent
+										? "#fb923c"
+										: isFinal
+											? "#34d399"
+											: "var(--svg-text)"
+								}
 								fontSize="14"
 								fontWeight={isCurrent ? "bold" : "normal"}
 								textAnchor="middle"
@@ -201,7 +213,7 @@ export function StateDiagram({
 									onEvent(event);
 								}
 							}}
-							className="px-4 py-2 bg-orange-500/20 border border-orange-400 text-orange-300 rounded-lg hover:bg-orange-500/30 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-colors font-mono text-sm"
+							className="px-4 py-2 bg-orange-500/20 border border-orange-400 text-accent-orange rounded-lg hover:bg-orange-500/30 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-colors font-mono text-sm"
 							type="button"
 							aria-label={`Trigger ${event} transition`}
 						>

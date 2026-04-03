@@ -63,7 +63,7 @@ export function PipelineOverviewDemo() {
 		<div className="flex flex-col gap-8">
 			{/* Pipeline Visualizer */}
 			<div className="relative flex flex-col items-center">
-				<div className="absolute top-0 bottom-0 left-1/2 w-1 bg-zinc-800 -translate-x-1/2 z-0" />
+				<div className="absolute top-0 bottom-0 left-1/2 w-1 bg-surface-secondary -translate-x-1/2 z-0" />
 
 				{STAGES.map((stage, index) => {
 					const isActive = activeStage === stage.id;
@@ -82,7 +82,7 @@ export function PipelineOverviewDemo() {
 									${
 										isActive
 											? "bg-violet-500/10 border-violet-500 shadow-[0_0_20px_rgba(139,92,246,0.3)]"
-											: "bg-zinc-900 border-zinc-700 hover:border-zinc-500 hover:bg-zinc-800"
+											: "bg-surface-primary border-border-secondary hover:border-text-muted hover:bg-surface-secondary"
 									}
 								`}
 							>
@@ -93,13 +93,13 @@ export function PipelineOverviewDemo() {
 								</div>
 								<div className="flex-1 text-left">
 									<h4
-										className={`font-bold text-lg ${isActive ? "text-violet-300" : "text-white"}`}
+										className={`font-bold text-lg ${isActive ? "text-accent-violet" : "text-text-primary"}`}
 									>
 										{stage.label}
 									</h4>
 								</div>
 								<div
-									className={`text-zinc-500 transition-transform duration-300 ${isActive ? "rotate-180" : ""}`}
+									className={`text-text-muted transition-transform duration-300 ${isActive ? "rotate-180" : ""}`}
 								>
 									▼
 								</div>
@@ -113,28 +113,28 @@ export function PipelineOverviewDemo() {
 										exit={{ opacity: 0, height: 0, y: -10 }}
 										className="w-full max-w-md overflow-hidden mt-2"
 									>
-										<div className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-4 shadow-lg">
-											<p className="text-zinc-300 text-sm leading-relaxed">
+										<div className="p-5 rounded-2xl bg-surface-primary border border-border-primary space-y-4 shadow-lg">
+											<p className="text-text-secondary text-sm leading-relaxed">
 												{stage.description}
 											</p>
 
-											<div className="grid grid-cols-2 gap-4 pt-4 border-t border-zinc-800/50">
+											<div className="grid grid-cols-2 gap-4 pt-4 border-t border-border-primary/50">
 												{stage.input && (
 													<div>
-														<span className="text-xs text-zinc-500 uppercase font-semibold">
+														<span className="text-xs text-text-muted uppercase font-semibold">
 															Input
 														</span>
-														<div className="text-sm font-mono text-cyan-400 mt-1 bg-zinc-950 p-2 rounded-md border border-zinc-800/50">
+														<div className="text-sm font-mono text-accent-cyan-soft mt-1 bg-surface-base p-2 rounded-md border border-border-primary/50">
 															{stage.input}
 														</div>
 													</div>
 												)}
 												{stage.output && (
 													<div className={!stage.input ? "col-span-2" : ""}>
-														<span className="text-xs text-zinc-500 uppercase font-semibold">
+														<span className="text-xs text-text-muted uppercase font-semibold">
 															Output
 														</span>
-														<div className="text-sm font-mono text-green-400 mt-1 bg-zinc-950 p-2 rounded-md border border-zinc-800/50">
+														<div className="text-sm font-mono text-accent-green-soft mt-1 bg-surface-base p-2 rounded-md border border-border-primary/50">
 															{stage.output}
 														</div>
 													</div>

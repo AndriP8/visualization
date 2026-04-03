@@ -103,9 +103,9 @@ const SCENARIOS: ScenarioConfig[] = [
 ];
 
 const getThresholdColor = (value: number): string => {
-	if (value <= 1800) return "text-green-400";
-	if (value <= 3000) return "text-yellow-400";
-	return "text-rose-400";
+	if (value <= 1800) return "text-accent-green-soft";
+	if (value <= 3000) return "text-accent-yellow-soft";
+	return "text-accent-rose-soft";
 };
 
 export default function FCPDemo() {
@@ -191,8 +191,8 @@ export default function FCPDemo() {
 							}}
 							className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
 								isSelected
-									? "bg-violet-500/20 text-violet-300 border-violet-500/30"
-									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
+									? "bg-violet-500/20 text-accent-violet border-violet-500/30"
+									: "bg-surface-secondary text-text-tertiary border-border-secondary hover:text-text-secondary"
 							}`}
 						>
 							{scenario.label}
@@ -203,7 +203,9 @@ export default function FCPDemo() {
 
 			{/* Description */}
 			{currentScenario && (
-				<p className="text-sm text-zinc-400">{currentScenario.description}</p>
+				<p className="text-sm text-text-tertiary">
+					{currentScenario.description}
+				</p>
 			)}
 
 			{/* Control button */}
@@ -211,16 +213,16 @@ export default function FCPDemo() {
 				type="button"
 				onClick={running ? reset : runScenario}
 				disabled={running}
-				className="px-6 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
+				className="px-6 py-2 rounded-lg bg-violet-500 text-text-primary font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
 			>
 				{running ? "Running..." : "Run Scenario"}
 			</button>
 
 			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-6">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6 space-y-6">
 				{/* Network waterfall */}
 				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						Network Waterfall
 					</h4>
 					<div className="space-y-2">
@@ -242,12 +244,12 @@ export default function FCPDemo() {
 									className="flex items-center gap-3"
 								>
 									<div
-										className="w-40 text-xs font-mono text-zinc-400 truncate"
+										className="w-40 text-xs font-mono text-text-tertiary truncate"
 										title={resource.name}
 									>
 										{resource.name}
 									</div>
-									<div className="flex-1 h-8 bg-zinc-800 rounded relative">
+									<div className="flex-1 h-8 bg-surface-secondary rounded relative">
 										<AnimatePresence>
 											{(isActive || isComplete) && (
 												<motion.div
@@ -256,7 +258,7 @@ export default function FCPDemo() {
 													className={`absolute h-full rounded ${resource.color} ${isActive ? "opacity-100" : "opacity-60"}`}
 													style={{ left: `${startPercent}%` }}
 												>
-													<div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-white">
+													<div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-text-primary">
 														{resource.duration}ms
 													</div>
 												</motion.div>
@@ -270,7 +272,7 @@ export default function FCPDemo() {
 
 					{/* Time marker */}
 					{running && (
-						<div className="text-xs text-zinc-500 text-right">
+						<div className="text-xs text-text-muted text-right">
 							Current time: {Math.round(currentTime)}ms
 						</div>
 					)}
@@ -278,14 +280,14 @@ export default function FCPDemo() {
 
 				{/* Viewport paint visualization */}
 				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400">Viewport</h4>
+					<h4 className="text-sm font-semibold text-text-tertiary">Viewport</h4>
 					<div
 						className="relative bg-white rounded-lg overflow-hidden"
 						style={{ aspectRatio: "16/9", maxWidth: "600px" }}
 					>
 						<AnimatePresence>
 							{phase === "idle" && (
-								<div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm">
+								<div className="absolute inset-0 flex items-center justify-center text-text-tertiary text-sm">
 									Waiting for content...
 								</div>
 							)}
@@ -333,13 +335,13 @@ export default function FCPDemo() {
 					<motion.div
 						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
-						className="flex items-center justify-between p-4 bg-zinc-800 rounded-lg"
+						className="flex items-center justify-between p-4 bg-surface-secondary rounded-lg"
 					>
 						<div>
-							<div className="text-sm font-semibold text-zinc-300">
+							<div className="text-sm font-semibold text-text-secondary">
 								First Contentful Paint
 							</div>
-							<div className="text-xs text-zinc-500 mt-1">
+							<div className="text-xs text-text-muted mt-1">
 								Time until first DOM content renders
 							</div>
 						</div>
@@ -349,7 +351,7 @@ export default function FCPDemo() {
 							>
 								{fcpTime}ms
 							</div>
-							<div className="text-xs text-zinc-500 mt-1">
+							<div className="text-xs text-text-muted mt-1">
 								{fcpTime <= 1800
 									? "Good"
 									: fcpTime <= 3000
@@ -364,15 +366,17 @@ export default function FCPDemo() {
 				<div className="flex gap-4 text-xs">
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-green-500" />
-						<span className="text-zinc-400">Good: ≤1.8s</span>
+						<span className="text-text-tertiary">Good: ≤1.8s</span>
 					</div>
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-yellow-500" />
-						<span className="text-zinc-400">Needs Improvement: 1.8-3s</span>
+						<span className="text-text-tertiary">
+							Needs Improvement: 1.8-3s
+						</span>
 					</div>
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-rose-500" />
-						<span className="text-zinc-400">Poor: &gt;3s</span>
+						<span className="text-text-tertiary">Poor: &gt;3s</span>
 					</div>
 				</div>
 			</div>
@@ -380,7 +384,7 @@ export default function FCPDemo() {
 			{/* Code examples */}
 			<div className="grid md:grid-cols-2 gap-4">
 				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						Before (Blocking)
 					</h4>
 					<ShikiCode
@@ -400,7 +404,7 @@ export default function FCPDemo() {
 					/>
 				</div>
 				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						After (Optimized)
 					</h4>
 					<ShikiCode

@@ -152,14 +152,14 @@ export function DataFlowPipelineDemo() {
 	const isAggregated = step >= 4;
 
 	return (
-		<div className="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden shadow-xl font-mono text-sm flex flex-col min-h-150">
+		<div className="bg-surface-base border border-border-primary rounded-xl overflow-hidden shadow-xl font-mono text-sm flex flex-col min-h-150">
 			{/* SQL Query Display with Highlighting */}
-			<div className="bg-zinc-900 border-b border-zinc-800 p-4">
+			<div className="bg-surface-primary border-b border-border-primary p-4">
 				<div className="max-w-3xl mx-auto">
-					<div className="text-zinc-500 text-xs uppercase tracking-wider mb-3 font-semibold">
+					<div className="text-text-muted text-xs uppercase tracking-wider mb-3 font-semibold">
 						SQL Query
 					</div>
-					<div className="bg-black/40 border border-zinc-800 rounded-lg p-4 space-y-1.5">
+					<div className="bg-black/40 border border-border-primary rounded-lg p-4 space-y-1.5">
 						{[
 							{ id: "select", clause: STEPS[4].sqlClause, active: step === 4 },
 							{ id: "from", clause: STEPS[0].sqlClause, active: step === 0 },
@@ -185,7 +185,7 @@ export function DataFlowPipelineDemo() {
 							>
 								<code
 									className={`transition-colors ${
-										item.active ? "text-blue-300" : "text-zinc-400"
+										item.active ? "text-accent-blue" : "text-text-tertiary"
 									}`}
 								>
 									{item.clause}
@@ -198,13 +198,13 @@ export function DataFlowPipelineDemo() {
 
 			<div className="flex flex-col lg:flex-row flex-1">
 				{/* Left side: Controls */}
-				<div className="w-full lg:w-64 bg-zinc-900 border-b lg:border-b-0 lg:border-r border-zinc-800 p-4 flex flex-col gap-4 sticky top-0 z-20">
-					<h3 className="text-zinc-400 font-semibold mb-2 uppercase text-xs tracking-wider">
+				<div className="w-full lg:w-64 bg-surface-primary border-b lg:border-b-0 lg:border-r border-border-primary p-4 flex flex-col gap-4 sticky top-0 z-20">
+					<h3 className="text-text-tertiary font-semibold mb-2 uppercase text-xs tracking-wider">
 						Execution Pipeline
 					</h3>
 					<div className="flex flex-col gap-2 relative">
 						{/* Connecting line */}
-						<div className="absolute left-2.75 top-6 bottom-4 w-px bg-zinc-800" />
+						<div className="absolute left-2.75 top-6 bottom-4 w-px bg-surface-secondary" />
 
 						{STEPS.map((s, idx) => (
 							<button
@@ -212,26 +212,28 @@ export function DataFlowPipelineDemo() {
 								type="button"
 								onClick={() => setStep(idx)}
 								className={`relative z-10 flex gap-3 text-left p-2 rounded-lg transition-colors group ${
-									step === idx ? "bg-blue-500/10" : "hover:bg-zinc-800/50"
+									step === idx
+										? "bg-blue-500/10"
+										: "hover:bg-surface-secondary/50"
 								}`}
 							>
 								<div
 									className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 border-2 transition-colors ${
 										step >= idx
-											? "bg-blue-500 text-white border-blue-500"
-											: "bg-zinc-900 border-zinc-700 text-zinc-500 group-hover:border-zinc-500"
+											? "bg-blue-500 text-text-primary border-blue-500"
+											: "bg-surface-primary border-border-secondary text-text-muted group-hover:border-text-muted"
 									}`}
 								>
 									{step > idx ? "✓" : idx + 1}
 								</div>
 								<div>
 									<div
-										className={`font-bold transition-colors ${step >= idx ? "text-blue-300" : "text-zinc-400"}`}
+										className={`font-bold transition-colors ${step >= idx ? "text-accent-blue" : "text-text-tertiary"}`}
 									>
 										{s.title}
 									</div>
 									<div
-										className={`text-xs transition-colors ${step === idx ? "text-zinc-300" : "text-zinc-500"}`}
+										className={`text-xs transition-colors ${step === idx ? "text-text-secondary" : "text-text-muted"}`}
 									>
 										{s.desc}
 									</div>
@@ -242,11 +244,11 @@ export function DataFlowPipelineDemo() {
 				</div>
 
 				{/* Right side: Visualization */}
-				<div className="flex-1 p-6 relative bg-zinc-950 overflow-y-auto overflow-x-hidden">
+				<div className="flex-1 p-6 relative bg-surface-base overflow-y-auto overflow-x-hidden">
 					<LayoutGroup>
 						<div className="w-full max-w-2xl mx-auto flex flex-col gap-4">
 							{/* Table Header conditionally showing columns */}
-							<div className="grid grid-cols-12 gap-2 px-4 py-2 border-b border-zinc-800 text-xs font-semibold text-zinc-500">
+							<div className="grid grid-cols-12 gap-2 px-4 py-2 border-b border-border-primary text-xs font-semibold text-text-muted">
 								{isAggregated ? (
 									<>
 										<div className="col-span-4">department</div>
@@ -302,14 +304,16 @@ function RawRow({ row, dim }: { row: Employee; dim: boolean }) {
 			animate={{ opacity: dim ? 0.3 : 1, y: 0 }}
 			exit={{ opacity: 0, scale: 0.9 }}
 			transition={{ duration: 0.4, type: "spring", bounce: 0.2 }}
-			className={`grid grid-cols-12 gap-2 px-4 py-3 rounded-lg border bg-zinc-900 overflow-hidden ${
+			className={`grid grid-cols-12 gap-2 px-4 py-3 rounded-lg border bg-surface-primary overflow-hidden ${
 				row.status === "active" ? "border-emerald-500/20" : "border-rose-500/20"
 			}`}
 		>
-			<div className="col-span-2 text-zinc-500">#{row.id}</div>
-			<div className="col-span-3 font-semibold text-zinc-200">{row.name}</div>
-			<div className="col-span-4 text-blue-300">{row.dept}</div>
-			<div className="col-span-2 text-right text-emerald-300">
+			<div className="col-span-2 text-text-muted">#{row.id}</div>
+			<div className="col-span-3 font-semibold text-text-secondary">
+				{row.name}
+			</div>
+			<div className="col-span-4 text-accent-blue">{row.dept}</div>
+			<div className="col-span-2 text-right text-accent-emerald">
 				${(row.salary / 1000).toFixed(0)}k
 			</div>
 			<div className="col-span-1 text-right">
@@ -345,19 +349,19 @@ function GroupedRow({
 					layout
 					className="grid grid-cols-12 gap-2 px-4 py-4 items-center"
 				>
-					<div className="col-span-4 font-bold text-blue-300 text-lg">
+					<div className="col-span-4 font-bold text-accent-blue text-lg">
 						{group.dept}
 					</div>
-					<div className="col-span-4 text-center text-purple-300 text-lg font-bold">
+					<div className="col-span-4 text-center text-accent-purple text-lg font-bold">
 						{group.count}
 					</div>
-					<div className="col-span-4 text-right text-emerald-300 text-lg font-bold">
+					<div className="col-span-4 text-right text-accent-emerald text-lg font-bold">
 						${(group.avg / 1000).toFixed(1)}k
 					</div>
 				</motion.div>
 			) : (
 				<motion.div layout className="p-3">
-					<div className="text-purple-300 font-bold mb-3 px-2 flex justify-between">
+					<div className="text-accent-purple font-bold mb-3 px-2 flex justify-between">
 						<span>{group.dept} Group</span>
 						<span className="text-xs font-normal opacity-70 border border-purple-500/30 px-2 py-0.5 rounded-full">
 							COUNT: {group.count}
@@ -369,14 +373,16 @@ function GroupedRow({
 								<motion.div
 									key={row.id}
 									layoutId={`row-${row.id}`}
-									className="grid grid-cols-12 gap-2 px-3 py-2 rounded-md bg-zinc-900 border border-zinc-800 text-xs"
+									className="grid grid-cols-12 gap-2 px-3 py-2 rounded-md bg-surface-primary border border-border-primary text-xs"
 								>
-									<div className="col-span-2 text-zinc-500">#{row.id}</div>
-									<div className="col-span-3 text-zinc-300">{row.name}</div>
-									<div className="col-span-4 text-zinc-500 blur-[1px] opacity-30 select-none">
+									<div className="col-span-2 text-text-muted">#{row.id}</div>
+									<div className="col-span-3 text-text-secondary">
+										{row.name}
+									</div>
+									<div className="col-span-4 text-text-muted blur-[1px] opacity-30 select-none">
 										{row.dept}
 									</div>
-									<div className="col-span-2 text-right text-emerald-300">
+									<div className="col-span-2 text-right text-accent-emerald">
 										${(row.salary / 1000).toFixed(0)}k
 									</div>
 									<div className="col-span-1 text-right text-emerald-500">

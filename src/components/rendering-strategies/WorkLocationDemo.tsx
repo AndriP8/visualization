@@ -276,8 +276,8 @@ export function WorkLocationDemo() {
 						className={clsx(
 							"px-3 py-1.5 rounded-full text-xs font-semibold border transition-all",
 							selected === c.strategy
-								? "text-zinc-900 border-transparent"
-								: "text-zinc-400 border-zinc-700 hover:border-zinc-500",
+								? "text-text-primary border-transparent"
+								: "text-text-tertiary border-border-secondary hover:border-text-muted",
 						)}
 						style={
 							selected === c.strategy ? { backgroundColor: c.color } : undefined
@@ -307,8 +307,8 @@ export function WorkLocationDemo() {
 								className={clsx(
 									"rounded-xl border p-4 transition-all duration-300 min-h-36",
 									isActive
-										? "border-zinc-600 bg-zinc-800/60"
-										: "border-zinc-800 bg-zinc-900/20 opacity-40",
+										? "border-border-tertiary bg-surface-secondary/60"
+										: "border-border-primary bg-surface-primary/20 opacity-40",
 								)}
 								style={
 									isActive
@@ -320,7 +320,7 @@ export function WorkLocationDemo() {
 								}
 							>
 								<div className="text-xl mb-2">{COLUMN_ICONS[col]}</div>
-								<div className="text-xs font-bold text-zinc-300 mb-1">
+								<div className="text-xs font-bold text-text-secondary mb-1">
 									{COLUMN_LABELS[col]}
 								</div>
 								{node && (
@@ -331,13 +331,13 @@ export function WorkLocationDemo() {
 										>
 											{node.label}
 										</div>
-										<p className="text-[10px] text-zinc-500 leading-relaxed">
+										<p className="text-[10px] text-text-muted leading-relaxed">
 											{node.description}
 										</p>
 									</>
 								)}
 								{!node && (
-									<p className="text-[10px] text-zinc-700 mt-3">
+									<p className="text-[10px] text-text-secondary mt-3">
 										Not involved for {selected}
 									</p>
 								)}
@@ -349,7 +349,7 @@ export function WorkLocationDemo() {
 
 			{/* Data flow arrows */}
 			<div className="space-y-2">
-				<p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+				<p className="text-xs font-semibold text-text-muted uppercase tracking-wider">
 					Data Flow
 				</p>
 				<AnimatePresence mode="wait">
@@ -363,7 +363,7 @@ export function WorkLocationDemo() {
 						{config.arrows.map((arrow) => (
 							<div
 								key={arrow.label}
-								className="flex items-center gap-3 bg-zinc-900/50 rounded-lg p-3 border border-zinc-800"
+								className="flex items-center gap-3 bg-surface-primary/50 rounded-lg p-3 border border-border-primary"
 							>
 								<div className="flex items-center gap-2 min-w-0 flex-1">
 									<span
@@ -372,7 +372,7 @@ export function WorkLocationDemo() {
 									>
 										{COLUMN_LABELS[arrow.from]}
 									</span>
-									<span className="text-zinc-600 text-xs shrink-0">→</span>
+									<span className="text-text-faint text-xs shrink-0">→</span>
 									<span
 										className="text-xs font-mono font-semibold shrink-0"
 										style={{ color: arrow.color }}
@@ -381,10 +381,10 @@ export function WorkLocationDemo() {
 									</span>
 								</div>
 								<div className="text-right">
-									<div className="text-xs font-semibold text-zinc-300">
+									<div className="text-xs font-semibold text-text-secondary">
 										{arrow.label}
 									</div>
-									<div className="text-[10px] text-zinc-500">
+									<div className="text-[10px] text-text-muted">
 										{arrow.payload}
 									</div>
 								</div>
@@ -401,7 +401,7 @@ export function WorkLocationDemo() {
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
-					className="text-sm text-zinc-400 bg-zinc-900/40 border border-zinc-800 rounded-lg p-4 leading-relaxed"
+					className="text-sm text-text-tertiary bg-surface-primary/40 border border-border-primary rounded-lg p-4 leading-relaxed"
 				>
 					<span className="font-semibold" style={{ color: config.color }}>
 						{selected}

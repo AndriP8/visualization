@@ -81,10 +81,10 @@ function ListPanel({
 	return (
 		<div className="flex-1 min-w-50">
 			<div className="mb-3">
-				<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+				<div className="text-xs font-semibold text-text-muted uppercase tracking-wider">
 					{title}
 				</div>
-				<div className="text-xs text-zinc-600 mt-0.5">{subtitle}</div>
+				<div className="text-xs text-text-faint mt-0.5">{subtitle}</div>
 			</div>
 
 			<div className="space-y-1.5">
@@ -96,28 +96,28 @@ function ListPanel({
 						animate={{ opacity: 1, x: 0 }}
 						exit={{ opacity: 0, x: 10 }}
 						transition={{ duration: 0.3 }}
-						className="flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-800/60 border border-zinc-700/50"
+						className="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-secondary/60 border border-border-secondary/50"
 					>
 						<span
 							className="w-3 h-3 rounded-full shrink-0"
 							style={{ backgroundColor: item.color }}
 						/>
-						<span className="text-sm text-zinc-300 font-mono">
+						<span className="text-sm text-text-secondary font-mono">
 							{useKeys ? `key={${item.id}}` : `index={${i}}`}
 						</span>
-						<span className="text-sm text-zinc-400">{item.label}</span>
+						<span className="text-sm text-text-tertiary">{item.label}</span>
 					</motion.div>
 				))}
 			</div>
 
 			{/* DOM operations */}
-			<div className="mt-3 p-3 rounded-lg bg-zinc-900 border border-zinc-800">
+			<div className="mt-3 p-3 rounded-lg bg-surface-primary border border-border-primary">
 				<div className="flex items-center justify-between mb-1.5">
-					<span className="text-[10px] text-zinc-500 uppercase tracking-wider">
+					<span className="text-[10px] text-text-muted uppercase tracking-wider">
 						DOM Operations ({ops.length})
 					</span>
 					{wastefulCount > 0 && (
-						<span className="text-[10px] px-1.5 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20">
+						<span className="text-[10px] px-1.5 py-0.5 rounded bg-red-500/10 text-accent-red-soft border border-red-500/20">
 							{wastefulCount} wasteful
 						</span>
 					)}
@@ -127,10 +127,10 @@ function ListPanel({
 						key={op}
 						className={`text-xs font-mono ${
 							op.includes("wasteful")
-								? "text-red-400"
+								? "text-accent-red-soft"
 								: op.includes("No DOM")
-									? "text-green-400"
-									: "text-yellow-400"
+									? "text-accent-green-soft"
+									: "text-accent-yellow-soft"
 						}`}
 					>
 						{op}
@@ -202,18 +202,18 @@ export function KeyPropDemo() {
 			description="When rendering lists, React needs a way to identify which items changed. Keys tell React which item is which."
 		>
 			{/* Concept explanation */}
-			<div className="mb-5 p-4 rounded-lg bg-zinc-800/30 border border-zinc-800 text-sm text-zinc-400 space-y-2">
+			<div className="mb-5 p-4 rounded-lg bg-surface-secondary/30 border border-border-primary text-sm text-text-tertiary space-y-2">
 				<p>
-					<strong className="text-zinc-300">The Problem:</strong> When a list
-					changes (reorder, add, remove), React must figure out what happened.
-					It has two strategies:
+					<strong className="text-text-secondary">The Problem:</strong> When a
+					list changes (reorder, add, remove), React must figure out what
+					happened. It has two strategies:
 				</p>
 				<div className="grid sm:grid-cols-2 gap-3 mt-2">
 					<div className="p-3 rounded-lg bg-red-500/5 border border-red-500/10">
-						<div className="text-xs font-semibold text-red-400 mb-1">
+						<div className="text-xs font-semibold text-accent-red-soft mb-1">
 							❌ Without Keys (by index)
 						</div>
-						<p className="text-xs text-zinc-500">
+						<p className="text-xs text-text-muted">
 							React compares position 0 to position 0, position 1 to position 1,
 							etc. If you shuffle items, React thinks{" "}
 							<em>every single item changed</em> — because the content at each
@@ -221,10 +221,10 @@ export function KeyPropDemo() {
 						</p>
 					</div>
 					<div className="p-3 rounded-lg bg-green-500/5 border border-green-500/10">
-						<div className="text-xs font-semibold text-green-400 mb-1">
+						<div className="text-xs font-semibold text-accent-green-soft mb-1">
 							✅ With Keys (by identity)
 						</div>
-						<p className="text-xs text-zinc-500">
+						<p className="text-xs text-text-muted">
 							React matches items by their <code>key</code>. If you shuffle,
 							React knows Apple is still Apple — it just moved. Only DOM{" "}
 							<em>move</em> operations are needed, not content updates.
@@ -245,7 +245,7 @@ export function KeyPropDemo() {
 						key={label}
 						type="button"
 						onClick={action}
-						className="px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-800 text-zinc-300 border border-zinc-700 hover:bg-zinc-700 transition-colors"
+						className="px-3 py-1.5 rounded-lg text-xs font-medium bg-surface-secondary text-text-secondary border border-border-secondary hover:bg-surface-tertiary transition-colors"
 					>
 						{label}
 					</button>
@@ -259,8 +259,8 @@ export function KeyPropDemo() {
 				animate={{ opacity: 1, y: 0 }}
 				className={`mb-5 px-4 py-3 rounded-lg text-xs border ${
 					lastAction === "none"
-						? "bg-zinc-800/30 border-zinc-700/50 text-zinc-500"
-						: "bg-violet-500/5 border-violet-500/20 text-violet-300"
+						? "bg-surface-secondary/30 border-border-secondary/50 text-text-muted"
+						: "bg-violet-500/5 border-violet-500/20 text-accent-violet"
 				}`}
 			>
 				{ACTION_INSIGHTS[lastAction]}

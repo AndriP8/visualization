@@ -1,5 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useRef, useState } from "react";
+import { useColorScheme } from "../../hooks/useColorScheme";
+import { THEME_COLORS } from "../../theme/tokens";
 import { DemoSection } from "../shared/DemoSection";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -76,6 +78,7 @@ function BatchPanel({
 	description,
 	flashSequence,
 }: PanelProps) {
+	const t = THEME_COLORS[useColorScheme()];
 	const [isRunning, setIsRunning] = useState(false);
 	const [currentFlash, setCurrentFlash] = useState<string | null>(null);
 	const [renderCount, setRenderCount] = useState(0);
@@ -85,7 +88,7 @@ function BatchPanel({
 	const colors = PANEL_COLORS[mode];
 
 	const clearTimers = useCallback(() => {
-		for (const t of timersRef.current) clearTimeout(t);
+		for (const timer of timersRef.current) clearTimeout(timer);
 		timersRef.current = [];
 	}, []);
 
@@ -133,7 +136,7 @@ function BatchPanel({
 	const isFlashing = currentFlash !== null;
 
 	return (
-		<div className="flex-1 min-w-0 rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 flex flex-col gap-3">
+		<div className="flex-1 min-w-0 rounded-xl border border-border-primary bg-surface-primary/60 p-4 flex flex-col gap-3">
 			{/* Header */}
 			<div>
 				<div className="flex items-center gap-2 mb-1">
@@ -144,17 +147,17 @@ function BatchPanel({
 						{subtitle}
 					</span>
 				</div>
-				<h4 className="text-sm font-bold text-white">{title}</h4>
-				<p className="text-xs text-zinc-500 mt-0.5">{description}</p>
+				<h4 className="text-sm font-bold text-text-primary">{title}</h4>
+				<p className="text-xs text-text-muted mt-0.5">{description}</p>
 			</div>
 
 			{/* Component box */}
 			<motion.div
 				className="rounded-lg border-2 flex items-center justify-center h-16 font-mono text-xs font-semibold transition-all"
 				animate={{
-					borderColor: isFlashing ? colors.flash : "#3f3f46",
-					backgroundColor: isFlashing ? colors.flashBg : "#18181b",
-					color: isFlashing ? colors.flashText : "#71717a",
+					borderColor: isFlashing ? colors.flash : t.svgBorder,
+					backgroundColor: isFlashing ? colors.flashBg : t.svgBg,
+					color: isFlashing ? colors.flashText : t.svgTextMuted,
 				}}
 				transition={{ duration: 0.15 }}
 			>
@@ -168,29 +171,29 @@ function BatchPanel({
 						🔄 {currentFlash}
 					</motion.span>
 				) : (
-					<span className="text-zinc-600">{"<MyComponent />"}</span>
+					<span className="text-text-faint">{"<MyComponent />"}</span>
 				)}
 			</motion.div>
 
 			{/* Render counter */}
 			<div className="flex items-center justify-between text-xs">
-				<span className="text-zinc-500">Renders triggered:</span>
+				<span className="text-text-muted">Renders triggered:</span>
 				<motion.span
 					key={renderCount}
 					initial={{ scale: 1.4 }}
 					animate={{ scale: 1 }}
 					className="font-mono font-bold text-sm"
-					style={{ color: renderCount > 0 ? colors.flash : "#52525b" }}
+					style={{ color: renderCount > 0 ? colors.flash : t.svgTextMuted }}
 				>
 					{renderCount}
 				</motion.span>
 			</div>
 
 			{/* Log */}
-			<div className="rounded-md bg-zinc-950/60 border border-zinc-800 p-2 min-h-13 text-xs font-mono space-y-0.5">
+			<div className="rounded-md bg-surface-base/60 border border-border-primary p-2 min-h-13 text-xs font-mono space-y-0.5">
 				<AnimatePresence>
 					{log.length === 0 ? (
-						<span className="text-zinc-700">—</span>
+						<span className="text-text-secondary">—</span>
 					) : (
 						log.map((entry, i) => (
 							<motion.div
@@ -198,7 +201,7 @@ function BatchPanel({
 								key={i}
 								initial={{ opacity: 0, x: -6 }}
 								animate={{ opacity: 1, x: 0 }}
-								className="text-zinc-400"
+								className="text-text-tertiary"
 							>
 								{entry}
 							</motion.div>
@@ -225,7 +228,7 @@ function BatchPanel({
 				<button
 					type="button"
 					onClick={reset}
-					className="px-3 py-1.5 rounded-md text-xs font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+					className="px-3 py-1.5 rounded-md text-xs font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 				>
 					Reset
 				</button>
@@ -273,21 +276,27 @@ export function BatchingVisualizerDemo() {
 			</div>
 
 			{/* Key insight */}
-			<div className="p-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-xs text-zinc-400 space-y-1.5">
+			<div className="p-3 rounded-lg bg-surface-secondary/50 border border-border-secondary/50 text-xs text-text-tertiary space-y-1.5">
 				<p>
-					<span className="text-orange-400 font-semibold">Pre-React 18:</span>{" "}
+					<span className="text-accent-orange-soft font-semibold">
+						Pre-React 18:
+					</span>{" "}
 					Batching only worked inside React synthetic event handlers. Async
 					callbacks (setTimeout, fetch.then) each triggered their own render.
 				</p>
 				<p>
-					<span className="text-green-400 font-semibold">React 18+:</span>{" "}
+					<span className="text-accent-green-soft font-semibold">
+						React 18+:
+					</span>{" "}
 					Automatic batching applies everywhere. Multiple setState calls in any
 					context are grouped into a single re-render at the end of the current
 					microtask/task boundary.
 				</p>
 				<p>
-					<span className="text-violet-400 font-semibold">flushSync:</span>{" "}
-					<code className="text-violet-300/80">
+					<span className="text-accent-violet-soft font-semibold">
+						flushSync:
+					</span>{" "}
+					<code className="text-accent-violet/80">
 						import {"{ flushSync }"} from "react"
 					</code>{" "}
 					— forces React to synchronously apply the queued updates before the

@@ -312,7 +312,7 @@ export function AdvancedXStateDemo() {
 				/>
 
 				<motion.div
-					className="p-6 bg-zinc-800 border border-zinc-700 rounded-lg"
+					className="p-6 bg-surface-secondary border border-border-secondary rounded-lg"
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.2 }}
@@ -325,17 +325,17 @@ export function AdvancedXStateDemo() {
 							className="space-y-4 text-center"
 						>
 							<div className="text-4xl">✓</div>
-							<h3 className="text-lg font-semibold text-emerald-400">
+							<h3 className="text-lg font-semibold text-accent-emerald-soft">
 								Login Successful!
 							</h3>
-							<p className="text-zinc-400">Welcome back, {email}</p>
-							<p className="text-xs text-zinc-500">
+							<p className="text-text-tertiary">Welcome back, {email}</p>
+							<p className="text-xs text-text-muted">
 								Succeeded after {attempts} attempt{attempts !== 1 ? "s" : ""}
 							</p>
 							<button
 								type="button"
 								onClick={() => send({ type: "RESET" })}
-								className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+								className="px-4 py-2 bg-orange-500 text-text-primary rounded-lg hover:bg-orange-600 transition-colors"
 							>
 								Start Over
 							</button>
@@ -347,10 +347,15 @@ export function AdvancedXStateDemo() {
 							animate={{ opacity: 1 }}
 							className="space-y-4"
 						>
-							<h3 className="text-lg font-semibold text-white">Login Form</h3>
+							<h3 className="text-lg font-semibold text-text-primary">
+								Login Form
+							</h3>
 
 							<div className="space-y-2">
-								<label htmlFor="email" className="block text-sm text-zinc-400">
+								<label
+									htmlFor="email"
+									className="block text-sm text-text-tertiary"
+								>
 									Email
 								</label>
 								<input
@@ -362,17 +367,19 @@ export function AdvancedXStateDemo() {
 										send({ type: "UPDATE_EMAIL", value: e.target.value })
 									}
 									disabled={isLoading}
-									className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
+									className="w-full px-4 py-2 bg-surface-primary border border-border-secondary rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
 								/>
 								{email.length > 0 && !email.includes("@") && (
-									<p className="text-xs text-amber-400">Email must contain @</p>
+									<p className="text-xs text-accent-amber-soft">
+										Email must contain @
+									</p>
 								)}
 							</div>
 
 							<div className="space-y-2">
 								<label
 									htmlFor="password"
-									className="block text-sm text-zinc-400"
+									className="block text-sm text-text-tertiary"
 								>
 									Password
 								</label>
@@ -385,10 +392,10 @@ export function AdvancedXStateDemo() {
 										send({ type: "UPDATE_PASSWORD", value: e.target.value })
 									}
 									disabled={isLoading}
-									className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
+									className="w-full px-4 py-2 bg-surface-primary border border-border-secondary rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
 								/>
 								{password.length > 0 && password.length < 6 && (
-									<p className="text-xs text-amber-400">
+									<p className="text-xs text-accent-amber-soft">
 										Password must be at least 6 characters
 									</p>
 								)}
@@ -398,7 +405,7 @@ export function AdvancedXStateDemo() {
 								<motion.div
 									initial={{ opacity: 0, y: -10 }}
 									animate={{ opacity: 1, y: 0 }}
-									className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm"
+									className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-accent-red-soft text-sm"
 								>
 									{error}
 								</motion.div>
@@ -408,7 +415,7 @@ export function AdvancedXStateDemo() {
 								<motion.div
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
-									className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg text-amber-400 text-sm"
+									className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg text-accent-amber-soft text-sm"
 								>
 									<p>
 										Attempts: {attempts}/3{" "}
@@ -424,7 +431,7 @@ export function AdvancedXStateDemo() {
 											<button
 												type="button"
 												onClick={() => send({ type: "RETRY" })}
-												className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+												className="px-4 py-2 bg-orange-500 text-text-primary rounded-lg hover:bg-orange-600 transition-colors"
 											>
 												Retry ({3 - attempts} left)
 											</button>
@@ -432,7 +439,7 @@ export function AdvancedXStateDemo() {
 										<button
 											type="button"
 											onClick={() => send({ type: "RESET" })}
-											className="px-4 py-2 bg-zinc-700 text-white rounded-lg hover:bg-zinc-600 transition-colors"
+											className="px-4 py-2 bg-surface-tertiary text-text-primary rounded-lg hover:bg-surface-tertiary transition-colors"
 										>
 											Reset Form
 										</button>
@@ -443,13 +450,13 @@ export function AdvancedXStateDemo() {
 										type="button"
 										onClick={() => send({ type: "SUBMIT" })}
 										disabled={!isFormValid}
-										className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+										className="px-4 py-2 bg-orange-500 text-text-primary rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 									>
 										Submit
 									</button>
 								)}
 								{isLoading && (
-									<div className="flex items-center gap-2 text-zinc-400">
+									<div className="flex items-center gap-2 text-text-tertiary">
 										<div className="w-4 h-4 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
 										{currentState === "validating"
 											? "Validating..."
@@ -459,7 +466,7 @@ export function AdvancedXStateDemo() {
 							</div>
 
 							{!isFormValid && email.length === 0 && password.length === 0 && (
-								<p className="text-xs text-zinc-500">
+								<p className="text-xs text-text-muted">
 									Hint: Try any email (with @) and password (6+ chars). API has
 									30% failure rate.
 								</p>
@@ -469,17 +476,17 @@ export function AdvancedXStateDemo() {
 				</motion.div>
 
 				<div className="space-y-4">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						Machine Definition
 					</h4>
 					<ShikiCode language="typescript" code={machineCode} />
 				</div>
 
 				<div className="p-4 bg-violet-500/10 border border-violet-500/30 rounded-lg">
-					<h4 className="text-sm font-semibold text-violet-400 mb-2">
+					<h4 className="text-sm font-semibold text-accent-violet-soft mb-2">
 						Advanced XState Features
 					</h4>
-					<ul className="text-sm text-zinc-300 space-y-1 list-disc list-inside">
+					<ul className="text-sm text-text-secondary space-y-1 list-disc list-inside">
 						<li>
 							<strong>Guards:</strong> Prevent invalid transitions (submit only
 							if form valid)

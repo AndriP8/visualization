@@ -117,12 +117,12 @@ export function HeaderCompressionDemo() {
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 				{/* Left: Header toggles */}
 				<div className="space-y-3">
-					<div className="rounded-xl bg-zinc-900 border border-zinc-700 p-4 space-y-3">
+					<div className="rounded-xl bg-surface-primary border border-border-secondary p-4 space-y-3">
 						<div className="flex items-center justify-between">
-							<span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+							<span className="text-xs font-semibold text-text-tertiary uppercase tracking-wider">
 								Request Headers
 							</span>
-							<span className="text-xs text-zinc-500">
+							<span className="text-xs text-text-muted">
 								toggle to include/exclude
 							</span>
 						</div>
@@ -135,29 +135,29 @@ export function HeaderCompressionDemo() {
 									onClick={() => toggleHeader(h.id)}
 									className={`w-full text-left px-3 py-2 rounded-lg border text-xs transition-all ${
 										h.enabled
-											? "bg-zinc-800 border-zinc-600 text-zinc-200"
-											: "bg-zinc-900 border-zinc-800 text-zinc-600"
+											? "bg-surface-secondary border-border-tertiary text-text-secondary"
+											: "bg-surface-primary border-border-primary text-text-faint"
 									}`}
 								>
 									<div className="flex items-center justify-between gap-2">
 										<span
-											className={`font-mono ${h.enabled ? "text-cyan-400" : "text-zinc-600"}`}
+											className={`font-mono ${h.enabled ? "text-accent-cyan-soft" : "text-text-faint"}`}
 										>
 											{h.name}
 										</span>
 										<div className="flex items-center gap-2 shrink-0">
-											<span className="text-zinc-500">{h.bytes}B</span>
+											<span className="text-text-muted">{h.bytes}B</span>
 											<div
 												className={`w-3 h-3 rounded-full border ${
 													h.enabled
 														? "bg-cyan-400 border-cyan-400"
-														: "bg-transparent border-zinc-600"
+														: "bg-transparent border-border-tertiary"
 												}`}
 											/>
 										</div>
 									</div>
 									{h.enabled && (
-										<div className="text-zinc-500 mt-0.5 truncate">
+										<div className="text-text-muted mt-0.5 truncate">
 											{h.value}
 										</div>
 									)}
@@ -165,16 +165,16 @@ export function HeaderCompressionDemo() {
 							))}
 						</div>
 
-						<div className="pt-2 border-t border-zinc-700 flex items-center justify-between">
-							<span className="text-xs text-zinc-400">
+						<div className="pt-2 border-t border-border-secondary flex items-center justify-between">
+							<span className="text-xs text-text-tertiary">
 								First request:{" "}
-								<span className="text-white font-mono">
+								<span className="text-text-primary font-mono">
 									{firstRequestBytes}B
 								</span>
 							</span>
-							<span className="text-xs text-zinc-400">
+							<span className="text-xs text-text-tertiary">
 								Subsequent (HPACK):{" "}
-								<span className="text-cyan-300 font-mono">
+								<span className="text-accent-cyan font-mono">
 									~{subsequentBytes}B
 								</span>
 							</span>
@@ -184,15 +184,15 @@ export function HeaderCompressionDemo() {
 
 				{/* Right: Comparison chart */}
 				<div className="space-y-4">
-					<div className="rounded-xl bg-zinc-900 border border-zinc-700 p-4 space-y-4">
+					<div className="rounded-xl bg-surface-primary border border-border-secondary p-4 space-y-4">
 						<div className="flex items-center justify-between">
-							<span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+							<span className="text-xs font-semibold text-text-tertiary uppercase tracking-wider">
 								Header bytes — {REQUEST_COUNT} requests
 							</span>
 							<button
 								type="button"
 								onClick={() => setShowRequests((v) => !v)}
-								className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+								className="text-xs text-text-muted hover:text-text-secondary transition-colors"
 							>
 								{showRequests ? "Show chart" : "Show breakdown"}
 							</button>
@@ -223,12 +223,12 @@ export function HeaderCompressionDemo() {
 												className="space-y-1"
 											>
 												<div className="flex items-center gap-2">
-													<span className="text-xs text-zinc-500 w-4 font-mono">
+													<span className="text-xs text-text-muted w-4 font-mono">
 														{i + 1}
 													</span>
 													<div className="flex-1 space-y-0.5">
 														{/* HTTP/1.1 bar */}
-														<div className="h-2.5 bg-zinc-800 rounded-full overflow-hidden">
+														<div className="h-2.5 bg-surface-secondary rounded-full overflow-hidden">
 															<motion.div
 																className="h-full bg-orange-500 rounded-full"
 																initial={{ width: 0 }}
@@ -237,7 +237,7 @@ export function HeaderCompressionDemo() {
 															/>
 														</div>
 														{/* HTTP/2 bar */}
-														<div className="h-2.5 bg-zinc-800 rounded-full overflow-hidden">
+														<div className="h-2.5 bg-surface-secondary rounded-full overflow-hidden">
 															<motion.div
 																className={`h-full rounded-full ${isFirst ? "bg-cyan-500" : "bg-cyan-700"}`}
 																initial={{ width: 0 }}
@@ -250,7 +250,7 @@ export function HeaderCompressionDemo() {
 														</div>
 													</div>
 													{!isFirst && (
-														<span className="text-xs text-cyan-400 font-mono w-8 text-right shrink-0">
+														<span className="text-xs text-accent-cyan-soft font-mono w-8 text-right shrink-0">
 															{subsequentBytes}B
 														</span>
 													)}
@@ -261,7 +261,7 @@ export function HeaderCompressionDemo() {
 								</div>
 
 								{/* Legend */}
-								<div className="flex items-center gap-4 text-xs text-zinc-400 pt-1">
+								<div className="flex items-center gap-4 text-xs text-text-tertiary pt-1">
 									<div className="flex items-center gap-1.5">
 										<div className="w-3 h-2 bg-orange-500 rounded-full" />
 										HTTP/1.1
@@ -273,8 +273,8 @@ export function HeaderCompressionDemo() {
 								</div>
 							</>
 						) : (
-							<div className="space-y-2 text-xs text-zinc-400">
-								<div className="grid grid-cols-3 gap-2 text-zinc-500 font-semibold pb-1 border-b border-zinc-700">
+							<div className="space-y-2 text-xs text-text-tertiary">
+								<div className="grid grid-cols-3 gap-2 text-text-muted font-semibold pb-1 border-b border-border-secondary">
 									<span>Request</span>
 									<span>HTTP/1.1</span>
 									<span>HTTP/2</span>
@@ -289,30 +289,32 @@ export function HeaderCompressionDemo() {
 											}-request`}
 											className="grid grid-cols-3 gap-2"
 										>
-											<span className="font-mono text-zinc-500">
+											<span className="font-mono text-text-muted">
 												#{i + 1}
 												{isFirst ? " (init)" : ""}
 											</span>
-											<span className="font-mono text-orange-400">
+											<span className="font-mono text-accent-orange-soft">
 												{firstRequestBytes}B
 											</span>
 											<span
-												className={`font-mono ${isFirst ? "text-cyan-400" : "text-cyan-600"}`}
+												className={`font-mono ${isFirst ? "text-accent-cyan-soft" : "text-cyan-600"}`}
 											>
 												{isFirst ? firstRequestBytes : subsequentBytes}B
 												{!isFirst && (
-													<span className="text-zinc-600 ml-1">(idx only)</span>
+													<span className="text-text-faint ml-1">
+														(idx only)
+													</span>
 												)}
 											</span>
 										</div>
 									);
 								})}
-								<div className="grid grid-cols-3 gap-2 pt-2 border-t border-zinc-700 font-semibold">
-									<span className="text-zinc-300">Total</span>
-									<span className="text-orange-300 font-mono">
+								<div className="grid grid-cols-3 gap-2 pt-2 border-t border-border-secondary font-semibold">
+									<span className="text-text-secondary">Total</span>
+									<span className="text-accent-orange font-mono">
 										{(http1Total / 1024).toFixed(1)}KB
 									</span>
-									<span className="text-cyan-300 font-mono">
+									<span className="text-accent-cyan font-mono">
 										{(http2Total / 1024).toFixed(1)}KB
 									</span>
 								</div>
@@ -320,24 +322,24 @@ export function HeaderCompressionDemo() {
 						)}
 
 						{/* Summary stats */}
-						<div className="pt-2 border-t border-zinc-700 grid grid-cols-3 gap-3">
+						<div className="pt-2 border-t border-border-secondary grid grid-cols-3 gap-3">
 							<div className="text-center">
-								<div className="text-base font-bold text-orange-400 font-mono">
+								<div className="text-base font-bold text-accent-orange-soft font-mono">
 									{(http1Total / 1024).toFixed(1)}KB
 								</div>
-								<div className="text-xs text-zinc-500">HTTP/1.1</div>
+								<div className="text-xs text-text-muted">HTTP/1.1</div>
 							</div>
 							<div className="text-center">
-								<div className="text-base font-bold text-cyan-400 font-mono">
+								<div className="text-base font-bold text-accent-cyan-soft font-mono">
 									{(http2Total / 1024).toFixed(1)}KB
 								</div>
-								<div className="text-xs text-zinc-500">HTTP/2</div>
+								<div className="text-xs text-text-muted">HTTP/2</div>
 							</div>
 							<div className="text-center">
-								<div className="text-base font-bold text-emerald-400 font-mono">
+								<div className="text-base font-bold text-accent-emerald-soft font-mono">
 									{savingsPct}%
 								</div>
-								<div className="text-xs text-zinc-500">saved</div>
+								<div className="text-xs text-text-muted">saved</div>
 							</div>
 						</div>
 					</div>
@@ -366,40 +368,42 @@ export function HeaderCompressionDemo() {
 					className="text-xs"
 				/>
 
-				<div className="p-4 rounded-xl bg-zinc-900 border border-zinc-700 space-y-3">
-					<p className="text-xs font-semibold text-zinc-300">How HPACK works</p>
-					<div className="space-y-2 text-xs text-zinc-400">
+				<div className="p-4 rounded-xl bg-surface-primary border border-border-secondary space-y-3">
+					<p className="text-xs font-semibold text-text-secondary">
+						How HPACK works
+					</p>
+					<div className="space-y-2 text-xs text-text-tertiary">
 						<div className="flex gap-2">
-							<span className="text-cyan-400 shrink-0">1.</span>
+							<span className="text-accent-cyan-soft shrink-0">1.</span>
 							<span>
 								First request sends all headers in full and adds them to the
 								dynamic table.
 							</span>
 						</div>
 						<div className="flex gap-2">
-							<span className="text-cyan-400 shrink-0">2.</span>
+							<span className="text-accent-cyan-soft shrink-0">2.</span>
 							<span>
 								Subsequent requests reference static/dynamic table entries by
 								integer index.
 							</span>
 						</div>
 						<div className="flex gap-2">
-							<span className="text-cyan-400 shrink-0">3.</span>
+							<span className="text-accent-cyan-soft shrink-0">3.</span>
 							<span>
 								Only changed values (like{" "}
-								<code className="text-violet-300">:path</code>) are transmitted
-								in full.
+								<code className="text-accent-violet">:path</code>) are
+								transmitted in full.
 							</span>
 						</div>
 						<div className="flex gap-2">
-							<span className="text-cyan-400 shrink-0">4.</span>
+							<span className="text-accent-cyan-soft shrink-0">4.</span>
 							<span>
 								Huffman encoding further reduces the size of literal strings.
 							</span>
 						</div>
 					</div>
 					<div className="p-2.5 rounded-lg bg-cyan-500/10 border border-cyan-500/20">
-						<p className="text-xs text-cyan-300">
+						<p className="text-xs text-accent-cyan">
 							Cookie-heavy APIs benefit most — a 180-byte cookie header becomes
 							~4 bytes on subsequent requests (index only).
 						</p>

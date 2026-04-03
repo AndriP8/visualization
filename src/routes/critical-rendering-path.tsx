@@ -20,47 +20,52 @@ function CriticalRenderingPathPage() {
 				gradient={{ from: "amber-400", to: "orange-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="text-sm text-text-muted space-y-2">
 							<p>
-								<strong className="text-zinc-300">The pipeline:</strong> When
-								the browser receives an HTML document, it goes through a
+								<strong className="text-text-secondary">The pipeline:</strong>{" "}
+								When the browser receives an HTML document, it goes through a
 								multi-stage pipeline before anything appears on screen:
 							</p>
-							<ol className="list-decimal list-inside space-y-1 text-zinc-400">
+							<ol className="list-decimal list-inside space-y-1 text-text-tertiary">
 								<li>
-									<strong className="text-amber-400">Parse</strong> — Bytes →
-									Characters → Tokens → Nodes → DOM Tree
+									<strong className="text-accent-amber-soft">Parse</strong> —
+									Bytes → Characters → Tokens → Nodes → DOM Tree
 								</li>
 								<li>
-									<strong className="text-amber-400">Style</strong> — CSS bytes
-									→ CSSOM Tree
+									<strong className="text-accent-amber-soft">Style</strong> —
+									CSS bytes → CSSOM Tree
 								</li>
 								<li>
-									<strong className="text-amber-400">Render Tree</strong> — DOM
-									+ CSSOM merged (only visible nodes)
+									<strong className="text-accent-amber-soft">
+										Render Tree
+									</strong>{" "}
+									— DOM + CSSOM merged (only visible nodes)
 								</li>
 								<li>
-									<strong className="text-amber-400">Layout</strong> — Compute
-									geometry (position, size)
+									<strong className="text-accent-amber-soft">Layout</strong> —
+									Compute geometry (position, size)
 								</li>
 								<li>
-									<strong className="text-amber-400">Paint</strong> — Fill in
-									pixels (colors, borders, shadows)
+									<strong className="text-accent-amber-soft">Paint</strong> —
+									Fill in pixels (colors, borders, shadows)
 								</li>
 								<li>
-									<strong className="text-amber-400">Composite</strong> — Layer
-									composition on GPU
+									<strong className="text-accent-amber-soft">Composite</strong>{" "}
+									— Layer composition on GPU
 								</li>
 							</ol>
-							<p className="text-zinc-500">
+							<p className="text-text-muted">
 								The browser{" "}
-								<strong className="text-zinc-300">renders progressively</strong>{" "}
+								<strong className="text-text-secondary">
+									renders progressively
+								</strong>{" "}
 								— it wants to paint as early as possible, but must wait for the{" "}
-								<strong className="text-orange-400">
+								<strong className="text-accent-orange-soft">
 									minimum critical resources
 								</strong>{" "}
 								(CSS in {"<head>"}, synchronous JS) before{" "}
-								<strong className="text-orange-400">First Paint</strong>.
+								<strong className="text-accent-orange-soft">First Paint</strong>
+								.
 							</p>
 						</div>
 					),

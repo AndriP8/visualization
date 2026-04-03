@@ -20,21 +20,21 @@ function ReconciliationPage() {
 				gradient={{ from: "violet-400", to: "cyan-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="text-sm text-text-muted space-y-2">
 							<p className="mb-1">
-								<strong className="text-zinc-300">The core idea:</strong>{" "}
-								<code className="text-violet-400">UI = f(state)</code>. When
-								state changes, React re-runs your component functions to get a
-								new tree, then
+								<strong className="text-text-secondary">The core idea:</strong>{" "}
+								<code className="text-accent-violet-soft">UI = f(state)</code>.
+								When state changes, React re-runs your component functions to
+								get a new tree, then
 								<em> diffs</em> it against the previous tree to find the minimum
 								set of DOM mutations.
 							</p>
 							<p>
 								General tree diff is O(n³). React reduces it to{" "}
-								<strong className="text-cyan-400">O(n)</strong> with two
+								<strong className="text-accent-cyan-soft">O(n)</strong> with two
 								heuristics: elements of different types produce different trees,
-								and <code className="text-violet-400">key</code> props hint
-								which children are stable.
+								and <code className="text-accent-violet-soft">key</code> props
+								hint which children are stable.
 							</p>
 						</div>
 					),

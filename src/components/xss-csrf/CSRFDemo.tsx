@@ -85,9 +85,9 @@ const STEPS_PROTECTED = [
 
 const actorColors: Record<string, string> = {
 	victim: "text-sky-400",
-	attacker: "text-rose-400",
-	browser: "text-zinc-300",
-	bank: "text-zinc-300",
+	attacker: "text-accent-rose-soft",
+	browser: "text-text-secondary",
+	bank: "text-text-secondary",
 };
 
 export function CSRFDemo() {
@@ -119,8 +119,8 @@ export function CSRFDemo() {
 					onClick={() => switchMode(false)}
 					className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
 						!protected_
-							? "bg-red-500/20 text-red-400 border border-red-500"
-							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-zinc-600"
+							? "bg-red-500/20 text-accent-red-soft border border-red-500"
+							: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:border-border-tertiary"
 					}`}
 				>
 					Without CSRF Protection
@@ -130,8 +130,8 @@ export function CSRFDemo() {
 					onClick={() => switchMode(true)}
 					className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
 						protected_
-							? "bg-emerald-500/20 text-emerald-400 border border-emerald-500"
-							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-zinc-600"
+							? "bg-emerald-500/20 text-accent-emerald-soft border border-emerald-500"
+							: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:border-border-tertiary"
 					}`}
 				>
 					With CSRF Token + SameSite=Strict
@@ -140,7 +140,7 @@ export function CSRFDemo() {
 
 			{/* CSRF token note — shown only in protected mode */}
 			{protected_ && (
-				<div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-xs text-amber-300">
+				<div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-xs text-accent-amber">
 					<strong>CSRF Token Rule:</strong> The token must NOT be stored in a
 					cookie — that defeats the purpose. It must be embedded in the HTML
 					form or sent in a request header, and verified server-side against the
@@ -151,7 +151,7 @@ export function CSRFDemo() {
 			{/* Attack flow */}
 			<div>
 				<div className="flex items-center justify-between mb-3">
-					<p className="text-sm font-semibold text-zinc-300">
+					<p className="text-sm font-semibold text-text-secondary">
 						Attack Flow (Step-Through)
 					</p>
 					<div className="flex gap-2">
@@ -159,7 +159,7 @@ export function CSRFDemo() {
 							<button
 								type="button"
 								onClick={() => setStep(0)}
-								className="px-3 py-1.5 bg-red-500/20 text-red-400 border border-red-500 rounded text-xs font-medium hover:bg-red-500/30 transition-colors"
+								className="px-3 py-1.5 bg-red-500/20 text-accent-red-soft border border-red-500 rounded text-xs font-medium hover:bg-red-500/30 transition-colors"
 							>
 								▶ Start
 							</button>
@@ -169,7 +169,7 @@ export function CSRFDemo() {
 									<button
 										type="button"
 										onClick={advance}
-										className="px-3 py-1.5 bg-zinc-700 text-zinc-300 rounded text-xs font-medium hover:bg-zinc-600 transition-colors"
+										className="px-3 py-1.5 bg-surface-tertiary text-text-secondary rounded text-xs font-medium hover:bg-surface-tertiary transition-colors"
 									>
 										Next →
 									</button>
@@ -177,7 +177,7 @@ export function CSRFDemo() {
 								<button
 									type="button"
 									onClick={reset}
-									className="px-3 py-1.5 bg-zinc-800 text-zinc-400 rounded text-xs font-medium hover:bg-zinc-700 transition-colors"
+									className="px-3 py-1.5 bg-surface-secondary text-text-tertiary rounded text-xs font-medium hover:bg-surface-tertiary transition-colors"
 								>
 									Reset
 								</button>
@@ -199,7 +199,7 @@ export function CSRFDemo() {
 											? "bg-emerald-500/10 border-emerald-500/40"
 											: !protected_ && i === steps.length - 1
 												? "bg-red-500/20 border-red-500/60"
-												: "bg-zinc-800 border-zinc-700"
+												: "bg-surface-secondary border-border-secondary"
 									}`}
 								>
 									<div className="flex items-start justify-between gap-2">
@@ -209,23 +209,25 @@ export function CSRFDemo() {
 											Step {i + 1}: {s.title}
 										</p>
 										{protected_ && i === steps.length - 1 && (
-											<span className="text-emerald-400 text-xs font-bold shrink-0">
+											<span className="text-accent-emerald-soft text-xs font-bold shrink-0">
 												✓ BLOCKED
 											</span>
 										)}
 										{!protected_ && i === steps.length - 1 && (
-											<span className="text-red-400 text-xs font-bold shrink-0">
+											<span className="text-accent-red-soft text-xs font-bold shrink-0">
 												🔴 TRANSFER SENT
 											</span>
 										)}
 									</div>
-									<p className="text-zinc-400 text-xs mt-1">{s.description}</p>
+									<p className="text-text-tertiary text-xs mt-1">
+										{s.description}
+									</p>
 									{s.cookie && (
 										<p
 											className={`mt-2 text-xs font-mono px-2 py-1 rounded ${
 												protected_ && i === 2
-													? "text-emerald-400 bg-emerald-500/10"
-													: "text-amber-400 bg-amber-500/10"
+													? "text-accent-emerald-soft bg-emerald-500/10"
+													: "text-accent-amber-soft bg-amber-500/10"
 											}`}
 										>
 											{s.cookie}
@@ -240,13 +242,14 @@ export function CSRFDemo() {
 
 			{/* Key distinction */}
 			<div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-4 text-sm">
-				<p className="text-violet-300 font-semibold mb-1">
+				<p className="text-accent-violet font-semibold mb-1">
 					XSS vs CSRF — The Core Difference
 				</p>
-				<p className="text-zinc-300 text-xs">
-					<strong className="text-red-400">CSRF</strong> doesn&apos;t steal data
-					— it forges actions. It exploits the browser&apos;s automatic cookie
-					behavior. <strong className="text-red-400">XSS</strong> exploits the
+				<p className="text-text-secondary text-xs">
+					<strong className="text-accent-red-soft">CSRF</strong> doesn&apos;t
+					steal data — it forges actions. It exploits the browser&apos;s
+					automatic cookie behavior.{" "}
+					<strong className="text-accent-red-soft">XSS</strong> exploits the
 					browser&apos;s script execution. They are different attack classes —
 					do not conflate them with clickjacking.
 				</p>
@@ -254,7 +257,7 @@ export function CSRFDemo() {
 
 			{/* Code */}
 			<div>
-				<p className="text-xs text-zinc-400 mb-2 font-semibold uppercase tracking-wider">
+				<p className="text-xs text-text-tertiary mb-2 font-semibold uppercase tracking-wider">
 					{protected_ ? "Secure Implementation" : "Vulnerable Implementation"}
 				</p>
 				<ShikiCode

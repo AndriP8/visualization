@@ -132,18 +132,18 @@ function ScopeBoxes({ variant, outputs }: ScopeBoxesProps) {
 		// One shared scope box for all 3 callbacks
 		return (
 			<div className="space-y-2">
-				<p className="text-xs text-zinc-500">Scope structure:</p>
+				<p className="text-xs text-text-muted">Scope structure:</p>
 				<div className="rounded-xl border-2 border-dashed border-red-500/40 p-4 bg-red-500/05 space-y-3">
-					<div className="text-xs font-semibold text-red-400">
+					<div className="text-xs font-semibold text-accent-red-soft">
 						Function scope (shared)
 					</div>
 					<div className="flex items-center gap-2 font-mono text-xs">
-						<span className="text-zinc-400">var i =</span>
+						<span className="text-text-tertiary">var i =</span>
 						<motion.span
 							key={outputs[0] ?? "?"}
 							initial={{ scale: 1.3 }}
 							animate={{ scale: 1 }}
-							className="text-red-400 font-bold"
+							className="text-accent-red-soft font-bold"
 						>
 							{outputs[0] !== null ? outputs[0] : "…"}
 						</motion.span>
@@ -154,8 +154,8 @@ function ScopeBoxes({ variant, outputs }: ScopeBoxesProps) {
 								key={idx}
 								className="flex-1 rounded-lg border border-red-500/30 bg-red-500/08 p-2 text-center"
 							>
-								<div className="text-[10px] text-zinc-500">cb{idx + 1}</div>
-								<div className="text-xs font-mono text-red-300">
+								<div className="text-[10px] text-text-muted">cb{idx + 1}</div>
+								<div className="text-xs font-mono text-accent-red">
 									reads i →{" "}
 									<span className="font-bold">
 										{outputs[idx] !== null ? outputs[idx] : "?"}
@@ -164,7 +164,7 @@ function ScopeBoxes({ variant, outputs }: ScopeBoxesProps) {
 							</div>
 						))}
 					</div>
-					<p className="text-[10px] text-red-400/70">
+					<p className="text-[10px] text-accent-red-soft/70">
 						↑ All callbacks point to the same <code>i</code> binding
 					</p>
 				</div>
@@ -184,7 +184,7 @@ function ScopeBoxes({ variant, outputs }: ScopeBoxesProps) {
 
 	return (
 		<div className="space-y-2">
-			<p className="text-xs text-zinc-500">Scope structure:</p>
+			<p className="text-xs text-text-muted">Scope structure:</p>
 			<div className="flex gap-2">
 				{[0, 1, 2].map((idx) => {
 					const color = colors[idx] ?? green;
@@ -201,7 +201,7 @@ function ScopeBoxes({ variant, outputs }: ScopeBoxesProps) {
 								{scopeLabel[variant]} #{idx + 1}
 							</div>
 							<div className="font-mono text-xs">
-								<span className="text-zinc-400">i = </span>
+								<span className="text-text-tertiary">i = </span>
 								<motion.span
 									key={outputs[idx] ?? "?"}
 									initial={{ scale: 1.3 }}
@@ -228,7 +228,7 @@ function ScopeBoxes({ variant, outputs }: ScopeBoxesProps) {
 					);
 				})}
 			</div>
-			<p className="text-[10px] text-green-400/70">
+			<p className="text-[10px] text-accent-green-soft/70">
 				↑ Each callback has its own independent binding
 			</p>
 		</div>
@@ -301,8 +301,8 @@ export function ForLoopBugDemo() {
 									}
 								: {
 										background: "transparent",
-										borderColor: "#3f3f46",
-										color: "#a1a1aa",
+										borderColor: "var(--svg-border)",
+										color: "var(--svg-text)",
 									}
 						}
 					>
@@ -314,7 +314,7 @@ export function ForLoopBugDemo() {
 			<div className="flex flex-col xl:flex-row gap-6">
 				{/* Code panel */}
 				<div className="xl:w-96 shrink-0 space-y-3">
-					<p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
+					<p className="text-xs text-text-muted uppercase tracking-wider font-semibold">
 						Code
 					</p>
 					<ShikiCode
@@ -343,10 +343,10 @@ export function ForLoopBugDemo() {
 				<div className="flex-1 min-w-0 space-y-5">
 					{/* Console output */}
 					<div className="space-y-2">
-						<p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
+						<p className="text-xs text-text-muted uppercase tracking-wider font-semibold">
 							Console output (after 1s delay)
 						</p>
-						<div className="rounded-xl bg-zinc-950 border border-zinc-800 p-4 font-mono text-sm space-y-1 min-h-24">
+						<div className="rounded-xl bg-surface-base border border-border-primary p-4 font-mono text-sm space-y-1 min-h-24">
 							<AnimatePresence>
 								{outputs.map((val, idx) =>
 									val !== null ? (
@@ -357,7 +357,7 @@ export function ForLoopBugDemo() {
 											animate={{ opacity: 1, x: 0 }}
 											className="flex items-center gap-3"
 										>
-											<span className="text-zinc-600 text-[11px]">
+											<span className="text-text-faint text-[11px]">
 												callback {idx + 1}:
 											</span>
 											<span
@@ -369,7 +369,7 @@ export function ForLoopBugDemo() {
 												{val}
 											</span>
 											{isBuggy && (
-												<span className="text-red-400/60 text-xs">
+												<span className="text-accent-red-soft/60 text-xs">
 													{" "}
 													← stale!
 												</span>
@@ -379,7 +379,7 @@ export function ForLoopBugDemo() {
 								)}
 							</AnimatePresence>
 							{outputs.every((v) => v === null) && (
-								<span className="text-zinc-700">
+								<span className="text-text-secondary">
 									Click "Run Loop" to see output…
 								</span>
 							)}
@@ -409,7 +409,7 @@ export function ForLoopBugDemo() {
 								</strong>{" "}
 								{variant.explanation}
 							</p>
-							<p className="text-zinc-500">{variant.scopeExplanation}</p>
+							<p className="text-text-muted">{variant.scopeExplanation}</p>
 						</motion.div>
 					</AnimatePresence>
 				</div>

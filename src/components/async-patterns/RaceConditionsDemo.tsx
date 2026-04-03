@@ -171,9 +171,9 @@ export function RaceConditionsDemo() {
 						className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
 							mode === m
 								? m === "none"
-									? "bg-rose-500/20 text-rose-300 border-rose-500/30"
-									: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-								: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-200"
+									? "bg-rose-500/20 text-accent-rose border-rose-500/30"
+									: "bg-emerald-500/20 text-accent-emerald border-emerald-500/30"
+								: "bg-surface-secondary text-text-tertiary border-border-secondary hover:text-text-secondary"
 						}`}
 					>
 						{FIX_LABELS[m]}
@@ -186,7 +186,7 @@ export function RaceConditionsDemo() {
 				<div className="flex-1">
 					<label
 						htmlFor="race-query"
-						className="text-xs text-zinc-500 block mb-1.5"
+						className="text-xs text-text-muted block mb-1.5"
 					>
 						Search query (type fast to trigger race condition)
 					</label>
@@ -196,13 +196,13 @@ export function RaceConditionsDemo() {
 						value={query}
 						onChange={handleInput}
 						placeholder="Type here..."
-						className="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-cyan-500/50"
+						className="w-full px-3 py-2 rounded-lg bg-surface-primary border border-border-secondary text-sm text-text-secondary placeholder-text-faint focus:outline-none focus:border-cyan-500/50"
 					/>
 				</div>
 				<div className="w-40">
 					<label
 						htmlFor="race-latency"
-						className="text-xs text-zinc-500 block mb-1.5"
+						className="text-xs text-text-muted block mb-1.5"
 					>
 						Max latency: {latency}ms
 					</label>
@@ -220,20 +220,20 @@ export function RaceConditionsDemo() {
 				<button
 					type="button"
 					onClick={reset}
-					className="self-end px-3 py-2 rounded-lg text-sm bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-200 transition-colors"
+					className="self-end px-3 py-2 rounded-lg text-sm bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 				>
 					↺ Reset
 				</button>
 			</div>
 
 			{/* Request timeline */}
-			<div className="p-4 rounded-lg bg-zinc-900 border border-zinc-800 min-h-[120px]">
-				<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
+			<div className="p-4 rounded-lg bg-surface-primary border border-border-primary min-h-[120px]">
+				<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">
 					Request Timeline
 				</div>
 				<AnimatePresence>
 					{requests.length === 0 ? (
-						<p className="text-xs text-zinc-600 text-center py-4">
+						<p className="text-xs text-text-faint text-center py-4">
 							Type above to fire requests...
 						</p>
 					) : (
@@ -245,15 +245,17 @@ export function RaceConditionsDemo() {
 									animate={{ opacity: 1, x: 0 }}
 									className="flex items-center gap-3 text-xs"
 								>
-									<span className="text-zinc-600 w-12 shrink-0">#{req.id}</span>
-									<span className="text-zinc-400 w-28 truncate shrink-0 font-mono">
+									<span className="text-text-faint w-12 shrink-0">
+										#{req.id}
+									</span>
+									<span className="text-text-tertiary w-28 truncate shrink-0 font-mono">
 										"{req.query}"
 									</span>
-									<div className="flex-1 relative h-5 bg-zinc-800 rounded overflow-hidden">
+									<div className="flex-1 relative h-5 bg-surface-secondary rounded overflow-hidden">
 										<motion.div
 											className={`absolute inset-y-0 left-0 rounded ${
 												req.cancelled
-													? "bg-zinc-600"
+													? "bg-surface-tertiary"
 													: req.stale
 														? "bg-rose-500/70"
 														: req.resolvedAt
@@ -270,12 +272,12 @@ export function RaceConditionsDemo() {
 									<span
 										className={`w-20 shrink-0 text-right ${
 											req.cancelled
-												? "text-zinc-500"
+												? "text-text-muted"
 												: req.stale
-													? "text-rose-400"
+													? "text-accent-rose-soft"
 													: req.resolvedAt
-														? "text-emerald-400"
-														: "text-cyan-400"
+														? "text-accent-emerald-soft"
+														: "text-accent-cyan-soft"
 										}`}
 									>
 										{req.cancelled
@@ -301,8 +303,8 @@ export function RaceConditionsDemo() {
 					animate={{ opacity: 1, scale: 1 }}
 					className={`p-3 rounded-lg border text-sm font-mono ${
 						mode === "none" && requests.some((r) => r.stale && r.resolvedAt)
-							? "bg-rose-500/10 border-rose-500/20 text-rose-300"
-							: "bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
+							? "bg-rose-500/10 border-rose-500/20 text-accent-rose"
+							: "bg-emerald-500/10 border-emerald-500/20 text-accent-emerald"
 					}`}
 				>
 					Displayed: {displayedResult}

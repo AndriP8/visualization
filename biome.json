@@ -19,6 +19,13 @@
 			"recommended": true
 		}
 	},
+	"css": {
+		"parser": {
+			"allowWrongLineComments": false,
+			"cssModules": false,
+			"tailwindDirectives": true
+		}
+	},
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "double"

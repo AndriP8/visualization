@@ -56,10 +56,10 @@ const SCENARIOS: ScenarioConfig[] = [
 
 const getThresholdColor = (value: number): string => {
 	if (value <= 2500)
-		return "text-green-400 bg-green-500/20 border-green-500/30";
+		return "text-accent-green-soft bg-green-500/20 border-green-500/30";
 	if (value <= 4000)
-		return "text-yellow-400 bg-yellow-500/20 border-yellow-500/30";
-	return "text-rose-400 bg-rose-500/20 border-rose-500/30";
+		return "text-accent-yellow-soft bg-yellow-500/20 border-yellow-500/30";
+	return "text-accent-rose-soft bg-rose-500/20 border-rose-500/30";
 };
 
 export default function LCPDemo() {
@@ -133,8 +133,8 @@ export default function LCPDemo() {
 							}}
 							className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
 								isSelected
-									? "bg-violet-500/20 text-violet-300 border-violet-500/30"
-									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
+									? "bg-violet-500/20 text-accent-violet border-violet-500/30"
+									: "bg-surface-secondary text-text-tertiary border-border-secondary hover:text-text-secondary"
 							}`}
 						>
 							{scenario.label}
@@ -145,7 +145,9 @@ export default function LCPDemo() {
 
 			{/* Description */}
 			{currentScenario && (
-				<p className="text-sm text-zinc-400">{currentScenario.description}</p>
+				<p className="text-sm text-text-tertiary">
+					{currentScenario.description}
+				</p>
 			)}
 
 			{/* Control button */}
@@ -153,16 +155,16 @@ export default function LCPDemo() {
 				type="button"
 				onClick={running ? reset : runScenario}
 				disabled={running}
-				className="px-6 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
+				className="px-6 py-2 rounded-lg bg-violet-500 text-text-primary font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
 			>
 				{running ? "Running..." : "Run Scenario"}
 			</button>
 
 			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-6">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6 space-y-6">
 				{/* Viewport mockup */}
 				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						Viewport Simulation
 					</h4>
 					<div
@@ -226,7 +228,7 @@ export default function LCPDemo() {
 								className="absolute inset-0 top-24 bg-linear-to-br from-blue-500 via-purple-500 to-pink-500 border-4 border-amber-400"
 							>
 								<div className="absolute inset-0 flex items-center justify-center">
-									<div className="text-white text-6xl font-bold drop-shadow-lg">
+									<div className="text-text-primary text-6xl font-bold drop-shadow-lg">
 										HERO
 									</div>
 								</div>
@@ -245,10 +247,10 @@ export default function LCPDemo() {
 
 				{/* Timeline */}
 				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400">Timeline</h4>
-					<div className="relative h-16 bg-zinc-800 rounded-lg">
+					<h4 className="text-sm font-semibold text-text-tertiary">Timeline</h4>
+					<div className="relative h-16 bg-surface-secondary rounded-lg">
 						{/* Time markers */}
-						<div className="absolute inset-x-0 top-0 flex justify-between px-2 py-1 text-xs text-zinc-500">
+						<div className="absolute inset-x-0 top-0 flex justify-between px-2 py-1 text-xs text-text-muted">
 							<span>0ms</span>
 							<span>1000ms</span>
 							<span>2000ms</span>
@@ -286,7 +288,7 @@ export default function LCPDemo() {
 								className="absolute bottom-2 left-0 h-8 bg-violet-500 rounded-r"
 								style={{ width: `${Math.min((lcpTime / 4000) * 100, 100)}%` }}
 							>
-								<div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-white">
+								<div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-text-primary">
 									{lcpTime}ms
 								</div>
 							</motion.div>
@@ -316,10 +318,10 @@ export default function LCPDemo() {
 						}}
 					>
 						<div>
-							<div className="text-sm font-semibold text-zinc-300">
+							<div className="text-sm font-semibold text-text-secondary">
 								Largest Contentful Paint
 							</div>
-							<div className="text-xs text-zinc-500 mt-1">
+							<div className="text-xs text-text-muted mt-1">
 								Time until largest element renders
 							</div>
 						</div>
@@ -335,7 +337,7 @@ export default function LCPDemo() {
 			{/* Code examples */}
 			<div className="grid md:grid-cols-2 gap-4">
 				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						Before (Unoptimized)
 					</h4>
 					<ShikiCode
@@ -349,7 +351,7 @@ export default function LCPDemo() {
 					/>
 				</div>
 				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						After (Optimized)
 					</h4>
 					<ShikiCode

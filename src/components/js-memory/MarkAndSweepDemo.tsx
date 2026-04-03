@@ -1,5 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useState } from "react";
+import { useColorScheme } from "../../hooks/useColorScheme";
+import { THEME_COLORS } from "../../theme/tokens";
 import { DemoSection } from "../shared/DemoSection";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -92,6 +94,7 @@ const NR = 28;
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function MarkAndSweepDemo() {
+	const t = THEME_COLORS[useColorScheme()];
 	const [nodes] = useState<GCNode[]>(INITIAL_NODES);
 	const [edges, setEdges] = useState<GCEdge[]>(INITIAL_EDGES);
 	const [statuses, setStatuses] = useState<Record<string, NodeStatus>>(() =>
@@ -164,7 +167,7 @@ export function MarkAndSweepDemo() {
 		if (n?.isRoot) return "#f59e0b"; // amber – GC root
 		const s = statuses[id];
 		if (s === "marked") return "#22c55e"; // green – alive
-		if (s === "swept") return "#52525b"; // grey – swept
+		if (s === "swept") return "var(--svg-text-muted)"; // grey – swept
 		return "#6366f1"; // indigo – unreachable (unvisited)
 	};
 
@@ -179,14 +182,14 @@ export function MarkAndSweepDemo() {
 					{ color: "#f59e0b", label: "GC Root (global/stack)" },
 					{ color: "#6366f1", label: "Unreachable (not yet visited)" },
 					{ color: "#22c55e", label: "Reachable (marked alive)" },
-					{ color: "#52525b", label: "Swept (reclaimed)" },
+					{ color: "var(--svg-text-muted)", label: "Swept (reclaimed)" },
 				].map(({ color, label }) => (
 					<div key={label} className="flex items-center gap-1.5">
 						<div
 							className="w-3 h-3 rounded-full border"
 							style={{ background: `${color}33`, borderColor: color }}
 						/>
-						<span className="text-zinc-400">{label}</span>
+						<span className="text-text-tertiary">{label}</span>
 					</div>
 				))}
 			</div>
@@ -242,7 +245,7 @@ export function MarkAndSweepDemo() {
 				<svg
 					width="100%"
 					viewBox={`0 0 ${CW} ${CH}`}
-					className="rounded-xl border border-zinc-800 bg-zinc-950"
+					className="rounded-xl border border-border-primary bg-surface-base"
 					style={{ minWidth: 380 }}
 					role="img"
 					aria-label="GC heap graph"
@@ -299,10 +302,10 @@ export function MarkAndSweepDemo() {
 										y1={fy}
 										x2={ex2}
 										y2={ey2}
-										stroke={isHovered ? "#ef4444" : "#3f3f46"}
+										stroke={isHovered ? "#ef4444" : t.svgBorder}
 										strokeWidth={isHovered ? 2.5 : 1.5}
 										markerEnd={`url(#arrowhead)`}
-										animate={{ stroke: isHovered ? "#ef4444" : "#3f3f46" }}
+										animate={{ stroke: isHovered ? "#ef4444" : t.svgBorder }}
 										transition={{ duration: 0.15 }}
 									/>
 									{isHovered && (
@@ -330,7 +333,7 @@ export function MarkAndSweepDemo() {
 							refY="3"
 							orient="auto"
 						>
-							<path d="M0,0 L6,3 L0,6 Z" fill="#3f3f46" />
+							<path d="M0,0 L6,3 L0,6 Z" fill="var(--svg-border)" />
 						</marker>
 					</defs>
 
@@ -412,7 +415,7 @@ export function MarkAndSweepDemo() {
 					type="button"
 					onClick={runGC}
 					disabled={phase === "marking" || phase === "sweeping"}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-accent-emerald border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					🔄 Run GC
 				</button>
@@ -420,11 +423,11 @@ export function MarkAndSweepDemo() {
 					type="button"
 					onClick={reset}
 					disabled={phase === "marking" || phase === "sweeping"}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					↺ Reset Graph
 				</button>
-				<span className="text-xs text-zinc-600 ml-auto">
+				<span className="text-xs text-text-faint ml-auto">
 					{phase === "idle"
 						? "Tip: hover an edge and click to sever it, then run GC"
 						: phase === "done"

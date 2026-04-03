@@ -121,7 +121,7 @@ export function VanillaStateMachineDemo() {
 				/>
 
 				<motion.div
-					className="p-6 bg-zinc-800 border border-zinc-700 rounded-lg"
+					className="p-6 bg-surface-secondary border border-border-secondary rounded-lg"
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.2 }}
@@ -134,7 +134,9 @@ export function VanillaStateMachineDemo() {
 							exit={{ opacity: 0, x: 20 }}
 							className="space-y-4"
 						>
-							<h3 className="text-lg font-semibold text-white">Step 1: Name</h3>
+							<h3 className="text-lg font-semibold text-text-primary">
+								Step 1: Name
+							</h3>
 							<input
 								type="text"
 								placeholder="Enter your name"
@@ -142,14 +144,14 @@ export function VanillaStateMachineDemo() {
 								onChange={(e) =>
 									setFormData({ ...formData, name: e.target.value })
 								}
-								className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
+								className="w-full px-4 py-2 bg-surface-primary border border-border-secondary rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-orange-500"
 							/>
 							<div className="flex gap-2">
 								<button
 									type="button"
 									onClick={() => transition("NEXT")}
 									disabled={!canGoNext || isTransitioningRef.current}
-									className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+									className="px-4 py-2 bg-orange-500 text-text-primary rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 								>
 									Next
 								</button>
@@ -165,7 +167,7 @@ export function VanillaStateMachineDemo() {
 							exit={{ opacity: 0, x: 20 }}
 							className="space-y-4"
 						>
-							<h3 className="text-lg font-semibold text-white">
+							<h3 className="text-lg font-semibold text-text-primary">
 								Step 2: Email
 							</h3>
 							<input
@@ -175,14 +177,14 @@ export function VanillaStateMachineDemo() {
 								onChange={(e) =>
 									setFormData({ ...formData, email: e.target.value })
 								}
-								className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
+								className="w-full px-4 py-2 bg-surface-primary border border-border-secondary rounded-lg text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-orange-500"
 							/>
 							<div className="flex gap-2">
 								<button
 									type="button"
 									onClick={() => transition("PREV")}
 									disabled={isTransitioningRef.current}
-									className="px-4 py-2 bg-zinc-700 text-white rounded-lg hover:bg-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+									className="px-4 py-2 bg-surface-tertiary text-text-primary rounded-lg hover:bg-surface-tertiary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 								>
 									Previous
 								</button>
@@ -190,7 +192,7 @@ export function VanillaStateMachineDemo() {
 									type="button"
 									onClick={() => transition("NEXT")}
 									disabled={!canGoNext || isTransitioningRef.current}
-									className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+									className="px-4 py-2 bg-orange-500 text-text-primary rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 								>
 									Next
 								</button>
@@ -206,17 +208,17 @@ export function VanillaStateMachineDemo() {
 							exit={{ opacity: 0, x: 20 }}
 							className="space-y-4"
 						>
-							<h3 className="text-lg font-semibold text-white">
+							<h3 className="text-lg font-semibold text-text-primary">
 								Step 3: Review
 							</h3>
-							<div className="space-y-2 p-4 bg-zinc-900 rounded-lg border border-zinc-700">
+							<div className="space-y-2 p-4 bg-surface-primary rounded-lg border border-border-secondary">
 								<div>
-									<span className="text-zinc-400">Name:</span>{" "}
-									<span className="text-white">{formData.name}</span>
+									<span className="text-text-tertiary">Name:</span>{" "}
+									<span className="text-text-primary">{formData.name}</span>
 								</div>
 								<div>
-									<span className="text-zinc-400">Email:</span>{" "}
-									<span className="text-white">{formData.email}</span>
+									<span className="text-text-tertiary">Email:</span>{" "}
+									<span className="text-text-primary">{formData.email}</span>
 								</div>
 							</div>
 							<div className="flex gap-2">
@@ -224,7 +226,7 @@ export function VanillaStateMachineDemo() {
 									type="button"
 									onClick={() => transition("PREV")}
 									disabled={isTransitioningRef.current}
-									className="px-4 py-2 bg-zinc-700 text-white rounded-lg hover:bg-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+									className="px-4 py-2 bg-surface-tertiary text-text-primary rounded-lg hover:bg-surface-tertiary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 								>
 									Previous
 								</button>
@@ -232,7 +234,7 @@ export function VanillaStateMachineDemo() {
 									type="button"
 									onClick={() => transition("SUBMIT")}
 									disabled={isTransitioningRef.current}
-									className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+									className="px-4 py-2 bg-emerald-500 text-text-primary rounded-lg hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 								>
 									Submit
 								</button>
@@ -248,10 +250,12 @@ export function VanillaStateMachineDemo() {
 							className="space-y-4 text-center"
 						>
 							<div className="text-4xl">✓</div>
-							<h3 className="text-lg font-semibold text-emerald-400">
+							<h3 className="text-lg font-semibold text-accent-emerald-soft">
 								Form Submitted!
 							</h3>
-							<p className="text-zinc-400">Your information has been saved.</p>
+							<p className="text-text-tertiary">
+								Your information has been saved.
+							</p>
 							<button
 								type="button"
 								onClick={() => {
@@ -259,7 +263,7 @@ export function VanillaStateMachineDemo() {
 									setFormData({ name: "", email: "" });
 								}}
 								disabled={isTransitioningRef.current}
-								className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+								className="px-4 py-2 bg-orange-500 text-text-primary rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 							>
 								Start Over
 							</button>
@@ -268,17 +272,17 @@ export function VanillaStateMachineDemo() {
 				</motion.div>
 
 				<div className="space-y-4">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						Machine Definition
 					</h4>
 					<ShikiCode language="typescript" code={machineCode} />
 				</div>
 
 				<div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-					<h4 className="text-sm font-semibold text-amber-400 mb-2">
+					<h4 className="text-sm font-semibold text-accent-amber-soft mb-2">
 						Manual State Management Challenges
 					</h4>
-					<ul className="text-sm text-zinc-300 space-y-1 list-disc list-inside">
+					<ul className="text-sm text-text-secondary space-y-1 list-disc list-inside">
 						<li>Boilerplate: Manual validation of every transition</li>
 						<li>
 							Error-prone: Easy to forget edge cases or invalid transitions

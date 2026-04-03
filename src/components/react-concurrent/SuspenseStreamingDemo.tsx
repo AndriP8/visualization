@@ -68,9 +68,9 @@ function SkeletonBlock({
 }) {
 	return (
 		<div
-			className={`${height} rounded-lg bg-zinc-700/50 animate-pulse flex items-center justify-center`}
+			className={`${height} rounded-lg bg-surface-tertiary/50 animate-pulse flex items-center justify-center`}
 		>
-			<span className="text-xs text-zinc-500">Loading {label}...</span>
+			<span className="text-xs text-text-muted">Loading {label}...</span>
 		</div>
 	);
 }
@@ -84,17 +84,17 @@ const SECTION_STYLES: Record<
 	violet: {
 		border: "border-violet-500/30",
 		bg: "bg-violet-500/5",
-		text: "text-violet-400",
+		text: "text-accent-violet-soft",
 	},
 	cyan: {
 		border: "border-cyan-500/30",
 		bg: "bg-cyan-500/5",
-		text: "text-cyan-400",
+		text: "text-accent-cyan-soft",
 	},
 	amber: {
 		border: "border-amber-500/30",
 		bg: "bg-amber-500/5",
-		text: "text-amber-400",
+		text: "text-accent-amber-soft",
 	},
 };
 
@@ -119,7 +119,7 @@ function SuspenseSection({
 			<h5 className={`text-sm font-semibold ${styles.text} mb-2`}>{label}</h5>
 			<div className="space-y-1">
 				{items.map((item) => (
-					<div key={item} className="text-xs text-zinc-400">
+					<div key={item} className="text-xs text-text-tertiary">
 						{item}
 					</div>
 				))}
@@ -171,14 +171,14 @@ function TraditionalDashboard({ fetchTimes }: { fetchTimes: FetchTimes }) {
 			<button
 				type="button"
 				onClick={handleLoad}
-				className="px-4 py-2 rounded-lg bg-violet-500/20 text-violet-300 border border-violet-500/30 text-sm hover:bg-violet-500/30 transition-colors"
+				className="px-4 py-2 rounded-lg bg-violet-500/20 text-accent-violet border border-violet-500/30 text-sm hover:bg-violet-500/30 transition-colors"
 			>
 				Load Dashboard
 			</button>
 			{loading && (
 				<div className="space-y-3">
 					<SkeletonBlock label="Everything" height="h-48" />
-					<p className="text-xs text-zinc-500 text-center">
+					<p className="text-xs text-text-muted text-center">
 						Waiting for slowest fetch (
 						{Math.max(fetchTimes.header, fetchTimes.sidebar, fetchTimes.feed)}
 						ms)...
@@ -192,29 +192,31 @@ function TraditionalDashboard({ fetchTimes }: { fetchTimes: FetchTimes }) {
 					className="space-y-3"
 				>
 					<div className="rounded-lg border border-violet-500/30 bg-violet-500/5 p-3">
-						<h5 className="text-sm font-semibold text-violet-400 mb-2">
+						<h5 className="text-sm font-semibold text-accent-violet-soft mb-2">
 							Header
 						</h5>
 						{data.header.map((item) => (
-							<div key={item} className="text-xs text-zinc-400">
+							<div key={item} className="text-xs text-text-tertiary">
 								{item}
 							</div>
 						))}
 					</div>
 					<div className="rounded-lg border border-cyan-500/30 bg-cyan-500/5 p-3">
-						<h5 className="text-sm font-semibold text-cyan-400 mb-2">
+						<h5 className="text-sm font-semibold text-accent-cyan-soft mb-2">
 							Sidebar
 						</h5>
 						{data.sidebar.map((item) => (
-							<div key={item} className="text-xs text-zinc-400">
+							<div key={item} className="text-xs text-text-tertiary">
 								{item}
 							</div>
 						))}
 					</div>
 					<div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-3">
-						<h5 className="text-sm font-semibold text-amber-400 mb-2">Feed</h5>
+						<h5 className="text-sm font-semibold text-accent-amber-soft mb-2">
+							Feed
+						</h5>
 						{data.feed.map((item) => (
-							<div key={item} className="text-xs text-zinc-400">
+							<div key={item} className="text-xs text-text-tertiary">
 								{item}
 							</div>
 						))}
@@ -247,7 +249,7 @@ function SuspenseDashboard({ fetchTimes }: { fetchTimes: FetchTimes }) {
 			<button
 				type="button"
 				onClick={handleLoad}
-				className="px-4 py-2 rounded-lg bg-violet-500/20 text-violet-300 border border-violet-500/30 text-sm hover:bg-violet-500/30 transition-colors"
+				className="px-4 py-2 rounded-lg bg-violet-500/20 text-accent-violet border border-violet-500/30 text-sm hover:bg-violet-500/30 transition-colors"
 			>
 				Load Dashboard
 			</button>
@@ -296,14 +298,14 @@ export function SuspenseStreamingDemo() {
 		>
 			<div className="space-y-6">
 				{/* Mode Toggle */}
-				<div className="flex bg-zinc-800 rounded-lg p-1 w-fit">
+				<div className="flex bg-surface-secondary rounded-lg p-1 w-fit">
 					<button
 						type="button"
 						onClick={() => setMode("without")}
 						className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 							mode === "without"
-								? "bg-red-500/20 text-red-400"
-								: "text-zinc-400 hover:text-white"
+								? "bg-red-500/20 text-accent-red-soft"
+								: "text-text-tertiary hover:text-text-primary"
 						}`}
 					>
 						Without Suspense
@@ -313,8 +315,8 @@ export function SuspenseStreamingDemo() {
 						onClick={() => setMode("with")}
 						className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 							mode === "with"
-								? "bg-emerald-500/20 text-emerald-400"
-								: "text-zinc-400 hover:text-white"
+								? "bg-emerald-500/20 text-accent-emerald-soft"
+								: "text-text-tertiary hover:text-text-primary"
 						}`}
 					>
 						With Suspense
@@ -322,15 +324,15 @@ export function SuspenseStreamingDemo() {
 				</div>
 
 				{/* Fetch Time Sliders */}
-				<div className="bg-zinc-800/50 rounded-lg p-4 space-y-3">
-					<h4 className="text-sm font-medium text-zinc-300">
+				<div className="bg-surface-secondary/50 rounded-lg p-4 space-y-3">
+					<h4 className="text-sm font-medium text-text-secondary">
 						Simulated Fetch Times
 					</h4>
 					{(
 						[
-							["header", "Header", "text-violet-400"],
-							["sidebar", "Sidebar", "text-cyan-400"],
-							["feed", "Feed", "text-amber-400"],
+							["header", "Header", "text-accent-violet-soft"],
+							["sidebar", "Sidebar", "text-accent-cyan-soft"],
+							["feed", "Feed", "text-accent-amber-soft"],
 						] as const
 					).map(([key, label, textClass]) => (
 						<div key={key} className="flex items-center gap-3">
@@ -349,7 +351,7 @@ export function SuspenseStreamingDemo() {
 								}
 								className="flex-1 accent-violet-500"
 							/>
-							<span className="text-xs text-zinc-400 w-14 text-right">
+							<span className="text-xs text-text-tertiary w-14 text-right">
 								{fetchTimes[key]}ms
 							</span>
 						</div>
@@ -357,8 +359,8 @@ export function SuspenseStreamingDemo() {
 				</div>
 
 				{/* Timeline Visualization */}
-				<div className="bg-zinc-800/50 rounded-lg p-4 space-y-3">
-					<h4 className="text-sm font-medium text-zinc-300">
+				<div className="bg-surface-secondary/50 rounded-lg p-4 space-y-3">
+					<h4 className="text-sm font-medium text-text-secondary">
 						Loading Timeline
 					</h4>
 					<AnimatePresence mode="wait">
@@ -370,9 +372,9 @@ export function SuspenseStreamingDemo() {
 								exit={{ opacity: 0 }}
 								className="space-y-2"
 							>
-								<div className="flex items-center gap-2 text-xs text-zinc-400">
+								<div className="flex items-center gap-2 text-xs text-text-tertiary">
 									<span className="w-16 shrink-0">All</span>
-									<div className="flex-1 h-6 rounded overflow-hidden relative bg-zinc-900">
+									<div className="flex-1 h-6 rounded overflow-hidden relative bg-surface-primary">
 										<motion.div
 											className="absolute inset-y-0 left-0 bg-red-500/30 border-r border-red-500"
 											style={{
@@ -382,7 +384,7 @@ export function SuspenseStreamingDemo() {
 											animate={{ scaleX: 1 }}
 											transition={{ duration: 0.5 }}
 										/>
-										<span className="absolute inset-0 flex items-center justify-center text-[10px] text-red-300">
+										<span className="absolute inset-0 flex items-center justify-center text-[10px] text-accent-red">
 											Wait for slowest (
 											{Math.max(
 												fetchTimes.header,
@@ -407,31 +409,31 @@ export function SuspenseStreamingDemo() {
 										{
 											label: "Header",
 											time: fetchTimes.header,
-											textClass: "text-violet-400",
+											textClass: "text-accent-violet-soft",
 											barClass: "bg-violet-500/30 border-r border-violet-500",
 										},
 										{
 											label: "Sidebar",
 											time: fetchTimes.sidebar,
-											textClass: "text-cyan-400",
+											textClass: "text-accent-cyan-soft",
 											barClass: "bg-cyan-500/30 border-r border-cyan-500",
 										},
 										{
 											label: "Feed",
 											time: fetchTimes.feed,
-											textClass: "text-amber-400",
+											textClass: "text-accent-amber-soft",
 											barClass: "bg-amber-500/30 border-r border-amber-500",
 										},
 									] as const
 								).map((item) => (
 									<div
 										key={item.label}
-										className="flex items-center gap-2 text-xs text-zinc-400"
+										className="flex items-center gap-2 text-xs text-text-tertiary"
 									>
 										<span className={`w-16 shrink-0 ${item.textClass}`}>
 											{item.label}
 										</span>
-										<div className="flex-1 h-5 rounded overflow-hidden relative bg-zinc-900">
+										<div className="flex-1 h-5 rounded overflow-hidden relative bg-surface-primary">
 											<motion.div
 												className={`absolute inset-y-0 left-0 ${item.barClass}`}
 												style={{
@@ -444,7 +446,7 @@ export function SuspenseStreamingDemo() {
 													delay: item.time / 5000,
 												}}
 											/>
-											<span className="absolute right-2 inset-y-0 flex items-center text-[10px] text-zinc-500">
+											<span className="absolute right-2 inset-y-0 flex items-center text-[10px] text-text-muted">
 												{item.time}ms
 											</span>
 										</div>
@@ -507,7 +509,7 @@ function navigate(to: string) {
 				/>
 
 				<div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-4">
-					<p className="text-sm text-cyan-300">
+					<p className="text-sm text-accent-cyan">
 						<span className="font-semibold">React 19 note:</span> the{" "}
 						<code className="text-cyan-200">use(promise)</code> hook replaces
 						the manual <code className="text-cyan-200">wrapPromise</code>{" "}
@@ -518,7 +520,7 @@ function navigate(to: string) {
 					</p>
 				</div>
 
-				<p className="text-xs text-zinc-500 italic">
+				<p className="text-xs text-text-muted italic">
 					Without startTransition, navigating to a Suspense-boundary page
 					immediately shows fallbacks (jarring). With it, React keeps the old
 					page visible until enough of the new page is ready.

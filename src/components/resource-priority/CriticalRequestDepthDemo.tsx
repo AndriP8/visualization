@@ -111,15 +111,17 @@ export default function CriticalRequestDepthDemo({
 					<div
 						className={`px-3 py-1 rounded text-sm font-medium ${
 							state === "bad"
-								? "bg-rose-500/20 text-rose-300 border border-rose-500/50"
-								: "bg-green-500/20 text-green-300 border border-green-500/50"
+								? "bg-rose-500/20 text-accent-rose border border-rose-500/50"
+								: "bg-green-500/20 text-accent-green border border-green-500/50"
 						}`}
 					>
 						{state === "bad" ? "❌ Bad: Depth 4" : "✓ Good: Depth 2"}
 					</div>
-					<div className="text-sm text-zinc-400">
+					<div className="text-sm text-text-tertiary">
 						Critical Path:{" "}
-						<span className="text-white font-medium">{criticalPath}ms</span>
+						<span className="text-text-primary font-medium">
+							{criticalPath}ms
+						</span>
 					</div>
 				</div>
 				<div className="flex gap-2">
@@ -127,7 +129,7 @@ export default function CriticalRequestDepthDemo({
 						<button
 							type="button"
 							onClick={applyFixes}
-							className="px-4 py-2 bg-green-500 text-white rounded-md text-sm font-medium hover:bg-green-600 transition-colors"
+							className="px-4 py-2 bg-green-500 text-text-primary rounded-md text-sm font-medium hover:bg-green-600 transition-colors"
 						>
 							Apply Fixes
 						</button>
@@ -136,7 +138,7 @@ export default function CriticalRequestDepthDemo({
 						<button
 							type="button"
 							onClick={resetTooBad}
-							className="px-4 py-2 bg-zinc-700 text-white rounded-md text-sm font-medium hover:bg-zinc-600 transition-colors"
+							className="px-4 py-2 bg-surface-tertiary text-text-primary rounded-md text-sm font-medium hover:bg-surface-tertiary transition-colors"
 						>
 							Reset
 						</button>
@@ -145,7 +147,7 @@ export default function CriticalRequestDepthDemo({
 			</div>
 
 			{/* Waterfall Visualization */}
-			<div className="p-6 bg-zinc-900 rounded border border-zinc-800 overflow-x-auto">
+			<div className="p-6 bg-surface-primary rounded border border-border-primary overflow-x-auto">
 				<div
 					className="relative min-w-max"
 					style={{ height: waterfall.length * BAR_SPACING + 40 }}
@@ -215,10 +217,10 @@ export default function CriticalRequestDepthDemo({
 							};
 
 							const textColorClasses = {
-								violet: "text-violet-300",
-								cyan: "text-cyan-300",
-								amber: "text-amber-300",
-								rose: "text-rose-300",
+								violet: "text-accent-violet",
+								cyan: "text-accent-cyan",
+								amber: "text-accent-amber",
+								rose: "text-accent-rose",
 							};
 
 							return (
@@ -240,7 +242,7 @@ export default function CriticalRequestDepthDemo({
 									<div
 										className={`h-full rounded border ${colorClasses[item.color as keyof typeof colorClasses]} flex items-center justify-between px-3`}
 									>
-										<span className="text-sm font-medium text-white">
+										<span className="text-sm font-medium text-text-primary">
 											{item.name}
 										</span>
 										<span
@@ -258,28 +260,28 @@ export default function CriticalRequestDepthDemo({
 
 			{/* Metrics Panel */}
 			<div className="grid md:grid-cols-2 gap-4">
-				<div className="p-4 bg-zinc-900 rounded border border-zinc-800">
-					<div className="text-sm text-zinc-400 mb-1">
+				<div className="p-4 bg-surface-primary rounded border border-border-primary">
+					<div className="text-sm text-text-tertiary mb-1">
 						Critical Request Depth
 					</div>
 					<motion.div
 						key={maxDepth}
 						initial={{ scale: 1.2 }}
 						animate={{ scale: 1 }}
-						className="text-3xl font-bold text-white"
+						className="text-3xl font-bold text-text-primary"
 					>
 						{maxDepth}
 					</motion.div>
 				</div>
-				<div className="p-4 bg-zinc-900 rounded border border-zinc-800">
-					<div className="text-sm text-zinc-400 mb-1">
+				<div className="p-4 bg-surface-primary rounded border border-border-primary">
+					<div className="text-sm text-text-tertiary mb-1">
 						Critical Path Duration
 					</div>
 					<motion.div
 						key={criticalPath}
 						initial={{ scale: 1.2 }}
 						animate={{ scale: 1 }}
-						className="text-3xl font-bold text-white"
+						className="text-3xl font-bold text-text-primary"
 					>
 						{criticalPath}ms
 					</motion.div>
@@ -287,12 +289,12 @@ export default function CriticalRequestDepthDemo({
 			</div>
 
 			{/* Explanation */}
-			<div className="p-4 bg-zinc-900 rounded border border-zinc-800 space-y-3">
-				<h4 className="text-sm font-medium text-white">
+			<div className="p-4 bg-surface-primary rounded border border-border-primary space-y-3">
+				<h4 className="text-sm font-medium text-text-primary">
 					{state === "bad" ? "Problem" : "Solution"}
 				</h4>
 				{state === "bad" ? (
-					<div className="text-sm text-zinc-400 space-y-2">
+					<div className="text-sm text-text-tertiary space-y-2">
 						<p>The browser discovers resources sequentially:</p>
 						<ol className="list-decimal list-inside space-y-1 ml-2">
 							<li>HTML loads → discovers CSS link</li>
@@ -300,15 +302,15 @@ export default function CriticalRequestDepthDemo({
 							<li>icons.css loads → discovers font-face</li>
 							<li>Font loads → finally LCP can happen</li>
 						</ol>
-						<p className="text-rose-300 font-medium">
+						<p className="text-accent-rose font-medium">
 							Total: 1100ms, depth of 4 requests
 						</p>
 					</div>
 				) : (
-					<div className="text-sm text-zinc-400 space-y-2">
+					<div className="text-sm text-text-tertiary space-y-2">
 						<p>
 							Using{" "}
-							<code className="text-violet-300 bg-zinc-800 px-1 rounded">
+							<code className="text-accent-violet bg-surface-secondary px-1 rounded">
 								{'<link rel="preload" as="font">'}
 							</code>{" "}
 							in HTML:
@@ -318,7 +320,7 @@ export default function CriticalRequestDepthDemo({
 							<li>CSS and font load in parallel</li>
 							<li>LCP happens as soon as font is ready</li>
 						</ol>
-						<p className="text-green-300 font-medium">
+						<p className="text-accent-green font-medium">
 							Total: 600ms, depth of 2 requests (500ms saved!)
 						</p>
 					</div>

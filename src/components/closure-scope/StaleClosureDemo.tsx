@@ -202,13 +202,13 @@ function StaleClosurePanel({ variant }: PanelProps) {
 				className="rounded-xl p-4 border space-y-3"
 				style={{ borderColor: `${color}22`, background: `${color}08` }}
 			>
-				<p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
+				<p className="text-xs text-text-muted uppercase tracking-wider font-semibold">
 					Live Simulation
 				</p>
 
 				{/* Real count (button increments) */}
 				<div className="flex items-center justify-between">
-					<span className="text-xs text-zinc-400">
+					<span className="text-xs text-text-tertiary">
 						State: <code className="font-mono">count</code>
 					</span>
 					<div className="flex items-center gap-3">
@@ -238,7 +238,7 @@ function StaleClosurePanel({ variant }: PanelProps) {
 
 				{/* Interval-read count */}
 				<div className="flex items-center justify-between">
-					<span className="text-xs text-zinc-400">
+					<span className="text-xs text-text-tertiary">
 						Interval reads:{" "}
 						<code className="font-mono">
 							{isBuggy ? "stale count" : "fresh count"}
@@ -287,20 +287,20 @@ function StaleClosurePanel({ variant }: PanelProps) {
 						}}
 					>
 						<div className="flex items-center justify-between">
-							<span className="text-zinc-400">Effect re-runs:</span>
+							<span className="text-text-tertiary">Effect re-runs:</span>
 							<motion.span
 								key={effectReruns}
 								initial={{ scale: 1.4 }}
 								animate={{ scale: 1 }}
-								className="text-green-400 font-mono font-bold"
+								className="text-accent-green-soft font-mono font-bold"
 							>
 								{effectReruns}
 							</motion.span>
 						</div>
-						<p className="text-zinc-600 mt-1.5 text-[11px]">
+						<p className="text-text-faint mt-1.5 text-[11px]">
 							Each re-run tears down the old interval and creates a{" "}
-							<strong className="text-green-400">fresh closure</strong> that
-							captures the latest <code className="font-mono">count</code>{" "}
+							<strong className="text-accent-green-soft">fresh closure</strong>{" "}
+							that captures the latest <code className="font-mono">count</code>{" "}
 							value.
 						</p>
 					</motion.div>
@@ -311,7 +311,7 @@ function StaleClosurePanel({ variant }: PanelProps) {
 					<motion.div
 						initial={{ opacity: 0, y: 4 }}
 						animate={{ opacity: 1, y: 0 }}
-						className="text-xs p-2 rounded-lg bg-red-500/10 border border-red-500/30 text-red-300"
+						className="text-xs p-2 rounded-lg bg-red-500/10 border border-red-500/30 text-accent-red"
 					>
 						The interval callback captured{" "}
 						<code>count = {capturedAtMount.current}</code> when the interval
@@ -339,14 +339,14 @@ function StaleClosurePanel({ variant }: PanelProps) {
 						type="button"
 						onClick={stop}
 						disabled={!running}
-						className="px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40"
+						className="px-3 py-1.5 rounded-lg text-xs font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors disabled:opacity-40"
 					>
 						⏹ Stop
 					</button>
 					<button
 						type="button"
 						onClick={reset}
-						className="px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+						className="px-3 py-1.5 rounded-lg text-xs font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 					>
 						↺ Reset
 					</button>
@@ -370,10 +370,10 @@ export function StaleClosureDemo() {
 			</div>
 
 			{/* Key insight */}
-			<div className="mt-6 p-4 rounded-lg bg-zinc-800/40 border border-zinc-700/40 text-xs text-zinc-500 space-y-2">
+			<div className="mt-6 p-4 rounded-lg bg-surface-secondary/40 border border-border-secondary/40 text-xs text-text-muted space-y-2">
 				<p>
-					<strong className="text-zinc-300">Why does this happen?</strong> The{" "}
-					<code className="font-mono">setInterval</code> callback is created
+					<strong className="text-text-secondary">Why does this happen?</strong>{" "}
+					The <code className="font-mono">setInterval</code> callback is created
 					once. It's a function that has a closure over the{" "}
 					<code className="font-mono">count</code> variable{" "}
 					<em>as it existed when the effect ran</em>. Because React only ran the
@@ -381,15 +381,15 @@ export function StaleClosureDemo() {
 					there is forever <code className="font-mono">0</code>.
 				</p>
 				<p>
-					<strong className="text-zinc-300">The fix:</strong> adding{" "}
+					<strong className="text-text-secondary">The fix:</strong> adding{" "}
 					<code className="font-mono">count</code> to the dependency array
 					forces React to tear down the old interval and create a{" "}
 					<em>new closure</em> every time <code>count</code> changes. The new
 					closure captures the fresh value.
 				</p>
-				<p className="text-zinc-600">
-					<strong className="text-zinc-400">Deeper solution:</strong> use the
-					functional updater form{" "}
+				<p className="text-text-faint">
+					<strong className="text-text-tertiary">Deeper solution:</strong> use
+					the functional updater form{" "}
 					<code className="font-mono">setCount(c =&gt; c + 1)</code> inside the
 					interval — then you don't need <code>count</code> in deps at all,
 					because you're reading from the setter's implicit current-value

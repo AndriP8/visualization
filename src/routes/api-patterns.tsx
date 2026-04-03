@@ -21,7 +21,7 @@ function ApiPatternsPage() {
 				gradient={{ from: "blue-400", via: "cyan-400", to: "violet-400" }}
 				explanation={{
 					content: (
-						<div className="space-y-3 text-sm text-zinc-300">
+						<div className="space-y-3 text-sm text-text-secondary">
 							<p>
 								Different API patterns solve different problems. REST is simple
 								and cache-friendly but can over-fetch. GraphQL gives precise
@@ -30,23 +30,25 @@ function ApiPatternsPage() {
 								updates. Polling works when latency isn't critical.
 							</p>
 							<div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
-								<div className="bg-zinc-900/50 rounded p-3 border border-zinc-700">
-									<div className="text-xs text-zinc-500 mb-1">
+								<div className="bg-surface-primary/50 rounded p-3 border border-border-secondary">
+									<div className="text-xs text-text-muted mb-1">
 										Best for CRUD
 									</div>
-									<div className="text-white font-semibold">REST</div>
+									<div className="text-text-primary font-semibold">REST</div>
 								</div>
-								<div className="bg-zinc-900/50 rounded p-3 border border-zinc-700">
-									<div className="text-xs text-zinc-500 mb-1">
+								<div className="bg-surface-primary/50 rounded p-3 border border-border-secondary">
+									<div className="text-xs text-text-muted mb-1">
 										Best for Flexibility
 									</div>
-									<div className="text-white font-semibold">GraphQL</div>
+									<div className="text-text-primary font-semibold">GraphQL</div>
 								</div>
-								<div className="bg-zinc-900/50 rounded p-3 border border-zinc-700">
-									<div className="text-xs text-zinc-500 mb-1">
+								<div className="bg-surface-primary/50 rounded p-3 border border-border-secondary">
+									<div className="text-xs text-text-muted mb-1">
 										Best for Real-time
 									</div>
-									<div className="text-white font-semibold">WebSocket</div>
+									<div className="text-text-primary font-semibold">
+										WebSocket
+									</div>
 								</div>
 							</div>
 						</div>
@@ -90,30 +92,32 @@ function ApiPatternsPage() {
 			</DemoSection>
 
 			{/* Key Takeaways */}
-			<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6">
-				<h3 className="text-lg font-semibold text-white mb-4">Key Takeaways</h3>
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-zinc-300">
+			<div className="bg-surface-primary border border-border-secondary rounded-xl p-6">
+				<h3 className="text-lg font-semibold text-text-primary mb-4">
+					Key Takeaways
+				</h3>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-text-secondary">
 					<div className="space-y-2">
 						<div className="flex gap-2">
-							<span className="text-rose-400 shrink-0">📦</span>
+							<span className="text-accent-rose-soft shrink-0">📦</span>
 							<div>
-								<strong className="text-white">REST:</strong> Good for CRUD,
-								cache-friendly, but over-fetches. Waterfall risk with N+1
+								<strong className="text-text-primary">REST:</strong> Good for
+								CRUD, cache-friendly, but over-fetches. Waterfall risk with N+1
 								queries.
 							</div>
 						</div>
 						<div className="flex gap-2">
-							<span className="text-cyan-400 shrink-0">◈</span>
+							<span className="text-accent-cyan-soft shrink-0">◈</span>
 							<div>
-								<strong className="text-white">GraphQL:</strong> Solves
+								<strong className="text-text-primary">GraphQL:</strong> Solves
 								over/under-fetching, single endpoint. Trade-off: backend
 								complexity, no HTTP caching.
 							</div>
 						</div>
 						<div className="flex gap-2">
-							<span className="text-violet-400 shrink-0">⚡</span>
+							<span className="text-accent-violet-soft shrink-0">⚡</span>
 							<div>
-								<strong className="text-white">tRPC:</strong> Perfect for
+								<strong className="text-text-primary">tRPC:</strong> Perfect for
 								TypeScript monorepos. Type-safe, no schema/codegen. Like REST
 								but with full inference.
 							</div>
@@ -121,27 +125,27 @@ function ApiPatternsPage() {
 					</div>
 					<div className="space-y-2">
 						<div className="flex gap-2">
-							<span className="text-green-400 shrink-0">⚡</span>
+							<span className="text-accent-green-soft shrink-0">⚡</span>
 							<div>
-								<strong className="text-white">WebSocket:</strong>{" "}
+								<strong className="text-text-primary">WebSocket:</strong>{" "}
 								Bidirectional, &lt;50ms latency. Use for chat, gaming,
 								collaborative editing. Connection overhead.
 							</div>
 						</div>
 						<div className="flex gap-2">
-							<span className="text-cyan-400 shrink-0">📡</span>
+							<span className="text-accent-cyan-soft shrink-0">📡</span>
 							<div>
-								<strong className="text-white">SSE:</strong> Simpler than
+								<strong className="text-text-primary">SSE:</strong> Simpler than
 								WebSocket if unidirectional (server → client). Auto-reconnects.
 								Perfect for logs, notifications.
 							</div>
 						</div>
 						<div className="flex gap-2">
-							<span className="text-amber-400 shrink-0">🔄</span>
+							<span className="text-accent-amber-soft shrink-0">🔄</span>
 							<div>
-								<strong className="text-white">Polling:</strong> Acceptable if
-								updates &lt;1/min. Simple, works everywhere. High bandwidth
-								waste for frequent updates.
+								<strong className="text-text-primary">Polling:</strong>{" "}
+								Acceptable if updates &lt;1/min. Simple, works everywhere. High
+								bandwidth waste for frequent updates.
 							</div>
 						</div>
 					</div>

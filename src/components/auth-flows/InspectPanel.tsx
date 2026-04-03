@@ -36,14 +36,16 @@ export function InspectPanel({
 						transition={{ type: "spring", stiffness: 300, damping: 30 }}
 						className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-2xl max-h-[80vh] overflow-auto"
 					>
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg shadow-2xl">
+						<div className="bg-surface-primary border border-border-secondary rounded-lg shadow-2xl">
 							{/* Header */}
-							<div className="flex items-center justify-between p-4 border-b border-zinc-700">
-								<h3 className="text-lg font-semibold text-white">{title}</h3>
+							<div className="flex items-center justify-between p-4 border-b border-border-secondary">
+								<h3 className="text-lg font-semibold text-text-primary">
+									{title}
+								</h3>
 								<button
 									type="button"
 									onClick={onClose}
-									className="text-zinc-400 hover:text-white transition-colors"
+									className="text-text-tertiary hover:text-text-primary transition-colors"
 								>
 									<svg
 										className="w-6 h-6"
@@ -87,12 +89,14 @@ function renderJWT(data: Record<string, unknown>) {
 			<div>
 				<div className="flex items-center gap-2 mb-2">
 					<div className="w-3 h-3 rounded-full bg-rose-400" />
-					<h4 className="text-sm font-semibold text-rose-300 uppercase tracking-wide">
+					<h4 className="text-sm font-semibold text-accent-rose uppercase tracking-wide">
 						Header
 					</h4>
 				</div>
-				<div className="bg-zinc-800 border border-zinc-700 rounded p-4 font-mono text-sm">
-					<pre className="text-zinc-300">{JSON.stringify(header, null, 2)}</pre>
+				<div className="bg-surface-secondary border border-border-secondary rounded p-4 font-mono text-sm">
+					<pre className="text-text-secondary">
+						{JSON.stringify(header, null, 2)}
+					</pre>
 				</div>
 			</div>
 
@@ -100,12 +104,12 @@ function renderJWT(data: Record<string, unknown>) {
 			<div>
 				<div className="flex items-center gap-2 mb-2">
 					<div className="w-3 h-3 rounded-full bg-violet-400" />
-					<h4 className="text-sm font-semibold text-violet-300 uppercase tracking-wide">
+					<h4 className="text-sm font-semibold text-accent-violet uppercase tracking-wide">
 						Payload
 					</h4>
 				</div>
-				<div className="bg-zinc-800 border border-zinc-700 rounded p-4 font-mono text-sm">
-					<pre className="text-zinc-300">
+				<div className="bg-surface-secondary border border-border-secondary rounded p-4 font-mono text-sm">
+					<pre className="text-text-secondary">
 						{JSON.stringify(payload, null, 2)}
 					</pre>
 				</div>
@@ -115,14 +119,14 @@ function renderJWT(data: Record<string, unknown>) {
 			<div>
 				<div className="flex items-center gap-2 mb-2">
 					<div className="w-3 h-3 rounded-full bg-cyan-400" />
-					<h4 className="text-sm font-semibold text-cyan-300 uppercase tracking-wide">
+					<h4 className="text-sm font-semibold text-accent-cyan uppercase tracking-wide">
 						Signature
 					</h4>
 				</div>
-				<div className="bg-zinc-800 border border-zinc-700 rounded p-4 font-mono text-sm break-all">
-					<span className="text-cyan-300">{signature}</span>
+				<div className="bg-surface-secondary border border-border-secondary rounded p-4 font-mono text-sm break-all">
+					<span className="text-accent-cyan">{signature}</span>
 				</div>
-				<p className="text-xs text-zinc-500 mt-2">
+				<p className="text-xs text-text-muted mt-2">
 					Verifies token integrity using server's secret key
 				</p>
 			</div>
@@ -135,15 +139,15 @@ function renderCookie(data: Record<string, unknown>) {
 		<div className="space-y-4">
 			{/* Cookie value */}
 			<div>
-				<h4 className="text-sm font-semibold text-violet-300 mb-2">Value</h4>
-				<div className="bg-zinc-800 border border-zinc-700 rounded p-4 font-mono text-sm break-all">
-					<span className="text-zinc-300">{data.value as string}</span>
+				<h4 className="text-sm font-semibold text-accent-violet mb-2">Value</h4>
+				<div className="bg-surface-secondary border border-border-secondary rounded p-4 font-mono text-sm break-all">
+					<span className="text-text-secondary">{data.value as string}</span>
 				</div>
 			</div>
 
 			{/* Flags */}
 			<div>
-				<h4 className="text-sm font-semibold text-violet-300 mb-2">
+				<h4 className="text-sm font-semibold text-accent-violet mb-2">
 					Security Flags
 				</h4>
 				<div className="space-y-3">
@@ -166,12 +170,12 @@ function renderCookie(data: Record<string, unknown>) {
 						<div className="flex items-start gap-3">
 							<div className="flex-1">
 								<div className="flex items-center gap-2">
-									<span className="text-sm text-zinc-400">Max-Age:</span>
-									<span className="text-sm text-white font-mono">
+									<span className="text-sm text-text-tertiary">Max-Age:</span>
+									<span className="text-sm text-text-primary font-mono">
 										{String(data.maxAge)}s
 									</span>
 								</div>
-								<p className="text-xs text-zinc-500 mt-1">
+								<p className="text-xs text-text-muted mt-1">
 									Cookie lifetime in seconds
 								</p>
 							</div>
@@ -188,35 +192,43 @@ function renderPKCE(data: Record<string, unknown>) {
 		<div className="space-y-6">
 			{/* Code Verifier */}
 			<div>
-				<h4 className="text-sm font-semibold text-amber-300 mb-2">
+				<h4 className="text-sm font-semibold text-accent-amber mb-2">
 					Code Verifier
 				</h4>
-				<div className="bg-zinc-800 border border-zinc-700 rounded p-4 font-mono text-sm break-all">
-					<span className="text-amber-300">{data.code_verifier as string}</span>
+				<div className="bg-surface-secondary border border-border-secondary rounded p-4 font-mono text-sm break-all">
+					<span className="text-accent-amber">
+						{data.code_verifier as string}
+					</span>
 				</div>
-				<p className="text-xs text-zinc-500 mt-2">
+				<p className="text-xs text-text-muted mt-2">
 					Random string (43-128 chars) stored securely in browser
 				</p>
 			</div>
 
 			{/* Code Challenge */}
 			<div>
-				<h4 className="text-sm font-semibold text-cyan-300 mb-2">
+				<h4 className="text-sm font-semibold text-accent-cyan mb-2">
 					Code Challenge
 				</h4>
-				<div className="bg-zinc-800 border border-zinc-700 rounded p-4 font-mono text-sm break-all">
-					<span className="text-cyan-300">{data.code_challenge as string}</span>
+				<div className="bg-surface-secondary border border-border-secondary rounded p-4 font-mono text-sm break-all">
+					<span className="text-accent-cyan">
+						{data.code_challenge as string}
+					</span>
 				</div>
-				<p className="text-xs text-zinc-500 mt-2">
+				<p className="text-xs text-text-muted mt-2">
 					SHA256(code_verifier) - sent to OAuth provider
 				</p>
 			</div>
 
 			{/* Method */}
 			<div>
-				<h4 className="text-sm font-semibold text-violet-300 mb-2">Method</h4>
-				<div className="bg-zinc-800 border border-zinc-700 rounded p-4">
-					<span className="text-white font-mono">{data.method as string}</span>
+				<h4 className="text-sm font-semibold text-accent-violet mb-2">
+					Method
+				</h4>
+				<div className="bg-surface-secondary border border-border-secondary rounded p-4">
+					<span className="text-text-primary font-mono">
+						{data.method as string}
+					</span>
 				</div>
 			</div>
 
@@ -246,14 +258,14 @@ function FlagItem({
 			<div className="flex-1">
 				<div className="flex items-center gap-2">
 					<div
-						className={`w-2 h-2 rounded-full ${isEnabled ? "bg-emerald-400" : "bg-zinc-600"}`}
+						className={`w-2 h-2 rounded-full ${isEnabled ? "bg-emerald-400" : "bg-surface-tertiary"}`}
 					/>
-					<span className="text-sm text-zinc-400">{name}:</span>
-					<span className="text-sm text-white font-mono">
+					<span className="text-sm text-text-tertiary">{name}:</span>
+					<span className="text-sm text-text-primary font-mono">
 						{typeof value === "boolean" ? (value ? "true" : "false") : value}
 					</span>
 				</div>
-				<p className="text-xs text-zinc-500 mt-1 ml-4">{description}</p>
+				<p className="text-xs text-text-muted mt-1 ml-4">{description}</p>
 			</div>
 		</div>
 	);

@@ -51,7 +51,7 @@ export function ExecutionQuizDemo() {
 	const [activeId, setActiveId] = useState<string | null>(null);
 
 	return (
-		<div className="bg-zinc-950 border border-zinc-800 rounded-xl p-6 lg:p-8 flex flex-col gap-6">
+		<div className="bg-surface-base border border-border-primary rounded-xl p-6 lg:p-8 flex flex-col gap-6">
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				{QUIZ_DATA.map((q) => {
 					const isFlipped = activeId === q.id;
@@ -71,19 +71,19 @@ export function ExecutionQuizDemo() {
 							>
 								{/* Front Card */}
 								<div
-									className={`absolute inset-0 backface-hidden bg-zinc-900 border ${
+									className={`absolute inset-0 backface-hidden bg-surface-primary border ${
 										isFlipped
 											? "border-blue-500/50"
-											: "border-zinc-800 group-hover:border-zinc-600"
+											: "border-border-primary group-hover:border-border-tertiary"
 									} rounded-xl p-6 flex flex-col justify-center items-center text-center gap-4 shadow-lg transition-colors`}
 								>
-									<div className="w-12 h-12 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xl mb-2">
+									<div className="w-12 h-12 rounded-full bg-blue-500/10 text-accent-blue-soft flex items-center justify-center font-bold text-xl mb-2">
 										?
 									</div>
-									<h3 className="font-semibold text-zinc-200 text-lg md:text-xl px-2">
+									<h3 className="font-semibold text-text-secondary text-lg md:text-xl px-2">
 										{q.question}
 									</h3>
-									<div className="text-zinc-500 text-sm mt-auto">
+									<div className="text-text-muted text-sm mt-auto">
 										Click to reveal answer
 									</div>
 								</div>
@@ -93,18 +93,18 @@ export function ExecutionQuizDemo() {
 									className="absolute inset-0 backface-hidden bg-linear-to-br from-blue-900/30 to-purple-900/30 border border-blue-500/30 rounded-xl p-5 flex flex-col shadow-xl overflow-hidden"
 									style={{ transform: "rotateY(180deg)" }}
 								>
-									<div className="text-blue-300 font-bold mb-2 uppercase text-[10px] tracking-wider shrink-0">
+									<div className="text-accent-blue font-bold mb-2 uppercase text-[10px] tracking-wider shrink-0">
 										Answer
 									</div>
-									<h4 className="font-semibold text-white text-[15px] leading-tight mb-2 shrink-0">
+									<h4 className="font-semibold text-text-primary text-[15px] leading-tight mb-2 shrink-0">
 										{q.answer}
 									</h4>
-									<p className="text-zinc-300 text-[13px] leading-relaxed overflow-y-auto pr-2 custom-scrollbar min-h-0">
+									<p className="text-text-secondary text-[13px] leading-relaxed overflow-y-auto pr-2 custom-scrollbar min-h-0">
 										{q.explanation}
 									</p>
 									{q.codeSnippet && (
 										<div className="mt-3 bg-black/40 border border-white/10 rounded text-[11px] overflow-hidden shrink-0">
-											<pre className="p-2.5 overflow-x-auto text-emerald-300 font-mono leading-relaxed">
+											<pre className="p-2.5 overflow-x-auto text-accent-emerald font-mono leading-relaxed">
 												{q.codeSnippet}
 											</pre>
 										</div>

@@ -21,22 +21,25 @@ function WebWorkersPage() {
 				gradient={{ from: "emerald-400", to: "teal-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-400 space-y-3">
+						<div className="text-sm text-text-tertiary space-y-3">
 							<p>
-								<strong className="text-zinc-300">The problem:</strong>{" "}
+								<strong className="text-text-secondary">The problem:</strong>{" "}
 								JavaScript's main thread handles both UI rendering and code
 								execution. Heavy tasks (image processing, large data parsing)
 								freeze the UI.
 							</p>
 							<p>
-								<strong className="text-emerald-400">Web Workers</strong> run
-								JavaScript in separate threads - truly parallel execution that
-								keeps the UI responsive. Workers can't access the DOM, but they
-								can handle computationally expensive tasks in the background.
+								<strong className="text-accent-emerald-soft">
+									Web Workers
+								</strong>{" "}
+								run JavaScript in separate threads - truly parallel execution
+								that keeps the UI responsive. Workers can't access the DOM, but
+								they can handle computationally expensive tasks in the
+								background.
 							</p>
-							<div className="mt-4 p-3 bg-zinc-900/50 border border-zinc-800 rounded-lg">
-								<p className="text-xs text-zinc-500">
-									<strong className="text-zinc-400">
+							<div className="mt-4 p-3 bg-surface-primary/50 border border-border-primary rounded-lg">
+								<p className="text-xs text-text-muted">
+									<strong className="text-text-tertiary">
 										Browser Requirements:
 									</strong>{" "}
 									Dedicated Workers (all modern browsers), Transferable Objects

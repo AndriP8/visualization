@@ -18,7 +18,7 @@ const LAYERS: CacheLayer[] = [
 		id: "browser-memory",
 		name: "Browser Memory Cache",
 		shortName: "Memory",
-		color: "text-violet-300",
+		color: "text-accent-violet",
 		bgColor: "bg-violet-500/10",
 		borderColor: "border-violet-500/30",
 		baseLatencyMs: 1,
@@ -28,7 +28,7 @@ const LAYERS: CacheLayer[] = [
 		id: "browser-disk",
 		name: "Browser Disk Cache",
 		shortName: "Disk Cache",
-		color: "text-cyan-300",
+		color: "text-accent-cyan",
 		bgColor: "bg-cyan-500/10",
 		borderColor: "border-cyan-500/30",
 		baseLatencyMs: 8,
@@ -48,7 +48,7 @@ const LAYERS: CacheLayer[] = [
 		id: "reverse-proxy",
 		name: "Reverse Proxy Cache",
 		shortName: "Nginx/Varnish",
-		color: "text-amber-300",
+		color: "text-accent-amber",
 		bgColor: "bg-amber-500/10",
 		borderColor: "border-amber-500/30",
 		baseLatencyMs: 5,
@@ -58,7 +58,7 @@ const LAYERS: CacheLayer[] = [
 		id: "app-cache",
 		name: "Application Cache",
 		shortName: "Redis",
-		color: "text-rose-300",
+		color: "text-accent-rose",
 		bgColor: "bg-rose-500/10",
 		borderColor: "border-rose-500/30",
 		baseLatencyMs: 3,
@@ -68,9 +68,9 @@ const LAYERS: CacheLayer[] = [
 		id: "database",
 		name: "Database → Disk",
 		shortName: "Database",
-		color: "text-zinc-300",
-		bgColor: "bg-zinc-600/10",
-		borderColor: "border-zinc-500/30",
+		color: "text-text-secondary",
+		bgColor: "bg-surface-tertiary/10",
+		borderColor: "border-text-muted/30",
 		baseLatencyMs: 120,
 		description: "Persistent storage — always the slowest",
 	},
@@ -218,8 +218,8 @@ export function CachingLayerStackDemo() {
 					whileTap={{ scale: 0.95 }}
 					className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
 						sim.running
-							? "bg-zinc-700 text-zinc-300 hover:bg-zinc-600"
-							: "bg-violet-600 hover:bg-violet-500 text-white"
+							? "bg-surface-tertiary text-text-secondary hover:bg-surface-tertiary"
+							: "bg-violet-600 hover:bg-violet-500 text-text-primary"
 					}`}
 				>
 					{match({ running: sim.running, done: sim.done })
@@ -232,10 +232,10 @@ export function CachingLayerStackDemo() {
 					<motion.div
 						initial={{ opacity: 0, x: -10 }}
 						animate={{ opacity: 1, x: 0 }}
-						className="text-sm text-zinc-400"
+						className="text-sm text-text-tertiary"
 					>
 						Total latency:{" "}
-						<span className="font-semibold text-amber-300">
+						<span className="font-semibold text-accent-amber">
 							~{sim.totalLatency}ms
 						</span>
 					</motion.div>
@@ -264,7 +264,7 @@ export function CachingLayerStackDemo() {
 										/>
 									)}
 									{!isBallHere && (
-										<div className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
+										<div className="w-2.5 h-2.5 rounded-full bg-surface-tertiary" />
 									)}
 								</div>
 
@@ -292,7 +292,7 @@ export function CachingLayerStackDemo() {
 														initial={{ opacity: 0, scale: 0.7 }}
 														animate={{ opacity: 1, scale: 1 }}
 														exit={{ opacity: 0 }}
-														className="px-2 py-0.5 rounded-full text-xs font-bold bg-green-500/20 text-green-400 border border-green-500/30"
+														className="px-2 py-0.5 rounded-full text-xs font-bold bg-green-500/20 text-accent-green-soft border border-green-500/30"
 													>
 														✓ HIT
 													</motion.span>
@@ -303,21 +303,21 @@ export function CachingLayerStackDemo() {
 														initial={{ opacity: 0, scale: 0.7 }}
 														animate={{ opacity: 1, scale: 1 }}
 														exit={{ opacity: 0 }}
-														className="px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30"
+														className="px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500/20 text-accent-orange-soft border border-orange-500/30"
 													>
 														✗ MISS
 													</motion.span>
 												)}
 											</AnimatePresence>
 										</div>
-										<p className="text-xs text-zinc-500 mt-0.5">
+										<p className="text-xs text-text-muted mt-0.5">
 											{layer.description}
 										</p>
 									</div>
 
 									{/* Latency */}
 									<div className="text-right shrink-0">
-										<div className="text-xs text-zinc-500">
+										<div className="text-xs text-text-muted">
 											~{layer.baseLatencyMs}ms
 										</div>
 									</div>
@@ -330,15 +330,15 @@ export function CachingLayerStackDemo() {
 											disabled={sim.running}
 											className={`shrink-0 w-16 py-1 rounded-full text-xs font-semibold border transition-all ${
 												isWarm
-													? "bg-green-500/15 text-green-400 border-green-500/30 hover:bg-green-500/25"
-													: "bg-zinc-700/50 text-zinc-500 border-zinc-600 hover:bg-zinc-700"
+													? "bg-green-500/15 text-accent-green-soft border-green-500/30 hover:bg-green-500/25"
+													: "bg-surface-tertiary/50 text-text-muted border-border-tertiary hover:bg-surface-tertiary"
 											} disabled:opacity-50 disabled:cursor-not-allowed`}
 										>
 											{isWarm ? "🔥 Warm" : "❄️ Cold"}
 										</button>
 									)}
 									{isLast && (
-										<span className="shrink-0 w-16 text-center text-xs text-zinc-600 italic">
+										<span className="shrink-0 w-16 text-center text-xs text-text-faint italic">
 											source
 										</span>
 									)}
@@ -350,45 +350,49 @@ export function CachingLayerStackDemo() {
 
 				{/* Explanation panel */}
 				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+					<h4 className="text-sm font-semibold text-text-tertiary uppercase tracking-wider">
 						How it works
 					</h4>
-					<div className="space-y-2.5 text-sm text-zinc-400">
+					<div className="space-y-2.5 text-sm text-text-tertiary">
 						<div className="flex gap-2.5">
-							<span className="text-white mt-0.5">→</span>
+							<span className="text-text-primary mt-0.5">→</span>
 							<p>
 								Toggle each layer between{" "}
-								<span className="text-green-400 font-medium">🔥 warm</span> (has
-								cached data) and{" "}
-								<span className="text-zinc-400 font-medium">❄️ cold</span>(cache
-								empty or expired) before sending the request.
+								<span className="text-accent-green-soft font-medium">
+									🔥 warm
+								</span>{" "}
+								(has cached data) and{" "}
+								<span className="text-text-tertiary font-medium">❄️ cold</span>
+								(cache empty or expired) before sending the request.
 							</p>
 						</div>
 						<div className="flex gap-2.5">
-							<span className="text-white mt-0.5">→</span>
+							<span className="text-text-primary mt-0.5">→</span>
 							<p>
 								The request ball drops through each layer. A{" "}
-								<span className="text-green-400 font-medium">warm</span> layer
-								returns data immediately (HIT). A{" "}
-								<span className="text-orange-400 font-medium">cold</span> layer
-								passes through (MISS).
+								<span className="text-accent-green-soft font-medium">warm</span>{" "}
+								layer returns data immediately (HIT). A{" "}
+								<span className="text-accent-orange-soft font-medium">
+									cold
+								</span>{" "}
+								layer passes through (MISS).
 							</p>
 						</div>
 						<div className="flex gap-2.5">
-							<span className="text-white mt-0.5">→</span>
+							<span className="text-text-primary mt-0.5">→</span>
 							<p>
 								The cumulative latency grows with each miss — reaching the DB
 								costs ~
-								<span className="text-amber-300 font-medium">157ms+</span> vs ~
-								<span className="text-green-400 font-medium">1ms</span> from
-								memory.
+								<span className="text-accent-amber font-medium">157ms+</span> vs
+								~<span className="text-accent-green-soft font-medium">1ms</span>{" "}
+								from memory.
 							</p>
 						</div>
 					</div>
-					<div className="mt-4 p-3 rounded-lg bg-zinc-800/50 border border-zinc-700 text-xs text-zinc-500">
-						<strong className="text-zinc-300">Key insight:</strong> The closer
-						to the user the cache is, the faster the response. Browser memory
-						cache is 5–100× faster than any network hop.
+					<div className="mt-4 p-3 rounded-lg bg-surface-secondary/50 border border-border-secondary text-xs text-text-muted">
+						<strong className="text-text-secondary">Key insight:</strong> The
+						closer to the user the cache is, the faster the response. Browser
+						memory cache is 5–100× faster than any network hop.
 					</div>
 				</div>
 			</div>

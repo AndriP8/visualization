@@ -112,7 +112,7 @@ export function MicroMacroDemo() {
 		>
 			{/* Code */}
 			<div className="mb-5">
-				<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+				<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 					What&apos;s the console output order?
 				</div>
 				<ShikiCode code={CODE_LINES.join("\n")} language="javascript" />
@@ -121,7 +121,7 @@ export function MicroMacroDemo() {
 			<div className="flex flex-col lg:flex-row gap-6">
 				{/* Prediction area */}
 				<div className="flex-1">
-					<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+					<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 						{phase === "predict"
 							? "Click to predict the order:"
 							: "Your prediction:"}
@@ -140,12 +140,12 @@ export function MicroMacroDemo() {
 										onClick={() => addPrediction(choice.id)}
 										className={`px-3 py-2 rounded-lg text-sm font-mono transition-all border ${
 											isSelected
-												? "border-emerald-500/50 bg-emerald-500/10 text-emerald-300"
-												: "border-zinc-700 bg-zinc-800 text-zinc-400 hover:text-zinc-300 hover:border-zinc-600"
+												? "border-emerald-500/50 bg-emerald-500/10 text-accent-emerald"
+												: "border-border-secondary bg-surface-secondary text-text-tertiary hover:text-text-secondary hover:border-border-tertiary"
 										}`}
 									>
 										{isSelected && (
-											<span className="text-emerald-400 mr-1.5 font-semibold">
+											<span className="text-accent-emerald-soft mr-1.5 font-semibold">
 												{index + 1}.
 											</span>
 										)}
@@ -163,16 +163,16 @@ export function MicroMacroDemo() {
 								key={p}
 								initial={{ opacity: 0, scale: 0.8 }}
 								animate={{ opacity: 1, scale: 1 }}
-								className="px-2 py-1 rounded text-xs font-mono bg-zinc-800 text-zinc-300 border border-zinc-700"
+								className="px-2 py-1 rounded text-xs font-mono bg-surface-secondary text-text-secondary border border-border-secondary"
 							>
-								<span className="text-zinc-500 mr-1">
+								<span className="text-text-muted mr-1">
 									{userPrediction.indexOf(p) + 1}.
 								</span>
 								{p}
 							</motion.div>
 						))}
 						{userPrediction.length === 0 && (
-							<span className="text-xs text-zinc-600">
+							<span className="text-xs text-text-faint">
 								Click the options above in order
 							</span>
 						)}
@@ -183,16 +183,16 @@ export function MicroMacroDemo() {
 							<button
 								type="button"
 								onClick={startReveal}
-								className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors"
+								className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-accent-emerald border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors"
 							>
 								Check & Reveal →
 							</button>
 							{isCorrect ? (
-								<span className="text-sm text-emerald-400 font-medium">
+								<span className="text-sm text-accent-emerald-soft font-medium">
 									✓ Correct!
 								</span>
 							) : (
-								<span className="text-sm text-amber-400 font-medium">
+								<span className="text-sm text-accent-amber-soft font-medium">
 									✗ Not quite — let&apos;s see why
 								</span>
 							)}
@@ -203,12 +203,12 @@ export function MicroMacroDemo() {
 				{/* Reveal area */}
 				{phase === "reveal" && (
 					<div className="flex-1">
-						<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+						<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 							Actual Execution
 						</div>
 
 						{/* Output */}
-						<div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 min-h-20 mb-4">
+						<div className="p-3 rounded-lg bg-surface-primary border border-border-primary min-h-20 mb-4">
 							<AnimatePresence>
 								{currentReveal.output.map((out) => {
 									const catColor =
@@ -224,14 +224,14 @@ export function MicroMacroDemo() {
 											animate={{ opacity: 1, x: 0 }}
 											className="text-xs font-mono flex items-center gap-2 py-0.5"
 										>
-											<span className="text-zinc-600">{">"}</span>
+											<span className="text-text-faint">{">"}</span>
 											<span style={{ color: catColor }}>{out}</span>
 										</motion.div>
 									);
 								})}
 							</AnimatePresence>
 							{currentReveal.output.length === 0 && (
-								<span className="text-xs text-zinc-600 font-mono">
+								<span className="text-xs text-text-faint font-mono">
 									(no output yet)
 								</span>
 							)}
@@ -245,9 +245,11 @@ export function MicroMacroDemo() {
 								animate={{ opacity: 1, scale: 1 }}
 								className="inline-block px-2 py-1 rounded text-xs font-semibold mb-3 border"
 								style={{
-									color: CATEGORY_COLORS[currentReveal.category] || "#a1a1aa",
-									borderColor: `${CATEGORY_COLORS[currentReveal.category] || "#3f3f46"}44`,
-									backgroundColor: `${CATEGORY_COLORS[currentReveal.category] || "#3f3f46"}15`,
+									color:
+										CATEGORY_COLORS[currentReveal.category] ||
+										"var(--svg-text)",
+									borderColor: `${CATEGORY_COLORS[currentReveal.category] || "var(--svg-border)"}44`,
+									backgroundColor: `${CATEGORY_COLORS[currentReveal.category] || "var(--svg-border)"}15`,
 								}}
 							>
 								{currentReveal.category}
@@ -265,7 +267,7 @@ export function MicroMacroDemo() {
 							type="button"
 							onClick={prevReveal}
 							disabled={revealStep <= 0}
-							className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+							className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 						>
 							← Back
 						</button>
@@ -273,18 +275,18 @@ export function MicroMacroDemo() {
 							type="button"
 							onClick={nextReveal}
 							disabled={revealStep >= REVEAL_STEPS.length - 1}
-							className="px-4 py-2 rounded-lg text-sm font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+							className="px-4 py-2 rounded-lg text-sm font-medium bg-cyan-500/20 text-accent-cyan border border-cyan-500/30 hover:bg-cyan-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 						>
 							Next →
 						</button>
 						<button
 							type="button"
 							onClick={resetAll}
-							className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+							className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 						>
 							↺ Try Again
 						</button>
-						<span className="text-xs text-zinc-600 ml-auto">
+						<span className="text-xs text-text-faint ml-auto">
 							Step {revealStep + 1} / {REVEAL_STEPS.length}
 						</span>
 					</div>
@@ -293,7 +295,7 @@ export function MicroMacroDemo() {
 						key={revealStep}
 						initial={{ opacity: 0, y: 5 }}
 						animate={{ opacity: 1, y: 0 }}
-						className="mt-4 p-3 rounded-lg bg-cyan-500/5 border border-cyan-500/20 text-sm text-cyan-300"
+						className="mt-4 p-3 rounded-lg bg-cyan-500/5 border border-cyan-500/20 text-sm text-accent-cyan"
 					>
 						{currentReveal.description}
 					</motion.div>
@@ -307,15 +309,15 @@ export function MicroMacroDemo() {
 					animate={{ opacity: 1, y: 0 }}
 					className="mt-4 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/30"
 				>
-					<p className="text-sm font-semibold text-emerald-300 mb-1">
+					<p className="text-sm font-semibold text-accent-emerald mb-1">
 						🔑 The Rule
 					</p>
 					<p className="text-sm text-emerald-200/80">
 						Microtasks <strong>always drain completely</strong> before the next
-						macrotask. <code className="text-cyan-300">Promise.then</code> and{" "}
-						<code className="text-cyan-300">queueMicrotask</code> run before{" "}
-						<code className="text-orange-300">setTimeout(fn, 0)</code> — even
-						though setTimeout was registered first.
+						macrotask. <code className="text-accent-cyan">Promise.then</code>{" "}
+						and <code className="text-accent-cyan">queueMicrotask</code> run
+						before <code className="text-accent-orange">setTimeout(fn, 0)</code>{" "}
+						— even though setTimeout was registered first.
 					</p>
 				</motion.div>
 			)}

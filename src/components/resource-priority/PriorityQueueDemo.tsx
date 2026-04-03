@@ -167,35 +167,35 @@ export default function PriorityQueueDemo({
 			case "Low":
 				return "text-cyan-500";
 			case "Lowest":
-				return "text-zinc-600";
+				return "text-text-faint";
 		}
 	};
 
 	return (
 		<div className="space-y-6">
 			{/* Explanation */}
-			<div className="p-4 bg-zinc-900/50 border border-zinc-800 rounded-lg text-sm text-zinc-400">
+			<div className="p-4 bg-surface-primary/50 border border-border-primary rounded-lg text-sm text-text-tertiary">
 				<p className="mb-2">
-					<span className="text-white font-medium">How it works:</span> Toggle
-					attributes on resources to see how browsers prioritize them. Resources
-					automatically move to different priority buckets based on their type
-					and hints.
+					<span className="text-text-primary font-medium">How it works:</span>{" "}
+					Toggle attributes on resources to see how browsers prioritize them.
+					Resources automatically move to different priority buckets based on
+					their type and hints.
 				</p>
 				<ul className="list-disc list-inside space-y-1 ml-2 text-xs">
 					<li>
-						<span className="text-rose-300">High priority</span>: Downloaded
+						<span className="text-accent-rose">High priority</span>: Downloaded
 						first (HTML, CSS, parser-blocking scripts)
 					</li>
 					<li>
-						<span className="text-amber-300">Medium priority</span>: Downloaded
-						after critical resources (fonts, XHR)
+						<span className="text-accent-amber">Medium priority</span>:
+						Downloaded after critical resources (fonts, XHR)
 					</li>
 					<li>
-						<span className="text-cyan-300">Low priority</span>: Downloaded when
-						bandwidth available (async/defer scripts, off-screen images)
+						<span className="text-accent-cyan">Low priority</span>: Downloaded
+						when bandwidth available (async/defer scripts, off-screen images)
 					</li>
 					<li>
-						<span className="text-zinc-500">Lowest priority</span>: Prefetched
+						<span className="text-text-muted">Lowest priority</span>: Prefetched
 						resources for future navigation
 					</li>
 				</ul>
@@ -204,7 +204,7 @@ export default function PriorityQueueDemo({
 			<div className="grid lg:grid-cols-2 gap-6">
 				{/* Left: Resource Cards */}
 				<div className="space-y-3">
-					<h3 className="text-sm font-medium text-zinc-400 mb-3">
+					<h3 className="text-sm font-medium text-text-tertiary mb-3">
 						Resources (toggle attributes)
 					</h3>
 					<div className="space-y-2">
@@ -212,18 +212,18 @@ export default function PriorityQueueDemo({
 							<motion.div
 								key={resource.id}
 								layout
-								className="p-3 bg-zinc-900 rounded border border-zinc-800 space-y-2"
+								className="p-3 bg-surface-primary rounded border border-border-primary space-y-2"
 							>
 								<div className="flex items-center justify-between">
 									<div className="flex items-center gap-2">
-										<span className="text-xs font-mono text-violet-300">
+										<span className="text-xs font-mono text-accent-violet">
 											{resource.type}
 										</span>
-										<span className="text-xs text-zinc-400">
+										<span className="text-xs text-text-tertiary">
 											{resource.url}
 										</span>
 									</div>
-									<span className="text-xs text-zinc-500">
+									<span className="text-xs text-text-muted">
 										{resource.size}KB
 									</span>
 								</div>
@@ -236,8 +236,8 @@ export default function PriorityQueueDemo({
 												onClick={() => toggleAttribute(resource.id, "async")}
 												className={`px-2 py-1 text-xs rounded ${
 													resource.attributes.async
-														? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50"
-														: "bg-zinc-800 text-zinc-500 border border-zinc-700"
+														? "bg-cyan-500/20 text-accent-cyan border border-cyan-500/50"
+														: "bg-surface-secondary text-text-muted border border-border-secondary"
 												}`}
 											>
 												async
@@ -247,8 +247,8 @@ export default function PriorityQueueDemo({
 												onClick={() => toggleAttribute(resource.id, "defer")}
 												className={`px-2 py-1 text-xs rounded ${
 													resource.attributes.defer
-														? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50"
-														: "bg-zinc-800 text-zinc-500 border border-zinc-700"
+														? "bg-cyan-500/20 text-accent-cyan border border-cyan-500/50"
+														: "bg-surface-secondary text-text-muted border border-border-secondary"
 												}`}
 											>
 												defer
@@ -260,8 +260,8 @@ export default function PriorityQueueDemo({
 										onClick={() => toggleAttribute(resource.id, "preload")}
 										className={`px-2 py-1 text-xs rounded ${
 											resource.attributes.preload
-												? "bg-rose-500/20 text-rose-300 border border-rose-500/50"
-												: "bg-zinc-800 text-zinc-500 border border-zinc-700"
+												? "bg-rose-500/20 text-accent-rose border border-rose-500/50"
+												: "bg-surface-secondary text-text-muted border border-border-secondary"
 										}`}
 									>
 										preload
@@ -271,8 +271,8 @@ export default function PriorityQueueDemo({
 										onClick={() => toggleAttribute(resource.id, "prefetch")}
 										className={`px-2 py-1 text-xs rounded ${
 											resource.attributes.prefetch
-												? "bg-zinc-600/20 text-zinc-400 border border-zinc-600/50"
-												: "bg-zinc-800 text-zinc-500 border border-zinc-700"
+												? "bg-surface-tertiary/20 text-text-tertiary border border-border-tertiary/50"
+												: "bg-surface-secondary text-text-muted border border-border-secondary"
 										}`}
 									>
 										prefetch
@@ -283,8 +283,8 @@ export default function PriorityQueueDemo({
 											onClick={() => toggleAttribute(resource.id, "inViewport")}
 											className={`px-2 py-1 text-xs rounded ${
 												resource.attributes.inViewport
-													? "bg-amber-500/20 text-amber-300 border border-amber-500/50"
-													: "bg-zinc-800 text-zinc-500 border border-zinc-700"
+													? "bg-amber-500/20 text-accent-amber border border-amber-500/50"
+													: "bg-surface-secondary text-text-muted border border-border-secondary"
 											}`}
 										>
 											in viewport
@@ -298,7 +298,7 @@ export default function PriorityQueueDemo({
 
 				{/* Right: Priority Buckets */}
 				<div className="space-y-3">
-					<h3 className="text-sm font-medium text-zinc-400 mb-3">
+					<h3 className="text-sm font-medium text-text-tertiary mb-3">
 						Priority Buckets
 					</h3>
 					<div className="space-y-3">
@@ -314,7 +314,7 @@ export default function PriorityQueueDemo({
 										>
 											{priority}
 										</span>
-										<span className="text-xs text-zinc-500">
+										<span className="text-xs text-text-muted">
 											{resourcesByPriority[priority].length} resources
 										</span>
 									</div>
@@ -323,13 +323,15 @@ export default function PriorityQueueDemo({
 											<motion.div
 												key={resource.id}
 												layoutId={resource.id}
-												className="p-2 bg-zinc-900/50 rounded text-xs font-mono"
+												className="p-2 bg-surface-primary/50 rounded text-xs font-mono"
 											>
 												<div className="flex items-center justify-between">
-													<span className="text-violet-300">
+													<span className="text-accent-violet">
 														{resource.type}
 													</span>
-													<span className="text-zinc-400">{resource.url}</span>
+													<span className="text-text-tertiary">
+														{resource.url}
+													</span>
 												</div>
 											</motion.div>
 										))}
@@ -346,7 +348,7 @@ export default function PriorityQueueDemo({
 				<button
 					type="button"
 					onClick={() => setShowWaterfall(!showWaterfall)}
-					className="px-4 py-2 bg-violet-500 text-white rounded-md text-sm font-medium hover:bg-violet-600 transition-colors"
+					className="px-4 py-2 bg-violet-500 text-text-primary rounded-md text-sm font-medium hover:bg-violet-600 transition-colors"
 				>
 					{showWaterfall ? "Hide Waterfall" : "Show Waterfall"}
 				</button>
@@ -358,15 +360,15 @@ export default function PriorityQueueDemo({
 					initial={{ opacity: 0, height: 0 }}
 					animate={{ opacity: 1, height: "auto" }}
 					exit={{ opacity: 0, height: 0 }}
-					className="p-4 bg-zinc-900 rounded border border-zinc-800 overflow-x-auto"
+					className="p-4 bg-surface-primary rounded border border-border-primary overflow-x-auto"
 				>
-					<h3 className="text-sm font-medium text-zinc-400 mb-4">
+					<h3 className="text-sm font-medium text-text-tertiary mb-4">
 						Network Waterfall ({protocol === "http2" ? "HTTP/2" : "HTTP/1.1"})
 					</h3>
 					<div className="space-y-1 min-w-max">
 						{waterfallBars.map((bar) => (
 							<div key={bar.resource.id} className="flex items-center gap-2">
-								<span className="text-xs font-mono text-zinc-400 w-32 truncate">
+								<span className="text-xs font-mono text-text-tertiary w-32 truncate">
 									{bar.resource.url}
 								</span>
 								<div className="relative h-6 flex-1">
@@ -381,7 +383,7 @@ export default function PriorityQueueDemo({
 											transformOrigin: "left",
 										}}
 									>
-										<span className="text-xs text-zinc-300">
+										<span className="text-xs text-text-secondary">
 											{bar.resource.size}KB
 										</span>
 									</motion.div>
@@ -394,7 +396,7 @@ export default function PriorityQueueDemo({
 							</div>
 						))}
 					</div>
-					<div className="mt-4 flex items-center gap-4 text-xs text-zinc-500">
+					<div className="mt-4 flex items-center gap-4 text-xs text-text-muted">
 						<span>Total time: {Math.round(maxEndTime)}ms</span>
 						{protocol === "http1" && <span>Max 6 concurrent connections</span>}
 					</div>

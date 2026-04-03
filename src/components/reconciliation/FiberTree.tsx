@@ -74,7 +74,7 @@ export function FiberTree({
 	return (
 		<div className="relative">
 			{label && (
-				<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2 text-center">
+				<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2 text-center">
 					{label}
 				</div>
 			)}

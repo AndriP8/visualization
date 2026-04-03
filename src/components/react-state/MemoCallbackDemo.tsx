@@ -1,5 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useRef, useState } from "react";
+import { useColorScheme } from "../../hooks/useColorScheme";
+import { THEME_COLORS } from "../../theme/tokens";
 import { DemoSection } from "../shared/DemoSection";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -15,28 +17,29 @@ interface Dep {
 // ─── Dep Badge ────────────────────────────────────────────────────────────────
 
 function DepBadge({ dep }: { dep: Dep }) {
+	const t = THEME_COLORS[useColorScheme()];
 	return (
 		<motion.div
 			className="flex items-center gap-1.5 px-2 py-1 rounded-md border text-xs font-mono"
 			animate={{
-				backgroundColor: dep.changed ? "#450a0a" : "#18181b",
-				borderColor: dep.changed ? "#dc2626" : "#3f3f46",
-				color: dep.changed ? "#fca5a5" : "#71717a",
+				backgroundColor: dep.changed ? "#450a0a" : t.svgBg,
+				borderColor: dep.changed ? "#dc2626" : t.svgBorder,
+				color: dep.changed ? "#fca5a5" : t.svgTextMuted,
 			}}
 			transition={{ duration: 0.25 }}
 		>
 			<motion.span
 				className="w-2 h-2 rounded-full flex-shrink-0"
-				animate={{ backgroundColor: dep.changed ? "#dc2626" : "#3f3f46" }}
+				animate={{ backgroundColor: dep.changed ? "#dc2626" : t.svgBorder }}
 				transition={{ duration: 0.25 }}
 			/>
-			<span className="text-zinc-500">{dep.name}:</span>
+			<span className="text-text-muted">{dep.name}:</span>
 			<span className="font-semibold">{dep.value}</span>
 			{dep.changed && (
 				<motion.span
 					initial={{ opacity: 0, scale: 0.8 }}
 					animate={{ opacity: 1, scale: 1 }}
-					className="ml-1 text-red-400 font-bold"
+					className="ml-1 text-accent-red-soft font-bold"
 				>
 					↑ changed
 				</motion.span>
@@ -56,11 +59,11 @@ function LinkLine({ broken, isActive }: LinkLineProps) {
 	if (!isActive) {
 		return (
 			<div className="flex items-center justify-center py-2">
-				<div className="flex-1 h-px bg-zinc-700" />
-				<span className="mx-2 text-xs text-zinc-600 font-mono">
+				<div className="flex-1 h-px bg-surface-tertiary" />
+				<span className="mx-2 text-xs text-text-faint font-mono">
 					callback prop
 				</span>
-				<div className="flex-1 h-px bg-zinc-700" />
+				<div className="flex-1 h-px bg-surface-tertiary" />
 			</div>
 		);
 	}
@@ -74,7 +77,7 @@ function LinkLine({ broken, isActive }: LinkLineProps) {
 					transition={{ duration: 0.4, repeat: 3 }}
 				/>
 				<motion.span
-					className="mx-2 text-xs font-mono font-bold text-red-400"
+					className="mx-2 text-xs font-mono font-bold text-accent-red-soft"
 					animate={{ scale: [1, 1.2, 1] }}
 					transition={{ duration: 0.4, repeat: 3 }}
 				>
@@ -97,7 +100,7 @@ function LinkLine({ broken, isActive }: LinkLineProps) {
 				transition={{ duration: 0.3 }}
 			/>
 			<motion.span
-				className="mx-2 text-xs font-mono font-bold text-green-400"
+				className="mx-2 text-xs font-mono font-bold text-accent-green-soft"
 				initial={{ scale: 0.8 }}
 				animate={{ scale: 1 }}
 			>
@@ -135,10 +138,11 @@ function ComponentBox({
 	bgColorFlash,
 	textColorFlash,
 }: ComponentBoxProps) {
+	const t = THEME_COLORS[useColorScheme()];
 	const active = isFlashing || isSkipped;
-	const borderColor = active ? borderColorFlash : "#3f3f46";
-	const bgColor = active ? bgColorFlash : "#18181b";
-	const textColor = active ? textColorFlash : "#a1a1aa";
+	const borderColor = active ? borderColorFlash : t.svgBorder;
+	const bgColor = active ? bgColorFlash : t.svgBg;
+	const textColor = active ? textColorFlash : t.svgText;
 
 	return (
 		<motion.div
@@ -152,7 +156,7 @@ function ComponentBox({
 			>
 				{name}
 			</span>
-			<span className="text-xs text-zinc-600">{subtitle}</span>
+			<span className="text-xs text-text-faint">{subtitle}</span>
 			<AnimatePresence mode="wait">
 				{isFlashing && isActive && (
 					<motion.span
@@ -172,7 +176,7 @@ function ComponentBox({
 						initial={{ opacity: 0, y: 4 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0 }}
-						className="text-xs font-semibold mt-1 text-green-400"
+						className="text-xs font-semibold mt-1 text-accent-green-soft"
 					>
 						✓ skipped (memo held)
 					</motion.span>
@@ -191,6 +195,7 @@ interface DepsState {
 }
 
 export function MemoCallbackDemo() {
+	const t = THEME_COLORS[useColorScheme()];
 	const [callbackMode, setCallbackMode] = useState<CallbackMode>("without");
 	const [phase, setPhase] = useState<"idle" | "running" | "done">("idle");
 	const [deps, setDeps] = useState<DepsState>({ count: 0, step: 1 });
@@ -311,9 +316,9 @@ function Parent() {
 									border: "1px solid #dc2626",
 								}
 							: {
-									backgroundColor: "#27272a",
-									color: "#71717a",
-									border: "1px solid #3f3f46",
+									backgroundColor: t.svgBg,
+									color: t.svgTextMuted,
+									border: `1px solid ${t.svgBorder}`,
 								}
 					}
 				>
@@ -334,9 +339,9 @@ function Parent() {
 									border: "1px solid #16a34a",
 								}
 							: {
-									backgroundColor: "#27272a",
-									color: "#71717a",
-									border: "1px solid #3f3f46",
+									backgroundColor: t.svgBg,
+									color: t.svgTextMuted,
+									border: `1px solid ${t.svgBorder}`,
 								}
 					}
 				>
@@ -377,14 +382,14 @@ function Parent() {
 							type="button"
 							onClick={triggerRender}
 							disabled={phase === "running"}
-							className="flex-1 px-3 py-2 rounded-md text-sm font-semibold bg-violet-500/10 text-violet-300 border border-violet-500/30 hover:bg-violet-500/20 transition-colors disabled:opacity-40"
+							className="flex-1 px-3 py-2 rounded-md text-sm font-semibold bg-violet-500/10 text-accent-violet border border-violet-500/30 hover:bg-violet-500/20 transition-colors disabled:opacity-40"
 						>
 							{phase === "running" ? "Running…" : "▶ Re-render Parent"}
 						</button>
 						<button
 							type="button"
 							onClick={reset}
-							className="px-3 py-2 rounded-md text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+							className="px-3 py-2 rounded-md text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 						>
 							Reset
 						</button>
@@ -392,10 +397,10 @@ function Parent() {
 
 					{/* Dep array visualizer */}
 					{callbackMode === "with" && (
-						<div className="mt-3 p-3 rounded-lg bg-zinc-900 border border-zinc-800">
-							<p className="text-xs text-zinc-500 mb-2 font-mono">
+						<div className="mt-3 p-3 rounded-lg bg-surface-primary border border-border-primary">
+							<p className="text-xs text-text-muted mb-2 font-mono">
 								useCallback deps:{" "}
-								<code className="text-violet-400">[step]</code>
+								<code className="text-accent-violet-soft">[step]</code>
 							</p>
 							<div className="flex flex-wrap gap-2">
 								{depBadges.map((dep) => (
@@ -403,11 +408,11 @@ function Parent() {
 								))}
 							</div>
 							{deps.count > 0 && (
-								<p className="text-[11px] text-zinc-600 mt-2">
-									<code className="text-zinc-400">count</code> changed (
+								<p className="text-[11px] text-text-faint mt-2">
+									<code className="text-text-tertiary">count</code> changed (
 									{prevDeps.count} → {deps.count}) but it's <em>not</em> in the
 									dep array — irrelevant to the callback.{" "}
-									<code className="text-zinc-400">step</code> = {deps.step}{" "}
+									<code className="text-text-tertiary">step</code> = {deps.step}{" "}
 									(stable) → same function ref.
 								</p>
 							)}
@@ -416,8 +421,8 @@ function Parent() {
 				</div>
 
 				{/* Right: code snippet */}
-				<div className="rounded-xl bg-zinc-950 border border-zinc-800 overflow-hidden">
-					<div className="px-4 py-2 border-b border-zinc-800 flex items-center gap-2">
+				<div className="rounded-xl bg-surface-base border border-border-primary overflow-hidden">
+					<div className="px-4 py-2 border-b border-border-primary flex items-center gap-2">
 						<span
 							className="w-2 h-2 rounded-full"
 							style={{
@@ -425,45 +430,49 @@ function Parent() {
 									callbackMode === "without" ? "#dc2626" : "#16a34a",
 							}}
 						/>
-						<span className="text-xs text-zinc-500 font-mono">
+						<span className="text-xs text-text-muted font-mono">
 							{callbackMode === "without"
 								? "without-callback.tsx"
 								: "with-callback.tsx"}
 						</span>
 					</div>
-					<pre className="text-xs font-mono text-zinc-400 p-4 overflow-x-auto whitespace-pre leading-relaxed">
+					<pre className="text-xs font-mono text-text-tertiary p-4 overflow-x-auto whitespace-pre leading-relaxed">
 						{callbackMode === "without" ? withoutCodeSnippet : withCodeSnippet}
 					</pre>
 				</div>
 			</div>
 
 			{/* Key insight */}
-			<div className="mt-4 p-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-xs text-zinc-400 space-y-1.5">
+			<div className="mt-4 p-3 rounded-lg bg-surface-secondary/50 border border-border-secondary/50 text-xs text-text-tertiary space-y-1.5">
 				<p>
-					<span className="text-red-400 font-semibold">
+					<span className="text-accent-red-soft font-semibold">
 						❌ Without useCallback:
 					</span>{" "}
 					Every time the parent renders, JavaScript evaluates{" "}
-					<code className="text-orange-300">{"() => {}"}</code> and creates a{" "}
+					<code className="text-accent-orange">{"() => {}"}</code> and creates a{" "}
 					<strong>new function object</strong>. Two function references are
 					never equal (
-					<code className="text-orange-300">{"(() => {}) === (() => {})"}</code>{" "}
+					<code className="text-accent-orange">
+						{"(() => {}) === (() => {})"}
+					</code>{" "}
 					is <code>false</code>). React.memo sees a changed prop → child
 					re-renders.
 				</p>
 				<p>
-					<span className="text-green-400 font-semibold">
+					<span className="text-accent-green-soft font-semibold">
 						✅ With useCallback:
 					</span>{" "}
 					React memoizes the function and only creates a new reference when the
 					specified dependencies change. If deps are stable,{" "}
-					<code className="text-green-300">
+					<code className="text-accent-green">
 						{"handleClick === handleClick"}
 					</code>{" "}
 					across renders → memo holds.
 				</p>
 				<p>
-					<span className="text-yellow-400 font-semibold">⚠️ Pitfall:</span>{" "}
+					<span className="text-accent-yellow-soft font-semibold">
+						⚠️ Pitfall:
+					</span>{" "}
 					Including the wrong deps (or omitting needed ones) leads to stale
 					closures or unnecessary re-creation. Always list every reactive value
 					the callback reads.

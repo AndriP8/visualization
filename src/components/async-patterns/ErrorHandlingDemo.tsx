@@ -149,10 +149,10 @@ export function ErrorHandlingDemo() {
 		<div className="space-y-6">
 			{/* Error propagation visualizer */}
 			<div className="space-y-3">
-				<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+				<div className="text-xs font-semibold text-text-muted uppercase tracking-wider">
 					Inject error at stage
 				</div>
-				<p className="text-xs text-zinc-500 mt-1">
+				<p className="text-xs text-text-muted mt-1">
 					When an async function throws, every subsequent <code>await</code> in
 					the chain is skipped. Select a stage to see where the error surfaces
 					and what gets bypassed.
@@ -166,9 +166,9 @@ export function ErrorHandlingDemo() {
 							className={`px-3 py-1.5 rounded-lg text-sm font-mono border transition-colors ${
 								errorStage === stage
 									? stage === "none"
-										? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-										: "bg-rose-500/20 text-rose-300 border-rose-500/30"
-									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-200"
+										? "bg-emerald-500/20 text-accent-emerald border-emerald-500/30"
+										: "bg-rose-500/20 text-accent-rose border-rose-500/30"
+									: "bg-surface-secondary text-text-tertiary border-border-secondary hover:text-text-secondary"
 							}`}
 						>
 							{stage === "none" ? "No error" : stage}
@@ -177,7 +177,7 @@ export function ErrorHandlingDemo() {
 				</div>
 
 				{/* Pipeline visualization */}
-				<div className="p-4 rounded-lg bg-zinc-900 border border-zinc-800">
+				<div className="p-4 rounded-lg bg-surface-primary border border-border-primary">
 					<div className="flex items-center gap-1 flex-wrap">
 						{CHAIN_STAGES.map((stage, i) => {
 							const isError = errorStage !== "none" && i === stageIndex;
@@ -196,12 +196,12 @@ export function ErrorHandlingDemo() {
 										}}
 										className={`px-3 py-2 rounded-lg text-xs font-mono border ${
 											isError
-												? "bg-rose-500/20 text-rose-300 border-rose-500/30"
+												? "bg-rose-500/20 text-accent-rose border-rose-500/30"
 												: isSkipped
-													? "bg-zinc-800/50 text-zinc-600 border-zinc-800"
+													? "bg-surface-secondary/50 text-text-faint border-border-primary"
 													: isSuccess
-														? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-														: "bg-zinc-800 text-zinc-400 border-zinc-700"
+														? "bg-emerald-500/10 text-accent-emerald-soft border-emerald-500/20"
+														: "bg-surface-secondary text-text-tertiary border-border-secondary"
 										}`}
 									>
 										{stage}()
@@ -210,7 +210,7 @@ export function ErrorHandlingDemo() {
 									</motion.div>
 									{i < CHAIN_STAGES.length - 1 && (
 										<span
-											className={`text-xs ${errorStage !== "none" && i + 1 >= stageIndex ? "text-zinc-700" : "text-zinc-500"}`}
+											className={`text-xs ${errorStage !== "none" && i + 1 >= stageIndex ? "text-text-secondary" : "text-text-muted"}`}
 										>
 											→
 										</span>
@@ -226,7 +226,7 @@ export function ErrorHandlingDemo() {
 								initial={{ opacity: 0, y: 4 }}
 								animate={{ opacity: 1, y: 0 }}
 								exit={{ opacity: 0 }}
-								className="mt-3 text-xs text-rose-400 font-mono"
+								className="mt-3 text-xs text-accent-rose-soft font-mono"
 							>
 								Error thrown at <strong>{errorStage}</strong> — bubbles up
 								through the async chain
@@ -237,7 +237,7 @@ export function ErrorHandlingDemo() {
 								initial={{ opacity: 0, y: 4 }}
 								animate={{ opacity: 1, y: 0 }}
 								exit={{ opacity: 0 }}
-								className="mt-3 text-xs text-emerald-400 font-mono"
+								className="mt-3 text-xs text-accent-emerald-soft font-mono"
 							>
 								All stages pass — pipeline resolves successfully
 							</motion.div>
@@ -250,10 +250,10 @@ export function ErrorHandlingDemo() {
 
 			{/* Retry with backoff */}
 			<div className="space-y-3">
-				<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+				<div className="text-xs font-semibold text-text-muted uppercase tracking-wider">
 					Retry with exponential backoff
 				</div>
-				<p className="text-xs text-zinc-500 mt-1">
+				<p className="text-xs text-text-muted mt-1">
 					Transient failures (network timeouts, rate limits) can be retried
 					safely — unlike deterministic errors (parse, validate) which will
 					always fail again. Exponential backoff doubles the wait between
@@ -261,9 +261,9 @@ export function ErrorHandlingDemo() {
 				</p>
 				<ShikiCode code={RETRY_CODE} language="typescript" />
 
-				<div className="text-xs text-zinc-500">
+				<div className="text-xs text-text-muted">
 					Simulating:{" "}
-					<span className="text-amber-400 font-mono">
+					<span className="text-accent-amber-soft font-mono">
 						transient network error
 					</span>{" "}
 					— e.g. timeout, 503
@@ -273,7 +273,7 @@ export function ErrorHandlingDemo() {
 					type="button"
 					onClick={runRetry}
 					disabled={retrying}
-					className="px-5 py-2 rounded-lg text-sm font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+					className="px-5 py-2 rounded-lg text-sm font-medium bg-amber-500/20 text-accent-amber border border-amber-500/30 hover:bg-amber-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
 				>
 					{retrying ? "Running..." : "▶ Simulate retry sequence"}
 				</button>
@@ -287,10 +287,10 @@ export function ErrorHandlingDemo() {
 								animate={{ opacity: 1, x: 0 }}
 								className="flex items-center gap-3 text-sm"
 							>
-								<span className="text-zinc-500 w-20 shrink-0">
+								<span className="text-text-muted w-20 shrink-0">
 									Attempt {a.attempt}
 								</span>
-								<div className="flex-1 h-6 bg-zinc-800 rounded overflow-hidden relative">
+								<div className="flex-1 h-6 bg-surface-secondary rounded overflow-hidden relative">
 									<motion.div
 										className={`absolute inset-y-0 left-0 ${
 											a.status === "success"
@@ -307,10 +307,10 @@ export function ErrorHandlingDemo() {
 								<span
 									className={`w-28 shrink-0 text-right text-xs ${
 										a.status === "success"
-											? "text-emerald-400"
+											? "text-accent-emerald-soft"
 											: a.status === "failed"
-												? "text-rose-400"
-												: "text-amber-400"
+												? "text-accent-rose-soft"
+												: "text-accent-amber-soft"
 									}`}
 								>
 									{a.status === "running"
@@ -327,10 +327,10 @@ export function ErrorHandlingDemo() {
 
 			{/* Best practices */}
 			<div className="space-y-3">
-				<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+				<div className="text-xs font-semibold text-text-muted uppercase tracking-wider">
 					Best practices checklist
 				</div>
-				<p className="text-xs text-zinc-500 mt-1">
+				<p className="text-xs text-text-muted mt-1">
 					Not all errors are equal — some should be retried, some re-thrown with
 					context, and some indicate a fatal bug. These patterns separate robust
 					async code from fragile code.
@@ -346,11 +346,15 @@ export function ErrorHandlingDemo() {
 							}`}
 						>
 							<span
-								className={`mt-0.5 shrink-0 ${item.good ? "text-emerald-400" : "text-rose-400"}`}
+								className={`mt-0.5 shrink-0 ${item.good ? "text-accent-emerald-soft" : "text-accent-rose-soft"}`}
 							>
 								{item.good ? "✓" : "✗"}
 							</span>
-							<span className={item.good ? "text-zinc-300" : "text-zinc-400"}>
+							<span
+								className={
+									item.good ? "text-text-secondary" : "text-text-tertiary"
+								}
+							>
 								{item.text}
 							</span>
 						</div>

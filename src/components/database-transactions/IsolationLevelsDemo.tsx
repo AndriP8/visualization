@@ -99,19 +99,19 @@ export function IsolationLevelsDemo() {
 	return (
 		<div className="flex flex-col gap-6">
 			{/* Header / Toggle */}
-			<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-zinc-900/40 p-3 rounded-lg border border-zinc-800">
-				<div className="text-sm text-zinc-400 mb-2 sm:mb-0">
+			<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-surface-primary/40 p-3 rounded-lg border border-border-primary">
+				<div className="text-sm text-text-tertiary mb-2 sm:mb-0">
 					Select the database engine specification to view:
 				</div>
-				<div className="bg-zinc-950 p-1 rounded-md border border-zinc-800 flex gap-1 relative">
+				<div className="bg-surface-base p-1 rounded-md border border-border-primary flex gap-1 relative">
 					<button
 						type="button"
 						onClick={() => setMode("ansi")}
 						className={clsx(
 							"relative px-4 py-1.5 rounded text-xs font-semibold transition-colors",
 							mode === "ansi"
-								? "text-white"
-								: "text-zinc-500 hover:text-zinc-300",
+								? "text-text-primary"
+								: "text-text-muted hover:text-text-secondary",
 						)}
 					>
 						{mode === "ansi" && (
@@ -130,8 +130,8 @@ export function IsolationLevelsDemo() {
 						className={clsx(
 							"relative px-4 py-1.5 rounded text-xs font-semibold transition-colors",
 							mode === "postgres"
-								? "text-white"
-								: "text-zinc-500 hover:text-zinc-300",
+								? "text-text-primary"
+								: "text-text-muted hover:text-text-secondary",
 						)}
 					>
 						{mode === "postgres" && (
@@ -150,9 +150,9 @@ export function IsolationLevelsDemo() {
 			{/* Table and Info */}
 			<div className="flex flex-col lg:flex-row gap-6">
 				{/* Matrix Grid */}
-				<div className="w-full lg:w-2/3 bg-zinc-900 overflow-x-auto rounded-lg border border-zinc-800">
+				<div className="w-full lg:w-2/3 bg-surface-primary overflow-x-auto rounded-lg border border-border-primary">
 					<table className="w-full text-left text-sm whitespace-nowrap">
-						<thead className="bg-zinc-950 border-b border-zinc-800 text-xs uppercase text-zinc-500">
+						<thead className="bg-surface-base border-b border-border-primary text-xs uppercase text-text-muted">
 							<tr>
 								<th className="px-4 py-3 font-semibold">Isolation Level</th>
 								{anomalies.map((a) => (
@@ -171,19 +171,23 @@ export function IsolationLevelsDemo() {
 										onMouseEnter={() => setHoveredLevel(level.id)}
 										onMouseLeave={() => setHoveredLevel(null)}
 										className={clsx(
-											"border-b border-zinc-800/50 last:border-0 transition-colors cursor-default",
-											isHovered ? "bg-violet-500/10" : "hover:bg-zinc-800/30",
+											"border-b border-border-primary/50 last:border-0 transition-colors cursor-default",
+											isHovered
+												? "bg-violet-500/10"
+												: "hover:bg-surface-secondary/30",
 										)}
 									>
 										<td
 											className={clsx(
 												"px-4 py-4 font-medium",
-												isHovered ? "text-violet-300" : "text-zinc-300",
+												isHovered
+													? "text-accent-violet"
+													: "text-text-secondary",
 											)}
 										>
 											{level.name}
 											{mode === "postgres" && level.id === "rc" && (
-												<span className="ml-2 text-[10px] bg-teal-500/20 text-teal-300 px-1.5 py-0.5 rounded border border-teal-500/30">
+												<span className="ml-2 text-[10px] bg-teal-500/20 text-accent-teal px-1.5 py-0.5 rounded border border-teal-500/30">
 													DEFAULT
 												</span>
 											)}
@@ -193,17 +197,17 @@ export function IsolationLevelsDemo() {
 											return (
 												<td key={a.id} className="px-4 py-4 text-center">
 													{state === "not_possible" && (
-														<span className="inline-block text-[11px] font-medium px-2 py-0.5 rounded bg-red-500/15 text-red-400 border border-red-500/25">
+														<span className="inline-block text-[11px] font-medium px-2 py-0.5 rounded bg-red-500/15 text-accent-red-soft border border-red-500/25">
 															Not Possible
 														</span>
 													)}
 													{state === "possible" && (
-														<span className="inline-block text-[11px] font-medium px-2 py-0.5 rounded bg-green-500/15 text-green-400 border border-green-500/25">
+														<span className="inline-block text-[11px] font-medium px-2 py-0.5 rounded bg-green-500/15 text-accent-green-soft border border-green-500/25">
 															Possible
 														</span>
 													)}
 													{state === "not_in_pg" && (
-														<span className="inline-block text-[11px] font-medium px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/25">
+														<span className="inline-block text-[11px] font-medium px-2 py-0.5 rounded bg-amber-500/15 text-accent-amber-soft border border-amber-500/25">
 															Allowed, but not in PG
 														</span>
 													)}
@@ -218,7 +222,7 @@ export function IsolationLevelsDemo() {
 				</div>
 
 				{/* Explanation Card */}
-				<div className="w-full lg:w-1/3 bg-zinc-800/40 rounded-lg p-5 border border-zinc-700 relative overflow-hidden">
+				<div className="w-full lg:w-1/3 bg-surface-secondary/40 rounded-lg p-5 border border-border-secondary relative overflow-hidden">
 					<AnimatePresence mode="wait">
 						<motion.div
 							key={activeLevel + mode}
@@ -227,13 +231,13 @@ export function IsolationLevelsDemo() {
 							exit={{ opacity: 0, y: -10 }}
 							transition={{ duration: 0.2 }}
 						>
-							<h4 className="text-lg font-bold text-violet-300 mb-2">
+							<h4 className="text-lg font-bold text-accent-violet mb-2">
 								{LEVELS.find((l) => l.id === activeLevel)?.name}
 							</h4>
-							<div className="text-xs uppercase text-zinc-500 mb-4 tracking-wider font-semibold">
+							<div className="text-xs uppercase text-text-muted mb-4 tracking-wider font-semibold">
 								{mode === "ansi" ? "ANSI Theory" : "PostgreSQL Reality"}
 							</div>
-							<p className="text-sm text-zinc-300 leading-relaxed">
+							<p className="text-sm text-text-secondary leading-relaxed">
 								{EXPLANATIONS[mode][activeLevel]}
 							</p>
 						</motion.div>

@@ -20,31 +20,35 @@ function EventLoopPage() {
 				gradient={{ from: "emerald-400", to: "cyan-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="text-sm text-text-muted space-y-2">
 							<p>
-								<strong className="text-zinc-300">The key insight:</strong>{" "}
+								<strong className="text-text-secondary">
+									The key insight:
+								</strong>{" "}
 								JavaScript is{" "}
-								<strong className="text-emerald-400">single-threaded</strong> —
-								it has one call stack and can only do one thing at a time. So
+								<strong className="text-accent-emerald-soft">
+									single-threaded
+								</strong>{" "}
+								— it has one call stack and can only do one thing at a time. So
 								how does it handle timers, network requests, and user events
 								without blocking?
 							</p>
 							<p>
 								The answer is the{" "}
-								<strong className="text-cyan-400">Event Loop</strong> — a
-								coordination mechanism that checks: if the call stack is empty,
-								drain <em>all</em>{" "}
-								<strong className="text-cyan-400">microtasks</strong>{" "}
+								<strong className="text-accent-cyan-soft">Event Loop</strong> —
+								a coordination mechanism that checks: if the call stack is
+								empty, drain <em>all</em>{" "}
+								<strong className="text-accent-cyan-soft">microtasks</strong>{" "}
 								(Promise.then, queueMicrotask), then pick <em>one</em>{" "}
-								<strong className="text-orange-400">macrotask</strong>{" "}
+								<strong className="text-accent-orange-soft">macrotask</strong>{" "}
 								(setTimeout, I/O), then repeat.
 							</p>
-							<p className="text-zinc-500">
-								<strong className="text-zinc-300">Web APIs</strong> (setTimeout,
-								fetch, DOM events) delegate work outside the main thread. When
-								they're done, their callbacks are queued — never interrupting
-								currently running code. The Event Loop decides <em>when</em>{" "}
-								each callback actually runs.
+							<p className="text-text-muted">
+								<strong className="text-text-secondary">Web APIs</strong>{" "}
+								(setTimeout, fetch, DOM events) delegate work outside the main
+								thread. When they're done, their callbacks are queued — never
+								interrupting currently running code. The Event Loop decides{" "}
+								<em>when</em> each callback actually runs.
 							</p>
 						</div>
 					),

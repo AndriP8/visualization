@@ -20,23 +20,25 @@ function JsMemoryPage() {
 				gradient={{ from: "emerald-400", via: "violet-400", to: "cyan-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="text-sm text-text-muted space-y-2">
 							<p>
-								<strong className="text-zinc-300">The key insight: </strong>
+								<strong className="text-text-secondary">
+									The key insight:{" "}
+								</strong>
 								Garbage collection never "looks for garbage" — it{" "}
-								<strong className="text-emerald-400">
+								<strong className="text-accent-emerald-soft">
 									traces what is alive
 								</strong>{" "}
 								starting from GC roots, marks everything reachable, then
 								discards the rest. A memory leak is simply an{" "}
-								<strong className="text-violet-400">
+								<strong className="text-accent-violet-soft">
 									unintended reference
 								</strong>{" "}
 								that keeps an object inside the reachable set.
 							</p>
-							<p className="text-zinc-500">
+							<p className="text-text-muted">
 								V8 uses a{" "}
-								<strong className="text-zinc-300">
+								<strong className="text-text-secondary">
 									generational hypothesis
 								</strong>
 								: most objects die young. Separating short-lived and long-lived

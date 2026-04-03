@@ -129,21 +129,21 @@ function PlanTreeVisualizer({
 					${
 						isOptimal
 							? "bg-emerald-500/20 border-emerald-500 text-emerald-200"
-							: "bg-zinc-800 border-zinc-600 text-zinc-300"
+							: "bg-surface-secondary border-border-tertiary text-text-secondary"
 					}
 				`}
 			>
 				<span className="font-bold text-xs tracking-wide">{node.type}</span>
 				{node.relation && (
-					<span className="text-[10px] text-cyan-400 font-mono mt-0.5">
+					<span className="text-[10px] text-accent-cyan-soft font-mono mt-0.5">
 						{node.relation}
 					</span>
 				)}
 				<div
 					className={`absolute -top-3 -right-3 text-[10px] font-mono px-1.5 py-0.5 rounded-full border ${
 						isOptimal
-							? "bg-emerald-950 border-emerald-500 text-emerald-400"
-							: "bg-zinc-900 border-zinc-500 text-zinc-400"
+							? "bg-emerald-950 border-emerald-500 text-accent-emerald-soft"
+							: "bg-surface-primary border-text-muted text-text-tertiary"
 					}`}
 				>
 					Cost: {node.cost}
@@ -154,14 +154,14 @@ function PlanTreeVisualizer({
 				<div className="flex flex-col items-center w-full">
 					{/* Vertical drop from parent to horizontal bar */}
 					<div
-						className={`w-px h-4 ${isOptimal ? "bg-emerald-500/50" : "bg-zinc-600"}`}
+						className={`w-px h-4 ${isOptimal ? "bg-emerald-500/50" : "bg-surface-tertiary"}`}
 					/>
 
 					<div className="flex gap-6 relative w-full justify-center">
 						{/* Horizontal connector — only when more than one child */}
 						{node.children.length > 1 && (
 							<div
-								className={`absolute top-0 border-t ${isOptimal ? "border-emerald-500/50" : "border-zinc-600"}`}
+								className={`absolute top-0 border-t ${isOptimal ? "border-emerald-500/50" : "border-border-tertiary"}`}
 								style={{
 									left: `calc(50% / ${node.children.length})`,
 									right: `calc(50% / ${node.children.length})`,
@@ -176,7 +176,7 @@ function PlanTreeVisualizer({
 							>
 								{/* Vertical drop from horizontal bar to child */}
 								<div
-									className={`w-px h-4 ${isOptimal ? "bg-emerald-500/50" : "bg-zinc-600"}`}
+									className={`w-px h-4 ${isOptimal ? "bg-emerald-500/50" : "bg-surface-tertiary"}`}
 								/>
 								<PlanTreeVisualizer node={child} isOptimal={isOptimal} />
 							</div>
@@ -207,23 +207,23 @@ export function PlannerOptimizerDemo() {
 
 	return (
 		<div className="space-y-6">
-			<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col md:flex-row gap-6 items-center justify-between">
+			<div className="bg-surface-primary border border-border-primary rounded-xl p-5 flex flex-col md:flex-row gap-6 items-center justify-between">
 				<div>
-					<h4 className="text-white font-semibold flex items-center gap-2">
+					<h4 className="text-text-primary font-semibold flex items-center gap-2">
 						<span>📊</span> Index on{" "}
-						<code className="font-mono text-cyan-400 bg-cyan-500/10 px-1 rounded">
+						<code className="font-mono text-accent-cyan-soft bg-cyan-500/10 px-1 rounded">
 							orders.user_id
 						</code>
 					</h4>
-					<p className="text-sm text-zinc-400 mt-1 max-w-lg">
+					<p className="text-sm text-text-tertiary mt-1 max-w-lg">
 						The optimizer picks the cheapest plan based on available indexes.
 						Toggle to see how adding one index changes everything.
 					</p>
 				</div>
 
-				<div className="flex items-center gap-3 bg-zinc-950 p-2 rounded-lg border border-zinc-800">
+				<div className="flex items-center gap-3 bg-surface-base p-2 rounded-lg border border-border-primary">
 					<span
-						className={`text-sm ${!hasIndexes ? "text-white font-medium" : "text-zinc-500"}`}
+						className={`text-sm ${!hasIndexes ? "text-text-primary font-medium" : "text-text-muted"}`}
 					>
 						No Index
 					</span>
@@ -231,7 +231,7 @@ export function PlannerOptimizerDemo() {
 						type="button"
 						onClick={handleToggleIndexes}
 						className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-zinc-900 ${
-							hasIndexes ? "bg-violet-500" : "bg-zinc-600"
+							hasIndexes ? "bg-violet-500" : "bg-surface-tertiary"
 						}`}
 					>
 						<span
@@ -241,14 +241,14 @@ export function PlannerOptimizerDemo() {
 						/>
 					</button>
 					<span
-						className={`text-sm ${hasIndexes ? "text-violet-400 font-medium" : "text-zinc-500"}`}
+						className={`text-sm ${hasIndexes ? "text-accent-violet-soft font-medium" : "text-text-muted"}`}
 					>
 						Index Enabled
 					</span>
 				</div>
 			</div>
 
-			<p className="text-xs text-zinc-500 italic -mt-2">
+			<p className="text-xs text-text-muted italic -mt-2">
 				Cost = optimizer's estimated work units (lower = better). Not
 				milliseconds — relative to each other.
 			</p>
@@ -268,25 +268,25 @@ export function PlannerOptimizerDemo() {
 								${
 									isOptimal
 										? "bg-emerald-500/5 border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
-										: "bg-zinc-900 border-zinc-800"
+										: "bg-surface-primary border-border-primary"
 								}
 							`}
 						>
 							<div className="flex justify-between items-start mb-6">
 								<div className="flex-1 mr-4">
 									<h5
-										className={`font-semibold ${isOptimal ? "text-emerald-400" : "text-white"}`}
+										className={`font-semibold ${isOptimal ? "text-accent-emerald-soft" : "text-text-primary"}`}
 									>
 										{plan.name}
 									</h5>
-									<p className="text-xs text-zinc-500 mt-2 leading-relaxed">
+									<p className="text-xs text-text-muted mt-2 leading-relaxed">
 										{plan.description}
 									</p>
-									<div className="text-xs text-zinc-500 mt-3">
+									<div className="text-xs text-text-muted mt-3">
 										Total Est. Cost
 									</div>
 									<div
-										className={`font-mono text-lg font-bold ${isOptimal ? "text-emerald-300" : "text-zinc-300"}`}
+										className={`font-mono text-lg font-bold ${isOptimal ? "text-accent-emerald" : "text-text-secondary"}`}
 									>
 										{totalCost.toLocaleString()}
 									</div>
@@ -296,7 +296,7 @@ export function PlannerOptimizerDemo() {
 									<motion.div
 										initial={{ scale: 0, rotate: -180 }}
 										animate={{ scale: 1, rotate: 0 }}
-										className="bg-emerald-500 text-white text-[10px] uppercase font-bold px-2 py-1 rounded-full flex items-center gap-1 shadow-lg"
+										className="bg-emerald-500 text-text-primary text-[10px] uppercase font-bold px-2 py-1 rounded-full flex items-center gap-1 shadow-lg"
 									>
 										<span>Winner</span>
 										<span>🏆</span>
@@ -310,13 +310,13 @@ export function PlannerOptimizerDemo() {
 									<motion.div
 										initial={{ opacity: 0, y: 6 }}
 										animate={{ opacity: 1, y: 0 }}
-										className="bg-emerald-950 border border-emerald-700 rounded-lg p-3 text-xs text-emerald-300 mt-3 space-y-1"
+										className="bg-emerald-950 border border-emerald-700 rounded-lg p-3 text-xs text-accent-emerald mt-3 space-y-1"
 									>
 										<div className="font-semibold">
 											Index eliminates full table scan
 										</div>
 										<div className="font-mono">O(n × m) → O(n × log m)</div>
-										<div className="text-emerald-400/70">
+										<div className="text-accent-emerald-soft/70">
 											Each user lookup = 1 B-Tree traversal instead of scanning
 											all orders
 										</div>
@@ -337,9 +337,9 @@ export function PlannerOptimizerDemo() {
 				})}
 			</div>
 
-			<div className="text-center text-sm text-zinc-500">
+			<div className="text-center text-sm text-text-muted">
 				Query:{" "}
-				<code className="text-violet-300 font-mono bg-violet-500/10 px-1 py-0.5 rounded">
+				<code className="text-accent-violet font-mono bg-violet-500/10 px-1 py-0.5 rounded">
 					SELECT * FROM users u JOIN orders o ON u.id = o.user_id
 				</code>
 			</div>

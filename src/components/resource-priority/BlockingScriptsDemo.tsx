@@ -239,15 +239,15 @@ export default function BlockingScriptsDemo({
 	return (
 		<div className="space-y-6">
 			{/* Explanation */}
-			<div className="p-4 bg-zinc-900/50 border border-zinc-800 rounded-lg text-sm text-zinc-400">
+			<div className="p-4 bg-surface-primary/50 border border-border-primary rounded-lg text-sm text-text-tertiary">
 				<p>
-					<span className="text-white font-medium">
+					<span className="text-text-primary font-medium">
 						Compare loading behavior:
 					</span>{" "}
 					Watch how sync, async, and defer scripts affect page load time. Sync
-					scripts <span className="text-rose-300">block parsing</span> (slower),
-					while async and defer allow{" "}
-					<span className="text-cyan-300">parallel loading</span> (faster).
+					scripts <span className="text-accent-rose">block parsing</span>{" "}
+					(slower), while async and defer allow{" "}
+					<span className="text-accent-cyan">parallel loading</span> (faster).
 				</p>
 			</div>
 
@@ -256,14 +256,14 @@ export default function BlockingScriptsDemo({
 					type="button"
 					onClick={play}
 					disabled={running}
-					className="px-4 py-2 bg-violet-500 text-white rounded-md text-sm font-medium hover:bg-violet-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+					className="px-4 py-2 bg-violet-500 text-text-primary rounded-md text-sm font-medium hover:bg-violet-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
 				>
 					Play
 				</button>
 				<button
 					type="button"
 					onClick={reset}
-					className="px-4 py-2 bg-zinc-700 text-white rounded-md text-sm font-medium hover:bg-zinc-600 transition-colors"
+					className="px-4 py-2 bg-surface-tertiary text-text-primary rounded-md text-sm font-medium hover:bg-surface-tertiary transition-colors"
 				>
 					Reset
 				</button>
@@ -294,16 +294,18 @@ export default function BlockingScriptsDemo({
 			{syncState.domReady && (
 				<div className="grid md:grid-cols-3 gap-4 text-center text-sm">
 					<div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded">
-						<div className="text-rose-300 font-medium">Sync: ~2500ms</div>
-						<div className="text-xs text-zinc-500 mt-1">Slowest (blocked)</div>
+						<div className="text-accent-rose font-medium">Sync: ~2500ms</div>
+						<div className="text-xs text-text-muted mt-1">
+							Slowest (blocked)
+						</div>
 					</div>
 					<div className="p-3 bg-cyan-500/10 border border-cyan-500/30 rounded">
-						<div className="text-cyan-300 font-medium">Async: ~1600ms</div>
-						<div className="text-xs text-zinc-500 mt-1">36% faster</div>
+						<div className="text-accent-cyan font-medium">Async: ~1600ms</div>
+						<div className="text-xs text-text-muted mt-1">36% faster</div>
 					</div>
 					<div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded">
-						<div className="text-amber-300 font-medium">Defer: ~1600ms</div>
-						<div className="text-xs text-zinc-500 mt-1">36% faster</div>
+						<div className="text-accent-amber font-medium">Defer: ~1600ms</div>
+						<div className="text-xs text-text-muted mt-1">36% faster</div>
 					</div>
 				</div>
 			)}
@@ -331,9 +333,9 @@ function ScenarioColumn({
 	};
 
 	const textClasses = {
-		rose: "text-rose-300",
-		cyan: "text-cyan-300",
-		amber: "text-amber-300",
+		rose: "text-accent-rose",
+		cyan: "text-accent-cyan",
+		amber: "text-accent-amber",
 	};
 
 	const borderBgClasses = {
@@ -348,19 +350,19 @@ function ScenarioColumn({
 			state.phase === "executing-script");
 
 	return (
-		<div className="p-4 bg-zinc-900 rounded border border-zinc-800 space-y-4">
+		<div className="p-4 bg-surface-primary rounded border border-border-primary space-y-4">
 			<h3 className={`text-sm font-medium ${textClasses[color]}`}>{title}</h3>
 
 			{/* HTML Parsing Progress */}
 			<div className="space-y-2">
 				<div className="flex items-center justify-between">
-					<span className="text-xs text-zinc-400">HTML Parsing</span>
-					<span className="text-xs text-zinc-500">{state.htmlProgress}%</span>
+					<span className="text-xs text-text-tertiary">HTML Parsing</span>
+					<span className="text-xs text-text-muted">{state.htmlProgress}%</span>
 				</div>
-				<div className="h-4 bg-zinc-800 rounded overflow-hidden relative">
+				<div className="h-4 bg-surface-secondary rounded overflow-hidden relative">
 					{isIdlePhase && (
 						<div className="absolute inset-0 bg-rose-500/20 border-2 border-rose-500/50 animate-pulse">
-							<span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-rose-300">
+							<span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-accent-rose">
 								BLOCKED
 							</span>
 						</div>
@@ -378,22 +380,24 @@ function ScenarioColumn({
 
 			{/* Script Download */}
 			<div className="space-y-2">
-				<span className="text-xs text-zinc-400">Script Download</span>
+				<span className="text-xs text-text-tertiary">Script Download</span>
 				<div
 					className={`p-2 rounded border ${
 						state.phase === "downloading-script" || state.scriptDownloaded
 							? borderBgClasses[color]
-							: "border-zinc-700 bg-zinc-800"
+							: "border-border-secondary bg-surface-secondary"
 					}`}
 				>
 					<div className="flex items-center justify-between">
-						<span className="text-xs font-mono text-zinc-300">app.js</span>
+						<span className="text-xs font-mono text-text-secondary">
+							app.js
+						</span>
 						{state.scriptDownloaded && (
-							<span className="text-xs text-green-400">✓ Done</span>
+							<span className="text-xs text-accent-green-soft">✓ Done</span>
 						)}
 						{state.phase === "downloading-script" &&
 							!state.scriptDownloaded && (
-								<span className="text-xs text-amber-400 animate-pulse">
+								<span className="text-xs text-accent-amber-soft animate-pulse">
 									Loading...
 								</span>
 							)}
@@ -403,21 +407,23 @@ function ScenarioColumn({
 
 			{/* Script Execution */}
 			<div className="space-y-2">
-				<span className="text-xs text-zinc-400">Script Execution</span>
+				<span className="text-xs text-text-tertiary">Script Execution</span>
 				<div
 					className={`p-2 rounded border ${
 						state.phase === "executing-script" || state.scriptExecuted
 							? borderBgClasses[color]
-							: "border-zinc-700 bg-zinc-800"
+							: "border-border-secondary bg-surface-secondary"
 					}`}
 				>
 					<div className="flex items-center justify-between">
-						<span className="text-xs font-mono text-zinc-300">Execute</span>
+						<span className="text-xs font-mono text-text-secondary">
+							Execute
+						</span>
 						{state.scriptExecuted && (
-							<span className="text-xs text-green-400">✓ Done</span>
+							<span className="text-xs text-accent-green-soft">✓ Done</span>
 						)}
 						{state.phase === "executing-script" && !state.scriptExecuted && (
-							<span className="text-xs text-amber-400 animate-pulse">
+							<span className="text-xs text-accent-amber-soft animate-pulse">
 								Running...
 							</span>
 						)}
@@ -427,17 +433,17 @@ function ScenarioColumn({
 
 			{/* DOMContentLoaded */}
 			<div className="space-y-2">
-				<span className="text-xs text-zinc-400">DOMContentLoaded</span>
+				<span className="text-xs text-text-tertiary">DOMContentLoaded</span>
 				<div
-					className={`p-2 rounded border ${state.domReady ? "border-green-500/50 bg-green-500/10" : "border-zinc-700 bg-zinc-800"}`}
+					className={`p-2 rounded border ${state.domReady ? "border-green-500/50 bg-green-500/10" : "border-border-secondary bg-surface-secondary"}`}
 				>
 					<div className="flex items-center justify-center">
 						{state.domReady ? (
-							<span className="text-xs font-medium text-green-400">
+							<span className="text-xs font-medium text-accent-green-soft">
 								✓ DOM Ready
 							</span>
 						) : (
-							<span className="text-xs text-zinc-500">Waiting...</span>
+							<span className="text-xs text-text-muted">Waiting...</span>
 						)}
 					</div>
 				</div>
