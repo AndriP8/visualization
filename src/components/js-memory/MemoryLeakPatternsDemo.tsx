@@ -190,8 +190,8 @@ function MemoryGraph({ mode }: { mode: LeakMode }) {
 	}, [mode]);
 
 	return (
-		<div className="rounded-lg bg-zinc-900 border border-zinc-800 p-3">
-			<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+		<div className="rounded-lg bg-surface-primary border border-border-primary p-3">
+			<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 				Simulated Heap Usage Over Time
 			</div>
 			<div className="flex items-end gap-0.5 h-22.5">
@@ -218,13 +218,13 @@ function MemoryGraph({ mode }: { mode: LeakMode }) {
 				})}
 			</div>
 			<div className="flex justify-between mt-1">
-				<span className="text-[9px] text-zinc-600 font-mono">older</span>
+				<span className="text-[9px] text-text-faint font-mono">older</span>
 				<span
-					className={`text-[10px] font-semibold font-mono ${mode === "leaking" ? "text-red-400" : "text-emerald-400"}`}
+					className={`text-[10px] font-semibold font-mono ${mode === "leaking" ? "text-accent-red-soft" : "text-accent-emerald-soft"}`}
 				>
 					{mode === "leaking" ? "📈 Growing — leak!" : "📉 Flat — GC healthy"}
 				</span>
-				<span className="text-[9px] text-zinc-600 font-mono">now</span>
+				<span className="text-[9px] text-text-faint font-mono">now</span>
 			</div>
 		</div>
 	);
@@ -261,8 +261,8 @@ export function MemoryLeakPatternsDemo() {
 						onClick={() => handleScenarioChange(tab.id)}
 						className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
 							scenario === tab.id
-								? "bg-violet-500/20 text-violet-300 border-violet-500/40"
-								: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-200"
+								? "bg-violet-500/20 text-accent-violet border-violet-500/40"
+								: "bg-surface-secondary text-text-tertiary border-border-secondary hover:text-text-secondary"
 						}`}
 					>
 						{tab.icon} {tab.label}
@@ -280,9 +280,9 @@ export function MemoryLeakPatternsDemo() {
 						className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-colors ${
 							mode === m
 								? m === "leaking"
-									? "bg-red-500/20 text-red-300 border-red-500/40"
-									: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
-								: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-200"
+									? "bg-red-500/20 text-accent-red border-red-500/40"
+									: "bg-emerald-500/20 text-accent-emerald border-emerald-500/40"
+								: "bg-surface-secondary text-text-tertiary border-border-secondary hover:text-text-secondary"
 						}`}
 					>
 						{m === "leaking" ? "❌ Leaking" : "✅ Fixed"}
@@ -314,8 +314,8 @@ export function MemoryLeakPatternsDemo() {
 					<div
 						className={`p-4 rounded-lg border text-sm leading-relaxed ${
 							mode === "leaking"
-								? "bg-red-500/5 border-red-500/20 text-red-300/80"
-								: "bg-emerald-500/5 border-emerald-500/20 text-emerald-300/80"
+								? "bg-red-500/5 border-red-500/20 text-accent-red/80"
+								: "bg-emerald-500/5 border-emerald-500/20 text-accent-emerald/80"
 						}`}
 					>
 						<div className="font-semibold mb-1">
@@ -326,8 +326,8 @@ export function MemoryLeakPatternsDemo() {
 
 					{/* GC reference chain callout */}
 					{mode === "leaking" && (
-						<div className="p-3 rounded-lg bg-zinc-800/50 border border-zinc-700 text-xs text-zinc-400 font-mono">
-							<span className="text-zinc-300 font-semibold not-italic">
+						<div className="p-3 rounded-lg bg-surface-secondary/50 border border-border-secondary text-xs text-text-tertiary font-mono">
+							<span className="text-text-secondary font-semibold not-italic">
 								Reference chain keeping object alive:{" "}
 							</span>
 							{scenario === "event-listener" &&

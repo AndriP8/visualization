@@ -246,8 +246,8 @@ export function WaterfallOptimizerDemo() {
 					const lcpColor =
 						opt.lcp <= 600 ? "green" : opt.lcp <= 1200 ? "amber" : "rose";
 					const className = isSelected
-						? "bg-violet-500/15 text-violet-300 border-violet-500/40"
-						: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600";
+						? "bg-violet-500/15 text-accent-violet border-violet-500/40"
+						: "bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary";
 
 					return (
 						<button
@@ -262,11 +262,11 @@ export function WaterfallOptimizerDemo() {
 								className={`text-xs ${
 									isSelected
 										? match(lcpColor)
-												.with("green", () => "text-green-300")
-												.with("amber", () => "text-amber-300")
-												.with("rose", () => "text-rose-300")
+												.with("green", () => "text-accent-green")
+												.with("amber", () => "text-accent-amber")
+												.with("rose", () => "text-accent-rose")
 												.exhaustive()
-										: "text-zinc-600"
+										: "text-text-faint"
 								}`}
 							>
 								LCP: {opt.lcp}ms
@@ -276,51 +276,53 @@ export function WaterfallOptimizerDemo() {
 				})}
 			</div>
 
-			<p className="text-sm text-zinc-400">{optimization.description}</p>
+			<p className="text-sm text-text-tertiary">{optimization.description}</p>
 
 			{/* Metrics */}
 			<div className="grid grid-cols-3 gap-3">
-				<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-4">
-					<div className="text-xs text-zinc-500 mb-1">Waterfall Depth</div>
-					<div className="text-3xl font-bold text-white">
+				<div className="bg-surface-primary border border-border-secondary rounded-lg p-4">
+					<div className="text-xs text-text-muted mb-1">Waterfall Depth</div>
+					<div className="text-3xl font-bold text-text-primary">
 						{optimization.depth}
 					</div>
 				</div>
-				<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-4">
-					<div className="text-xs text-zinc-500 mb-1">LCP (ms)</div>
+				<div className="bg-surface-primary border border-border-secondary rounded-lg p-4">
+					<div className="text-xs text-text-muted mb-1">LCP (ms)</div>
 					<div
 						className={`text-3xl font-bold ${
 							optimization.lcp <= 600
-								? "text-green-400"
+								? "text-accent-green-soft"
 								: optimization.lcp <= 1200
-									? "text-amber-400"
-									: "text-rose-400"
+									? "text-accent-amber-soft"
+									: "text-accent-rose-soft"
 						}`}
 					>
 						{optimization.lcp}
 					</div>
 				</div>
-				<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-4">
-					<div className="text-xs text-zinc-500 mb-1">Requests</div>
-					<div className="text-3xl font-bold text-white">{requests.length}</div>
+				<div className="bg-surface-primary border border-border-secondary rounded-lg p-4">
+					<div className="text-xs text-text-muted mb-1">Requests</div>
+					<div className="text-3xl font-bold text-text-primary">
+						{requests.length}
+					</div>
 				</div>
 			</div>
 
 			{/* Waterfall visualization */}
-			<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6">
+			<div className="bg-surface-primary border border-border-secondary rounded-xl p-6">
 				<div className="flex items-center justify-between mb-4">
-					<div className="text-xs text-zinc-500 font-mono">
+					<div className="text-xs text-text-muted font-mono">
 						Request Timeline
 					</div>
-					<div className="text-xs text-zinc-400 font-mono">
+					<div className="text-xs text-text-tertiary font-mono">
 						{running ? `${currentTime}ms` : "Ready"}
 					</div>
 				</div>
 
 				{/* Timeline */}
-				<div className="relative h-64 bg-zinc-800/50 rounded-lg p-4">
+				<div className="relative h-64 bg-surface-secondary/50 rounded-lg p-4">
 					{/* Time markers */}
-					<div className="absolute top-0 left-0 right-0 flex justify-between px-4 text-xs text-zinc-600 font-mono">
+					<div className="absolute top-0 left-0 right-0 flex justify-between px-4 text-xs text-text-faint font-mono">
 						{selected === "prefetch" ? (
 							<>
 								<span>-400ms</span>
@@ -373,9 +375,9 @@ export function WaterfallOptimizerDemo() {
 												width: `${widthPercent}%`,
 											}}
 										>
-											<div className="relative w-full h-8 rounded overflow-hidden bg-zinc-700/50 border border-zinc-600">
+											<div className="relative w-full h-8 rounded overflow-hidden bg-surface-tertiary/50 border border-border-tertiary">
 												<div className="absolute inset-0 flex items-center px-2 z-10">
-													<span className="text-xs font-mono text-white truncate">
+													<span className="text-xs font-mono text-text-primary truncate">
 														{req.label}
 													</span>
 												</div>
@@ -422,8 +424,8 @@ export function WaterfallOptimizerDemo() {
 					onClick={running ? reset : runAnimation}
 					className={`mt-4 w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
 						running
-							? "bg-zinc-700 text-zinc-300"
-							: "bg-violet-600 hover:bg-violet-500 text-white"
+							? "bg-surface-tertiary text-text-secondary"
+							: "bg-violet-600 hover:bg-violet-500 text-text-primary"
 					}`}
 				>
 					{running ? "⏹ Stop" : requests.length > 0 ? "↺ Replay" : "▶ Animate"}
@@ -431,19 +433,19 @@ export function WaterfallOptimizerDemo() {
 			</div>
 
 			{/* Key insights */}
-			<div className="bg-zinc-800/30 border border-zinc-700 rounded-lg p-5">
-				<h4 className="text-sm font-semibold text-white mb-3">
+			<div className="bg-surface-secondary/30 border border-border-secondary rounded-lg p-5">
+				<h4 className="text-sm font-semibold text-text-primary mb-3">
 					Optimization Strategy
 				</h4>
-				<div className="space-y-2 text-sm text-zinc-400">
+				<div className="space-y-2 text-sm text-text-tertiary">
 					{selected === "sequential" && (
 						<>
 							<div className="flex gap-2">
-								<span className="text-rose-400">•</span>
+								<span className="text-accent-rose-soft">•</span>
 								<span>Depth-3 waterfall adds 1800ms latency</span>
 							</div>
 							<div className="flex gap-2">
-								<span className="text-rose-400">•</span>
+								<span className="text-accent-rose-soft">•</span>
 								<span>Each request blocks the next - poor LCP</span>
 							</div>
 						</>
@@ -451,11 +453,11 @@ export function WaterfallOptimizerDemo() {
 					{selected === "parallel" && (
 						<>
 							<div className="flex gap-2">
-								<span className="text-amber-400">•</span>
+								<span className="text-accent-amber-soft">•</span>
 								<span>All requests fire at once - depth reduced to 1</span>
 							</div>
 							<div className="flex gap-2">
-								<span className="text-amber-400">•</span>
+								<span className="text-accent-amber-soft">•</span>
 								<span>
 									Over-fetching trade-off for speed (extra /user/profile)
 								</span>
@@ -465,11 +467,11 @@ export function WaterfallOptimizerDemo() {
 					{selected === "graphql" && (
 						<>
 							<div className="flex gap-2">
-								<span className="text-cyan-400">•</span>
+								<span className="text-accent-cyan-soft">•</span>
 								<span>Single query fetches all related data</span>
 							</div>
 							<div className="flex gap-2">
-								<span className="text-cyan-400">•</span>
+								<span className="text-accent-cyan-soft">•</span>
 								<span>Best of both worlds - fast + no over-fetching</span>
 							</div>
 						</>
@@ -477,11 +479,11 @@ export function WaterfallOptimizerDemo() {
 					{selected === "prefetch" && (
 						<>
 							<div className="flex gap-2">
-								<span className="text-green-400">•</span>
+								<span className="text-accent-green-soft">•</span>
 								<span>Starts loading 400ms before user clicks (on hover)</span>
 							</div>
 							<div className="flex gap-2">
-								<span className="text-green-400">•</span>
+								<span className="text-accent-green-soft">•</span>
 								<span>Instant perceived load - data ready when needed</span>
 							</div>
 						</>

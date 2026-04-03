@@ -180,8 +180,8 @@ export function TypeChangeDemo() {
 							}}
 							className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
 								scenario === key
-									? "bg-violet-500/20 text-violet-300 border border-violet-500/30"
-									: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300"
+									? "bg-violet-500/20 text-accent-violet border border-violet-500/30"
+									: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary"
 							}`}
 						>
 							{s.label}
@@ -190,13 +190,13 @@ export function TypeChangeDemo() {
 				)}
 			</div>
 
-			<p className="text-sm text-zinc-400 mb-4">{config.description}</p>
+			<p className="text-sm text-text-tertiary mb-4">{config.description}</p>
 
 			{/* Toggle */}
 			<button
 				type="button"
 				onClick={() => setShowAfter((v) => !v)}
-				className="px-4 py-2 mb-5 rounded-lg text-sm font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/30 transition-colors"
+				className="px-4 py-2 mb-5 rounded-lg text-sm font-medium bg-cyan-500/20 text-accent-cyan border border-cyan-500/30 hover:bg-cyan-500/30 transition-colors"
 			>
 				{showAfter ? "← Show Before" : "Trigger Re-render →"}
 			</button>
@@ -224,7 +224,7 @@ export function TypeChangeDemo() {
 				<motion.div
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
-					className="mt-5 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-sm text-zinc-300"
+					className="mt-5 p-4 rounded-lg bg-surface-secondary/50 border border-border-secondary/50 text-sm text-text-secondary"
 				>
 					{config.explanation}
 				</motion.div>

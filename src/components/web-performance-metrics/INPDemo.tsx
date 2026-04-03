@@ -62,9 +62,9 @@ const SCENARIOS: ScenarioConfig[] = [
 ];
 
 const getThresholdColor = (value: number): string => {
-	if (value <= 200) return "text-green-400";
-	if (value <= 500) return "text-yellow-400";
-	return "text-rose-400";
+	if (value <= 200) return "text-accent-green-soft";
+	if (value <= 500) return "text-accent-yellow-soft";
+	return "text-accent-rose-soft";
 };
 
 export default function INPDemo() {
@@ -156,8 +156,8 @@ export default function INPDemo() {
 							}}
 							className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
 								isSelected
-									? "bg-violet-500/20 text-violet-300 border-violet-500/30"
-									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
+									? "bg-violet-500/20 text-accent-violet border-violet-500/30"
+									: "bg-surface-secondary text-text-tertiary border-border-secondary hover:text-text-secondary"
 							}`}
 						>
 							{scenario.label}
@@ -168,7 +168,9 @@ export default function INPDemo() {
 
 			{/* Description */}
 			{currentScenario && (
-				<p className="text-sm text-zinc-400">{currentScenario.description}</p>
+				<p className="text-sm text-text-tertiary">
+					{currentScenario.description}
+				</p>
 			)}
 
 			{/* Control button */}
@@ -176,16 +178,16 @@ export default function INPDemo() {
 				type="button"
 				onClick={running ? reset : runScenario}
 				disabled={running}
-				className="px-6 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
+				className="px-6 py-2 rounded-lg bg-violet-500 text-text-primary font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
 			>
 				{running ? "Running..." : "Run Scenario"}
 			</button>
 
 			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-6">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6 space-y-6">
 				{/* Interactive button */}
 				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						User Interaction
 					</h4>
 					<div className="flex items-center justify-center py-12 relative">
@@ -194,7 +196,7 @@ export default function INPDemo() {
 							type="button"
 							onClick={runScenario}
 							disabled={running}
-							className="relative px-8 py-4 rounded-lg bg-blue-500 text-white font-bold text-lg hover:bg-blue-600 disabled:opacity-50 transition-all"
+							className="relative px-8 py-4 rounded-lg bg-blue-500 text-text-primary font-bold text-lg hover:bg-blue-600 disabled:opacity-50 transition-all"
 						>
 							Click Me!
 						</button>
@@ -221,7 +223,7 @@ export default function INPDemo() {
 								<motion.div
 									initial={{ scale: 0 }}
 									animate={{ scale: 1 }}
-									className="absolute -right-4 -top-4 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-xl"
+									className="absolute -right-4 -top-4 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-text-primary text-xl"
 								>
 									✓
 								</motion.div>
@@ -231,18 +233,18 @@ export default function INPDemo() {
 
 				{/* Event timeline */}
 				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						Event Timeline
 					</h4>
 					<div className="space-y-2">
 						{/* Click registered */}
 						<div className="flex items-center gap-3">
 							<div
-								className={`w-32 text-xs font-mono ${phase === "click-registered" ? "text-violet-400" : "text-zinc-500"}`}
+								className={`w-32 text-xs font-mono ${phase === "click-registered" ? "text-accent-violet-soft" : "text-text-muted"}`}
 							>
 								Click
 							</div>
-							<div className="flex-1 h-2 bg-zinc-800 rounded-full overflow-hidden">
+							<div className="flex-1 h-2 bg-surface-secondary rounded-full overflow-hidden">
 								{phase === "click-registered" && (
 									<motion.div
 										initial={{ width: 0 }}
@@ -257,11 +259,11 @@ export default function INPDemo() {
 						{/* Handler execution */}
 						<div className="flex items-center gap-3">
 							<div
-								className={`w-32 text-xs font-mono ${phase === "handler-start" || phase === "handler-executing" ? "text-amber-400" : "text-zinc-500"}`}
+								className={`w-32 text-xs font-mono ${phase === "handler-start" || phase === "handler-executing" ? "text-accent-amber-soft" : "text-text-muted"}`}
 							>
 								Handler
 							</div>
-							<div className="flex-1 h-8 bg-zinc-800 rounded overflow-hidden relative">
+							<div className="flex-1 h-8 bg-surface-secondary rounded overflow-hidden relative">
 								{(phase === "handler-start" ||
 									phase === "handler-executing") && (
 									<>
@@ -275,7 +277,7 @@ export default function INPDemo() {
 										/>
 										{currentPhaseConfig?.duration &&
 											currentPhaseConfig.duration > 200 && (
-												<div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-white">
+												<div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-text-primary">
 													{currentPhaseConfig.duration}ms (Blocking!)
 												</div>
 											)}
@@ -287,11 +289,11 @@ export default function INPDemo() {
 						{/* Render */}
 						<div className="flex items-center gap-3">
 							<div
-								className={`w-32 text-xs font-mono ${phase === "render-queued" ? "text-cyan-400" : "text-zinc-500"}`}
+								className={`w-32 text-xs font-mono ${phase === "render-queued" ? "text-accent-cyan-soft" : "text-text-muted"}`}
 							>
 								Render
 							</div>
-							<div className="flex-1 h-2 bg-zinc-800 rounded-full overflow-hidden">
+							<div className="flex-1 h-2 bg-surface-secondary rounded-full overflow-hidden">
 								{phase === "render-queued" && (
 									<motion.div
 										initial={{ width: 0 }}
@@ -306,11 +308,11 @@ export default function INPDemo() {
 						{/* Paint */}
 						<div className="flex items-center gap-3">
 							<div
-								className={`w-32 text-xs font-mono ${phase === "paint" || phase === "done" ? "text-green-400" : "text-zinc-500"}`}
+								className={`w-32 text-xs font-mono ${phase === "paint" || phase === "done" ? "text-accent-green-soft" : "text-text-muted"}`}
 							>
 								Paint
 							</div>
-							<div className="flex-1 h-2 bg-zinc-800 rounded-full overflow-hidden">
+							<div className="flex-1 h-2 bg-surface-secondary rounded-full overflow-hidden">
 								{(phase === "paint" || phase === "done") && (
 									<motion.div
 										initial={{ width: 0 }}
@@ -332,7 +334,7 @@ export default function INPDemo() {
 							initial={{ opacity: 0 }}
 							animate={{ opacity: [0, 1, 0, 1, 0, 1] }}
 							transition={{ duration: 0.6, repeat: 2 }}
-							className="p-3 bg-rose-500/20 border border-rose-500/30 rounded-lg text-sm text-rose-300"
+							className="p-3 bg-rose-500/20 border border-rose-500/30 rounded-lg text-sm text-accent-rose"
 						>
 							⚠️ Frame drops detected! Main thread blocked.
 						</motion.div>
@@ -343,13 +345,13 @@ export default function INPDemo() {
 					<motion.div
 						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
-						className="flex items-center justify-between p-4 bg-zinc-800 rounded-lg"
+						className="flex items-center justify-between p-4 bg-surface-secondary rounded-lg"
 					>
 						<div>
-							<div className="text-sm font-semibold text-zinc-300">
+							<div className="text-sm font-semibold text-text-secondary">
 								Interaction to Next Paint
 							</div>
-							<div className="text-xs text-zinc-500 mt-1">
+							<div className="text-xs text-text-muted mt-1">
 								Time from click to visual feedback
 							</div>
 						</div>
@@ -359,7 +361,7 @@ export default function INPDemo() {
 							>
 								{inpTime}ms
 							</div>
-							<div className="text-xs text-zinc-500 mt-1">
+							<div className="text-xs text-text-muted mt-1">
 								{inpTime <= 200
 									? "Good"
 									: inpTime <= 500
@@ -374,15 +376,17 @@ export default function INPDemo() {
 				<div className="flex gap-4 text-xs">
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-green-500" />
-						<span className="text-zinc-400">Good: ≤200ms</span>
+						<span className="text-text-tertiary">Good: ≤200ms</span>
 					</div>
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-yellow-500" />
-						<span className="text-zinc-400">Needs Improvement: 200-500ms</span>
+						<span className="text-text-tertiary">
+							Needs Improvement: 200-500ms
+						</span>
 					</div>
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-rose-500" />
-						<span className="text-zinc-400">Poor: &gt;500ms</span>
+						<span className="text-text-tertiary">Poor: &gt;500ms</span>
 					</div>
 				</div>
 			</div>
@@ -390,7 +394,7 @@ export default function INPDemo() {
 			{/* Code examples */}
 			<div className="grid md:grid-cols-2 gap-4">
 				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						Before (Blocking)
 					</h4>
 					<ShikiCode
@@ -410,7 +414,7 @@ function doExpensiveWork() {
 					/>
 				</div>
 				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						After (Optimized)
 					</h4>
 					<ShikiCode

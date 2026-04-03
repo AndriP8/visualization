@@ -16,16 +16,16 @@ const TRANSITIONS: Transition[] = [
 ];
 
 const STATE_COLORS = {
-	red: { bg: "bg-red-500", border: "border-red-400", text: "text-red-300" },
+	red: { bg: "bg-red-500", border: "border-red-400", text: "text-accent-red" },
 	yellow: {
 		bg: "bg-yellow-500",
 		border: "border-yellow-400",
-		text: "text-yellow-300",
+		text: "text-accent-yellow",
 	},
 	green: {
 		bg: "bg-green-500",
 		border: "border-green-400",
-		text: "text-green-300",
+		text: "text-accent-green",
 	},
 } as const;
 
@@ -52,14 +52,14 @@ export function BasicStateMachineDemo() {
 		<div className="space-y-8">
 			{/* Visual Traffic Light */}
 			<div className="flex justify-center">
-				<div className="bg-zinc-900 border border-zinc-700 rounded-3xl p-6 space-y-4">
+				<div className="bg-surface-primary border border-border-secondary rounded-3xl p-6 space-y-4">
 					{(["red", "yellow", "green"] as const).map((state) => (
 						<motion.div
 							key={state}
 							className={`w-20 h-20 rounded-full border-4 ${
 								currentState === state
 									? `${STATE_COLORS[state].bg} ${STATE_COLORS[state].border} shadow-lg`
-									: "bg-zinc-800 border-zinc-700"
+									: "bg-surface-secondary border-border-secondary"
 							}`}
 							animate={{
 								opacity: currentState === state ? 1 : 0.3,
@@ -76,7 +76,7 @@ export function BasicStateMachineDemo() {
 			</div>
 
 			{/* State Diagram */}
-			<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-8">
+			<div className="bg-surface-primary border border-border-secondary rounded-lg p-8">
 				<div className="flex items-center justify-around relative">
 					{/* States as nodes */}
 					{(["red", "yellow", "green"] as const).map((state, idx) => (
@@ -85,7 +85,7 @@ export function BasicStateMachineDemo() {
 								className={`w-24 h-24 rounded-full border-2 flex items-center justify-center font-semibold ${
 									currentState === state
 										? `${STATE_COLORS[state].bg} ${STATE_COLORS[state].border} shadow-lg`
-										: "bg-zinc-800 border-zinc-700 text-zinc-500"
+										: "bg-surface-secondary border-border-secondary text-text-muted"
 								}`}
 								animate={{
 									scale: currentState === state ? 1.1 : 1,
@@ -165,7 +165,7 @@ export function BasicStateMachineDemo() {
 											transition={{ duration: 0.4 }}
 										/>
 									</svg>
-									<div className="text-xs text-center text-cyan-400 -mt-2">
+									<div className="text-xs text-center text-accent-cyan-soft -mt-2">
 										TIMER
 									</div>
 								</motion.div>
@@ -222,7 +222,9 @@ export function BasicStateMachineDemo() {
 								}}
 							/>
 						</svg>
-						<div className="text-xs text-center text-cyan-400 -mt-8">TIMER</div>
+						<div className="text-xs text-center text-accent-cyan-soft -mt-8">
+							TIMER
+						</div>
 					</motion.div>
 				</div>
 			</div>
@@ -233,14 +235,14 @@ export function BasicStateMachineDemo() {
 					type="button"
 					onClick={transition}
 					disabled={isTransitioning}
-					className="px-6 py-3 bg-violet-600 hover:bg-violet-700 disabled:bg-zinc-700 disabled:text-zinc-500 text-white rounded-lg font-medium transition-colors"
+					className="px-6 py-3 bg-violet-600 hover:bg-violet-700 disabled:bg-surface-tertiary disabled:text-text-muted text-text-primary rounded-lg font-medium transition-colors"
 				>
 					{isTransitioning
 						? "Transitioning..."
 						: `Send TIMER Event → ${getNextState()?.toUpperCase()}`}
 				</button>
 
-				<div className="text-sm text-zinc-400 text-center">
+				<div className="text-sm text-text-tertiary text-center">
 					Current state:{" "}
 					<span
 						className={`font-mono font-bold ${STATE_COLORS[currentState].text}`}
@@ -252,7 +254,7 @@ export function BasicStateMachineDemo() {
 
 			{/* Key Insight */}
 			<div className="bg-violet-950/30 border border-violet-800/50 rounded-lg p-4">
-				<div className="text-sm text-violet-300">
+				<div className="text-sm text-accent-violet">
 					<strong>Key insight:</strong> Each state has exactly one valid
 					transition. No ambiguity, no impossible states. The system is{" "}
 					<strong>deterministic</strong> - the same event in the same state

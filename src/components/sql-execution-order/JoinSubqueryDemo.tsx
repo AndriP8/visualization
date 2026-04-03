@@ -115,17 +115,17 @@ function SubSection({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className="border border-zinc-800 rounded-lg bg-zinc-900/50">
+		<div className="border border-border-primary rounded-lg bg-surface-primary/50">
 			<button
 				type="button"
 				onClick={onToggle}
-				className="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/50 transition-colors"
+				className="w-full px-6 py-4 flex items-center justify-between hover:bg-surface-secondary/50 transition-colors"
 			>
-				<h3 className="text-lg font-semibold text-blue-400">{title}</h3>
+				<h3 className="text-lg font-semibold text-accent-blue-soft">{title}</h3>
 				{isExpanded ? (
-					<ChevronDown className="w-5 h-5 text-gray-400" />
+					<ChevronDown className="w-5 h-5 text-text-tertiary" />
 				) : (
-					<ChevronRight className="w-5 h-5 text-gray-400" />
+					<ChevronRight className="w-5 h-5 text-text-tertiary" />
 				)}
 			</button>
 
@@ -409,7 +409,7 @@ function JoinVisualization() {
 			{/* Controls */}
 			<div className="flex flex-wrap items-center gap-4">
 				<div className="flex items-center gap-2">
-					<span className="text-sm text-gray-400">JOIN Type:</span>
+					<span className="text-sm text-text-tertiary">JOIN Type:</span>
 					<select
 						value={joinType}
 						onChange={(e) => {
@@ -421,7 +421,7 @@ function JoinVisualization() {
 							setScannedRight(0);
 						}}
 						disabled={isAnimating}
-						className="px-3 py-1.5 rounded bg-zinc-800 border border-zinc-700 text-gray-300 text-sm focus:outline-none focus:border-blue-500"
+						className="px-3 py-1.5 rounded bg-surface-secondary border border-border-secondary text-text-secondary text-sm focus:outline-none focus:border-blue-500"
 					>
 						<option value="INNER">INNER JOIN</option>
 						<option value="LEFT">LEFT JOIN</option>
@@ -431,7 +431,7 @@ function JoinVisualization() {
 				</div>
 
 				<div className="flex items-center gap-2">
-					<span className="text-sm text-gray-400">Speed:</span>
+					<span className="text-sm text-text-tertiary">Speed:</span>
 					<div className="flex gap-1">
 						{([0.5, 1, 2] as const).map((speed) => (
 							<button
@@ -441,8 +441,8 @@ function JoinVisualization() {
 								disabled={isAnimating}
 								className={`px-2 py-1 rounded text-xs ${
 									animSpeed === speed
-										? "bg-blue-500 text-white"
-										: "bg-zinc-800 text-gray-400 hover:bg-zinc-700"
+										? "bg-blue-500 text-text-primary"
+										: "bg-surface-secondary text-text-tertiary hover:bg-surface-tertiary"
 								}`}
 							>
 								{speed}x
@@ -455,7 +455,7 @@ function JoinVisualization() {
 					type="button"
 					onClick={animateJoin}
 					disabled={isAnimating}
-					className="flex items-center gap-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium"
+					className="flex items-center gap-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-text-primary text-sm font-medium"
 				>
 					<Play className="w-4 h-4" />
 					Animate JOIN
@@ -465,7 +465,7 @@ function JoinVisualization() {
 					type="button"
 					onClick={skipToResult}
 					disabled={!isAnimating}
-					className="flex items-center gap-2 px-4 py-2 rounded bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium"
+					className="flex items-center gap-2 px-4 py-2 rounded bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed text-text-primary text-sm font-medium"
 				>
 					<FastForward className="w-4 h-4" />
 					Skip to Result
@@ -476,20 +476,20 @@ function JoinVisualization() {
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 				{/* Orders Table */}
 				<div>
-					<h4 className="text-sm font-semibold text-emerald-400 mb-2">
+					<h4 className="text-sm font-semibold text-accent-emerald-soft mb-2">
 						Orders (Left Table)
 					</h4>
-					<div className="border border-zinc-700 rounded-lg overflow-hidden">
+					<div className="border border-border-secondary rounded-lg overflow-hidden">
 						<table className="w-full text-sm">
-							<thead className="bg-zinc-800">
+							<thead className="bg-surface-secondary">
 								<tr>
-									<th className="px-3 py-2 text-left text-gray-400 font-mono">
+									<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 										order_id
 									</th>
-									<th className="px-3 py-2 text-left text-gray-400 font-mono">
+									<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 										user_id
 									</th>
-									<th className="px-3 py-2 text-left text-gray-400 font-mono">
+									<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 										amount
 									</th>
 								</tr>
@@ -498,10 +498,10 @@ function JoinVisualization() {
 								{ORDERS.map((order, idx) => (
 									<motion.tr
 										key={order.order_id}
-										className={`border-t border-zinc-700 ${
+										className={`border-t border-border-secondary ${
 											currentLeftIdx === idx
 												? "bg-blue-500/20"
-												: "bg-zinc-900/50"
+												: "bg-surface-primary/50"
 										}`}
 										animate={{
 											backgroundColor:
@@ -522,20 +522,20 @@ function JoinVisualization() {
 
 				{/* Users Table */}
 				<div>
-					<h4 className="text-sm font-semibold text-purple-400 mb-2">
+					<h4 className="text-sm font-semibold text-accent-purple-soft mb-2">
 						Users (Right Table)
 					</h4>
-					<div className="border border-zinc-700 rounded-lg overflow-hidden">
+					<div className="border border-border-secondary rounded-lg overflow-hidden">
 						<table className="w-full text-sm">
-							<thead className="bg-zinc-800">
+							<thead className="bg-surface-secondary">
 								<tr>
-									<th className="px-3 py-2 text-left text-gray-400 font-mono">
+									<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 										user_id
 									</th>
-									<th className="px-3 py-2 text-left text-gray-400 font-mono">
+									<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 										name
 									</th>
-									<th className="px-3 py-2 text-left text-gray-400 font-mono">
+									<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 										country
 									</th>
 								</tr>
@@ -544,10 +544,10 @@ function JoinVisualization() {
 								{USERS.map((user, idx) => (
 									<motion.tr
 										key={user.user_id}
-										className={`border-t border-zinc-700 ${
+										className={`border-t border-border-secondary ${
 											currentRightIdx === idx
 												? "bg-emerald-500/20"
-												: "bg-zinc-900/50"
+												: "bg-surface-primary/50"
 										}`}
 										animate={{
 											backgroundColor:
@@ -569,13 +569,15 @@ function JoinVisualization() {
 
 			{/* Metrics */}
 			<div className="flex items-center gap-6 text-sm">
-				<div className="text-gray-400">
-					<span className="text-emerald-400 font-semibold">Scanned:</span>{" "}
+				<div className="text-text-tertiary">
+					<span className="text-accent-emerald-soft font-semibold">
+						Scanned:
+					</span>{" "}
 					{scannedLeft} orders × {scannedRight}{" "}
 					{joinType === "CROSS" ? "combinations" : "users"}
 				</div>
-				<div className="text-gray-400">
-					<span className="text-blue-400 font-semibold">Result:</span>{" "}
+				<div className="text-text-tertiary">
+					<span className="text-accent-blue-soft font-semibold">Result:</span>{" "}
 					{resultRows.length} rows
 				</div>
 			</div>
@@ -583,26 +585,26 @@ function JoinVisualization() {
 			{/* Result Table */}
 			{resultRows.length > 0 && (
 				<div>
-					<h4 className="text-sm font-semibold text-blue-400 mb-2">
+					<h4 className="text-sm font-semibold text-accent-blue-soft mb-2">
 						Result ({joinType} JOIN)
 					</h4>
-					<div className="border border-zinc-700 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
+					<div className="border border-border-secondary rounded-lg overflow-hidden max-h-64 overflow-y-auto">
 						<table className="w-full text-sm">
-							<thead className="bg-zinc-800 sticky top-0">
+							<thead className="bg-surface-secondary sticky top-0">
 								<tr>
-									<th className="px-3 py-2 text-left text-gray-400 font-mono">
+									<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 										order_id
 									</th>
-									<th className="px-3 py-2 text-left text-gray-400 font-mono">
+									<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 										user_id
 									</th>
-									<th className="px-3 py-2 text-left text-gray-400 font-mono">
+									<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 										amount
 									</th>
-									<th className="px-3 py-2 text-left text-gray-400 font-mono">
+									<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 										name
 									</th>
-									<th className="px-3 py-2 text-left text-gray-400 font-mono">
+									<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 										country
 									</th>
 								</tr>
@@ -614,11 +616,11 @@ function JoinVisualization() {
 											key={`${row.order_id}-${row.user_id}-${idx}`}
 											initial={{ opacity: 0, x: -20 }}
 											animate={{ opacity: 1, x: 0 }}
-											className="border-t border-zinc-700 bg-zinc-900/50"
+											className="border-t border-border-secondary bg-surface-primary/50"
 										>
 											<td className="px-3 py-2 font-mono">
 												{row.order_id ?? (
-													<span className="text-gray-600">NULL</span>
+													<span className="text-text-faint">NULL</span>
 												)}
 											</td>
 											<td className="px-3 py-2 font-mono">{row.user_id}</td>
@@ -626,17 +628,17 @@ function JoinVisualization() {
 												{row.amount !== null ? (
 													`$${row.amount}`
 												) : (
-													<span className="text-gray-600">NULL</span>
+													<span className="text-text-faint">NULL</span>
 												)}
 											</td>
 											<td className="px-3 py-2 font-mono">
 												{row.name ?? (
-													<span className="text-gray-600">NULL</span>
+													<span className="text-text-faint">NULL</span>
 												)}
 											</td>
 											<td className="px-3 py-2 font-mono">
 												{row.country ?? (
-													<span className="text-gray-600">NULL</span>
+													<span className="text-text-faint">NULL</span>
 												)}
 											</td>
 										</motion.tr>
@@ -646,7 +648,7 @@ function JoinVisualization() {
 						</table>
 					</div>
 					{joinType === "CROSS" && resultRows.length === 3 && isAnimating && (
-						<p className="text-xs text-gray-500 mt-2 italic">
+						<p className="text-xs text-text-muted mt-2 italic">
 							... {ORDERS.length * USERS.length - 3} more rows (animation
 							skipped for brevity)
 						</p>
@@ -791,8 +793,8 @@ function SubqueryVisualization() {
 					disabled={isAnimating}
 					className={`px-4 py-2 rounded text-sm font-medium ${
 						activeDemo === "non-correlated"
-							? "bg-blue-600 text-white"
-							: "bg-zinc-800 text-gray-400 hover:bg-zinc-700"
+							? "bg-blue-600 text-text-primary"
+							: "bg-surface-secondary text-text-tertiary hover:bg-surface-tertiary"
 					}`}
 				>
 					Non-Correlated Subquery
@@ -809,8 +811,8 @@ function SubqueryVisualization() {
 					disabled={isAnimating}
 					className={`px-4 py-2 rounded text-sm font-medium ${
 						activeDemo === "correlated"
-							? "bg-purple-600 text-white"
-							: "bg-zinc-800 text-gray-400 hover:bg-zinc-700"
+							? "bg-purple-600 text-text-primary"
+							: "bg-surface-secondary text-text-tertiary hover:bg-surface-tertiary"
 					}`}
 				>
 					Correlated Subquery
@@ -820,12 +822,14 @@ function SubqueryVisualization() {
 			{/* Non-Correlated Demo */}
 			{activeDemo === "non-correlated" && (
 				<div className="space-y-4">
-					<div className="border border-zinc-700 rounded-lg p-4 bg-zinc-900/50">
-						<pre className="text-sm text-gray-300 font-mono">
-							<span className="text-blue-400">SELECT</span> name, salary{"\n"}
-							<span className="text-blue-400">FROM</span> employees{"\n"}
-							<span className="text-blue-400">WHERE</span> salary {">"}{" "}
-							<span className="text-purple-400">
+					<div className="border border-border-secondary rounded-lg p-4 bg-surface-primary/50">
+						<pre className="text-sm text-text-secondary font-mono">
+							<span className="text-accent-blue-soft">SELECT</span> name, salary
+							{"\n"}
+							<span className="text-accent-blue-soft">FROM</span> employees
+							{"\n"}
+							<span className="text-accent-blue-soft">WHERE</span> salary {">"}{" "}
+							<span className="text-accent-purple-soft">
 								(SELECT AVG(salary) FROM employees)
 							</span>
 							;
@@ -836,7 +840,7 @@ function SubqueryVisualization() {
 						type="button"
 						onClick={animateNonCorrelated}
 						disabled={isAnimating}
-						className="flex items-center gap-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-medium"
+						className="flex items-center gap-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-text-primary text-sm font-medium"
 					>
 						<Play className="w-4 h-4" />
 						Animate Execution
@@ -845,20 +849,20 @@ function SubqueryVisualization() {
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 						{/* Employees Table */}
 						<div>
-							<h4 className="text-sm font-semibold text-emerald-400 mb-2">
+							<h4 className="text-sm font-semibold text-accent-emerald-soft mb-2">
 								Employees Table
 							</h4>
-							<div className="border border-zinc-700 rounded-lg overflow-hidden">
+							<div className="border border-border-secondary rounded-lg overflow-hidden">
 								<table className="w-full text-sm">
-									<thead className="bg-zinc-800">
+									<thead className="bg-surface-secondary">
 										<tr>
-											<th className="px-3 py-2 text-left text-gray-400 font-mono">
+											<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 												name
 											</th>
-											<th className="px-3 py-2 text-left text-gray-400 font-mono">
+											<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 												dept
 											</th>
-											<th className="px-3 py-2 text-left text-gray-400 font-mono">
+											<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 												salary
 											</th>
 										</tr>
@@ -867,10 +871,10 @@ function SubqueryVisualization() {
 										{EMPLOYEES.map((emp, idx) => (
 											<motion.tr
 												key={emp.id}
-												className={`border-t border-zinc-700 ${
+												className={`border-t border-border-secondary ${
 													currentOuterIdx === idx
 														? "bg-blue-500/20"
-														: "bg-zinc-900/50"
+														: "bg-surface-primary/50"
 												}`}
 											>
 												<td className="px-3 py-2 font-mono">{emp.name}</td>
@@ -887,18 +891,20 @@ function SubqueryVisualization() {
 
 						{/* Execution Info */}
 						<div className="space-y-4">
-							<div className="border border-zinc-700 rounded-lg p-4 bg-zinc-900/50">
+							<div className="border border-border-secondary rounded-lg p-4 bg-surface-primary/50">
 								<div className="text-sm space-y-2">
 									<div className="flex items-center justify-between">
-										<span className="text-gray-400">Subquery Executions:</span>
-										<span className="text-emerald-400 font-bold text-lg">
+										<span className="text-text-tertiary">
+											Subquery Executions:
+										</span>
+										<span className="text-accent-emerald-soft font-bold text-lg">
 											{subqueryExecCount}
 										</span>
 									</div>
 									{cachedAvg !== null && (
 										<div className="flex items-center justify-between">
-											<span className="text-gray-400">AVG(salary):</span>
-											<span className="text-purple-400 font-mono">
+											<span className="text-text-tertiary">AVG(salary):</span>
+											<span className="text-accent-purple-soft font-mono">
 												${cachedAvg.toLocaleString()}
 											</span>
 										</div>
@@ -908,17 +914,17 @@ function SubqueryVisualization() {
 
 							{resultRows.length > 0 && (
 								<div>
-									<h4 className="text-sm font-semibold text-blue-400 mb-2">
+									<h4 className="text-sm font-semibold text-accent-blue-soft mb-2">
 										Result
 									</h4>
-									<div className="border border-zinc-700 rounded-lg overflow-hidden">
+									<div className="border border-border-secondary rounded-lg overflow-hidden">
 										<table className="w-full text-sm">
-											<thead className="bg-zinc-800">
+											<thead className="bg-surface-secondary">
 												<tr>
-													<th className="px-3 py-2 text-left text-gray-400 font-mono">
+													<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 														name
 													</th>
-													<th className="px-3 py-2 text-left text-gray-400 font-mono">
+													<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 														salary
 													</th>
 												</tr>
@@ -930,7 +936,7 @@ function SubqueryVisualization() {
 															key={emp.id}
 															initial={{ opacity: 0, x: -20 }}
 															animate={{ opacity: 1, x: 0 }}
-															className="border-t border-zinc-700 bg-zinc-900/50"
+															className="border-t border-border-secondary bg-surface-primary/50"
 														>
 															<td className="px-3 py-2 font-mono">
 																{emp.name}
@@ -949,7 +955,7 @@ function SubqueryVisualization() {
 						</div>
 					</div>
 
-					<div className="text-xs text-gray-500 italic border-l-2 border-blue-500 pl-3">
+					<div className="text-xs text-text-muted italic border-l-2 border-blue-500 pl-3">
 						✓ Subquery executed once, result cached and reused for each row
 					</div>
 				</div>
@@ -958,12 +964,14 @@ function SubqueryVisualization() {
 			{/* Correlated Demo */}
 			{activeDemo === "correlated" && (
 				<div className="space-y-4">
-					<div className="border border-zinc-700 rounded-lg p-4 bg-zinc-900/50">
-						<pre className="text-sm text-gray-300 font-mono">
-							<span className="text-blue-400">SELECT</span> name, salary{"\n"}
-							<span className="text-blue-400">FROM</span> employees e1{"\n"}
-							<span className="text-blue-400">WHERE</span> salary {">"}{" "}
-							<span className="text-purple-400">
+					<div className="border border-border-secondary rounded-lg p-4 bg-surface-primary/50">
+						<pre className="text-sm text-text-secondary font-mono">
+							<span className="text-accent-blue-soft">SELECT</span> name, salary
+							{"\n"}
+							<span className="text-accent-blue-soft">FROM</span> employees e1
+							{"\n"}
+							<span className="text-accent-blue-soft">WHERE</span> salary {">"}{" "}
+							<span className="text-accent-purple-soft">
 								(SELECT AVG(salary) FROM employees e2 WHERE e2.dept = e1.dept)
 							</span>
 							;
@@ -974,7 +982,7 @@ function SubqueryVisualization() {
 						type="button"
 						onClick={animateCorrelated}
 						disabled={isAnimating}
-						className="flex items-center gap-2 px-4 py-2 rounded bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-sm font-medium"
+						className="flex items-center gap-2 px-4 py-2 rounded bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-text-primary text-sm font-medium"
 					>
 						<Play className="w-4 h-4" />
 						Animate Execution
@@ -983,20 +991,20 @@ function SubqueryVisualization() {
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 						{/* Employees Table */}
 						<div>
-							<h4 className="text-sm font-semibold text-emerald-400 mb-2">
+							<h4 className="text-sm font-semibold text-accent-emerald-soft mb-2">
 								Employees Table
 							</h4>
-							<div className="border border-zinc-700 rounded-lg overflow-hidden">
+							<div className="border border-border-secondary rounded-lg overflow-hidden">
 								<table className="w-full text-sm">
-									<thead className="bg-zinc-800">
+									<thead className="bg-surface-secondary">
 										<tr>
-											<th className="px-3 py-2 text-left text-gray-400 font-mono">
+											<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 												name
 											</th>
-											<th className="px-3 py-2 text-left text-gray-400 font-mono">
+											<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 												dept
 											</th>
-											<th className="px-3 py-2 text-left text-gray-400 font-mono">
+											<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 												salary
 											</th>
 										</tr>
@@ -1005,10 +1013,10 @@ function SubqueryVisualization() {
 										{EMPLOYEES.map((emp, idx) => (
 											<motion.tr
 												key={emp.id}
-												className={`border-t border-zinc-700 ${
+												className={`border-t border-border-secondary ${
 													currentOuterIdx === idx
 														? "bg-purple-500/20"
-														: "bg-zinc-900/50"
+														: "bg-surface-primary/50"
 												}`}
 											>
 												<td className="px-3 py-2 font-mono">{emp.name}</td>
@@ -1025,26 +1033,30 @@ function SubqueryVisualization() {
 
 						{/* Execution Info */}
 						<div className="space-y-4">
-							<div className="border border-zinc-700 rounded-lg p-4 bg-zinc-900/50">
+							<div className="border border-border-secondary rounded-lg p-4 bg-surface-primary/50">
 								<div className="text-sm space-y-2">
 									<div className="flex items-center justify-between">
-										<span className="text-gray-400">Subquery Executions:</span>
-										<span className="text-rose-400 font-bold text-lg">
+										<span className="text-text-tertiary">
+											Subquery Executions:
+										</span>
+										<span className="text-accent-rose-soft font-bold text-lg">
 											{subqueryExecCount}
 										</span>
 									</div>
 									{currentDept && (
 										<div className="flex items-center justify-between">
-											<span className="text-gray-400">Current Dept:</span>
-											<span className="text-purple-400 font-mono">
+											<span className="text-text-tertiary">Current Dept:</span>
+											<span className="text-accent-purple-soft font-mono">
 												{currentDept}
 											</span>
 										</div>
 									)}
 									{deptAvg !== null && (
 										<div className="flex items-center justify-between">
-											<span className="text-gray-400">Dept AVG(salary):</span>
-											<span className="text-purple-400 font-mono">
+											<span className="text-text-tertiary">
+												Dept AVG(salary):
+											</span>
+											<span className="text-accent-purple-soft font-mono">
 												${deptAvg.toLocaleString()}
 											</span>
 										</div>
@@ -1054,17 +1066,17 @@ function SubqueryVisualization() {
 
 							{resultRows.length > 0 && (
 								<div>
-									<h4 className="text-sm font-semibold text-purple-400 mb-2">
+									<h4 className="text-sm font-semibold text-accent-purple-soft mb-2">
 										Result
 									</h4>
-									<div className="border border-zinc-700 rounded-lg overflow-hidden">
+									<div className="border border-border-secondary rounded-lg overflow-hidden">
 										<table className="w-full text-sm">
-											<thead className="bg-zinc-800">
+											<thead className="bg-surface-secondary">
 												<tr>
-													<th className="px-3 py-2 text-left text-gray-400 font-mono">
+													<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 														name
 													</th>
-													<th className="px-3 py-2 text-left text-gray-400 font-mono">
+													<th className="px-3 py-2 text-left text-text-tertiary font-mono">
 														salary
 													</th>
 												</tr>
@@ -1076,7 +1088,7 @@ function SubqueryVisualization() {
 															key={emp.id}
 															initial={{ opacity: 0, x: -20 }}
 															animate={{ opacity: 1, x: 0 }}
-															className="border-t border-zinc-700 bg-zinc-900/50"
+															className="border-t border-border-secondary bg-surface-primary/50"
 														>
 															<td className="px-3 py-2 font-mono">
 																{emp.name}
@@ -1095,7 +1107,7 @@ function SubqueryVisualization() {
 						</div>
 					</div>
 
-					<div className="text-xs text-gray-500 italic border-l-2 border-rose-500 pl-3">
+					<div className="text-xs text-text-muted italic border-l-2 border-rose-500 pl-3">
 						⚠ Subquery re-executed for each outer row — potentially expensive!
 						Modern databases may optimize with semi-joins or materialization.
 					</div>

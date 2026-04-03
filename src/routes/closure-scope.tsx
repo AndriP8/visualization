@@ -20,25 +20,29 @@ function ClosureScopePage() {
 				gradient={{ from: "violet-400", to: "cyan-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="text-sm text-text-muted space-y-2">
 							<p>
-								<strong className="text-zinc-300">Lexical scope</strong> means a
-								function's accessible variables are determined by{" "}
-								<strong className="text-violet-400">where it is written</strong>{" "}
+								<strong className="text-text-secondary">Lexical scope</strong>{" "}
+								means a function's accessible variables are determined by{" "}
+								<strong className="text-accent-violet-soft">
+									where it is written
+								</strong>{" "}
 								in source code, not where it is called. Inner functions can
 								always read and write variables from their outer (enclosing)
 								scopes.
 							</p>
 							<p>
-								A <strong className="text-cyan-400">closure</strong> is the
-								combination of a function and a reference to the{" "}
+								A <strong className="text-accent-cyan-soft">closure</strong> is
+								the combination of a function and a reference to the{" "}
 								<em>lexical environment</em> in which it was defined. The inner
 								function doesn't copy the values — it holds a{" "}
-								<strong className="text-cyan-400">live reference</strong> to the
-								outer scope's environment record, keeping it alive even after
-								the outer function has returned.
+								<strong className="text-accent-cyan-soft">
+									live reference
+								</strong>{" "}
+								to the outer scope's environment record, keeping it alive even
+								after the outer function has returned.
 							</p>
-							<p className="text-zinc-600">
+							<p className="text-text-faint">
 								The demos below progress from the basic scope chain lookup, to
 								closure environments, to two real-world bugs you'll encounter in
 								production React and plain JavaScript code.

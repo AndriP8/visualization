@@ -173,30 +173,30 @@ const colorMap: Record<string, string> = {
 	rose: "#fb7185",
 	green: "#4ade80",
 	orange: "#fb923c",
-	zinc: "#71717a",
+	zinc: "var(--svg-text-muted)",
 };
 
 const buttonColorClasses: Record<string, { active: string; inactive: string }> =
 	{
 		violet: {
-			active: "bg-violet-500/15 text-violet-300 border-violet-500/40",
+			active: "bg-violet-500/15 text-accent-violet border-violet-500/40",
 			inactive:
-				"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+				"bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary",
 		},
 		cyan: {
-			active: "bg-cyan-500/15 text-cyan-300 border-cyan-500/40",
+			active: "bg-cyan-500/15 text-accent-cyan border-cyan-500/40",
 			inactive:
-				"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+				"bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary",
 		},
 		amber: {
-			active: "bg-amber-500/15 text-amber-300 border-amber-500/40",
+			active: "bg-amber-500/15 text-accent-amber border-amber-500/40",
 			inactive:
-				"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+				"bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary",
 		},
 		rose: {
-			active: "bg-rose-500/15 text-rose-300 border-rose-500/40",
+			active: "bg-rose-500/15 text-accent-rose border-rose-500/40",
 			inactive:
-				"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+				"bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary",
 		},
 	};
 
@@ -229,7 +229,7 @@ function getNodeAnimation(
 			}),
 		)
 		.otherwise(() => ({
-			borderColor: "#3f3f46",
+			borderColor: "var(--svg-border)",
 			backgroundColor: "#27272a99",
 		}));
 }
@@ -245,7 +245,7 @@ function getStepAnimation(state: StepState) {
 function getBorderColor(step: FlowStep, state: StepState): string {
 	return match(state)
 		.with("past", "current", () => colorMap[step.color])
-		.with("future", () => "#3f3f46")
+		.with("future", () => "var(--svg-border)")
 		.exhaustive();
 }
 
@@ -284,7 +284,7 @@ function FlowDiagram({ steps, active }: { steps: FlowStep[]; active: number }) {
 							className="flex flex-col items-center gap-1.5 p-3 rounded-xl border"
 						>
 							<span className="text-xl">{n.icon}</span>
-							<span className="text-xs text-zinc-400 font-medium">
+							<span className="text-xs text-text-tertiary font-medium">
 								{n.label}
 							</span>
 						</motion.div>
@@ -310,7 +310,7 @@ function FlowDiagram({ steps, active }: { steps: FlowStep[]; active: number }) {
 							className="flex items-center gap-2 px-2 py-1.5 rounded-lg"
 							style={{ color: colorMap[step.color] }}
 						>
-							<span className="text-xs font-mono w-4 text-zinc-600">
+							<span className="text-xs font-mono w-4 text-text-faint">
 								{idx + 1}.
 							</span>
 							<div
@@ -344,7 +344,7 @@ function FlowDiagram({ steps, active }: { steps: FlowStep[]; active: number }) {
 										repeat: Number.POSITIVE_INFINITY,
 										duration: 1.5,
 									}}
-									className="text-xs text-zinc-500"
+									className="text-xs text-text-muted"
 								>
 									⏳
 								</motion.span>
@@ -457,9 +457,11 @@ export function CacheInvalidationDemo() {
 				{/* Left: controls + diagram */}
 				<div className="space-y-4">
 					<div>
-						<p className="text-sm text-zinc-400 mb-1">{strategy.tagline}</p>
+						<p className="text-sm text-text-tertiary mb-1">
+							{strategy.tagline}
+						</p>
 						{strategy.writeRisk && (
-							<p className="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded px-2 py-1">
+							<p className="text-xs text-accent-amber-soft bg-amber-500/10 border border-amber-500/20 rounded px-2 py-1">
 								{strategy.writeRisk}
 							</p>
 						)}
@@ -467,13 +469,14 @@ export function CacheInvalidationDemo() {
 
 					{/* Operation & cache state toggles */}
 					<div className="flex flex-wrap gap-3">
-						<div className="flex rounded-lg overflow-hidden border border-zinc-700">
+						<div className="flex rounded-lg overflow-hidden border border-border-secondary">
 							{(["read", "write"] as OperationType[]).map((op) => {
 								const className = match(operation === op)
-									.with(true, () => "bg-violet-600 text-white")
+									.with(true, () => "bg-violet-600 text-text-primary")
 									.with(
 										false,
-										() => "bg-zinc-800 text-zinc-400 hover:text-white",
+										() =>
+											"bg-surface-secondary text-text-tertiary hover:text-text-primary",
 									)
 									.exhaustive();
 
@@ -503,12 +506,13 @@ export function CacheInvalidationDemo() {
 								)
 									.with(
 										true,
-										() => "bg-green-500/15 text-green-400 border-green-500/30",
+										() =>
+											"bg-green-500/15 text-accent-green-soft border-green-500/30",
 									)
 									.with(
 										false,
 										() =>
-											"bg-orange-500/10 text-orange-400 border-orange-500/30",
+											"bg-orange-500/10 text-accent-orange-soft border-orange-500/30",
 									)
 									.exhaustive()}`}
 							>
@@ -528,8 +532,11 @@ export function CacheInvalidationDemo() {
 						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${match(
 							running,
 						)
-							.with(true, () => "bg-zinc-700 text-zinc-300")
-							.with(false, () => "bg-violet-600 hover:bg-violet-500 text-white")
+							.with(true, () => "bg-surface-tertiary text-text-secondary")
+							.with(
+								false,
+								() => "bg-violet-600 hover:bg-violet-500 text-text-primary",
+							)
 							.exhaustive()}`}
 					>
 						{match({ running, hasPlayed: activeStep >= 0 })
@@ -545,19 +552,19 @@ export function CacheInvalidationDemo() {
 
 				{/* Right: trade-offs */}
 				<div className="space-y-4">
-					<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+					<h4 className="text-sm font-semibold text-text-tertiary uppercase tracking-wider">
 						Trade-offs
 					</h4>
 					<div className="space-y-3">
 						<div>
-							<p className="text-xs text-green-400 font-semibold mb-1.5 uppercase tracking-wide">
+							<p className="text-xs text-accent-green-soft font-semibold mb-1.5 uppercase tracking-wide">
 								✓ Pros
 							</p>
 							<ul className="space-y-1.5">
 								{strategy.tradeoffs.pro.map((p) => (
 									<li
 										key={p}
-										className="text-sm text-zinc-300 flex items-start gap-2"
+										className="text-sm text-text-secondary flex items-start gap-2"
 									>
 										<span className="text-green-500 mt-0.5">+</span>
 										{p}
@@ -566,14 +573,14 @@ export function CacheInvalidationDemo() {
 							</ul>
 						</div>
 						<div>
-							<p className="text-xs text-red-400 font-semibold mb-1.5 uppercase tracking-wide">
+							<p className="text-xs text-accent-red-soft font-semibold mb-1.5 uppercase tracking-wide">
 								✗ Cons
 							</p>
 							<ul className="space-y-1.5">
 								{strategy.tradeoffs.con.map((c) => (
 									<li
 										key={c}
-										className="text-sm text-zinc-300 flex items-start gap-2"
+										className="text-sm text-text-secondary flex items-start gap-2"
 									>
 										<span className="text-red-500 mt-0.5">−</span>
 										{c}
@@ -583,19 +590,19 @@ export function CacheInvalidationDemo() {
 						</div>
 					</div>
 
-					<div className="mt-4 p-4 rounded-xl bg-zinc-800/50 border border-zinc-700 space-y-2">
-						<p className="text-xs font-semibold text-zinc-300 uppercase tracking-wide">
+					<div className="mt-4 p-4 rounded-xl bg-surface-secondary/50 border border-border-secondary space-y-2">
+						<p className="text-xs font-semibold text-text-secondary uppercase tracking-wide">
 							When to use
 						</p>
 						{match(selected)
 							.with("cache-aside", () => (
 								<div className="space-y-2">
-									<p className="text-sm text-zinc-400">
+									<p className="text-sm text-text-tertiary">
 										Best default strategy. Use for read-heavy workloads where
 										cache availability is not 100% guaranteed. Common with Redis
 										+ most web backends.
 									</p>
-									<div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300">
+									<div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-accent-amber">
 										<strong>Race condition:</strong> Thread A reads DB (miss) →
 										Thread B updates DB + invalidates cache → Thread A writes
 										stale value to cache. Fix: use versioning or Compare-And-Set
@@ -604,13 +611,13 @@ export function CacheInvalidationDemo() {
 								</div>
 							))
 							.with("write-through", () => (
-								<p className="text-sm text-zinc-400">
+								<p className="text-sm text-text-tertiary">
 									Use when read consistency is critical and write volume is
 									moderate. Good for user profile data, session stores.
 								</p>
 							))
 							.with("write-behind", () => (
-								<p className="text-sm text-zinc-400">
+								<p className="text-sm text-text-tertiary">
 									Use for high write-throughput systems where slight data loss
 									is acceptable (analytics counters, view counts). Never use for
 									financial data.
@@ -618,7 +625,7 @@ export function CacheInvalidationDemo() {
 							))
 							.with("read-through", () => (
 								<div className="space-y-2">
-									<p className="text-sm text-zinc-400">
+									<p className="text-sm text-text-tertiary">
 										App code doesn't need to know whether it's hitting cache or
 										DB. The cache layer handles fetching on miss.
 									</p>
@@ -637,11 +644,11 @@ const user = await cache.wrap(
 										showLineNumbers={false}
 										className="text-xs"
 									/>
-									<p className="text-xs text-zinc-500">
+									<p className="text-xs text-text-muted">
 										Libraries:{" "}
-										<code className="text-violet-300">cache-manager</code>,{" "}
-										<code className="text-violet-300">keyv</code>, or{" "}
-										<code className="text-violet-300">node-cache</code> with
+										<code className="text-accent-violet">cache-manager</code>,{" "}
+										<code className="text-accent-violet">keyv</code>, or{" "}
+										<code className="text-accent-violet">node-cache</code> with
 										custom wrapper.
 									</p>
 								</div>

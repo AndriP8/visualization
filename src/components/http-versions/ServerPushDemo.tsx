@@ -229,11 +229,11 @@ export function ServerPushDemo() {
 							className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
 								mode === id
 									? id === "traditional"
-										? "bg-orange-500/15 text-orange-300 border-orange-500/40"
+										? "bg-orange-500/15 text-accent-orange border-orange-500/40"
 										: id === "push"
-											? "bg-cyan-500/15 text-cyan-300 border-cyan-500/40"
-											: "bg-emerald-500/15 text-emerald-300 border-emerald-500/40"
-									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600"
+											? "bg-cyan-500/15 text-accent-cyan border-cyan-500/40"
+											: "bg-emerald-500/15 text-accent-emerald border-emerald-500/40"
+									: "bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary"
 							}`}
 						>
 							{label}
@@ -242,7 +242,7 @@ export function ServerPushDemo() {
 				</div>
 
 				<div className="flex items-center gap-2">
-					<span className="text-xs text-zinc-400">Latency:</span>
+					<span className="text-xs text-text-tertiary">Latency:</span>
 					{LATENCY_OPTIONS.map((ms) => (
 						<button
 							key={ms}
@@ -250,8 +250,8 @@ export function ServerPushDemo() {
 							onClick={() => setLatency(ms)}
 							className={`px-2 py-1 rounded text-xs font-mono border transition-all ${
 								latency === ms
-									? "bg-zinc-600 text-white border-zinc-500"
-									: "bg-zinc-800 text-zinc-400 border-zinc-700"
+									? "bg-surface-tertiary text-text-primary border-text-muted"
+									: "bg-surface-secondary text-text-tertiary border-border-secondary"
 							}`}
 						>
 							{ms}ms
@@ -263,12 +263,12 @@ export function ServerPushDemo() {
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 				{/* Waterfall */}
 				<div className="space-y-3">
-					<div className="rounded-xl bg-zinc-900 border border-zinc-700 p-4 space-y-3">
+					<div className="rounded-xl bg-surface-primary border border-border-secondary p-4 space-y-3">
 						<div className="flex items-center justify-between">
-							<span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+							<span className="text-xs font-semibold text-text-tertiary uppercase tracking-wider">
 								Network Timeline
 							</span>
-							<span className="text-xs font-mono text-zinc-400">
+							<span className="text-xs font-mono text-text-tertiary">
 								{rttCount} RTT{rttCount > 1 ? "s" : ""} — ~{totalMs}ms
 							</span>
 						</div>
@@ -292,14 +292,14 @@ export function ServerPushDemo() {
 										<span
 											className={`text-xs shrink-0 w-4 ${
 												step.actor === "client"
-													? "text-zinc-500"
-													: "text-zinc-500"
+													? "text-text-muted"
+													: "text-text-muted"
 											}`}
 										>
 											{step.actor === "client" ? "→" : "←"}
 										</span>
 										<div className="flex-1 space-y-0.5">
-											<div className="h-5 bg-zinc-800 rounded relative overflow-hidden">
+											<div className="h-5 bg-surface-secondary rounded relative overflow-hidden">
 												{/* Ghost */}
 												<div
 													className={`absolute top-0 h-full rounded opacity-20 ${step.color}`}
@@ -317,7 +317,7 @@ export function ServerPushDemo() {
 														transition={{ duration: 0.05 }}
 													/>
 												)}
-												<span className="absolute inset-0 flex items-center px-2 text-[10px] text-white/70 font-mono truncate">
+												<span className="absolute inset-0 flex items-center px-2 text-[10px] text-text-primary/70 font-mono truncate">
 													{step.label}
 												</span>
 											</div>
@@ -328,7 +328,7 @@ export function ServerPushDemo() {
 						</div>
 
 						{/* Timeline ruler */}
-						<div className="relative h-1 bg-zinc-800 rounded-full">
+						<div className="relative h-1 bg-surface-secondary rounded-full">
 							{(animating || progress > 0) && (
 								<motion.div
 									className={`absolute top-0 left-0 h-full rounded-full ${
@@ -352,8 +352,8 @@ export function ServerPushDemo() {
 									exit={{ opacity: 0 }}
 									className={`text-xs px-3 py-2 rounded-lg border ${
 										mode === "traditional"
-											? "bg-orange-500/10 text-orange-300 border-orange-500/20"
-											: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20"
+											? "bg-orange-500/10 text-accent-orange border-orange-500/20"
+											: "bg-emerald-500/10 text-accent-emerald border-emerald-500/20"
 									}`}
 								>
 									{mode === "traditional"
@@ -380,8 +380,8 @@ export function ServerPushDemo() {
 						onClick={animating ? stopAnimation : startAnimation}
 						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
 							animating
-								? "bg-zinc-700 text-zinc-300"
-								: "bg-violet-600 hover:bg-violet-500 text-white"
+								? "bg-surface-tertiary text-text-secondary"
+								: "bg-violet-600 hover:bg-violet-500 text-text-primary"
 						}`}
 					>
 						{animating ? "Stop" : progress > 0 ? "Replay" : "Animate"}
@@ -393,10 +393,10 @@ export function ServerPushDemo() {
 					{mode === "traditional" && (
 						<>
 							<div className="space-y-2">
-								<h4 className="text-sm font-semibold text-zinc-300">
+								<h4 className="text-sm font-semibold text-text-secondary">
 									Traditional Flow — 3 Round Trips
 								</h4>
-								<p className="text-sm text-zinc-400">
+								<p className="text-sm text-text-tertiary">
 									Client must parse HTML before it knows to fetch CSS and JS.
 									Each discovery requires a new round trip.
 								</p>
@@ -425,10 +425,10 @@ Server ← 200 JS
 					{mode === "push" && (
 						<>
 							<div className="space-y-2">
-								<h4 className="text-sm font-semibold text-zinc-300">
+								<h4 className="text-sm font-semibold text-text-secondary">
 									HTTP/2 Server Push
 								</h4>
-								<p className="text-sm text-zinc-400">
+								<p className="text-sm text-text-tertiary">
 									Server proactively pushes CSS and JS alongside the HTML
 									response. Client receives them before parsing.
 								</p>
@@ -456,7 +456,7 @@ server.on('stream', (stream, headers) => {
 								className="text-xs"
 							/>
 							<div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-								<p className="text-xs text-amber-300">
+								<p className="text-xs text-accent-amber">
 									<span className="font-semibold">Deprecated:</span> Server Push
 									was removed from Chrome in 2022. It could push resources the
 									client already had cached, wasting bandwidth. Use 103 Early
@@ -469,10 +469,10 @@ server.on('stream', (stream, headers) => {
 					{mode === "early-hints" && (
 						<>
 							<div className="space-y-2">
-								<h4 className="text-sm font-semibold text-zinc-300">
+								<h4 className="text-sm font-semibold text-text-secondary">
 									103 Early Hints (Modern Approach)
 								</h4>
-								<p className="text-sm text-zinc-400">
+								<p className="text-sm text-text-tertiary">
 									Server sends a preliminary 103 response with preload hints
 									while still generating the full HTML. Client starts fetching
 									immediately.
@@ -496,7 +496,7 @@ Content-Type: text/html
 								className="text-xs"
 							/>
 							<div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-								<p className="text-xs text-emerald-300">
+								<p className="text-xs text-accent-emerald">
 									103 Early Hints works best over HTTP/2 (HTTP/1.1 support
 									varies by browser), doesn't cache-bust, and is supported in
 									Chrome 103+, Firefox 102+.

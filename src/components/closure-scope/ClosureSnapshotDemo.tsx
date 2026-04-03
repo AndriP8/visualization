@@ -93,7 +93,7 @@ export function ClosureSnapshotDemo() {
 			<div className="flex flex-col lg:flex-row gap-6">
 				{/* Code panel */}
 				<div className="lg:w-96 shrink-0 space-y-3">
-					<p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
+					<p className="text-xs text-text-muted uppercase tracking-wider font-semibold">
 						Factory Source
 					</p>
 					<div className="relative">
@@ -130,19 +130,22 @@ export function ClosureSnapshotDemo() {
 					</div>
 
 					{/* Key insight box */}
-					<div className="p-3 rounded-lg bg-zinc-800/40 border border-zinc-700/40 text-xs text-zinc-500 space-y-1.5">
+					<div className="p-3 rounded-lg bg-surface-secondary/40 border border-border-secondary/40 text-xs text-text-muted space-y-1.5">
 						<p>
-							<strong className="text-violet-400">Definition time:</strong> when{" "}
-							<code>makeCounter()</code> runs, a new{" "}
+							<strong className="text-accent-violet-soft">
+								Definition time:
+							</strong>{" "}
+							when <code>makeCounter()</code> runs, a new{" "}
 							<strong>environment record</strong> is created holding{" "}
 							<code>count = 0</code>. The inner function gets a reference to
 							that record — not a copy of the value.
 						</p>
 						<p>
-							<strong className="text-cyan-400">Call time:</strong> each call to{" "}
-							<code>counter()</code> reads and mutates <code>count</code>{" "}
-							through that live reference. Other closures are unaffected because
-							they each own a <em>different</em> environment record.
+							<strong className="text-accent-cyan-soft">Call time:</strong> each
+							call to <code>counter()</code> reads and mutates{" "}
+							<code>count</code> through that live reference. Other closures are
+							unaffected because they each own a <em>different</em> environment
+							record.
 						</p>
 					</div>
 				</div>
@@ -150,7 +153,7 @@ export function ClosureSnapshotDemo() {
 				{/* Closure instances */}
 				<div className="flex-1 min-w-0 space-y-4">
 					<div className="flex items-center justify-between">
-						<p className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
+						<p className="text-xs text-text-muted uppercase tracking-wider font-semibold">
 							Live Closure Environments
 						</p>
 						<div className="flex gap-2">
@@ -158,7 +161,7 @@ export function ClosureSnapshotDemo() {
 								type="button"
 								onClick={spawnCounter}
 								disabled={instances.length >= 3}
-								className="px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-500/20 text-violet-300 border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+								className="px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-500/20 text-accent-violet border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 							>
 								+ makeCounter()
 							</button>
@@ -166,7 +169,7 @@ export function ClosureSnapshotDemo() {
 								<button
 									type="button"
 									onClick={reset}
-									className="px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+									className="px-3 py-1.5 rounded-lg text-xs font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 								>
 									↺ Reset
 								</button>
@@ -175,7 +178,7 @@ export function ClosureSnapshotDemo() {
 					</div>
 
 					{instances.length === 0 && (
-						<div className="flex items-center justify-center h-40 rounded-xl border-2 border-dashed border-zinc-800 text-zinc-600 text-sm">
+						<div className="flex items-center justify-center h-40 rounded-xl border-2 border-dashed border-border-primary text-text-faint text-sm">
 							Click "+ makeCounter()" to spawn a closure
 						</div>
 					)}
@@ -228,11 +231,11 @@ export function ClosureSnapshotDemo() {
 												background: `${color}0a`,
 											}}
 										>
-											<div className="text-zinc-500 text-[10px] uppercase tracking-wider mb-2">
+											<div className="text-text-muted text-[10px] uppercase tracking-wider mb-2">
 												Environment Record
 											</div>
 											<div className="flex items-center justify-between">
-												<span className="text-zinc-400">count</span>
+												<span className="text-text-tertiary">count</span>
 												<motion.span
 													key={inst.count}
 													initial={{ scale: 1.4, color }}
@@ -265,7 +268,7 @@ export function ClosureSnapshotDemo() {
 					</div>
 
 					{instances.length >= 3 && (
-						<p className="text-xs text-zinc-600">
+						<p className="text-xs text-text-faint">
 							3 independent closures — each owns a separate{" "}
 							<code className="font-mono">count</code>. Calling one never
 							affects the others.

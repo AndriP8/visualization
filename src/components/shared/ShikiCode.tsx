@@ -26,7 +26,11 @@ export function ShikiCode({
 			try {
 				const result = await codeToHtml(code, {
 					lang: language,
-					theme: "vitesse-dark",
+					themes: {
+						light: "vitesse-light",
+						dark: "vitesse-dark",
+					},
+					defaultColor: false,
 					transformers: [
 						{
 							line(node, line) {
@@ -62,11 +66,10 @@ export function ShikiCode({
 	return (
 		<div
 			ref={containerRef}
-			className={`shiki-wrapper relative rounded-lg overflow-x-auto bg-[#121212] border border-zinc-800 text-xs font-mono p-4 ${className} ${
+			className={`shiki-wrapper relative rounded-lg overflow-x-auto bg-surface-code border border-border-primary text-xs font-mono p-4 ${className} ${
 				highlightLine >= 0 ? "shiki-has-highlight" : ""
 			} ${showLineNumbers ? "shiki-show-line-numbers" : ""}`}
-			// Using dangerouslySetInnerHTML is ok here since code and html originate locally
-			// biome-ignore lint/security/noDangerouslySetInnerHtml: Shiki generates safe HTML
+			// biome-ignore lint/security/noDangerouslySetInnerHtml: Shiki generates safe HTML from local code strings
 			dangerouslySetInnerHTML={{
 				__html: html || `<pre><code>${code}</code></pre>`,
 			}}

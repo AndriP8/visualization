@@ -211,9 +211,9 @@ export function GenerationalGCDemo() {
 			description="V8 divides the heap into Young (New Space) and Old (Old Space) regions. Most objects die young — this makes minor GC fast. Objects surviving enough cycles get promoted to Old space."
 		>
 			{/* Explanation row */}
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 text-xs text-zinc-400 leading-relaxed">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 text-xs text-text-tertiary leading-relaxed">
 				<div className="p-3 rounded-lg bg-violet-500/5 border border-violet-500/20">
-					<div className="font-semibold text-violet-300 mb-1">
+					<div className="font-semibold text-accent-violet mb-1">
 						🟣 Young Generation (New Space)
 					</div>
 					Small (~1-8 MB). Collected very frequently (minor GC). Uses{" "}
@@ -221,12 +221,12 @@ export function GenerationalGCDemo() {
 					allocation is just a pointer bump. Fast and cheap.
 				</div>
 				<div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
-					<div className="font-semibold text-amber-300 mb-1">
+					<div className="font-semibold text-accent-amber mb-1">
 						🟡 Old Generation (Old Space)
 					</div>
 					Large (~500 MB+). Collected rarely (major/full GC — expensive). Uses{" "}
 					<em>mark-sweep-compact</em>. Objects promoted here after surviving{" "}
-					<code className="bg-zinc-800 px-1 rounded">
+					<code className="bg-surface-secondary px-1 rounded">
 						{PROMOTION_THRESHOLD}
 					</code>{" "}
 					young GC cycles.
@@ -234,7 +234,7 @@ export function GenerationalGCDemo() {
 			</div>
 
 			{/* Legend strip */}
-			<div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4 px-1 text-[11px] text-zinc-400">
+			<div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4 px-1 text-[11px] text-text-tertiary">
 				<span>
 					<span className="inline-block w-2.5 h-2.5 rounded-full bg-[#6366f1] mr-1 align-middle" />
 					0 survivals
@@ -243,11 +243,11 @@ export function GenerationalGCDemo() {
 					<span className="inline-block w-2.5 h-2.5 rounded-full bg-[#a78bfa] mr-1 align-middle" />
 					survived ≥1 GC
 				</span>
-				<span className="text-zinc-600">·</span>
-				<span className="text-zinc-500 italic">
+				<span className="text-text-faint">·</span>
+				<span className="text-text-muted italic">
 					fading = about to be collected
 				</span>
-				<span className="text-zinc-600">·</span>
+				<span className="text-text-faint">·</span>
 				<span>
 					<span className="inline-block w-2.5 h-2.5 rounded-full bg-[#f59e0b] mr-1 align-middle" />
 					promoted to Old (at {PROMOTION_THRESHOLD} survivals)
@@ -277,8 +277,8 @@ export function GenerationalGCDemo() {
 			</div>
 
 			{/* Log */}
-			<div className="mb-4 rounded-lg bg-zinc-900 border border-zinc-800 p-3 min-h-15">
-				<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+			<div className="mb-4 rounded-lg bg-surface-primary border border-border-primary p-3 min-h-15">
+				<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-1.5">
 					Log
 				</div>
 				<AnimatePresence>
@@ -287,7 +287,7 @@ export function GenerationalGCDemo() {
 							key={id}
 							initial={{ opacity: 0, x: -8 }}
 							animate={{ opacity: 1 - i * 0.18, x: 0 }}
-							className="text-xs font-mono text-zinc-300"
+							className="text-xs font-mono text-text-secondary"
 						>
 							{msg}
 						</motion.div>
@@ -301,7 +301,7 @@ export function GenerationalGCDemo() {
 					type="button"
 					onClick={runYoungGC}
 					disabled={isRunning}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-violet-300 border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-accent-violet border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					🔄 Run Young GC
 				</button>
@@ -309,7 +309,7 @@ export function GenerationalGCDemo() {
 					type="button"
 					onClick={runOldGC}
 					disabled={isRunning || oldObjects.length === 0}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-amber-500/20 text-accent-amber border border-amber-500/30 hover:bg-amber-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					🧹 Run Major GC (Old Space)
 				</button>
@@ -317,11 +317,11 @@ export function GenerationalGCDemo() {
 					type="button"
 					onClick={reset}
 					disabled={isRunning}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					↺ Reset
 				</button>
-				<span className="text-xs text-zinc-500 ml-auto">
+				<span className="text-xs text-text-muted ml-auto">
 					Young GC #{youngGcCount} · Major GC #{oldGcCount}
 				</span>
 			</div>
@@ -359,14 +359,14 @@ function GenLane({
 			>
 				{title}
 			</div>
-			<div className="text-xs text-zinc-500 mb-3">{subtitle}</div>
+			<div className="text-xs text-text-muted mb-3">{subtitle}</div>
 			<div className="flex flex-wrap gap-2 min-h-25 content-start">
 				<AnimatePresence>
 					{objects.length === 0 && (
 						<motion.p
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
-							className="text-xs text-zinc-600 font-mono italic self-center w-full text-center"
+							className="text-xs text-text-faint font-mono italic self-center w-full text-center"
 						>
 							{emptyText}
 						</motion.p>
@@ -405,7 +405,7 @@ function GenLane({
 								</div>
 								<div
 									className="text-[9px] font-mono mt-0.5"
-									style={{ color: "#71717a" }}
+									style={{ color: "var(--svg-text-muted)" }}
 								>
 									{obj.label}
 								</div>
@@ -416,7 +416,7 @@ function GenLane({
 											animate={{ opacity: 1, y: -6, scale: 1 }}
 											exit={{ opacity: 0, scale: 0.8 }}
 											transition={{ duration: 0.35 }}
-											className="absolute -top-4 text-[9px] font-bold text-amber-400 whitespace-nowrap"
+											className="absolute -top-4 text-[9px] font-bold text-accent-amber-soft whitespace-nowrap"
 										>
 											⬆ promoted
 										</motion.div>

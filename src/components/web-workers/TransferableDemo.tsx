@@ -103,10 +103,10 @@ export function TransferableDemo() {
 			<div className="relative">
 				<div className="grid grid-cols-2 gap-12">
 					{/* Main Thread */}
-					<div className="bg-zinc-900 border border-violet-500 rounded-lg p-6">
+					<div className="bg-surface-primary border border-violet-500 rounded-lg p-6">
 						<div className="flex items-center gap-3 mb-6">
 							<div className="w-3 h-3 rounded-full bg-violet-500 animate-pulse" />
-							<h3 className="text-lg font-semibold text-violet-300">
+							<h3 className="text-lg font-semibold text-accent-violet">
 								Main Thread
 							</h3>
 						</div>
@@ -122,7 +122,7 @@ export function TransferableDemo() {
 								>
 									<div className="w-32 h-32 bg-linear-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-violet-500/50">
 										<div className="text-center">
-											<div className="text-2xl font-bold text-white">
+											<div className="text-2xl font-bold text-text-primary">
 												{bufferSize}MB
 											</div>
 											<div className="text-xs text-violet-200">ArrayBuffer</div>
@@ -139,10 +139,12 @@ export function TransferableDemo() {
 									animate={{ scale: 1, opacity: 1 }}
 									exit={{ scale: 0.8, opacity: 0 }}
 								>
-									<div className="w-32 h-32 bg-zinc-800 border-2 border-dashed border-zinc-700 rounded-lg flex items-center justify-center">
+									<div className="w-32 h-32 bg-surface-secondary border-2 border-dashed border-border-secondary rounded-lg flex items-center justify-center">
 										<div className="text-center">
-											<div className="text-2xl font-bold text-zinc-600">0B</div>
-											<div className="text-xs text-zinc-600">Neutered</div>
+											<div className="text-2xl font-bold text-text-faint">
+												0B
+											</div>
+											<div className="text-xs text-text-faint">Neutered</div>
 										</div>
 									</div>
 								</motion.div>
@@ -153,8 +155,8 @@ export function TransferableDemo() {
 									animate={{ scale: 1, opacity: 1 }}
 									exit={{ scale: 0.8, opacity: 0 }}
 								>
-									<div className="w-32 h-32 bg-zinc-800/50 border-2 border-dashed border-zinc-700 rounded-lg flex items-center justify-center">
-										<div className="text-xs text-zinc-600">No buffer</div>
+									<div className="w-32 h-32 bg-surface-secondary/50 border-2 border-dashed border-border-secondary rounded-lg flex items-center justify-center">
+										<div className="text-xs text-text-faint">No buffer</div>
 									</div>
 								</motion.div>
 							)}
@@ -162,10 +164,10 @@ export function TransferableDemo() {
 					</div>
 
 					{/* Worker Thread */}
-					<div className="bg-zinc-900 border border-emerald-500 rounded-lg p-6">
+					<div className="bg-surface-primary border border-emerald-500 rounded-lg p-6">
 						<div className="flex items-center gap-3 mb-6">
 							<div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-							<h3 className="text-lg font-semibold text-emerald-300">
+							<h3 className="text-lg font-semibold text-accent-emerald">
 								Worker Thread
 							</h3>
 						</div>
@@ -180,7 +182,7 @@ export function TransferableDemo() {
 								>
 									<div className="w-32 h-32 bg-linear-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/50">
 										<div className="text-center">
-											<div className="text-2xl font-bold text-white">
+											<div className="text-2xl font-bold text-text-primary">
 												{bufferSize}MB
 											</div>
 											<div className="text-xs text-emerald-200">Processing</div>
@@ -194,8 +196,8 @@ export function TransferableDemo() {
 									animate={{ scale: 1, opacity: 1 }}
 									exit={{ scale: 0.8, opacity: 0 }}
 								>
-									<div className="w-32 h-32 bg-zinc-800/50 border-2 border-dashed border-zinc-700 rounded-lg flex items-center justify-center">
-										<div className="text-xs text-zinc-600">Waiting</div>
+									<div className="w-32 h-32 bg-surface-secondary/50 border-2 border-dashed border-border-secondary rounded-lg flex items-center justify-center">
+										<div className="text-xs text-text-faint">Waiting</div>
 									</div>
 								</motion.div>
 							)}
@@ -215,7 +217,7 @@ export function TransferableDemo() {
 								<div className="text-2xl">
 									{transferMethod === "transfer" ? "⚡" : "📦"}
 								</div>
-								<div className="text-xs text-zinc-400">
+								<div className="text-xs text-text-tertiary">
 									{transferMethod === "transfer" ? "Zero-copy" : "Copying..."}
 								</div>
 							</div>
@@ -225,11 +227,11 @@ export function TransferableDemo() {
 			</div>
 
 			{/* Controls */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-4">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6 space-y-4">
 				<div>
 					<label
 						htmlFor="buffer-size"
-						className="block text-sm text-zinc-400 mb-2"
+						className="block text-sm text-text-tertiary mb-2"
 					>
 						Buffer Size: {bufferSize} MB
 					</label>
@@ -256,8 +258,8 @@ export function TransferableDemo() {
 						}}
 						className={`px-4 py-3 rounded-lg border-2 transition-all ${
 							transferMethod === "copy"
-								? "border-amber-500 bg-amber-500/20 text-amber-300"
-								: "border-zinc-700 bg-zinc-800 text-zinc-400 hover:border-zinc-600"
+								? "border-amber-500 bg-amber-500/20 text-accent-amber"
+								: "border-border-secondary bg-surface-secondary text-text-tertiary hover:border-border-tertiary"
 						}`}
 					>
 						<div className="text-sm font-semibold">📦 Copy (postMessage)</div>
@@ -274,8 +276,8 @@ export function TransferableDemo() {
 						}}
 						className={`px-4 py-3 rounded-lg border-2 transition-all ${
 							transferMethod === "transfer"
-								? "border-emerald-500 bg-emerald-500/20 text-emerald-300"
-								: "border-zinc-700 bg-zinc-800 text-zinc-400 hover:border-zinc-600"
+								? "border-emerald-500 bg-emerald-500/20 text-accent-emerald"
+								: "border-border-secondary bg-surface-secondary text-text-tertiary hover:border-border-tertiary"
 						}`}
 					>
 						<div className="text-sm font-semibold">⚡ Transfer (zero-copy)</div>
@@ -287,7 +289,7 @@ export function TransferableDemo() {
 					type="button"
 					onClick={handleTransfer}
 					disabled={isTransferring}
-					className="w-full px-4 py-3 bg-cyan-500 hover:bg-cyan-600 disabled:bg-zinc-700 disabled:text-zinc-500 rounded-lg text-sm font-semibold transition-colors"
+					className="w-full px-4 py-3 bg-cyan-500 hover:bg-cyan-600 disabled:bg-surface-tertiary disabled:text-text-muted rounded-lg text-sm font-semibold transition-colors"
 				>
 					{isTransferring ? "Transferring..." : "Transfer to Worker"}
 				</button>
@@ -307,24 +309,24 @@ export function TransferableDemo() {
 								<div
 									className={`text-3xl font-bold ${
 										transferMethod === "transfer"
-											? "text-emerald-300"
-											: "text-amber-300"
+											? "text-accent-emerald"
+											: "text-accent-amber"
 									}`}
 								>
 									{sendDuration < 0.1
 										? "<0.1ms"
 										: `${sendDuration.toFixed(2)}ms`}
 								</div>
-								<div className="text-xs text-zinc-400 mt-1">
+								<div className="text-xs text-text-tertiary mt-1">
 									Send time (main thread blocked)
 								</div>
 							</div>
 							{roundTripDuration !== null && (
-								<div className="text-center flex-1 border-l border-zinc-700 ml-4 pl-4">
-									<div className="text-lg font-semibold text-zinc-400">
+								<div className="text-center flex-1 border-l border-border-secondary ml-4 pl-4">
+									<div className="text-lg font-semibold text-text-tertiary">
 										{roundTripDuration.toFixed(2)}ms
 									</div>
-									<div className="text-xs text-zinc-500 mt-1">Round-trip</div>
+									<div className="text-xs text-text-muted mt-1">Round-trip</div>
 								</div>
 							)}
 						</div>
@@ -333,35 +335,37 @@ export function TransferableDemo() {
 			</div>
 
 			{/* Performance comparison table */}
-			<div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-zinc-300 mb-1">
+			<div className="bg-surface-primary/50 border border-border-primary rounded-lg p-6">
+				<h4 className="text-sm font-semibold text-text-secondary mb-1">
 					Performance Comparison
 				</h4>
-				<p className="text-xs text-zinc-500 mb-4">
+				<p className="text-xs text-text-muted mb-4">
 					Send time = main thread blocking during postMessage(). Does not
 					include worker processing or response. Transfer is always O(1).
 				</p>
 				<div className="overflow-x-auto">
 					<table className="w-full text-sm">
 						<thead>
-							<tr className="border-b border-zinc-800">
-								<th className="text-left py-2 text-zinc-400 font-medium">
+							<tr className="border-b border-border-primary">
+								<th className="text-left py-2 text-text-tertiary font-medium">
 									Buffer Size
 								</th>
-								<th className="text-left py-2 text-amber-300 font-medium">
+								<th className="text-left py-2 text-accent-amber font-medium">
 									Send time (copy)
 								</th>
-								<th className="text-left py-2 text-emerald-300 font-medium">
+								<th className="text-left py-2 text-accent-emerald font-medium">
 									Send time (transfer)
 								</th>
 							</tr>
 						</thead>
-						<tbody className="text-zinc-400">
+						<tbody className="text-text-tertiary">
 							{performanceData.map((row) => (
-								<tr key={row.id} className="border-b border-zinc-800/50">
+								<tr key={row.id} className="border-b border-border-primary/50">
 									<td className="py-3 font-mono">{row.size}</td>
-									<td className="font-mono text-amber-300">{row.copy}</td>
-									<td className="font-mono text-emerald-300">{row.transfer}</td>
+									<td className="font-mono text-accent-amber">{row.copy}</td>
+									<td className="font-mono text-accent-emerald">
+										{row.transfer}
+									</td>
 								</tr>
 							))}
 						</tbody>
@@ -372,7 +376,7 @@ export function TransferableDemo() {
 			{/* Code examples */}
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 				<div>
-					<h4 className="text-sm font-semibold text-zinc-400 mb-3">
+					<h4 className="text-sm font-semibold text-text-tertiary mb-3">
 						❌ Slow: Copy (serialization)
 					</h4>
 					<ShikiCode
@@ -392,7 +396,7 @@ console.log(buffer.byteLength); // 10485760`}
 				</div>
 
 				<div>
-					<h4 className="text-sm font-semibold text-zinc-400 mb-3">
+					<h4 className="text-sm font-semibold text-text-tertiary mb-3">
 						✅ Fast: Transfer ownership
 					</h4>
 					<ShikiCode
@@ -413,70 +417,76 @@ console.log(buffer.byteLength); // 0`}
 			</div>
 
 			{/* Use cases */}
-			<div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-zinc-300 mb-4">
+			<div className="bg-surface-primary/50 border border-border-primary rounded-lg p-6">
+				<h4 className="text-sm font-semibold text-text-secondary mb-4">
 					When to Use Transferable Objects
 				</h4>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
 					<div className="space-y-2">
 						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
+							<span className="text-accent-emerald-soft">✅</span>
 							<div>
-								<div className="font-medium text-zinc-300">
+								<div className="font-medium text-text-secondary">
 									Image Processing
 								</div>
-								<div className="text-xs text-zinc-500">
+								<div className="text-xs text-text-muted">
 									Canvas → OffscreenCanvas
 								</div>
 							</div>
 						</div>
 						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
+							<span className="text-accent-emerald-soft">✅</span>
 							<div>
-								<div className="font-medium text-zinc-300">
+								<div className="font-medium text-text-secondary">
 									Audio Processing
 								</div>
-								<div className="text-xs text-zinc-500">
+								<div className="text-xs text-text-muted">
 									Web Audio API worklets
 								</div>
 							</div>
 						</div>
 						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
+							<span className="text-accent-emerald-soft">✅</span>
 							<div>
-								<div className="font-medium text-zinc-300">
+								<div className="font-medium text-text-secondary">
 									Video Encoding/Decoding
 								</div>
-								<div className="text-xs text-zinc-500">Large frame buffers</div>
+								<div className="text-xs text-text-muted">
+									Large frame buffers
+								</div>
 							</div>
 						</div>
 					</div>
 					<div className="space-y-2">
 						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
+							<span className="text-accent-emerald-soft">✅</span>
 							<div>
-								<div className="font-medium text-zinc-300">
+								<div className="font-medium text-text-secondary">
 									Large Dataset Manipulation
 								</div>
-								<div className="text-xs text-zinc-500">
+								<div className="text-xs text-text-muted">
 									Binary data processing
 								</div>
 							</div>
 						</div>
 						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
+							<span className="text-accent-emerald-soft">✅</span>
 							<div>
-								<div className="font-medium text-zinc-300">File Processing</div>
-								<div className="text-xs text-zinc-500">
+								<div className="font-medium text-text-secondary">
+									File Processing
+								</div>
+								<div className="text-xs text-text-muted">
 									Reading/writing binary files
 								</div>
 							</div>
 						</div>
 						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
+							<span className="text-accent-emerald-soft">✅</span>
 							<div>
-								<div className="font-medium text-zinc-300">WebGL Textures</div>
-								<div className="text-xs text-zinc-500">
+								<div className="font-medium text-text-secondary">
+									WebGL Textures
+								</div>
+								<div className="text-xs text-text-muted">
 									GPU buffer transfers
 								</div>
 							</div>

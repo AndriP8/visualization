@@ -1,6 +1,249 @@
 @import "tailwindcss";
 
-/* Custom scrollbar for dark theme */
+/* ─── Theme Tokens ─── */
+@theme inline {
+	--color-surface-base: var(--surface-base);
+	--color-surface-primary: var(--surface-primary);
+	--color-surface-secondary: var(--surface-secondary);
+	--color-surface-tertiary: var(--surface-tertiary);
+	--color-surface-code: var(--surface-code);
+	--color-surface-overlay: var(--surface-overlay);
+
+	--color-text-primary: var(--text-primary);
+	--color-text-secondary: var(--text-secondary);
+	--color-text-tertiary: var(--text-tertiary);
+	--color-text-muted: var(--text-muted);
+	--color-text-faint: var(--text-faint);
+
+	--color-border-primary: var(--border-primary);
+	--color-border-secondary: var(--border-secondary);
+	--color-border-tertiary: var(--border-tertiary);
+
+	/* Accent text tokens — readable in both themes */
+	--color-accent-violet: var(--accent-violet);
+	--color-accent-cyan: var(--accent-cyan);
+	--color-accent-emerald: var(--accent-emerald);
+	--color-accent-amber: var(--accent-amber);
+	--color-accent-orange: var(--accent-orange);
+	--color-accent-rose: var(--accent-rose);
+	--color-accent-red: var(--accent-red);
+	--color-accent-blue: var(--accent-blue);
+	--color-accent-green: var(--accent-green);
+	--color-accent-yellow: var(--accent-yellow);
+	--color-accent-teal: var(--accent-teal);
+	--color-accent-indigo: var(--accent-indigo);
+	--color-accent-pink: var(--accent-pink);
+	--color-accent-purple: var(--accent-purple);
+
+	/* Accent text soft (-400 level) */
+	--color-accent-violet-soft: var(--accent-violet-soft);
+	--color-accent-cyan-soft: var(--accent-cyan-soft);
+	--color-accent-emerald-soft: var(--accent-emerald-soft);
+	--color-accent-amber-soft: var(--accent-amber-soft);
+	--color-accent-orange-soft: var(--accent-orange-soft);
+	--color-accent-rose-soft: var(--accent-rose-soft);
+	--color-accent-red-soft: var(--accent-red-soft);
+	--color-accent-blue-soft: var(--accent-blue-soft);
+	--color-accent-green-soft: var(--accent-green-soft);
+	--color-accent-yellow-soft: var(--accent-yellow-soft);
+	--color-accent-teal-soft: var(--accent-teal-soft);
+	--color-accent-indigo-soft: var(--accent-indigo-soft);
+	--color-accent-pink-soft: var(--accent-pink-soft);
+	--color-accent-purple-soft: var(--accent-purple-soft);
+}
+
+/* Light theme (default) */
+:root {
+	color-scheme: light dark;
+
+	--surface-base: #ffffff;
+	--surface-primary: oklch(98.5% 0 0); /* zinc-50 */
+	--surface-secondary: oklch(96.7% 0.001 286.375); /* zinc-100 */
+	--surface-tertiary: oklch(92% 0.004 286.32); /* zinc-200 */
+	--surface-code: #f5f5f5;
+	--surface-overlay: rgba(0, 0, 0, 0.3);
+
+	--text-primary: oklch(21% 0.006 285.885); /* zinc-900 */
+	--text-secondary: oklch(37% 0.013 285.805); /* zinc-700 */
+	--text-tertiary: oklch(55.2% 0.016 285.938); /* zinc-500 */
+	--text-muted: oklch(70.5% 0.015 286.067); /* zinc-400 */
+	--text-faint: oklch(87.1% 0.006 286.286); /* zinc-300 */
+
+	--border-primary: oklch(92% 0.004 286.32); /* zinc-200 */
+	--border-secondary: oklch(87.1% 0.006 286.286); /* zinc-300 */
+	--border-tertiary: oklch(70.5% 0.015 286.067); /* zinc-400 */
+
+	--svg-bg: #fafafa;
+	--svg-border: #d4d4d8;
+	--svg-text: #52525b;
+	--svg-text-muted: #a1a1aa;
+
+	--scrollbar-thumb: #d4d4d8;
+	--scrollbar-thumb-hover: #a1a1aa;
+
+	--shiki-line-number: rgb(161 161 170); /* zinc-400 */
+	--shiki-active-line-bg: rgb(139 92 246 / 0.1); /* violet-500/10 */
+
+	/* Accent text (for -300 level) — darker shades for light mode readability */
+	--accent-violet: oklch(47.7% 0.254 277.023); /* violet-600 */
+	--accent-cyan: oklch(48.8% 0.243 264.376); /* cyan-600 */
+	--accent-emerald: oklch(50.6% 0.186 143.211); /* emerald-600 */
+	--accent-amber: oklch(55.3% 0.195 78.172); /* amber-600 */
+	--accent-orange: oklch(55% 0.213 38.402); /* orange-600 */
+	--accent-rose: oklch(51.4% 0.222 16.935); /* rose-600 */
+	--accent-red: oklch(50.7% 0.232 27.325); /* red-600 */
+	--accent-blue: oklch(50% 0.17 258.338); /* blue-600 */
+	--accent-green: oklch(51.7% 0.196 142.499); /* green-600 */
+	--accent-yellow: oklch(66.8% 0.194 100.301); /* yellow-600 */
+	--accent-teal: oklch(51.1% 0.172 183.108); /* teal-600 */
+	--accent-indigo: oklch(45.7% 0.24 277.023); /* indigo-600 */
+	--accent-pink: oklch(51.9% 0.217 321.39); /* pink-600 */
+	--accent-purple: oklch(49.6% 0.265 301.924); /* purple-600 */
+
+	/* Accent text (for -400 level) — uses -500 in light mode */
+	--accent-violet-soft: oklch(59.1% 0.249 278.072); /* violet-500 */
+	--accent-cyan-soft: oklch(60.9% 0.223 260.031); /* cyan-500 */
+	--accent-emerald-soft: oklch(62.5% 0.194 149.214); /* emerald-500 */
+	--accent-amber-soft: oklch(68.3% 0.196 78.301); /* amber-500 */
+	--accent-orange-soft: oklch(67% 0.207 42.622); /* orange-500 */
+	--accent-rose-soft: oklch(62.8% 0.226 18.302); /* rose-500 */
+	--accent-red-soft: oklch(63.3% 0.234 28.047); /* red-500 */
+	--accent-blue-soft: oklch(62.3% 0.214 258.338); /* blue-500 */
+	--accent-green-soft: oklch(62.3% 0.201 145.566); /* green-500 */
+	--accent-yellow-soft: oklch(79.5% 0.184 91.191); /* yellow-500 */
+	--accent-teal-soft: oklch(61.6% 0.172 183.108); /* teal-500 */
+	--accent-indigo-soft: oklch(55.5% 0.231 277.023); /* indigo-500 */
+	--accent-pink-soft: oklch(62% 0.213 321.39); /* pink-500 */
+	--accent-purple-soft: oklch(58.8% 0.262 299.813); /* purple-500 */
+}
+
+/* Dark theme — media query (no override) */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		--surface-base: oklch(14.1% 0.005 285.823); /* zinc-950 */
+		--surface-primary: oklch(21% 0.006 285.885); /* zinc-900 */
+		--surface-secondary: oklch(27.4% 0.006 286.033); /* zinc-800 */
+		--surface-tertiary: oklch(37% 0.013 285.805); /* zinc-700 */
+		--surface-code: #121212;
+		--surface-overlay: rgba(0, 0, 0, 0.6);
+
+		--text-primary: #ffffff;
+		--text-secondary: oklch(87.1% 0.006 286.286); /* zinc-300 */
+		--text-tertiary: oklch(70.5% 0.015 286.067); /* zinc-400 */
+		--text-muted: oklch(55.2% 0.016 285.938); /* zinc-500 */
+		--text-faint: oklch(44.2% 0.017 285.786); /* zinc-600 */
+
+		--border-primary: oklch(27.4% 0.006 286.033); /* zinc-800 */
+		--border-secondary: oklch(37% 0.013 285.805); /* zinc-700 */
+		--border-tertiary: oklch(44.2% 0.017 285.786); /* zinc-600 */
+
+		--svg-bg: #18181b;
+		--svg-border: #3f3f46;
+		--svg-text: #a1a1aa;
+		--svg-text-muted: #71717a;
+
+		--scrollbar-thumb: #3f3f46;
+		--scrollbar-thumb-hover: #52525b;
+
+		--shiki-line-number: rgb(82 82 91); /* zinc-600 */
+		--shiki-active-line-bg: rgb(139 92 246 / 0.2); /* violet-500/20 */
+
+		/* Accent text — bright shades for dark mode (-300 level) */
+		--accent-violet: oklch(74.3% 0.225 282.464); /* violet-300 */
+		--accent-cyan: oklch(77.7% 0.152 194.769); /* cyan-300 */
+		--accent-emerald: oklch(76.5% 0.177 163.223); /* emerald-300 */
+		--accent-amber: oklch(82.8% 0.189 84.429); /* amber-300 */
+		--accent-orange: oklch(79% 0.189 60.622); /* orange-300 */
+		--accent-rose: oklch(75.6% 0.196 17.403); /* rose-300 */
+		--accent-red: oklch(75.8% 0.197 25.33); /* red-300 */
+		--accent-blue: oklch(73.3% 0.168 251.407); /* blue-300 */
+		--accent-green: oklch(76.5% 0.177 163.223); /* green-300 */
+		--accent-yellow: oklch(90.5% 0.182 98.111); /* yellow-300 */
+		--accent-teal: oklch(77.4% 0.166 181.912); /* teal-300 */
+		--accent-indigo: oklch(68.6% 0.226 277.023); /* indigo-300 */
+		--accent-pink: oklch(77.2% 0.198 321.39); /* pink-300 */
+		--accent-purple: oklch(71.4% 0.248 297.682); /* purple-300 */
+
+		/* Accent text soft (-400 level) for dark mode */
+		--accent-violet-soft: oklch(65.2% 0.239 279.684); /* violet-400 */
+		--accent-cyan-soft: oklch(69.1% 0.196 196.979); /* cyan-400 */
+		--accent-emerald-soft: oklch(69.6% 0.195 162.48); /* emerald-400 */
+		--accent-amber-soft: oklch(76.9% 0.196 80.474); /* amber-400 */
+		--accent-orange-soft: oklch(74.6% 0.213 52.583); /* orange-400 */
+		--accent-rose-soft: oklch(68.4% 0.215 17.302); /* rose-400 */
+		--accent-red-soft: oklch(68.6% 0.217 25.664); /* red-400 */
+		--accent-blue-soft: oklch(67.3% 0.189 254.624); /* blue-400 */
+		--accent-green-soft: oklch(69.6% 0.195 162.48); /* green-400 */
+		--accent-yellow-soft: oklch(85.2% 0.199 91.936); /* yellow-400 */
+		--accent-teal-soft: oklch(70.4% 0.18 184.355); /* teal-400 */
+		--accent-indigo-soft: oklch(58.5% 0.233 277.117); /* indigo-400 */
+		--accent-pink-soft: oklch(71.8% 0.202 350.974); /* pink-400 */
+		--accent-purple-soft: oklch(62.7% 0.265 303.9); /* purple-400 */
+	}
+}
+
+/* Dark theme — forced via data-theme attribute */
+:root[data-theme="dark"] {
+	--surface-base: oklch(14.1% 0.005 285.823);
+	--surface-primary: oklch(21% 0.006 285.885);
+	--surface-secondary: oklch(27.4% 0.006 286.033);
+	--surface-tertiary: oklch(37% 0.013 285.805);
+	--surface-code: #121212;
+	--surface-overlay: rgba(0, 0, 0, 0.6);
+
+	--text-primary: #ffffff;
+	--text-secondary: oklch(87.1% 0.006 286.286);
+	--text-tertiary: oklch(70.5% 0.015 286.067);
+	--text-muted: oklch(55.2% 0.016 285.938);
+	--text-faint: oklch(44.2% 0.017 285.786);
+
+	--border-primary: oklch(27.4% 0.006 286.033);
+	--border-secondary: oklch(37% 0.013 285.805);
+	--border-tertiary: oklch(44.2% 0.017 285.786);
+
+	--svg-bg: #18181b;
+	--svg-border: #3f3f46;
+	--svg-text: #a1a1aa;
+	--svg-text-muted: #71717a;
+
+	--scrollbar-thumb: #3f3f46;
+	--scrollbar-thumb-hover: #52525b;
+
+	--shiki-line-number: rgb(82 82 91);
+	--shiki-active-line-bg: rgb(139 92 246 / 0.2);
+
+	--accent-violet: oklch(74.3% 0.225 282.464);
+	--accent-cyan: oklch(77.7% 0.152 194.769);
+	--accent-emerald: oklch(76.5% 0.177 163.223);
+	--accent-amber: oklch(82.8% 0.189 84.429);
+	--accent-orange: oklch(79% 0.189 60.622);
+	--accent-rose: oklch(75.6% 0.196 17.403);
+	--accent-red: oklch(75.8% 0.197 25.33);
+	--accent-blue: oklch(73.3% 0.168 251.407);
+	--accent-green: oklch(76.5% 0.177 163.223);
+	--accent-yellow: oklch(90.5% 0.182 98.111);
+	--accent-teal: oklch(77.4% 0.166 181.912);
+	--accent-indigo: oklch(68.6% 0.226 277.023);
+	--accent-pink: oklch(77.2% 0.198 321.39);
+	--accent-purple: oklch(71.4% 0.248 297.682);
+
+	--accent-violet-soft: oklch(65.2% 0.239 279.684);
+	--accent-cyan-soft: oklch(69.1% 0.196 196.979);
+	--accent-emerald-soft: oklch(69.6% 0.195 162.48);
+	--accent-amber-soft: oklch(76.9% 0.196 80.474);
+	--accent-orange-soft: oklch(74.6% 0.213 52.583);
+	--accent-rose-soft: oklch(68.4% 0.215 17.302);
+	--accent-red-soft: oklch(68.6% 0.217 25.664);
+	--accent-blue-soft: oklch(67.3% 0.189 254.624);
+	--accent-green-soft: oklch(69.6% 0.195 162.48);
+	--accent-yellow-soft: oklch(85.2% 0.199 91.936);
+	--accent-teal-soft: oklch(70.4% 0.18 184.355);
+	--accent-indigo-soft: oklch(58.5% 0.233 277.117);
+	--accent-pink-soft: oklch(71.8% 0.202 350.974);
+	--accent-purple-soft: oklch(62.7% 0.265 303.9);
+}
+
+/* ─── Custom Scrollbar ─── */
 ::-webkit-scrollbar {
 	width: 6px;
 	height: 6px;
@@ -9,14 +252,14 @@
 	background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-	background: #3f3f46;
+	background: var(--scrollbar-thumb);
 	border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-	background: #52525b;
+	background: var(--scrollbar-thumb-hover);
 }
 
-/* SVG tree animations */
+/* ─── SVG Tree Animations ─── */
 @keyframes node-pulse {
 	0%,
 	100% {
@@ -46,7 +289,7 @@
 	animation: node-pulse 1s ease-in-out infinite;
 }
 
-/* Shiki Customizations */
+/* ─── Shiki Customizations ─── */
 .shiki-wrapper pre {
 	margin: 0;
 	background: transparent;
@@ -78,7 +321,7 @@
 	width: 1.5rem;
 	text-align: right;
 	margin-right: 1rem;
-	color: rgb(82 82 91); /* zinc-600 */
+	color: var(--shiki-line-number);
 	user-select: none;
 }
 
@@ -89,5 +332,26 @@
 }
 
 .shiki-has-highlight .line.shiki-active-line {
-	background-color: rgb(139 92 246 / 0.2); /* violet-500/20 */
+	background-color: var(--shiki-active-line-bg);
+}
+
+/* Shiki dual-theme: show correct theme based on color scheme */
+.shiki-wrapper .shiki,
+.shiki-wrapper .shiki span {
+	color: var(--shiki-light);
+	background-color: var(--shiki-light-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) .shiki-wrapper .shiki,
+	:root:not([data-theme="light"]) .shiki-wrapper .shiki span {
+		color: var(--shiki-dark);
+		background-color: var(--shiki-dark-bg);
+	}
+}
+
+:root[data-theme="dark"] .shiki-wrapper .shiki,
+:root[data-theme="dark"] .shiki-wrapper .shiki span {
+	color: var(--shiki-dark);
+	background-color: var(--shiki-dark-bg);
 }

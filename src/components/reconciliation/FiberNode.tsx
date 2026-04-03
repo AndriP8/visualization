@@ -5,7 +5,11 @@ const STATUS_COLORS: Record<
 	NodeStatus,
 	{ bg: string; border: string; text: string }
 > = {
-	unchanged: { bg: "#18181b", border: "#3f3f46", text: "#a1a1aa" },
+	unchanged: {
+		bg: "var(--svg-bg)",
+		border: "var(--svg-border)",
+		text: "var(--svg-text)",
+	},
 	updated: { bg: "#422006", border: "#ca8a04", text: "#fde047" },
 	added: { bg: "#052e16", border: "#16a34a", text: "#4ade80" },
 	removed: { bg: "#450a0a", border: "#dc2626", text: "#fca5a5" },
@@ -83,7 +87,7 @@ export function FiberNode({
 					x={x}
 					y={y + 12}
 					textAnchor="middle"
-					fill="#71717a"
+					fill="var(--svg-text-muted)"
 					fontSize={9}
 					fontFamily="monospace"
 				>

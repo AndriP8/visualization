@@ -99,8 +99,8 @@ export function WorkLocationDiagram() {
 						onClick={() => setSelectedStrategy(flow.strategy)}
 						className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
 							selectedStrategy === flow.strategy
-								? "text-white border-2"
-								: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300"
+								? "text-text-primary border-2"
+								: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary"
 						}`}
 						style={
 							selectedStrategy === flow.strategy
@@ -129,7 +129,7 @@ export function WorkLocationDiagram() {
 								className={`relative p-6 rounded-xl border-2 transition-all ${
 									isHtmlSource
 										? "border-violet-500 bg-violet-500/10"
-										: "border-zinc-700 bg-zinc-800/30"
+										: "border-border-secondary bg-surface-secondary/30"
 								}`}
 								animate={{
 									scale: isHtmlSource ? 1.05 : 1,
@@ -151,10 +151,10 @@ export function WorkLocationDiagram() {
 
 								<div className="relative text-center">
 									<div className="text-4xl mb-2">{location.icon}</div>
-									<h4 className="text-sm font-semibold text-white mb-1">
+									<h4 className="text-sm font-semibold text-text-primary mb-1">
 										{location.label}
 									</h4>
-									<p className="text-xs text-zinc-500">
+									<p className="text-xs text-text-muted">
 										{location.description}
 									</p>
 
@@ -162,7 +162,7 @@ export function WorkLocationDiagram() {
 										<motion.div
 											initial={{ opacity: 0, y: -10 }}
 											animate={{ opacity: 1, y: 0 }}
-											className="mt-3 text-xs font-medium px-2 py-1 rounded bg-violet-500/20 text-violet-300 border border-violet-500/30"
+											className="mt-3 text-xs font-medium px-2 py-1 rounded bg-violet-500/20 text-accent-violet border border-violet-500/30"
 										>
 											HTML Generated Here
 										</motion.div>
@@ -237,7 +237,7 @@ export function WorkLocationDiagram() {
 						>
 							{currentFlow.strategy}:
 						</span>{" "}
-						<span className="text-zinc-300">{currentFlow.payload}</span>
+						<span className="text-text-secondary">{currentFlow.payload}</span>
 					</motion.div>
 				)}
 			</div>

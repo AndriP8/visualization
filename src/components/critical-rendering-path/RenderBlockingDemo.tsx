@@ -213,12 +213,12 @@ const BLOCKING_BADGE: Record<
 	"render-blocking": {
 		label: "RENDER-BLOCKING",
 		className:
-			"text-[9px] px-1 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20",
+			"text-[9px] px-1 py-0.5 rounded bg-amber-500/10 text-accent-amber-soft border border-amber-500/20",
 	},
 	"parser-blocking": {
 		label: "PARSER-BLOCKING",
 		className:
-			"text-[9px] px-1 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20",
+			"text-[9px] px-1 py-0.5 rounded bg-red-500/10 text-accent-red-soft border border-red-500/20",
 	},
 	none: null,
 };
@@ -250,36 +250,39 @@ export function RenderBlockingDemo() {
 			description="Not all blocking is equal. Render-blocking pauses painting but the parser continues. Parser-blocking stops everything."
 		>
 			{/* Key distinction callout */}
-			<div className="mb-5 p-3 rounded-lg bg-zinc-800/40 border border-zinc-800 space-y-2">
+			<div className="mb-5 p-3 rounded-lg bg-surface-secondary/40 border border-border-primary space-y-2">
 				<div className="flex items-start gap-3">
 					<div className="flex-1 space-y-1.5">
 						<div className="flex items-center gap-2">
 							<span className="w-2.5 h-2.5 rounded-sm bg-amber-400" />
-							<span className="text-xs font-semibold text-amber-400">
+							<span className="text-xs font-semibold text-accent-amber-soft">
 								Render-blocking
 							</span>
-							<span className="text-xs text-zinc-500">(CSS)</span>
+							<span className="text-xs text-text-muted">(CSS)</span>
 						</div>
-						<p className="text-xs text-zinc-400 pl-[18px]">
+						<p className="text-xs text-text-tertiary pl-[18px]">
 							Browser pauses <em>rendering</em> until the resource is processed,
 							but the{" "}
-							<strong className="text-zinc-300">parser continues</strong>{" "}
+							<strong className="text-text-secondary">parser continues</strong>{" "}
 							scanning for other resources to download.
 						</p>
 					</div>
 					<div className="flex-1 space-y-1.5">
 						<div className="flex items-center gap-2">
 							<span className="w-2.5 h-2.5 rounded-sm bg-red-400" />
-							<span className="text-xs font-semibold text-red-400">
+							<span className="text-xs font-semibold text-accent-red-soft">
 								Parser-blocking
 							</span>
-							<span className="text-xs text-zinc-500">(sync JS)</span>
+							<span className="text-xs text-text-muted">(sync JS)</span>
 						</div>
-						<p className="text-xs text-zinc-400 pl-[18px]">
+						<p className="text-xs text-text-tertiary pl-[18px]">
 							Browser stops the{" "}
-							<strong className="text-zinc-300">HTML parser entirely</strong>.
-							Nothing else proceeds until the script is downloaded and executed.
-							This is <strong className="text-red-400">much worse</strong> — it
+							<strong className="text-text-secondary">
+								HTML parser entirely
+							</strong>
+							. Nothing else proceeds until the script is downloaded and
+							executed. This is{" "}
+							<strong className="text-accent-red-soft">much worse</strong> — it
 							also implicitly blocks rendering.
 						</p>
 					</div>
@@ -298,14 +301,14 @@ export function RenderBlockingDemo() {
 							onClick={() => toggleResource(resource.id)}
 							className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border flex items-center gap-2 ${
 								isOn
-									? "border-white/20 bg-zinc-800 text-white"
-									: "border-zinc-800 bg-zinc-900/50 text-zinc-600"
+									? "border-white/20 bg-surface-secondary text-text-primary"
+									: "border-border-primary bg-surface-primary/50 text-text-faint"
 							}`}
 						>
 							<span
 								className="w-2.5 h-2.5 rounded-sm"
 								style={{
-									backgroundColor: isOn ? resource.color : "#3f3f46",
+									backgroundColor: isOn ? resource.color : "var(--svg-border)",
 								}}
 							/>
 							{resource.label}
@@ -318,16 +321,16 @@ export function RenderBlockingDemo() {
 			</div>
 
 			{/* Waterfall timeline */}
-			<div className="rounded-lg bg-zinc-800/30 border border-zinc-800 p-4 overflow-x-auto">
+			<div className="rounded-lg bg-surface-secondary/30 border border-border-primary p-4 overflow-x-auto">
 				<div className="min-w-[500px]">
 					{/* Time axis */}
 					<div className="flex items-center mb-3 ml-[100px]">
 						<div className="flex-1 relative h-5">
-							<div className="absolute inset-0 flex justify-between text-[10px] text-zinc-600 font-mono">
+							<div className="absolute inset-0 flex justify-between text-[10px] text-text-faint font-mono">
 								<span>0ms</span>
 								<span>{Math.round(totalWidth * 2)}ms</span>
 							</div>
-							<div className="absolute bottom-0 left-0 right-0 h-px bg-zinc-700" />
+							<div className="absolute bottom-0 left-0 right-0 h-px bg-surface-tertiary" />
 						</div>
 					</div>
 
@@ -339,7 +342,7 @@ export function RenderBlockingDemo() {
 								className="flex items-center gap-2 h-7"
 							>
 								{/* Label */}
-								<div className="w-[100px] text-right text-xs text-zinc-400 font-mono truncate shrink-0">
+								<div className="w-[100px] text-right text-xs text-text-tertiary font-mono truncate shrink-0">
 									{bar.resource.shortLabel}
 								</div>
 
@@ -364,14 +367,14 @@ export function RenderBlockingDemo() {
 									>
 										{bar.blocksParser && (
 											<div className="absolute inset-0 flex items-center justify-center">
-												<span className="text-[9px] text-red-400 font-mono">
+												<span className="text-[9px] text-accent-red-soft font-mono">
 													⛔ parser stopped
 												</span>
 											</div>
 										)}
 										{!bar.blocksParser && bar.blocksRender && (
 											<div className="absolute inset-0 flex items-center justify-center">
-												<span className="text-[9px] text-amber-400 font-mono">
+												<span className="text-[9px] text-accent-amber-soft font-mono">
 													⏸ render paused
 												</span>
 											</div>
@@ -414,7 +417,7 @@ export function RenderBlockingDemo() {
 
 						{/* First Paint marker */}
 						<div className="flex items-center gap-2 h-7">
-							<div className="w-[100px] text-right text-xs text-emerald-400 font-semibold shrink-0">
+							<div className="w-[100px] text-right text-xs text-accent-emerald-soft font-semibold shrink-0">
 								First Paint
 							</div>
 							<div className="flex-1 relative h-full">
@@ -432,7 +435,7 @@ export function RenderBlockingDemo() {
 										initial={{ opacity: 0 }}
 										animate={{ opacity: 1 }}
 										transition={{ delay: 0.8 }}
-										className="absolute top-0 left-3 text-[10px] text-emerald-400 font-mono whitespace-nowrap"
+										className="absolute top-0 left-3 text-[10px] text-accent-emerald-soft font-mono whitespace-nowrap"
 									>
 										~{Math.round(firstPaint * 2)}ms
 									</motion.span>
@@ -454,7 +457,7 @@ export function RenderBlockingDemo() {
 							key={resource.id}
 							initial={{ opacity: 0, y: 5 }}
 							animate={{ opacity: 1, y: 0 }}
-							className="p-3 rounded-lg bg-zinc-800/30 border border-zinc-800"
+							className="p-3 rounded-lg bg-surface-secondary/30 border border-border-primary"
 						>
 							<div className="flex items-center gap-2 mb-1">
 								<span
@@ -473,7 +476,7 @@ export function RenderBlockingDemo() {
 									<span className={badge.className}>{badge.label}</span>
 								)}
 							</div>
-							<p className="text-xs text-zinc-500">{resource.description}</p>
+							<p className="text-xs text-text-muted">{resource.description}</p>
 						</motion.div>
 					);
 				})}

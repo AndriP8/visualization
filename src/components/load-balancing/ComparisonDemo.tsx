@@ -281,15 +281,17 @@ export function ComparisonDemo() {
 							disabled={running}
 							className={`px-4 py-2 rounded-lg font-medium transition-colors ${
 								selectedScenario.name === scenario.name
-									? "bg-indigo-600 text-white"
-									: "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+									? "bg-indigo-600 text-text-primary"
+									: "bg-surface-secondary text-text-tertiary hover:bg-surface-tertiary"
 							} disabled:opacity-50 disabled:cursor-not-allowed`}
 						>
 							{scenario.name}
 						</button>
 					))}
 				</div>
-				<p className="text-sm text-zinc-400">{selectedScenario.description}</p>
+				<p className="text-sm text-text-tertiary">
+					{selectedScenario.description}
+				</p>
 			</div>
 
 			{/* Controls */}
@@ -306,7 +308,7 @@ export function ComparisonDemo() {
 					type="button"
 					onClick={reset}
 					disabled={running}
-					className="px-4 py-3 bg-zinc-700 hover:bg-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg font-medium transition-colors"
+					className="px-4 py-3 bg-surface-tertiary hover:bg-surface-tertiary disabled:opacity-50 disabled:cursor-not-allowed rounded-lg font-medium transition-colors"
 				>
 					Reset
 				</button>
@@ -350,21 +352,23 @@ export function ComparisonDemo() {
 					return (
 						<div
 							key={algorithm}
-							className="bg-zinc-900 border border-zinc-800 rounded-xl p-6"
+							className="bg-surface-primary border border-border-primary rounded-xl p-6"
 						>
-							<h3 className="font-semibold text-white mb-4">{config.title}</h3>
+							<h3 className="font-semibold text-text-primary mb-4">
+								{config.title}
+							</h3>
 
 							{/* Servers */}
 							<div className="space-y-3 mb-6">
 								{state.servers.map((server) => (
 									<div key={server.id} className="space-y-2">
 										<div className="flex justify-between text-sm">
-											<span className="text-zinc-400">{server.name}</span>
-											<span className="text-white font-mono">
+											<span className="text-text-tertiary">{server.name}</span>
+											<span className="text-text-primary font-mono">
 												{server.totalProcessed}
 											</span>
 										</div>
-										<div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
+										<div className="h-2 bg-surface-secondary rounded-full overflow-hidden">
 											<motion.div
 												className={`h-full ${config.bgColor.replace("/20", "")}`}
 												initial={{ width: 0 }}
@@ -374,7 +378,7 @@ export function ComparisonDemo() {
 												transition={{ duration: 0.3 }}
 											/>
 										</div>
-										<div className="flex justify-between text-xs text-zinc-500">
+										<div className="flex justify-between text-xs text-text-muted">
 											<span>Active: {server.activeConnections}</span>
 										</div>
 									</div>
@@ -386,22 +390,22 @@ export function ComparisonDemo() {
 								className={`${config.bgColor} border border-${config.color}-500/30 rounded-lg p-4 space-y-2`}
 							>
 								<div className="flex justify-between text-sm">
-									<span className="text-zinc-400">Total Requests:</span>
-									<span className="text-white font-mono">
+									<span className="text-text-tertiary">Total Requests:</span>
+									<span className="text-text-primary font-mono">
 										{state.requestCount}
 									</span>
 								</div>
 								<div className="flex justify-between text-sm">
-									<span className="text-zinc-400">Variance:</span>
-									<span className="text-white font-mono">
+									<span className="text-text-tertiary">Variance:</span>
+									<span className="text-text-primary font-mono">
 										{variance.toFixed(2)}
 									</span>
 								</div>
 								{algorithm === "consistent-hashing" &&
 									selectedScenario.requestPattern === "cache-aware" && (
 										<div className="flex justify-between text-sm">
-											<span className="text-zinc-400">Cache Hits:</span>
-											<span className="text-emerald-400 font-mono">
+											<span className="text-text-tertiary">Cache Hits:</span>
+											<span className="text-accent-emerald-soft font-mono">
 												{state.cacheHits}
 											</span>
 										</div>
@@ -413,55 +417,61 @@ export function ComparisonDemo() {
 			</div>
 
 			{/* Trade-off Matrix */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
-				<h3 className="font-semibold text-white mb-4">
+			<div className="bg-surface-primary border border-border-primary rounded-xl p-6">
+				<h3 className="font-semibold text-text-primary mb-4">
 					Algorithm Trade-offs Matrix
 				</h3>
 				<div className="overflow-x-auto">
 					<table className="w-full text-sm">
 						<thead>
-							<tr className="border-b border-zinc-800">
-								<th className="text-left py-3 px-4 text-zinc-400 font-medium">
+							<tr className="border-b border-border-primary">
+								<th className="text-left py-3 px-4 text-text-tertiary font-medium">
 									Algorithm
 								</th>
-								<th className="text-center py-3 px-4 text-zinc-400 font-medium">
+								<th className="text-center py-3 px-4 text-text-tertiary font-medium">
 									Simplicity
 								</th>
-								<th className="text-center py-3 px-4 text-zinc-400 font-medium">
+								<th className="text-center py-3 px-4 text-text-tertiary font-medium">
 									Load Awareness
 								</th>
-								<th className="text-center py-3 px-4 text-zinc-400 font-medium">
+								<th className="text-center py-3 px-4 text-text-tertiary font-medium">
 									Cache Affinity
 								</th>
-								<th className="text-center py-3 px-4 text-zinc-400 font-medium">
+								<th className="text-center py-3 px-4 text-text-tertiary font-medium">
 									Failover
 								</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr className="border-b border-zinc-800">
-								<td className="py-3 px-4 text-white">Round-Robin</td>
+							<tr className="border-b border-border-primary">
+								<td className="py-3 px-4 text-text-primary">Round-Robin</td>
 								<td className="text-center py-3 px-4">⭐⭐⭐</td>
 								<td className="text-center py-3 px-4">❌</td>
 								<td className="text-center py-3 px-4">❌</td>
 								<td className="text-center py-3 px-4">⭐⭐</td>
 							</tr>
-							<tr className="border-b border-zinc-800">
-								<td className="py-3 px-4 text-white">Least Connections</td>
+							<tr className="border-b border-border-primary">
+								<td className="py-3 px-4 text-text-primary">
+									Least Connections
+								</td>
 								<td className="text-center py-3 px-4">⭐⭐</td>
 								<td className="text-center py-3 px-4">⭐⭐⭐</td>
 								<td className="text-center py-3 px-4">❌</td>
 								<td className="text-center py-3 px-4">⭐⭐⭐</td>
 							</tr>
-							<tr className="border-b border-zinc-800">
-								<td className="py-3 px-4 text-white">Weighted Round-Robin</td>
+							<tr className="border-b border-border-primary">
+								<td className="py-3 px-4 text-text-primary">
+									Weighted Round-Robin
+								</td>
 								<td className="text-center py-3 px-4">⭐⭐</td>
 								<td className="text-center py-3 px-4">⭐⭐</td>
 								<td className="text-center py-3 px-4">❌</td>
 								<td className="text-center py-3 px-4">⭐⭐</td>
 							</tr>
 							<tr>
-								<td className="py-3 px-4 text-white">Consistent Hashing</td>
+								<td className="py-3 px-4 text-text-primary">
+									Consistent Hashing
+								</td>
 								<td className="text-center py-3 px-4">⭐</td>
 								<td className="text-center py-3 px-4">❌</td>
 								<td className="text-center py-3 px-4">⭐⭐⭐</td>
@@ -473,46 +483,60 @@ export function ComparisonDemo() {
 			</div>
 
 			{/* Decision Tree */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
-				<h3 className="font-semibold text-white mb-4 flex items-center gap-2">
+			<div className="bg-surface-primary border border-border-primary rounded-xl p-6">
+				<h3 className="font-semibold text-text-primary mb-4 flex items-center gap-2">
 					<span>🌳</span>
 					Decision Tree: Which Algorithm to Use?
 				</h3>
 				<div className="space-y-3 text-sm">
 					<div className="flex items-start gap-3">
-						<div className="text-emerald-400 font-bold min-w-[20px]">→</div>
+						<div className="text-accent-emerald-soft font-bold min-w-[20px]">
+							→
+						</div>
 						<div>
-							<span className="font-medium text-white">
+							<span className="font-medium text-text-primary">
 								Need cache affinity (sticky sessions)?
 							</span>
-							<span className="text-zinc-400 ml-2">→ Consistent Hashing</span>
+							<span className="text-text-tertiary ml-2">
+								→ Consistent Hashing
+							</span>
 						</div>
 					</div>
 					<div className="flex items-start gap-3">
-						<div className="text-cyan-400 font-bold min-w-[20px]">→</div>
+						<div className="text-accent-cyan-soft font-bold min-w-[20px]">
+							→
+						</div>
 						<div>
-							<span className="font-medium text-white">
+							<span className="font-medium text-text-primary">
 								Variable request durations?
 							</span>
-							<span className="text-zinc-400 ml-2">→ Least Connections</span>
+							<span className="text-text-tertiary ml-2">
+								→ Least Connections
+							</span>
 						</div>
 					</div>
 					<div className="flex items-start gap-3">
-						<div className="text-rose-400 font-bold min-w-[20px]">→</div>
+						<div className="text-accent-rose-soft font-bold min-w-[20px]">
+							→
+						</div>
 						<div>
-							<span className="font-medium text-white">
+							<span className="font-medium text-text-primary">
 								Heterogeneous server capacities?
 							</span>
-							<span className="text-zinc-400 ml-2">→ Weighted Round-Robin</span>
+							<span className="text-text-tertiary ml-2">
+								→ Weighted Round-Robin
+							</span>
 						</div>
 					</div>
 					<div className="flex items-start gap-3">
-						<div className="text-violet-400 font-bold min-w-[20px]">→</div>
+						<div className="text-accent-violet-soft font-bold min-w-[20px]">
+							→
+						</div>
 						<div>
-							<span className="font-medium text-white">
+							<span className="font-medium text-text-primary">
 								Simple, stateless APIs?
 							</span>
-							<span className="text-zinc-400 ml-2">→ Round-Robin</span>
+							<span className="text-text-tertiary ml-2">→ Round-Robin</span>
 						</div>
 					</div>
 				</div>

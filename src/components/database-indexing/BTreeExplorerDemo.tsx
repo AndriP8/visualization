@@ -194,7 +194,7 @@ function TreeSVG({
 						y1={parentY + NODE_H / 2}
 						x2={x}
 						y2={y - NODE_H / 2}
-						stroke="#52525b"
+						stroke="var(--svg-text-muted)"
 						strokeWidth={1.5}
 						initial={{ pathLength: 0 }}
 						animate={{ pathLength: 1 }}
@@ -214,12 +214,12 @@ function TreeSVG({
 						: "#134e3e"
 					: isLeafNode
 						? "#1c1917"
-						: "#18181b";
+						: "var(--svg-bg)";
 				const stroke = isHighlighted
 					? splitOccurred
 						? "#22c55e"
 						: "#14b8a6"
-					: "#3f3f46";
+					: "var(--svg-border)";
 
 				return (
 					<motion.g
@@ -247,7 +247,7 @@ function TreeSVG({
 							textAnchor="middle"
 							fontSize={11}
 							fontFamily="monospace"
-							fill={isHighlighted ? "#5eead4" : "#a1a1aa"}
+							fill={isHighlighted ? "#5eead4" : "var(--svg-text)"}
 						>
 							{node.keys.join(", ")}
 						</text>
@@ -257,7 +257,7 @@ function TreeSVG({
 								y={y - NODE_H / 2 - 4}
 								textAnchor="middle"
 								fontSize={8}
-								fill="#52525b"
+								fill="var(--svg-text-muted)"
 							>
 								leaf
 							</text>
@@ -353,13 +353,13 @@ export function BTreeExplorerDemo() {
 					onChange={(e) => setInput(e.target.value)}
 					onKeyDown={(e) => e.key === "Enter" && handleInsert()}
 					placeholder="Enter number…"
-					className="px-3 py-1.5 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-teal-500/60 w-36"
+					className="px-3 py-1.5 rounded-lg bg-surface-secondary border border-border-secondary text-sm text-text-secondary placeholder-text-faint focus:outline-none focus:border-teal-500/60 w-36"
 				/>
 				<button
 					type="button"
 					onClick={handleInsert}
 					disabled={isAnimating || !input}
-					className="px-3 py-1.5 rounded-lg text-sm font-medium bg-teal-600/20 text-teal-300 border border-teal-500/30 hover:bg-teal-600/30 transition-colors disabled:opacity-40"
+					className="px-3 py-1.5 rounded-lg text-sm font-medium bg-teal-600/20 text-accent-teal border border-teal-500/30 hover:bg-teal-600/30 transition-colors disabled:opacity-40"
 				>
 					Insert
 				</button>
@@ -367,24 +367,25 @@ export function BTreeExplorerDemo() {
 					type="button"
 					onClick={insertNext}
 					disabled={isAnimating || presetIdx >= PRESET_VALUES.length}
-					className="px-3 py-1.5 rounded-lg text-sm font-medium bg-violet-600/20 text-violet-300 border border-violet-500/30 hover:bg-violet-600/30 transition-colors disabled:opacity-40"
+					className="px-3 py-1.5 rounded-lg text-sm font-medium bg-violet-600/20 text-accent-violet border border-violet-500/30 hover:bg-violet-600/30 transition-colors disabled:opacity-40"
 				>
 					▶ Insert Next ({PRESET_VALUES[presetIdx] ?? "done"})
 				</button>
 				<button
 					type="button"
 					onClick={resetTree}
-					className="px-3 py-1.5 rounded-lg text-sm font-medium bg-zinc-700/50 text-zinc-300 border border-zinc-600 hover:bg-zinc-700 transition-colors"
+					className="px-3 py-1.5 rounded-lg text-sm font-medium bg-surface-tertiary/50 text-text-secondary border border-border-tertiary hover:bg-surface-tertiary transition-colors"
 				>
 					↺ Reset
 				</button>
-				<div className="flex gap-3 text-xs text-zinc-500 ml-auto">
+				<div className="flex gap-3 text-xs text-text-muted ml-auto">
 					<span>
-						Depth: <strong className="text-zinc-300">{treeDepth(root)}</strong>
+						Depth:{" "}
+						<strong className="text-text-secondary">{treeDepth(root)}</strong>
 					</span>
 					<span>
 						Splits:{" "}
-						<strong className="text-zinc-300">
+						<strong className="text-text-secondary">
 							{insertLog.filter((l) => l.split).length}
 						</strong>
 					</span>
@@ -399,7 +400,7 @@ export function BTreeExplorerDemo() {
 						initial={{ opacity: 0, scale: 0.9 }}
 						animate={{ opacity: 1, scale: 1 }}
 						exit={{ opacity: 0 }}
-						className="mb-3 px-4 py-2 rounded-lg bg-green-500/10 border border-green-500/20 text-green-300 text-xs"
+						className="mb-3 px-4 py-2 rounded-lg bg-green-500/10 border border-green-500/20 text-accent-green text-xs"
 					>
 						🌿 <strong>Node split!</strong> Middle key promoted to parent — tree
 						stays balanced. This is what keeps B-Trees at O(log n) even after
@@ -409,14 +410,14 @@ export function BTreeExplorerDemo() {
 			</AnimatePresence>
 
 			{/* Tree SVG */}
-			<div className="rounded-xl border border-zinc-700/50 bg-zinc-900 p-4 mb-4 overflow-x-auto">
+			<div className="rounded-xl border border-border-secondary/50 bg-surface-primary p-4 mb-4 overflow-x-auto">
 				<TreeSVG
 					root={root}
 					highlightPath={highlightPath}
 					splitOccurred={lastSplit}
 				/>
 				{root.keys.length === 0 && (
-					<p className="text-center text-xs text-zinc-600 mt-2">
+					<p className="text-center text-xs text-text-faint mt-2">
 						Tree is empty — insert a value to begin
 					</p>
 				)}
@@ -431,8 +432,8 @@ export function BTreeExplorerDemo() {
 						animate={{ opacity: 1, y: 0 }}
 						className={`px-2 py-0.5 rounded border ${
 							entry.split
-								? "bg-green-500/10 border-green-500/25 text-green-400"
-								: "bg-zinc-800 border-zinc-700 text-zinc-400"
+								? "bg-green-500/10 border-green-500/25 text-accent-green-soft"
+								: "bg-surface-secondary border-border-secondary text-text-tertiary"
 						}`}
 					>
 						{entry.value}
@@ -442,18 +443,19 @@ export function BTreeExplorerDemo() {
 			</div>
 
 			{/* Legend */}
-			<div className="mt-4 p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50 text-xs text-zinc-400 space-y-1">
+			<div className="mt-4 p-3 rounded-lg bg-surface-secondary/30 border border-border-secondary/50 text-xs text-text-tertiary space-y-1">
 				<p>
-					<strong className="text-zinc-300">Order 3:</strong> max{" "}
-					<strong className="text-teal-400">2 keys</strong> per node. When a 3rd
-					key is inserted, the node{" "}
-					<strong className="text-green-400">splits</strong> — the median key
-					rises to the parent. If the root splits, the tree grows taller by one
-					level.
+					<strong className="text-text-secondary">Order 3:</strong> max{" "}
+					<strong className="text-accent-teal-soft">2 keys</strong> per node.
+					When a 3rd key is inserted, the node{" "}
+					<strong className="text-accent-green-soft">splits</strong> — the
+					median key rises to the parent. If the root splits, the tree grows
+					taller by one level.
 				</p>
 				<p>
-					<span className="text-teal-400 font-mono">← teal path</span> =
-					traversal. <span className="text-green-400 font-mono">✂ green</span> =
+					<span className="text-accent-teal-soft font-mono">← teal path</span> =
+					traversal.{" "}
+					<span className="text-accent-green-soft font-mono">✂ green</span> =
 					split occurred.
 				</p>
 			</div>

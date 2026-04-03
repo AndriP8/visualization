@@ -21,30 +21,31 @@ function AsyncPatternsPage() {
 				gradient={{ from: "emerald-400", via: "cyan-400", to: "blue-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="text-sm text-text-muted space-y-2">
 							<p>
-								<strong className="text-zinc-300">async/await</strong> is
+								<strong className="text-text-secondary">async/await</strong> is
 								syntactic sugar over Promises. Every{" "}
-								<code className="text-emerald-400">await</code> suspends the
-								current async function and schedules its continuation as a{" "}
-								<strong className="text-cyan-400">microtask</strong> — it never
-								blocks the thread.
+								<code className="text-accent-emerald-soft">await</code> suspends
+								the current async function and schedules its continuation as a{" "}
+								<strong className="text-accent-cyan-soft">microtask</strong> —
+								it never blocks the thread.
 							</p>
 							<p>
-								Promise <strong className="text-zinc-300">combinators</strong> (
-								<code className="text-cyan-400">all</code>,{" "}
-								<code className="text-cyan-400">race</code>,{" "}
-								<code className="text-cyan-400">allSettled</code>,{" "}
-								<code className="text-cyan-400">any</code>) differ in how they
-								handle partial failures and which result wins — choosing the
-								right one prevents subtle bugs.
+								Promise{" "}
+								<strong className="text-text-secondary">combinators</strong> (
+								<code className="text-accent-cyan-soft">all</code>,{" "}
+								<code className="text-accent-cyan-soft">race</code>,{" "}
+								<code className="text-accent-cyan-soft">allSettled</code>,{" "}
+								<code className="text-accent-cyan-soft">any</code>) differ in
+								how they handle partial failures and which result wins —
+								choosing the right one prevents subtle bugs.
 							</p>
 							<p>
-								<strong className="text-zinc-300">Race conditions</strong> occur
-								when multiple in-flight requests can resolve in any order. Fix
-								them with{" "}
-								<code className="text-amber-400">AbortController</code> or a
-								request ID guard.
+								<strong className="text-text-secondary">Race conditions</strong>{" "}
+								occur when multiple in-flight requests can resolve in any order.
+								Fix them with{" "}
+								<code className="text-accent-amber-soft">AbortController</code>{" "}
+								or a request ID guard.
 							</p>
 						</div>
 					),

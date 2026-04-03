@@ -270,7 +270,9 @@ function ScoreDots({ score }: { score: number }) {
 					// biome-ignore lint/suspicious/noArrayIndexKey: static dots
 					key={i}
 					className="w-2 h-2 rounded-full transition-colors"
-					style={{ backgroundColor: i < score ? scoreColor(score) : "#27272a" }}
+					style={{
+						backgroundColor: i < score ? scoreColor(score) : "var(--svg-bg)",
+					}}
 				/>
 			))}
 		</div>
@@ -304,11 +306,11 @@ export function TradeoffMatrixDemo() {
 				<table className="w-full text-xs border-collapse">
 					<thead>
 						<tr>
-							<th className="text-left p-2 text-zinc-500 font-medium w-12" />
+							<th className="text-left p-2 text-text-muted font-medium w-12" />
 							{FACTORS.map((f) => (
 								<th
 									key={f}
-									className="text-center p-2 text-zinc-400 font-semibold whitespace-nowrap"
+									className="text-center p-2 text-text-tertiary font-semibold whitespace-nowrap"
 								>
 									{f}
 								</th>
@@ -317,7 +319,7 @@ export function TradeoffMatrixDemo() {
 					</thead>
 					<tbody>
 						{ALL_STRATEGIES.map((strategy) => (
-							<tr key={strategy} className="border-t border-zinc-800/50">
+							<tr key={strategy} className="border-t border-border-primary/50">
 								<td className="p-2">
 									<span
 										className="font-bold text-xs"
@@ -342,13 +344,13 @@ export function TradeoffMatrixDemo() {
 												className={clsx(
 													"flex flex-col items-center gap-1 w-full p-2 rounded-lg transition-all cursor-pointer",
 													isSelected
-														? "bg-zinc-700/80 ring-1 ring-white/20"
-														: "hover:bg-zinc-800/50",
+														? "bg-surface-tertiary/80 ring-1 ring-white/20"
+														: "hover:bg-surface-secondary/50",
 												)}
 												title={rating.label}
 											>
 												<ScoreDots score={rating.score} />
-												<span className="text-[9px] text-zinc-500 leading-tight">
+												<span className="text-[9px] text-text-muted leading-tight">
 													{rating.label}
 												</span>
 											</button>
@@ -370,7 +372,7 @@ export function TradeoffMatrixDemo() {
 						exit={{ opacity: 0, height: 0 }}
 						className="overflow-hidden"
 					>
-						<div className="bg-zinc-800/50 border border-zinc-700 rounded-xl p-4 space-y-2">
+						<div className="bg-surface-secondary/50 border border-border-secondary rounded-xl p-4 space-y-2">
 							<div className="flex items-center gap-3">
 								<span
 									className="font-bold text-sm px-2 py-0.5 rounded"
@@ -381,15 +383,15 @@ export function TradeoffMatrixDemo() {
 								>
 									{selectedData.strategy}
 								</span>
-								<span className="text-zinc-400 text-sm">→</span>
-								<span className="font-semibold text-zinc-200 text-sm">
+								<span className="text-text-tertiary text-sm">→</span>
+								<span className="font-semibold text-text-secondary text-sm">
 									{selectedData.factor}
 								</span>
 								<span className="ml-auto">
 									<ScoreDots score={selectedData.rating.score} />
 								</span>
 							</div>
-							<p className="text-sm text-zinc-300 leading-relaxed">
+							<p className="text-sm text-text-secondary leading-relaxed">
 								{selectedData.rating.explanation}
 							</p>
 						</div>
@@ -400,7 +402,7 @@ export function TradeoffMatrixDemo() {
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
-						className="text-xs text-zinc-600 text-center py-2"
+						className="text-xs text-text-faint text-center py-2"
 					>
 						Click any cell to see why it rates that way
 					</motion.p>

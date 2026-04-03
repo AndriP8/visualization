@@ -122,7 +122,7 @@ export function UseCaseMatcherDemo({
 		<div className="space-y-6">
 			{/* Strategy pills — live elimination view */}
 			<div className="flex flex-wrap gap-2 items-center">
-				<span className="text-xs text-zinc-500 mr-1">Candidates:</span>
+				<span className="text-xs text-text-muted mr-1">Candidates:</span>
 				{ALL_STRATEGIES.map((s) => (
 					<motion.span
 						key={s}
@@ -176,15 +176,17 @@ export function UseCaseMatcherDemo({
 							className={clsx(
 								"rounded-xl border p-4 space-y-3 transition-colors",
 								isPast && answered
-									? "border-zinc-800 bg-zinc-900/30"
+									? "border-border-primary bg-surface-primary/30"
 									: "border-violet-500/30 bg-violet-500/5",
 							)}
 						>
 							<div className="flex items-start gap-3">
-								<span className="text-xs font-bold text-zinc-600 w-5 shrink-0 mt-0.5">
+								<span className="text-xs font-bold text-text-faint w-5 shrink-0 mt-0.5">
 									Q{i + 1}
 								</span>
-								<p className="text-sm text-zinc-200 font-medium">{q.text}</p>
+								<p className="text-sm text-text-secondary font-medium">
+									{q.text}
+								</p>
 							</div>
 
 							{!answered && isCurrent && (
@@ -192,14 +194,14 @@ export function UseCaseMatcherDemo({
 									<button
 										type="button"
 										onClick={() => answer(q.id, true)}
-										className="flex-1 px-3 py-2 rounded-lg text-xs font-semibold bg-green-500/15 text-green-400 border border-green-500/30 hover:bg-green-500/25 transition-colors text-left"
+										className="flex-1 px-3 py-2 rounded-lg text-xs font-semibold bg-green-500/15 text-accent-green-soft border border-green-500/30 hover:bg-green-500/25 transition-colors text-left"
 									>
 										✅ {q.yesLabel}
 									</button>
 									<button
 										type="button"
 										onClick={() => answer(q.id, false)}
-										className="flex-1 px-3 py-2 rounded-lg text-xs font-semibold bg-zinc-800 text-zinc-300 border border-zinc-700 hover:bg-zinc-700 transition-colors text-left"
+										className="flex-1 px-3 py-2 rounded-lg text-xs font-semibold bg-surface-secondary text-text-secondary border border-border-secondary hover:bg-surface-tertiary transition-colors text-left"
 									>
 										❌ {q.noLabel}
 									</button>
@@ -213,14 +215,14 @@ export function UseCaseMatcherDemo({
 											className={clsx(
 												"text-xs px-2 py-0.5 rounded font-semibold",
 												answerValue
-													? "bg-green-500/15 text-green-400"
-													: "bg-zinc-700 text-zinc-300",
+													? "bg-green-500/15 text-accent-green-soft"
+													: "bg-surface-tertiary text-text-secondary",
 											)}
 										>
 											{answerValue ? `✅ ${q.yesLabel}` : `❌ ${q.noLabel}`}
 										</span>
 										{eliminated_by_this.length > 0 && (
-											<span className="text-[10px] text-zinc-500">
+											<span className="text-[10px] text-text-muted">
 												→ eliminated:{" "}
 												{eliminated_by_this.map((s) => (
 													<span
@@ -235,7 +237,7 @@ export function UseCaseMatcherDemo({
 										)}
 									</div>
 									{explain && (
-										<p className="text-xs text-zinc-400 leading-relaxed">
+										<p className="text-xs text-text-tertiary leading-relaxed">
 											{explain}
 										</p>
 									)}
@@ -257,10 +259,10 @@ export function UseCaseMatcherDemo({
 					>
 						{remaining.length === 0 ? (
 							<>
-								<p className="text-sm font-semibold text-amber-400">
+								<p className="text-sm font-semibold text-accent-amber-soft">
 									⚠️ All strategies eliminated
 								</p>
-								<p className="text-xs text-zinc-400">
+								<p className="text-xs text-text-tertiary">
 									Your requirements are very strict. In practice, you'd likely
 									use SSR or CSR with careful architecture (e.g., edge SSR +
 									client-side real-time updates), depending on your performance
@@ -269,7 +271,7 @@ export function UseCaseMatcherDemo({
 							</>
 						) : (
 							<>
-								<p className="text-sm font-semibold text-zinc-200">
+								<p className="text-sm font-semibold text-text-secondary">
 									🎯 Best fit for your use case:
 								</p>
 								<div className="flex flex-wrap gap-2">
@@ -287,7 +289,7 @@ export function UseCaseMatcherDemo({
 										</span>
 									))}
 								</div>
-								<p className="text-xs text-zinc-500">
+								<p className="text-xs text-text-muted">
 									💡 The Timeline Comparison above dims the eliminated
 									strategies so you can focus on what fits.
 								</p>
@@ -303,7 +305,7 @@ export function UseCaseMatcherDemo({
 					<button
 						type="button"
 						onClick={reset}
-						className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors underline"
+						className="text-xs text-text-muted hover:text-text-secondary transition-colors underline"
 					>
 						↩ Start over
 					</button>

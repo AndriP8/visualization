@@ -15,7 +15,7 @@ const STREAMS: Stream[] = [
 	{
 		id: 1,
 		label: "HTML",
-		color: "text-blue-300",
+		color: "text-accent-blue",
 		bgColor: "bg-blue-500",
 		borderColor: "border-blue-500/40",
 		duration: 0.6,
@@ -23,7 +23,7 @@ const STREAMS: Stream[] = [
 	{
 		id: 2,
 		label: "CSS (slow)",
-		color: "text-orange-300",
+		color: "text-accent-orange",
 		bgColor: "bg-orange-500",
 		borderColor: "border-orange-500/40",
 		duration: 3.5,
@@ -31,7 +31,7 @@ const STREAMS: Stream[] = [
 	{
 		id: 3,
 		label: "img1",
-		color: "text-emerald-300",
+		color: "text-accent-emerald",
 		bgColor: "bg-emerald-500",
 		borderColor: "border-emerald-500/40",
 		duration: 0.5,
@@ -39,7 +39,7 @@ const STREAMS: Stream[] = [
 	{
 		id: 4,
 		label: "img2",
-		color: "text-violet-300",
+		color: "text-accent-violet",
 		bgColor: "bg-violet-500",
 		borderColor: "border-violet-500/40",
 		duration: 0.7,
@@ -47,7 +47,7 @@ const STREAMS: Stream[] = [
 	{
 		id: 5,
 		label: "img3",
-		color: "text-rose-300",
+		color: "text-accent-rose",
 		bgColor: "bg-rose-500",
 		borderColor: "border-rose-500/40",
 		duration: 0.8,
@@ -55,7 +55,7 @@ const STREAMS: Stream[] = [
 	{
 		id: 6,
 		label: "img4",
-		color: "text-amber-300",
+		color: "text-accent-amber",
 		bgColor: "bg-amber-500",
 		borderColor: "border-amber-500/40",
 		duration: 0.6,
@@ -131,12 +131,12 @@ export function MultiplexingDemo() {
 				{/* Visualization */}
 				<div className="space-y-3">
 					{/* Stream lanes */}
-					<div className="rounded-xl bg-zinc-900 border border-zinc-700 p-4 space-y-4">
+					<div className="rounded-xl bg-surface-primary border border-border-secondary p-4 space-y-4">
 						<div className="flex items-center justify-between">
-							<span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+							<span className="text-xs font-semibold text-text-tertiary uppercase tracking-wider">
 								HTTP/2 — Single TCP Connection
 							</span>
-							<span className="text-xs font-mono text-cyan-400">
+							<span className="text-xs font-mono text-accent-cyan-soft">
 								{animating || progress > 0
 									? `${currentTime.toFixed(1)}s`
 									: `total: ${TOTAL_TIME}s`}
@@ -163,7 +163,7 @@ export function MultiplexingDemo() {
 										>
 											S{stream.id}: {stream.label}
 										</span>
-										<div className="flex-1 h-5 bg-zinc-800 rounded relative overflow-hidden">
+										<div className="flex-1 h-5 bg-surface-secondary rounded relative overflow-hidden">
 											{/* Ghost */}
 											<div
 												className={`absolute top-0 left-0 h-full rounded opacity-20 ${stream.bgColor}`}
@@ -191,7 +191,7 @@ export function MultiplexingDemo() {
 
 						{/* Progress bar */}
 						{(animating || progress > 0) && (
-							<div className="relative h-1 bg-zinc-800 rounded-full">
+							<div className="relative h-1 bg-surface-secondary rounded-full">
 								<motion.div
 									className="absolute top-0 left-0 h-full bg-cyan-400 rounded-full"
 									animate={{ width: `${progress * 100}%` }}
@@ -202,10 +202,10 @@ export function MultiplexingDemo() {
 
 						{/* Frame pipe visualization */}
 						<div className="space-y-2">
-							<p className="text-xs text-zinc-500">
+							<p className="text-xs text-text-muted">
 								TCP pipe (frames interleaved):
 							</p>
-							<div className="h-8 bg-zinc-800 rounded-lg overflow-hidden relative flex items-center px-2 gap-0.5">
+							<div className="h-8 bg-surface-secondary rounded-lg overflow-hidden relative flex items-center px-2 gap-0.5">
 								{animating &&
 									frames
 										.filter((frame) => {
@@ -231,7 +231,7 @@ export function MultiplexingDemo() {
 											/>
 										))}
 								{!animating && frames.length === 0 && (
-									<span className="text-xs text-zinc-600">
+									<span className="text-xs text-text-faint">
 										Click Animate to see interleaved frames
 									</span>
 								)}
@@ -245,7 +245,7 @@ export function MultiplexingDemo() {
 									initial={{ opacity: 0, y: 4 }}
 									animate={{ opacity: 1, y: 0 }}
 									exit={{ opacity: 0 }}
-									className="text-xs px-3 py-2 rounded-lg border bg-cyan-500/10 text-cyan-300 border-cyan-500/20"
+									className="text-xs px-3 py-2 rounded-lg border bg-cyan-500/10 text-accent-cyan border-cyan-500/20"
 								>
 									Done in {TOTAL_TIME}s — only the slowest stream determines
 									total time. CSS didn't block anything.
@@ -259,8 +259,8 @@ export function MultiplexingDemo() {
 						onClick={animating ? stopAnimation : startAnimation}
 						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
 							animating
-								? "bg-zinc-700 text-zinc-300"
-								: "bg-violet-600 hover:bg-violet-500 text-white"
+								? "bg-surface-tertiary text-text-secondary"
+								: "bg-violet-600 hover:bg-violet-500 text-text-primary"
 						}`}
 					>
 						{animating ? "Stop" : progress > 0 ? "Replay" : "Animate"}
@@ -270,10 +270,10 @@ export function MultiplexingDemo() {
 				{/* Explanation */}
 				<div className="space-y-4">
 					<div className="space-y-2">
-						<h4 className="text-sm font-semibold text-zinc-300">
+						<h4 className="text-sm font-semibold text-text-secondary">
 							HTTP/2 Multiplexing
 						</h4>
-						<p className="text-sm text-zinc-400">
+						<p className="text-sm text-text-tertiary">
 							HTTP/2 splits each request/response into binary frames and
 							interleaves them over a single TCP connection. Each stream is
 							independent — a slow CSS file has no effect on the image
@@ -301,7 +301,7 @@ fetch('/image2.jpg');  // Stream 4
 					/>
 
 					<div className="space-y-2">
-						<p className="text-xs font-semibold text-zinc-300">
+						<p className="text-xs font-semibold text-text-secondary">
 							Key HTTP/2 concepts
 						</p>
 						<div className="space-y-2">
@@ -309,34 +309,34 @@ fetch('/image2.jpg');  // Stream 4
 								{
 									term: "Stream",
 									def: "A logical bidirectional channel within the connection. Each request/response pair gets one stream.",
-									color: "text-cyan-400",
+									color: "text-accent-cyan-soft",
 								},
 								{
 									term: "Frame",
 									def: "The smallest unit of communication — headers, data, priority, etc. Frames from different streams can be interleaved.",
-									color: "text-violet-400",
+									color: "text-accent-violet-soft",
 								},
 								{
 									term: "Binary protocol",
 									def: "HTTP/2 uses binary framing instead of text. Faster to parse, less ambiguous.",
-									color: "text-emerald-400",
+									color: "text-accent-emerald-soft",
 								},
 							].map(({ term, def, color }) => (
 								<div
 									key={term}
-									className="p-2.5 rounded-lg bg-zinc-800/50 border border-zinc-700"
+									className="p-2.5 rounded-lg bg-surface-secondary/50 border border-border-secondary"
 								>
 									<span className={`text-xs font-semibold ${color}`}>
 										{term}:{" "}
 									</span>
-									<span className="text-xs text-zinc-400">{def}</span>
+									<span className="text-xs text-text-tertiary">{def}</span>
 								</div>
 							))}
 						</div>
 					</div>
 
 					<div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-						<p className="text-xs text-amber-300">
+						<p className="text-xs text-accent-amber">
 							<span className="font-semibold">Note:</span> HTTP/2 solves HOL
 							blocking at the HTTP layer. TCP-level HOL blocking still exists —
 							a lost packet stalls all streams. HTTP/3 (QUIC) solves this too.

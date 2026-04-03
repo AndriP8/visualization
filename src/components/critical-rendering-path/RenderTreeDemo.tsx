@@ -152,7 +152,7 @@ function renderMiniTree(
 				y1={options.parentY + 14}
 				x2={node.x}
 				y2={node.y - 2}
-				stroke={isDimmed ? "#27272a" : "#3f3f46"}
+				stroke={isDimmed ? "var(--svg-bg)" : "var(--svg-border)"}
 				strokeWidth={1.5}
 				strokeDasharray={isDimmed ? "4 2" : "none"}
 			/>,
@@ -167,15 +167,15 @@ function renderMiniTree(
 				width={70}
 				height={24}
 				rx={5}
-				fill={isDimmed ? "#18181b" : "#1c1c1e"}
-				stroke={isDimmed ? "#27272a" : options.treeColor}
+				fill={isDimmed ? "var(--svg-bg)" : "#1c1c1e"}
+				stroke={isDimmed ? "var(--svg-bg)" : options.treeColor}
 				strokeWidth={1}
 			/>
 			<text
 				x={node.x}
 				y={node.y + 5}
 				textAnchor="middle"
-				fill={isDimmed ? "#52525b" : options.treeColor}
+				fill={isDimmed ? "var(--svg-text-muted)" : options.treeColor}
 				fontSize={9}
 				fontFamily="monospace"
 			>
@@ -261,7 +261,7 @@ export function RenderTreeDemo() {
 		>
 			{/* CSS Rule toggles */}
 			<div className="mb-5">
-				<h4 className="text-xs text-zinc-500 uppercase tracking-wider mb-2">
+				<h4 className="text-xs text-text-muted uppercase tracking-wider mb-2">
 					CSS Rules (toggle to see Render Tree change)
 				</h4>
 				<div className="flex flex-wrap gap-2">
@@ -272,8 +272,8 @@ export function RenderTreeDemo() {
 							onClick={() => toggleCssRule(i)}
 							className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border ${
 								rule.enabled
-									? "border-cyan-500/30 bg-cyan-500/10 text-cyan-400"
-									: "border-zinc-800 bg-zinc-900/50 text-zinc-600 line-through"
+									? "border-cyan-500/30 bg-cyan-500/10 text-accent-cyan-soft"
+									: "border-border-primary bg-surface-primary/50 text-text-faint line-through"
 							}`}
 						>
 							{rule.selector} {"{ "}
@@ -286,8 +286,8 @@ export function RenderTreeDemo() {
 			{/* Trees */}
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
 				{/* DOM Tree */}
-				<div className="rounded-lg bg-zinc-800/30 border border-zinc-800 p-4">
-					<h4 className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-3">
+				<div className="rounded-lg bg-surface-secondary/30 border border-border-primary p-4">
+					<h4 className="text-xs font-semibold text-accent-amber-soft uppercase tracking-wider mb-3">
 						DOM Tree
 					</h4>
 					<svg
@@ -305,8 +305,8 @@ export function RenderTreeDemo() {
 				</div>
 
 				{/* CSSOM Tree */}
-				<div className="rounded-lg bg-zinc-800/30 border border-zinc-800 p-4">
-					<h4 className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-3">
+				<div className="rounded-lg bg-surface-secondary/30 border border-border-primary p-4">
+					<h4 className="text-xs font-semibold text-accent-cyan-soft uppercase tracking-wider mb-3">
 						CSSOM Tree
 					</h4>
 					<svg
@@ -328,8 +328,8 @@ export function RenderTreeDemo() {
 					onClick={() => setShowRenderTree(!showRenderTree)}
 					className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all border ${
 						showRenderTree
-							? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-							: "bg-amber-500/20 text-amber-300 border-amber-500/30 hover:bg-amber-500/30"
+							? "bg-emerald-500/20 text-accent-emerald border-emerald-500/30"
+							: "bg-amber-500/20 text-accent-amber border-amber-500/30 hover:bg-amber-500/30"
 					}`}
 				>
 					{showRenderTree
@@ -347,8 +347,8 @@ export function RenderTreeDemo() {
 						exit={{ opacity: 0, height: 0 }}
 						className="overflow-hidden"
 					>
-						<div className="rounded-lg bg-zinc-800/30 border border-emerald-500/20 p-4">
-							<h4 className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-3">
+						<div className="rounded-lg bg-surface-secondary/30 border border-emerald-500/20 p-4">
+							<h4 className="text-xs font-semibold text-accent-emerald-soft uppercase tracking-wider mb-3">
 								Render Tree (visible nodes only)
 							</h4>
 							<div className="flex flex-wrap gap-2 mb-4">
@@ -358,9 +358,9 @@ export function RenderTreeDemo() {
 										initial={{ opacity: 0, scale: 0.8 }}
 										animate={{ opacity: 1, scale: 1 }}
 										transition={{ delay: i * 0.08 }}
-										className="px-3 py-2 rounded-lg bg-zinc-900 border border-emerald-500/20"
+										className="px-3 py-2 rounded-lg bg-surface-primary border border-emerald-500/20"
 									>
-										<span className="text-xs font-mono text-emerald-400">
+										<span className="text-xs font-mono text-accent-emerald-soft">
 											{node.tag}
 										</span>
 									</motion.div>
@@ -369,7 +369,7 @@ export function RenderTreeDemo() {
 
 							{/* Excluded nodes explanation */}
 							<div className="space-y-1.5">
-								<h5 className="text-xs text-zinc-500 font-semibold">
+								<h5 className="text-xs text-text-muted font-semibold">
 									Excluded from Render Tree:
 								</h5>
 								<div className="flex flex-wrap gap-2">
@@ -378,7 +378,7 @@ export function RenderTreeDemo() {
 										.map((node) => (
 											<span
 												key={node.id}
-												className="px-2 py-1 text-xs font-mono rounded bg-red-500/10 text-red-400 border border-red-500/20"
+												className="px-2 py-1 text-xs font-mono rounded bg-red-500/10 text-accent-red-soft border border-red-500/20"
 											>
 												{"<"}
 												{node.tag}

@@ -228,19 +228,19 @@ export function CacheStampedeDemo() {
 					})
 						.with(
 							{ isSelected: true, color: "rose" },
-							() => "bg-rose-500/15 text-rose-300 border-rose-500/40",
+							() => "bg-rose-500/15 text-accent-rose border-rose-500/40",
 						)
 						.with(
 							{ isSelected: true, color: "amber" },
-							() => "bg-amber-500/15 text-amber-300 border-amber-500/40",
+							() => "bg-amber-500/15 text-accent-amber border-amber-500/40",
 						)
 						.with(
 							{ isSelected: true, color: "green" },
-							() => "bg-green-500/15 text-green-300 border-green-500/40",
+							() => "bg-green-500/15 text-accent-green border-green-500/40",
 						)
 						.otherwise(
 							() =>
-								"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+								"bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary",
 						);
 
 					return (
@@ -257,22 +257,22 @@ export function CacheStampedeDemo() {
 			</div>
 
 			<div>
-				<h4 className="text-base font-semibold text-white mb-1">
+				<h4 className="text-base font-semibold text-text-primary mb-1">
 					{scenario.heading}
 				</h4>
-				<p className="text-sm text-zinc-400">{scenario.description}</p>
+				<p className="text-sm text-text-tertiary">{scenario.description}</p>
 			</div>
 
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 				{/* Animation canvas */}
 				<div className="space-y-4">
 					{/* Stage */}
-					<div className="relative rounded-xl bg-zinc-900 border border-zinc-700 overflow-hidden h-64">
+					<div className="relative rounded-xl bg-surface-primary border border-border-secondary overflow-hidden h-64">
 						{/* Labels */}
-						<div className="absolute top-3 left-3 text-xs text-zinc-500 font-mono">
+						<div className="absolute top-3 left-3 text-xs text-text-muted font-mono">
 							Incoming requests{" "}
 							{running && (
-								<span className="text-zinc-400">({REQUEST_LABEL})</span>
+								<span className="text-text-tertiary">({REQUEST_LABEL})</span>
 							)}
 						</div>
 
@@ -280,15 +280,15 @@ export function CacheStampedeDemo() {
 						<div className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 w-28 h-10 rounded-lg border-2 border-dashed flex items-center justify-center text-xs font-semibold">
 							{phase === "idle" ||
 							(selected === "stampede" && phase === "miss") ? (
-								<span className="text-orange-400 border-orange-500/40">
+								<span className="text-accent-orange-soft border-orange-500/40">
 									❌ Cache Miss
 								</span>
 							) : phase === "refresh" ? (
-								<span className="text-amber-300 border-amber-500/40">
+								<span className="text-accent-amber border-amber-500/40">
 									🔄 Refreshing…
 								</span>
 							) : (
-								<span className="text-green-400 border-green-500/40">
+								<span className="text-accent-green-soft border-green-500/40">
 									✅ Cache Warm
 								</span>
 							)}
@@ -301,24 +301,26 @@ export function CacheStampedeDemo() {
 									<motion.div
 										initial={{ opacity: 0, y: -5 }}
 										animate={{ opacity: 1, y: 0 }}
-										className="text-rose-400 text-xs font-bold animate-pulse"
+										className="text-accent-rose-soft text-xs font-bold animate-pulse"
 									>
 										🔴 DB OVERLOADED!
 									</motion.div>
 								)}
 							</AnimatePresence>
-							<div className="px-4 py-2 rounded-lg bg-zinc-700 border border-zinc-600 text-xs text-zinc-300">
+							<div className="px-4 py-2 rounded-lg bg-surface-tertiary border border-border-tertiary text-xs text-text-secondary">
 								🗄️ Database
 							</div>
 							{/* DB load bar */}
-							<div className="w-28 h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+							<div className="w-28 h-1.5 rounded-full bg-surface-secondary overflow-hidden">
 								<motion.div
 									className={`h-full rounded-full transition-colors duration-300 ${dbLoadColor}`}
 									animate={{ width: `${dbLoad}%` }}
 									transition={{ duration: 0.3 }}
 								/>
 							</div>
-							<span className="text-xs text-zinc-500">DB load: {dbLoad}%</span>
+							<span className="text-xs text-text-muted">
+								DB load: {dbLoad}%
+							</span>
 						</div>
 
 						{/* Request dots */}
@@ -412,12 +414,12 @@ export function CacheStampedeDemo() {
 							exit={{ opacity: 0 }}
 							className={`text-sm px-3 py-2 rounded-lg border ${
 								phase === "overload"
-									? "bg-rose-500/10 text-rose-300 border-rose-500/20"
+									? "bg-rose-500/10 text-accent-rose border-rose-500/20"
 									: phase === "resolve"
-										? "bg-green-500/10 text-green-300 border-green-500/20"
+										? "bg-green-500/10 text-accent-green border-green-500/20"
 										: phase === "queue"
-											? "bg-amber-500/10 text-amber-300 border-amber-500/20"
-											: "bg-zinc-800 text-zinc-400 border-zinc-700"
+											? "bg-amber-500/10 text-accent-amber border-amber-500/20"
+											: "bg-surface-secondary text-text-tertiary border-border-secondary"
 							}`}
 						>
 							{phase === "idle" && "Click Animate to start"}
@@ -446,8 +448,8 @@ export function CacheStampedeDemo() {
 						onClick={running ? reset : runScenario}
 						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
 							running
-								? "bg-zinc-700 text-zinc-300"
-								: "bg-violet-600 hover:bg-violet-500 text-white"
+								? "bg-surface-tertiary text-text-secondary"
+								: "bg-violet-600 hover:bg-violet-500 text-text-primary"
 						}`}
 					>
 						{running ? "⏹ Stop" : phase !== "idle" ? "↺ Replay" : "▶ Animate"}
@@ -456,32 +458,32 @@ export function CacheStampedeDemo() {
 
 				{/* Explanation */}
 				<div className="space-y-4">
-					<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+					<h4 className="text-sm font-semibold text-text-tertiary uppercase tracking-wider">
 						Implementation Notes
 					</h4>
 
 					{selected === "stampede" && (
-						<div className="space-y-3 text-sm text-zinc-400">
+						<div className="space-y-3 text-sm text-text-tertiary">
 							<p>When a hot cache key expires under high traffic:</p>
 							<ul className="space-y-2">
 								<li className="flex gap-2">
-									<span className="text-rose-400">1.</span>N concurrent requests
-									all get a cache miss
+									<span className="text-accent-rose-soft">1.</span>N concurrent
+									requests all get a cache miss
 								</li>
 								<li className="flex gap-2">
-									<span className="text-rose-400">2.</span>All independently
-									query the DB
+									<span className="text-accent-rose-soft">2.</span>All
+									independently query the DB
 								</li>
 								<li className="flex gap-2">
-									<span className="text-rose-400">3.</span>DB gets N
+									<span className="text-accent-rose-soft">3.</span>DB gets N
 									simultaneous identical queries
 								</li>
 								<li className="flex gap-2">
-									<span className="text-rose-400">4.</span>DB latency spikes →
-									timeout cascade
+									<span className="text-accent-rose-soft">4.</span>DB latency
+									spikes → timeout cascade
 								</li>
 							</ul>
-							<div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs">
+							<div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-accent-rose text-xs">
 								⚠️ This can bring down your entire backend. Popular keys should
 								never expire simultaneously.
 							</div>
@@ -489,7 +491,7 @@ export function CacheStampedeDemo() {
 					)}
 
 					{selected === "early-expiry" && (
-						<div className="space-y-3 text-sm text-zinc-400">
+						<div className="space-y-3 text-sm text-text-tertiary">
 							<p>Add jitter + proactive refresh before TTL hits:</p>
 							<ShikiCode
 								language="javascript"
@@ -506,7 +508,9 @@ if (timeUntilExpiry < delta * beta * Math.log(Math.random())) {
 							/>
 							<p className="text-xs">
 								The{" "}
-								<code className="text-amber-300">Math.log(Math.random())</code>{" "}
+								<code className="text-accent-amber">
+									Math.log(Math.random())
+								</code>{" "}
 								introduces probabilistic spread — some requests refresh early at
 								random times, preventing a thundering herd at the exact expiry
 								moment. Based on the XFetch paper (Vattani et al., 2015).
@@ -515,7 +519,7 @@ if (timeUntilExpiry < delta * beta * Math.log(Math.random())) {
 					)}
 
 					{selected === "single-flight" && (
-						<div className="space-y-3 text-sm text-zinc-400">
+						<div className="space-y-3 text-sm text-text-tertiary">
 							<p>Deduplicate in-flight requests with a pending promise map:</p>
 							<ShikiCode
 								language="javascript"

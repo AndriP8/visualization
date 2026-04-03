@@ -15,42 +15,42 @@ const RESOURCES: Resource[] = [
 		id: "html",
 		label: "HTML",
 		size: 1,
-		color: "text-blue-300",
+		color: "text-accent-blue",
 		bgColor: "bg-blue-500",
 	},
 	{
 		id: "css",
 		label: "CSS",
 		size: 2,
-		color: "text-orange-300",
+		color: "text-accent-orange",
 		bgColor: "bg-orange-500",
 	},
 	{
 		id: "img1",
 		label: "img1",
 		size: 1,
-		color: "text-emerald-300",
+		color: "text-accent-emerald",
 		bgColor: "bg-emerald-500",
 	},
 	{
 		id: "img2",
 		label: "img2",
 		size: 1,
-		color: "text-violet-300",
+		color: "text-accent-violet",
 		bgColor: "bg-violet-500",
 	},
 	{
 		id: "img3",
 		label: "img3",
 		size: 1,
-		color: "text-rose-300",
+		color: "text-accent-rose",
 		bgColor: "bg-rose-500",
 	},
 	{
 		id: "img4",
 		label: "img4",
 		size: 1,
-		color: "text-amber-300",
+		color: "text-accent-amber",
 		bgColor: "bg-amber-500",
 	},
 ];
@@ -164,8 +164,8 @@ export function HeadOfLineDemo() {
 							onClick={() => setMode(m)}
 							className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
 								mode === m
-									? "bg-orange-500/15 text-orange-300 border-orange-500/40"
-									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600"
+									? "bg-orange-500/15 text-accent-orange border-orange-500/40"
+									: "bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary"
 							}`}
 						>
 							{m === "single"
@@ -176,7 +176,7 @@ export function HeadOfLineDemo() {
 				</div>
 
 				<div className="flex items-center gap-3">
-					<span className="text-xs text-zinc-400">CSS delay:</span>
+					<span className="text-xs text-text-tertiary">CSS delay:</span>
 					<input
 						type="range"
 						min={0}
@@ -186,7 +186,7 @@ export function HeadOfLineDemo() {
 						onChange={(e) => setSlowDelay(Number(e.target.value))}
 						className="w-28 accent-orange-400"
 					/>
-					<span className="text-xs text-orange-300 font-mono w-10">
+					<span className="text-xs text-accent-orange font-mono w-10">
 						+{slowDelay}s
 					</span>
 				</div>
@@ -195,12 +195,12 @@ export function HeadOfLineDemo() {
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 				{/* Waterfall */}
 				<div className="space-y-3">
-					<div className="rounded-xl bg-zinc-900 border border-zinc-700 p-4 space-y-3">
+					<div className="rounded-xl bg-surface-primary border border-border-secondary p-4 space-y-3">
 						<div className="flex items-center justify-between">
-							<span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+							<span className="text-xs font-semibold text-text-tertiary uppercase tracking-wider">
 								Waterfall Timeline
 							</span>
-							<span className="text-xs text-zinc-500 font-mono">
+							<span className="text-xs text-text-muted font-mono">
 								total: {totalTime.toFixed(1)}s
 							</span>
 						</div>
@@ -220,10 +220,10 @@ export function HeadOfLineDemo() {
 
 								return (
 									<div key={bar.id} className="flex items-center gap-2">
-										<span className="text-xs text-zinc-400 w-8 font-mono shrink-0">
+										<span className="text-xs text-text-tertiary w-8 font-mono shrink-0">
 											{bar.label}
 										</span>
-										<div className="flex-1 h-5 bg-zinc-800 rounded relative overflow-hidden">
+										<div className="flex-1 h-5 bg-surface-secondary rounded relative overflow-hidden">
 											{/* Ghost bar (full extent) */}
 											<div
 												className={`absolute top-0 h-full rounded opacity-20 ${bar.color}`}
@@ -251,7 +251,7 @@ export function HeadOfLineDemo() {
 										{mode === "single" &&
 											bar.id !== "html" &&
 											bar.id !== "css" && (
-												<span className="text-xs text-red-400 w-14 shrink-0">
+												<span className="text-xs text-accent-red-soft w-14 shrink-0">
 													{animating || progress > 0 ? "" : "blocked"}
 												</span>
 											)}
@@ -262,9 +262,9 @@ export function HeadOfLineDemo() {
 
 						{/* Time indicator */}
 						{(animating || progress > 0) && (
-							<div className="relative h-1 bg-zinc-800 rounded-full mt-1">
+							<div className="relative h-1 bg-surface-secondary rounded-full mt-1">
 								<motion.div
-									className="absolute top-0 left-0 h-full bg-zinc-400 rounded-full"
+									className="absolute top-0 left-0 h-full bg-text-tertiary rounded-full"
 									animate={{ width: `${progress * 100}%` }}
 									transition={{ duration: 0.05 }}
 								/>
@@ -280,8 +280,8 @@ export function HeadOfLineDemo() {
 									exit={{ opacity: 0 }}
 									className={`text-xs px-3 py-2 rounded-lg border ${
 										mode === "single"
-											? "bg-red-500/10 text-red-300 border-red-500/20"
-											: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20"
+											? "bg-red-500/10 text-accent-red border-red-500/20"
+											: "bg-emerald-500/10 text-accent-emerald border-emerald-500/20"
 									}`}
 								>
 									{mode === "single"
@@ -297,8 +297,8 @@ export function HeadOfLineDemo() {
 						onClick={animating ? stopAnimation : startAnimation}
 						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
 							animating
-								? "bg-zinc-700 text-zinc-300"
-								: "bg-violet-600 hover:bg-violet-500 text-white"
+								? "bg-surface-tertiary text-text-secondary"
+								: "bg-violet-600 hover:bg-violet-500 text-text-primary"
 						}`}
 					>
 						{animating ? "Stop" : progress > 0 ? "Replay" : "Animate"}
@@ -308,12 +308,12 @@ export function HeadOfLineDemo() {
 				{/* Code + explanation */}
 				<div className="space-y-4">
 					<div className="space-y-2">
-						<h4 className="text-sm font-semibold text-zinc-300">
+						<h4 className="text-sm font-semibold text-text-secondary">
 							{mode === "single"
 								? "HTTP/1.1 Head-of-Line Blocking"
 								: "HTTP/1.1 Parallel Connections"}
 						</h4>
-						<p className="text-sm text-zinc-400">
+						<p className="text-sm text-text-tertiary">
 							{mode === "single"
 								? "On a single TCP connection, requests are serialized. A slow response blocks every request queued behind it — the CSS here holds up all images."
 								: "Browsers open up to 6 parallel TCP connections per domain. This helps, but each connection still suffers from HOL blocking internally. HTTP/2 makes this workaround unnecessary."}
@@ -354,28 +354,29 @@ GET /img4.jpg    → blocked
 						className="text-xs"
 					/>
 
-					<div className="p-3 rounded-lg bg-zinc-800/50 border border-zinc-700 space-y-2">
-						<p className="text-xs font-semibold text-zinc-300">
+					<div className="p-3 rounded-lg bg-surface-secondary/50 border border-border-secondary space-y-2">
+						<p className="text-xs font-semibold text-text-secondary">
 							Common HTTP/1.1 workarounds
 						</p>
-						<ul className="text-xs text-zinc-400 space-y-1">
+						<ul className="text-xs text-text-tertiary space-y-1">
 							<li className="flex gap-2">
-								<span className="text-orange-400">•</span> Domain sharding
-								(multiple hostnames to exceed the 6-connection limit)
+								<span className="text-accent-orange-soft">•</span> Domain
+								sharding (multiple hostnames to exceed the 6-connection limit)
 							</li>
 							<li className="flex gap-2">
-								<span className="text-orange-400">•</span> CSS/JS concatenation
-								(fewer requests)
+								<span className="text-accent-orange-soft">•</span> CSS/JS
+								concatenation (fewer requests)
 							</li>
 							<li className="flex gap-2">
-								<span className="text-orange-400">•</span> CSS sprites (combine
-								images)
+								<span className="text-accent-orange-soft">•</span> CSS sprites
+								(combine images)
 							</li>
 							<li className="flex gap-2">
-								<span className="text-orange-400">•</span> Inline critical CSS
+								<span className="text-accent-orange-soft">•</span> Inline
+								critical CSS
 							</li>
 						</ul>
-						<p className="text-xs text-zinc-500 pt-1">
+						<p className="text-xs text-text-muted pt-1">
 							All of these become anti-patterns under HTTP/2.
 						</p>
 					</div>

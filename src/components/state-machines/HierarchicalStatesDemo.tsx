@@ -96,8 +96,8 @@ export function HierarchicalStatesDemo() {
 	return (
 		<div className="space-y-8">
 			{/* Hierarchical State Visualization */}
-			<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-white mb-4">
+			<div className="bg-surface-primary border border-border-secondary rounded-lg p-6">
+				<h4 className="text-sm font-semibold text-text-primary mb-4">
 					Hierarchical States (Nested)
 				</h4>
 
@@ -109,8 +109,8 @@ export function HierarchicalStatesDemo() {
 								<motion.div
 									className={`px-4 py-3 rounded-lg border-2 text-center font-semibold ${
 										playerState.status === state
-											? "bg-violet-900/30 border-violet-500 text-violet-300"
-											: "bg-zinc-800 border-zinc-700 text-zinc-500"
+											? "bg-violet-900/30 border-violet-500 text-accent-violet"
+											: "bg-surface-secondary border-border-secondary text-text-muted"
 									}`}
 									animate={{
 										scale: playerState.status === state ? 1.02 : 1,
@@ -139,8 +139,8 @@ export function HierarchicalStatesDemo() {
 														className={`px-3 py-2 rounded border text-xs font-medium ${
 															playerState.status === "playing" &&
 															playerState.substatus === substatus
-																? "bg-cyan-900/30 border-cyan-500 text-cyan-300"
-																: "bg-zinc-800 border-zinc-700 text-zinc-500"
+																? "bg-cyan-900/30 border-cyan-500 text-accent-cyan"
+																: "bg-surface-secondary border-border-secondary text-text-muted"
 														}`}
 														animate={{
 															scale:
@@ -162,11 +162,11 @@ export function HierarchicalStatesDemo() {
 					</div>
 
 					{/* Visual Player */}
-					<div className="bg-zinc-800 rounded-lg p-6 space-y-4">
+					<div className="bg-surface-secondary rounded-lg p-6 space-y-4">
 						<div className="flex items-center justify-between">
-							<div className="text-sm text-zinc-400">
+							<div className="text-sm text-text-tertiary">
 								State:{" "}
-								<span className="text-violet-300 font-mono">
+								<span className="text-accent-violet font-mono">
 									{playerState.status}
 									{playerState.status === "playing"
 										? `.${playerState.substatus}`
@@ -177,32 +177,32 @@ export function HierarchicalStatesDemo() {
 								<button
 									type="button"
 									onClick={toggleNetwork}
-									className="text-zinc-400 hover:text-white transition-colors"
+									className="text-text-tertiary hover:text-text-primary transition-colors"
 									title="Toggle network"
 								>
 									{parallelState.network === "online" ? (
-										<Wifi className="w-4 h-4 text-green-400" />
+										<Wifi className="w-4 h-4 text-accent-green-soft" />
 									) : (
-										<WifiOff className="w-4 h-4 text-red-400" />
+										<WifiOff className="w-4 h-4 text-accent-red-soft" />
 									)}
 								</button>
 								<button
 									type="button"
 									onClick={toggleAudio}
-									className="text-zinc-400 hover:text-white transition-colors"
+									className="text-text-tertiary hover:text-text-primary transition-colors"
 									title="Toggle audio"
 								>
 									{parallelState.audio === "unmuted" ? (
 										<Volume2 className="w-4 h-4" />
 									) : (
-										<VolumeX className="w-4 h-4 text-amber-400" />
+										<VolumeX className="w-4 h-4 text-accent-amber-soft" />
 									)}
 								</button>
 							</div>
 						</div>
 
 						{/* Progress bar */}
-						<div className="relative h-2 bg-zinc-700 rounded-full overflow-hidden">
+						<div className="relative h-2 bg-surface-tertiary rounded-full overflow-hidden">
 							<motion.div
 								className="absolute inset-y-0 left-0 bg-gradient-to-r from-violet-500 to-cyan-500"
 								animate={{ width: `${progress}%` }}
@@ -218,7 +218,7 @@ export function HierarchicalStatesDemo() {
 										initial={{ opacity: 0, y: -10 }}
 										animate={{ opacity: 1, y: 0 }}
 										exit={{ opacity: 0, y: -10 }}
-										className="text-xs text-cyan-400 flex items-center gap-2"
+										className="text-xs text-accent-cyan-soft flex items-center gap-2"
 									>
 										<div className="w-3 h-3 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
 										Buffering...
@@ -232,7 +232,7 @@ export function HierarchicalStatesDemo() {
 								type="button"
 								onClick={play}
 								disabled={playerState.status === "playing"}
-								className="p-3 bg-violet-600 hover:bg-violet-700 disabled:bg-zinc-700 disabled:text-zinc-500 text-white rounded-full transition-colors"
+								className="p-3 bg-violet-600 hover:bg-violet-700 disabled:bg-surface-tertiary disabled:text-text-muted text-text-primary rounded-full transition-colors"
 								title="Play"
 							>
 								<Play className="w-5 h-5" />
@@ -241,7 +241,7 @@ export function HierarchicalStatesDemo() {
 								type="button"
 								onClick={pause}
 								disabled={playerState.status !== "playing"}
-								className="p-3 bg-zinc-700 hover:bg-zinc-600 disabled:bg-zinc-800 disabled:text-zinc-600 text-white rounded-full transition-colors"
+								className="p-3 bg-surface-tertiary hover:bg-surface-tertiary disabled:bg-surface-secondary disabled:text-text-faint text-text-primary rounded-full transition-colors"
 								title="Pause"
 							>
 								<Pause className="w-5 h-5" />
@@ -250,7 +250,7 @@ export function HierarchicalStatesDemo() {
 								type="button"
 								onClick={stop}
 								disabled={playerState.status === "stopped"}
-								className="p-2 bg-zinc-700 hover:bg-zinc-600 disabled:bg-zinc-800 disabled:text-zinc-600 text-white rounded-full transition-colors"
+								className="p-2 bg-surface-tertiary hover:bg-surface-tertiary disabled:bg-surface-secondary disabled:text-text-faint text-text-primary rounded-full transition-colors"
 								title="Stop"
 							>
 								<div className="w-4 h-4 bg-current rounded-sm" />
@@ -259,7 +259,7 @@ export function HierarchicalStatesDemo() {
 								type="button"
 								onClick={skip}
 								disabled={playerState.status === "stopped"}
-								className="p-3 bg-zinc-700 hover:bg-zinc-600 disabled:bg-zinc-800 disabled:text-zinc-600 text-white rounded-full transition-colors"
+								className="p-3 bg-surface-tertiary hover:bg-surface-tertiary disabled:bg-surface-secondary disabled:text-text-faint text-text-primary rounded-full transition-colors"
 								title="Skip forward"
 							>
 								<SkipForward className="w-5 h-5" />
@@ -270,15 +270,15 @@ export function HierarchicalStatesDemo() {
 			</div>
 
 			{/* Parallel States Visualization */}
-			<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-white mb-4">
+			<div className="bg-surface-primary border border-border-secondary rounded-lg p-6">
+				<h4 className="text-sm font-semibold text-text-primary mb-4">
 					Parallel States (Independent)
 				</h4>
 
 				<div className="grid md:grid-cols-2 gap-4">
 					{/* Network state */}
-					<div className="bg-zinc-800 rounded-lg p-4 space-y-3">
-						<div className="text-sm font-medium text-zinc-400">
+					<div className="bg-surface-secondary rounded-lg p-4 space-y-3">
+						<div className="text-sm font-medium text-text-tertiary">
 							Network State
 						</div>
 						<div className="grid grid-cols-2 gap-2">
@@ -288,9 +288,9 @@ export function HierarchicalStatesDemo() {
 									className={`px-3 py-2 rounded border text-center text-sm font-medium ${
 										parallelState.network === state
 											? state === "online"
-												? "bg-green-900/30 border-green-500 text-green-300"
-												: "bg-red-900/30 border-red-500 text-red-300"
-											: "bg-zinc-700 border-zinc-600 text-zinc-500"
+												? "bg-green-900/30 border-green-500 text-accent-green"
+												: "bg-red-900/30 border-red-500 text-accent-red"
+											: "bg-surface-tertiary border-border-tertiary text-text-muted"
 									}`}
 									animate={{
 										scale: parallelState.network === state ? 1.05 : 1,
@@ -303,8 +303,10 @@ export function HierarchicalStatesDemo() {
 					</div>
 
 					{/* Audio state */}
-					<div className="bg-zinc-800 rounded-lg p-4 space-y-3">
-						<div className="text-sm font-medium text-zinc-400">Audio State</div>
+					<div className="bg-surface-secondary rounded-lg p-4 space-y-3">
+						<div className="text-sm font-medium text-text-tertiary">
+							Audio State
+						</div>
 						<div className="grid grid-cols-2 gap-2">
 							{(["unmuted", "muted"] as const).map((state) => (
 								<motion.div
@@ -312,9 +314,9 @@ export function HierarchicalStatesDemo() {
 									className={`px-3 py-2 rounded border text-center text-sm font-medium ${
 										parallelState.audio === state
 											? state === "unmuted"
-												? "bg-blue-900/30 border-blue-500 text-blue-300"
-												: "bg-amber-900/30 border-amber-500 text-amber-300"
-											: "bg-zinc-700 border-zinc-600 text-zinc-500"
+												? "bg-blue-900/30 border-blue-500 text-accent-blue"
+												: "bg-amber-900/30 border-amber-500 text-accent-amber"
+											: "bg-surface-tertiary border-border-tertiary text-text-muted"
 									}`}
 									animate={{
 										scale: parallelState.audio === state ? 1.05 : 1,
@@ -327,17 +329,17 @@ export function HierarchicalStatesDemo() {
 					</div>
 				</div>
 
-				<div className="mt-4 text-xs text-zinc-400">
-					<strong className="text-violet-300">Parallel states</strong> operate
-					independently. Network and audio can be in any combination: (online,
-					muted), (offline, unmuted), etc.
+				<div className="mt-4 text-xs text-text-tertiary">
+					<strong className="text-accent-violet">Parallel states</strong>{" "}
+					operate independently. Network and audio can be in any combination:
+					(online, muted), (offline, unmuted), etc.
 				</div>
 			</div>
 
 			{/* Key Insights */}
 			<div className="grid md:grid-cols-2 gap-4">
 				<div className="bg-violet-950/30 border border-violet-800/50 rounded-lg p-4">
-					<div className="text-sm text-violet-300">
+					<div className="text-sm text-accent-violet">
 						<strong>Hierarchical States:</strong> Parent state "playing"
 						contains substates "normal" and "buffering". You can only be in a
 						substate when the parent state is active. This models real-world
@@ -345,7 +347,7 @@ export function HierarchicalStatesDemo() {
 					</div>
 				</div>
 				<div className="bg-cyan-950/30 border border-cyan-800/50 rounded-lg p-4">
-					<div className="text-sm text-cyan-300">
+					<div className="text-sm text-accent-cyan">
 						<strong>Parallel States:</strong> Network and audio states run
 						independently. The player can be online/offline AND muted/unmuted in
 						any combination. 4 possible combinations, all valid.

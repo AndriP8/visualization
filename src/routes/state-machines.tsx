@@ -52,7 +52,7 @@ function StateMachinesPage() {
 				>
 					<div className="space-y-6">
 						<div>
-							<h4 className="text-sm font-semibold text-white mb-3">
+							<h4 className="text-sm font-semibold text-text-primary mb-3">
 								Define States as Discriminated Union
 							</h4>
 							<ShikiCode
@@ -73,7 +73,7 @@ type RequestState =
 						</div>
 
 						<div>
-							<h4 className="text-sm font-semibold text-white mb-3">
+							<h4 className="text-sm font-semibold text-text-primary mb-3">
 								Implement Transitions
 							</h4>
 							<ShikiCode
@@ -107,10 +107,10 @@ state = transition(state, { type: "SUCCESS", data: "User data" });`}
 							/>
 						</div>
 
-						<div className="bg-violet-950/30 border border-violet-800/50 rounded-lg p-4">
-							<div className="text-sm text-violet-300">
+						<div className="bg-violet-500/10 border border-violet-500/20 rounded-lg p-4">
+							<div className="text-sm text-accent-violet">
 								<strong>Key benefits:</strong> Type system prevents accessing{" "}
-								<code className="text-violet-200 bg-violet-950/50 px-1 rounded">
+								<code className="text-accent-violet bg-surface-secondary px-1 rounded">
 									data
 								</code>{" "}
 								when in loading state. Transitions are explicit and testable. No
@@ -127,7 +127,7 @@ state = transition(state, { type: "SUCCESS", data: "User data" });`}
 				>
 					<div className="space-y-6">
 						<div>
-							<h4 className="text-sm font-semibold text-white mb-3">
+							<h4 className="text-sm font-semibold text-text-primary mb-3">
 								Define Machine with XState
 							</h4>
 							<ShikiCode
@@ -172,7 +172,7 @@ service.send("SUCCESS");`}
 						</div>
 
 						<div>
-							<h4 className="text-sm font-semibold text-white mb-3">
+							<h4 className="text-sm font-semibold text-text-primary mb-3">
 								Advanced Features: Guards & Actions
 							</h4>
 							<ShikiCode
@@ -221,7 +221,7 @@ service.send("SUCCESS");`}
 						</div>
 
 						<div>
-							<h4 className="text-sm font-semibold text-white mb-3">
+							<h4 className="text-sm font-semibold text-text-primary mb-3">
 								React Integration
 							</h4>
 							<ShikiCode
@@ -247,7 +247,7 @@ function FetchComponent() {
 						</div>
 
 						<div className="bg-cyan-950/30 border border-cyan-800/50 rounded-lg p-4">
-							<div className="text-sm text-cyan-300">
+							<div className="text-sm text-accent-cyan">
 								<strong>XState advantages:</strong> Built-in visualizer (
 								<a
 									href="https://stately.ai/viz"
@@ -271,41 +271,41 @@ function FetchComponent() {
 				>
 					<div className="grid md:grid-cols-2 gap-6">
 						{/* When to use */}
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 space-y-4">
-							<h4 className="text-sm font-semibold text-green-400">
+						<div className="bg-surface-primary border border-border-secondary rounded-lg p-6 space-y-4">
+							<h4 className="text-sm font-semibold text-accent-green-soft">
 								✓ Use State Machines When:
 							</h4>
-							<ul className="space-y-3 text-sm text-zinc-300">
+							<ul className="space-y-3 text-sm text-text-secondary">
 								<li className="flex items-start gap-2">
-									<span className="text-green-400 mt-1">•</span>
+									<span className="text-accent-green-soft mt-1">•</span>
 									<div>
 										<strong>Complex async flows:</strong> Authentication,
 										multi-step forms, media players, game states
 									</div>
 								</li>
 								<li className="flex items-start gap-2">
-									<span className="text-green-400 mt-1">•</span>
+									<span className="text-accent-green-soft mt-1">•</span>
 									<div>
 										<strong>Preventing impossible states:</strong> Can't be
 										loading AND error simultaneously
 									</div>
 								</li>
 								<li className="flex items-start gap-2">
-									<span className="text-green-400 mt-1">•</span>
+									<span className="text-accent-green-soft mt-1">•</span>
 									<div>
 										<strong>Self-documenting behavior:</strong> State chart
 										serves as visual documentation
 									</div>
 								</li>
 								<li className="flex items-start gap-2">
-									<span className="text-green-400 mt-1">•</span>
+									<span className="text-accent-green-soft mt-1">•</span>
 									<div>
 										<strong>Race condition bugs:</strong> Sequential operations
 										with side effects
 									</div>
 								</li>
 								<li className="flex items-start gap-2">
-									<span className="text-green-400 mt-1">•</span>
+									<span className="text-accent-green-soft mt-1">•</span>
 									<div>
 										<strong>Testing critical paths:</strong> Explicit
 										transitions make edge cases testable
@@ -315,44 +315,44 @@ function FetchComponent() {
 						</div>
 
 						{/* When NOT to use */}
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 space-y-4">
-							<h4 className="text-sm font-semibold text-amber-400">
+						<div className="bg-surface-primary border border-border-secondary rounded-lg p-6 space-y-4">
+							<h4 className="text-sm font-semibold text-accent-amber-soft">
 								⚠ Skip State Machines When:
 							</h4>
-							<ul className="space-y-3 text-sm text-zinc-300">
+							<ul className="space-y-3 text-sm text-text-secondary">
 								<li className="flex items-start gap-2">
-									<span className="text-amber-400 mt-1">•</span>
+									<span className="text-accent-amber-soft mt-1">•</span>
 									<div>
 										<strong>Simple toggles:</strong> Single boolean (
-										<code className="text-xs bg-zinc-800 px-1 rounded">
+										<code className="text-xs bg-surface-secondary px-1 rounded">
 											isOpen
 										</code>
 										) is clearer than a state machine
 									</div>
 								</li>
 								<li className="flex items-start gap-2">
-									<span className="text-amber-400 mt-1">•</span>
+									<span className="text-accent-amber-soft mt-1">•</span>
 									<div>
 										<strong>No invalid states possible:</strong> If booleans
 										can't conflict, keep it simple
 									</div>
 								</li>
 								<li className="flex items-start gap-2">
-									<span className="text-amber-400 mt-1">•</span>
+									<span className="text-accent-amber-soft mt-1">•</span>
 									<div>
 										<strong>Continuous values:</strong> Sliders, scroll
 										positions - not discrete states
 									</div>
 								</li>
 								<li className="flex items-start gap-2">
-									<span className="text-amber-400 mt-1">•</span>
+									<span className="text-accent-amber-soft mt-1">•</span>
 									<div>
 										<strong>Over-engineering risk:</strong> Adding complexity
 										where useState suffices
 									</div>
 								</li>
 								<li className="flex items-start gap-2">
-									<span className="text-amber-400 mt-1">•</span>
+									<span className="text-accent-amber-soft mt-1">•</span>
 									<div>
 										<strong>Team unfamiliarity:</strong> Learning curve may
 										outweigh benefits for simple cases
@@ -362,67 +362,79 @@ function FetchComponent() {
 						</div>
 					</div>
 
-					<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 mt-6">
-						<h4 className="text-sm font-semibold text-white mb-4">
+					<div className="bg-surface-primary border border-border-secondary rounded-lg p-6 mt-6">
+						<h4 className="text-sm font-semibold text-text-primary mb-4">
 							Real-World Decision Matrix
 						</h4>
 						<div className="overflow-x-auto">
 							<table className="w-full text-sm">
 								<thead>
-									<tr className="border-b border-zinc-700">
-										<th className="text-left py-2 px-3 text-zinc-400 font-medium">
+									<tr className="border-b border-border-secondary">
+										<th className="text-left py-2 px-3 text-text-tertiary font-medium">
 											Scenario
 										</th>
-										<th className="text-left py-2 px-3 text-zinc-400 font-medium">
+										<th className="text-left py-2 px-3 text-text-tertiary font-medium">
 											Boolean Soup
 										</th>
-										<th className="text-left py-2 px-3 text-zinc-400 font-medium">
+										<th className="text-left py-2 px-3 text-text-tertiary font-medium">
 											State Machine
 										</th>
-										<th className="text-left py-2 px-3 text-zinc-400 font-medium">
+										<th className="text-left py-2 px-3 text-text-tertiary font-medium">
 											Winner
 										</th>
 									</tr>
 								</thead>
-								<tbody className="text-zinc-300">
-									<tr className="border-b border-zinc-800">
+								<tbody className="text-text-secondary">
+									<tr className="border-b border-border-primary">
 										<td className="py-3 px-3">Modal open/close</td>
-										<td className="py-3 px-3 text-green-400">✓ Simple</td>
-										<td className="py-3 px-3 text-amber-400">Overkill</td>
+										<td className="py-3 px-3 text-accent-green-soft">
+											✓ Simple
+										</td>
+										<td className="py-3 px-3 text-accent-amber-soft">
+											Overkill
+										</td>
 										<td className="py-3 px-3 font-medium">Boolean</td>
 									</tr>
-									<tr className="border-b border-zinc-800">
+									<tr className="border-b border-border-primary">
 										<td className="py-3 px-3">
 											API request (idle/loading/success/error)
 										</td>
-										<td className="py-3 px-3 text-red-400">Race conditions</td>
-										<td className="py-3 px-3 text-green-400">✓ Type-safe</td>
+										<td className="py-3 px-3 text-accent-red-soft">
+											Race conditions
+										</td>
+										<td className="py-3 px-3 text-accent-green-soft">
+											✓ Type-safe
+										</td>
 										<td className="py-3 px-3 font-medium">State Machine</td>
 									</tr>
-									<tr className="border-b border-zinc-800">
+									<tr className="border-b border-border-primary">
 										<td className="py-3 px-3">Multi-step checkout flow</td>
-										<td className="py-3 px-3 text-red-400">
+										<td className="py-3 px-3 text-accent-red-soft">
 											Impossible states
 										</td>
-										<td className="py-3 px-3 text-green-400">
+										<td className="py-3 px-3 text-accent-green-soft">
 											✓ Self-documenting
 										</td>
 										<td className="py-3 px-3 font-medium">State Machine</td>
 									</tr>
-									<tr className="border-b border-zinc-800">
+									<tr className="border-b border-border-primary">
 										<td className="py-3 px-3">Form field validation</td>
-										<td className="py-3 px-3 text-green-400">✓ Adequate</td>
-										<td className="py-3 px-3 text-amber-400">Verbose</td>
+										<td className="py-3 px-3 text-accent-green-soft">
+											✓ Adequate
+										</td>
+										<td className="py-3 px-3 text-accent-amber-soft">
+											Verbose
+										</td>
 										<td className="py-3 px-3 font-medium">Boolean</td>
 									</tr>
 									<tr>
 										<td className="py-3 px-3">
 											WebSocket connection lifecycle
 										</td>
-										<td className="py-3 px-3 text-red-400">
+										<td className="py-3 px-3 text-accent-red-soft">
 											Reconnection bugs
 										</td>
-										<td className="py-3 px-3 text-green-400">
+										<td className="py-3 px-3 text-accent-green-soft">
 											✓ Handles retries
 										</td>
 										<td className="py-3 px-3 font-medium">State Machine</td>
@@ -435,24 +447,26 @@ function FetchComponent() {
 			</div>
 
 			{/* Summary */}
-			<div className="bg-linear-to-r from-violet-950/50 via-purple-950/50 to-fuchsia-950/50 border border-violet-800/50 rounded-lg p-6">
-				<h3 className="text-lg font-semibold text-white mb-4">Key Takeaways</h3>
-				<div className="grid md:grid-cols-3 gap-6 text-sm text-zinc-300">
+			<div className="bg-violet-500/10 border border-violet-500/20 rounded-lg p-6">
+				<h3 className="text-lg font-semibold text-text-primary mb-4">
+					Key Takeaways
+				</h3>
+				<div className="grid md:grid-cols-3 gap-6 text-sm text-text-secondary">
 					<div>
-						<div className="text-violet-400 font-medium mb-2">
+						<div className="text-accent-violet-soft font-medium mb-2">
 							1. Impossible States
 						</div>
 						<p>
 							State machines make invalid states unrepresentable. TypeScript
 							prevents you from accessing{" "}
-							<code className="text-xs bg-violet-950/50 px-1 rounded">
+							<code className="text-xs bg-surface-secondary px-1 rounded">
 								data
 							</code>{" "}
 							in loading state.
 						</p>
 					</div>
 					<div>
-						<div className="text-purple-400 font-medium mb-2">
+						<div className="text-accent-purple-soft font-medium mb-2">
 							2. Deterministic Behavior
 						</div>
 						<p>
@@ -461,7 +475,7 @@ function FetchComponent() {
 						</p>
 					</div>
 					<div>
-						<div className="text-fuchsia-400 font-medium mb-2">
+						<div className="text-accent-pink-soft font-medium mb-2">
 							3. Self-Documenting
 						</div>
 						<p>

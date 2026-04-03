@@ -114,10 +114,10 @@ const QUERIES: QueryExample[] = [
 ];
 
 const NOTE_COLORS: Record<RewriteNote["kind"], string> = {
-	alias: "text-amber-300 bg-amber-500/10 border-amber-500/30",
-	cast: "text-orange-300 bg-orange-500/10 border-orange-500/30",
+	alias: "text-accent-amber bg-amber-500/10 border-amber-500/30",
+	cast: "text-accent-orange bg-orange-500/10 border-orange-500/30",
 	view: "text-fuchsia-300 bg-fuchsia-500/10 border-fuchsia-500/30",
-	ok: "text-green-300 bg-green-500/10 border-green-500/30",
+	ok: "text-accent-green bg-green-500/10 border-green-500/30",
 };
 
 const NOTE_ICONS: Record<RewriteNote["kind"], string> = {
@@ -147,12 +147,12 @@ function QueryTree({
 							? "bg-cyan-500/10 border-cyan-500/30"
 							: node.unresolved
 								? "bg-amber-500/10 border-amber-500/30"
-								: "bg-zinc-800 border-zinc-700"
+								: "bg-surface-secondary border-border-secondary"
 					}`}
 				>
 					<span
 						className={`text-xs font-bold tracking-wider mr-2 ${
-							resolved ? "text-cyan-400" : "text-violet-400"
+							resolved ? "text-accent-cyan-soft" : "text-accent-violet-soft"
 						}`}
 					>
 						{node.label}
@@ -163,7 +163,7 @@ function QueryTree({
 								? "text-cyan-200"
 								: node.unresolved
 									? "text-amber-200"
-									: "text-zinc-300"
+									: "text-text-secondary"
 						}`}
 					>
 						{node.value}
@@ -189,8 +189,8 @@ export function AnalyzerRewriterDemo() {
 						onClick={() => setActiveIdx(idx)}
 						className={`text-xs px-3 py-1.5 rounded-full transition-colors border ${
 							activeIdx === idx
-								? "bg-violet-500/20 border-violet-500/50 text-violet-300"
-								: "bg-zinc-800/50 border-zinc-700 text-zinc-400 hover:text-zinc-200"
+								? "bg-violet-500/20 border-violet-500/50 text-accent-violet"
+								: "bg-surface-secondary/50 border-border-secondary text-text-tertiary hover:text-text-secondary"
 						}`}
 					>
 						{q.label}
@@ -208,36 +208,36 @@ export function AnalyzerRewriterDemo() {
 					className="space-y-4"
 				>
 					{/* SQL display */}
-					<div className="font-mono text-xs bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-zinc-300">
-						<span className="text-zinc-600 select-none mr-2">SQL</span>
+					<div className="font-mono text-xs bg-surface-base border border-border-primary rounded-xl p-4 text-text-secondary">
+						<span className="text-text-faint select-none mr-2">SQL</span>
 						{active.raw}
 					</div>
 
 					{/* Two-panel query trees */}
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-						<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+						<div className="bg-surface-primary border border-border-primary rounded-xl p-4 space-y-3">
 							<div className="flex items-center justify-between">
-								<h4 className="text-xs font-medium text-zinc-400">
+								<h4 className="text-xs font-medium text-text-tertiary">
 									Query Tree (from Parser)
 								</h4>
-								<span className="text-xs px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-400">
+								<span className="text-xs px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 text-accent-amber-soft">
 									Unresolved
 								</span>
 							</div>
 							<QueryTree nodes={active.inputTree} resolved={false} />
 						</div>
 
-						<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+						<div className="bg-surface-primary border border-border-primary rounded-xl p-4 space-y-3">
 							<div className="flex items-center justify-between">
-								<h4 className="text-xs font-medium text-zinc-400">
+								<h4 className="text-xs font-medium text-text-tertiary">
 									Resolved Query Tree
 								</h4>
 								{active.status === "valid" ? (
-									<span className="text-xs px-2 py-0.5 rounded-md bg-green-500/10 border border-green-500/20 text-green-400">
+									<span className="text-xs px-2 py-0.5 rounded-md bg-green-500/10 border border-green-500/20 text-accent-green-soft">
 										Semantically Valid
 									</span>
 								) : (
-									<span className="text-xs px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-400">
+									<span className="text-xs px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 text-accent-amber-soft">
 										Rewrite Applied
 									</span>
 								)}
@@ -248,7 +248,7 @@ export function AnalyzerRewriterDemo() {
 
 					{/* Rewrite notes */}
 					<div className="space-y-2">
-						<h4 className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
+						<h4 className="text-xs font-medium text-text-muted uppercase tracking-wider">
 							Analyzer Notes
 						</h4>
 						<AnimatePresence>

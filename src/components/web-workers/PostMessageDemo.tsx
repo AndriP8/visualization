@@ -140,20 +140,20 @@ export function PostMessageDemo() {
 		<div className="space-y-8">
 			{/* Thread visualization */}
 			<div className="relative">
-				<p className="text-xs text-zinc-500 text-center mb-4">
+				<p className="text-xs text-text-muted text-center mb-4">
 					Messages travel between threads via{" "}
-					<code className="text-cyan-400">postMessage</code>
+					<code className="text-accent-cyan-soft">postMessage</code>
 				</p>
 				<div className="grid grid-cols-2 gap-12">
 					{/* Main Thread */}
-					<div className="bg-zinc-900 border border-violet-500 rounded-lg p-6">
+					<div className="bg-surface-primary border border-violet-500 rounded-lg p-6">
 						<div className="flex items-center gap-3 mb-4">
 							<div className="w-3 h-3 rounded-full bg-violet-500 animate-pulse" />
-							<h3 className="text-lg font-semibold text-violet-300">
+							<h3 className="text-lg font-semibold text-accent-violet">
 								Main Thread
 							</h3>
 						</div>
-						<div className="text-sm text-zinc-400 space-y-2">
+						<div className="text-sm text-text-tertiary space-y-2">
 							<p>• Has DOM access</p>
 							<p>• Handles UI events</p>
 							<p>• Can create workers</p>
@@ -161,14 +161,14 @@ export function PostMessageDemo() {
 					</div>
 
 					{/* Worker Thread */}
-					<div className="bg-zinc-900 border border-emerald-500 rounded-lg p-6">
+					<div className="bg-surface-primary border border-emerald-500 rounded-lg p-6">
 						<div className="flex items-center gap-3 mb-4">
 							<div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-							<h3 className="text-lg font-semibold text-emerald-300">
+							<h3 className="text-lg font-semibold text-accent-emerald">
 								Worker Thread
 							</h3>
 						</div>
-						<div className="text-sm text-zinc-400 space-y-2">
+						<div className="text-sm text-text-tertiary space-y-2">
 							<p>• No DOM access</p>
 							<p>• Runs in isolation</p>
 							<p>• Receives messages</p>
@@ -178,7 +178,7 @@ export function PostMessageDemo() {
 
 				{/* Channel label */}
 				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-10">
-					<span className="text-[10px] text-zinc-600 whitespace-nowrap">
+					<span className="text-[10px] text-text-faint whitespace-nowrap">
 						postMessage channel
 					</span>
 				</div>
@@ -209,8 +209,8 @@ export function PostMessageDemo() {
 			</div>
 
 			{/* Interactive controls */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-4">
-				<h4 className="text-sm font-semibold text-zinc-300">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6 space-y-4">
+				<h4 className="text-sm font-semibold text-text-secondary">
 					Send Message to Worker
 				</h4>
 
@@ -221,7 +221,7 @@ export function PostMessageDemo() {
 						onChange={(e) => setInputValue(e.target.value)}
 						onKeyDown={(e) => e.key === "Enter" && handleCustomSend()}
 						placeholder="Type a message..."
-						className="flex-1 px-3 py-2 bg-zinc-800 border border-zinc-700 rounded text-sm focus:outline-none focus:border-cyan-500"
+						className="flex-1 px-3 py-2 bg-surface-secondary border border-border-secondary rounded text-sm focus:outline-none focus:border-cyan-500"
 					/>
 					<button
 						type="button"
@@ -235,7 +235,7 @@ export function PostMessageDemo() {
 				<div>
 					<label
 						htmlFor="test-cloning"
-						className="block text-xs text-zinc-400 mb-2"
+						className="block text-xs text-text-tertiary mb-2"
 					>
 						Test Structured Cloning:
 					</label>
@@ -248,7 +248,7 @@ export function PostMessageDemo() {
 									e.target.value as "primitive" | "object" | "function" | "dom",
 								)
 							}
-							className="flex-1 px-3 py-2 bg-zinc-800 border border-zinc-700 rounded text-sm focus:outline-none focus:border-cyan-500"
+							className="flex-1 px-3 py-2 bg-surface-secondary border border-border-secondary rounded text-sm focus:outline-none focus:border-cyan-500"
 						>
 							<option value="primitive">✅ Primitive (number)</option>
 							<option value="object">✅ Object (array)</option>
@@ -258,7 +258,7 @@ export function PostMessageDemo() {
 						<button
 							type="button"
 							onClick={handleTestSend}
-							className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded text-sm font-medium transition-colors"
+							className="px-4 py-2 bg-surface-tertiary hover:bg-surface-tertiary rounded text-sm font-medium transition-colors"
 						>
 							Test
 						</button>
@@ -267,13 +267,13 @@ export function PostMessageDemo() {
 			</div>
 
 			{/* Message log */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-zinc-300 mb-4">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6">
+				<h4 className="text-sm font-semibold text-text-secondary mb-4">
 					Message Log
 				</h4>
 				<div className="space-y-2 font-mono text-xs">
 					{messages.length === 0 ? (
-						<p className="text-zinc-600 text-center py-4">
+						<p className="text-text-faint text-center py-4">
 							No messages yet. Send one above!
 						</p>
 					) : (
@@ -284,17 +284,17 @@ export function PostMessageDemo() {
 								animate={{ opacity: 1, x: 0 }}
 								className={`p-3 rounded border ${
 									msg.direction === "to-worker"
-										? "bg-violet-500/10 border-violet-500/30 text-violet-300"
-										: "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
+										? "bg-violet-500/10 border-violet-500/30 text-accent-violet"
+										: "bg-emerald-500/10 border-emerald-500/30 text-accent-emerald"
 								}`}
 							>
 								<div className="flex items-center justify-between mb-1">
-									<span className="text-[10px] text-zinc-500">
+									<span className="text-[10px] text-text-muted">
 										{msg.direction === "to-worker"
 											? "→ To Worker"
 											: "← From Worker"}
 									</span>
-									<span className="text-[10px] text-zinc-600">
+									<span className="text-[10px] text-text-faint">
 										{new Date(msg.timestamp).toLocaleTimeString()}
 									</span>
 								</div>
@@ -310,7 +310,7 @@ export function PostMessageDemo() {
 			{/* Code examples */}
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 				<div>
-					<h4 className="text-sm font-semibold text-zinc-400 mb-3">
+					<h4 className="text-sm font-semibold text-text-tertiary mb-3">
 						Main Thread → Worker
 					</h4>
 					<ShikiCode
@@ -334,7 +334,7 @@ worker.onmessage = (event) => {
 				</div>
 
 				<div>
-					<h4 className="text-sm font-semibold text-zinc-400 mb-3">
+					<h4 className="text-sm font-semibold text-text-tertiary mb-3">
 						Worker → Main Thread
 					</h4>
 					<ShikiCode
@@ -359,16 +359,16 @@ self.onmessage = (event) => {
 			</div>
 
 			{/* Structured cloning rules */}
-			<div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-zinc-300 mb-4">
+			<div className="bg-surface-primary/50 border border-border-primary rounded-lg p-6">
+				<h4 className="text-sm font-semibold text-text-secondary mb-4">
 					Structured Cloning Rules
 				</h4>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
 					<div>
-						<h5 className="text-emerald-400 font-medium mb-2">
+						<h5 className="text-accent-emerald-soft font-medium mb-2">
 							✅ Can Be Cloned
 						</h5>
-						<ul className="space-y-1 text-zinc-400">
+						<ul className="space-y-1 text-text-tertiary">
 							<li>• Primitives (number, string, boolean)</li>
 							<li>• Arrays and Objects</li>
 							<li>• Date, RegExp</li>
@@ -378,10 +378,10 @@ self.onmessage = (event) => {
 						</ul>
 					</div>
 					<div>
-						<h5 className="text-red-400 font-medium mb-2">
+						<h5 className="text-accent-red-soft font-medium mb-2">
 							❌ Cannot Be Cloned
 						</h5>
-						<ul className="space-y-1 text-zinc-400">
+						<ul className="space-y-1 text-text-tertiary">
 							<li>• Functions</li>
 							<li>• DOM nodes</li>
 							<li>• Symbols</li>
@@ -393,7 +393,7 @@ self.onmessage = (event) => {
 				</div>
 
 				<div className="mt-4 p-3 bg-cyan-500/10 border border-cyan-500/30 rounded">
-					<p className="text-xs text-cyan-300">
+					<p className="text-xs text-accent-cyan">
 						<strong>⚡ Transferable Objects:</strong> ArrayBuffer and
 						MessagePort can be transferred with zero-copy using the transfer
 						list (see next demo)

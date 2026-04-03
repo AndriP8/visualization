@@ -58,9 +58,9 @@ const SCENARIOS: ScenarioConfig[] = [
 ];
 
 const getThresholdColor = (value: number): string => {
-	if (value <= 0.1) return "text-green-400";
-	if (value <= 0.25) return "text-yellow-400";
-	return "text-rose-400";
+	if (value <= 0.1) return "text-accent-green-soft";
+	if (value <= 0.25) return "text-accent-yellow-soft";
+	return "text-accent-rose-soft";
 };
 
 export default function CLSDemo() {
@@ -149,8 +149,8 @@ export default function CLSDemo() {
 							}}
 							className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
 								isSelected
-									? "bg-violet-500/20 text-violet-300 border-violet-500/30"
-									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
+									? "bg-violet-500/20 text-accent-violet border-violet-500/30"
+									: "bg-surface-secondary text-text-tertiary border-border-secondary hover:text-text-secondary"
 							}`}
 						>
 							{scenario.label}
@@ -161,7 +161,9 @@ export default function CLSDemo() {
 
 			{/* Description */}
 			{currentScenario && (
-				<p className="text-sm text-zinc-400">{currentScenario.description}</p>
+				<p className="text-sm text-text-tertiary">
+					{currentScenario.description}
+				</p>
 			)}
 
 			{/* Control button */}
@@ -169,16 +171,16 @@ export default function CLSDemo() {
 				type="button"
 				onClick={running ? reset : runScenario}
 				disabled={running}
-				className="px-6 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
+				className="px-6 py-2 rounded-lg bg-violet-500 text-text-primary font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
 			>
 				{running ? "Running..." : "Run Scenario"}
 			</button>
 
 			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-6">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6 space-y-6">
 				{/* Article mockup */}
 				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						Article Layout
 					</h4>
 					<div
@@ -263,7 +265,7 @@ export default function CLSDemo() {
 												? { height: 200, opacity: 1 }
 												: { opacity: 1 }
 										}
-										className={`bg-gradient-to-br from-blue-400 to-purple-500 rounded flex items-center justify-center text-white font-bold ${
+										className={`bg-gradient-to-br from-blue-400 to-purple-500 rounded flex items-center justify-center text-text-primary font-bold ${
 											phase === "image-load" && showBadLayout
 												? "ring-2 ring-rose-400 ring-offset-2"
 												: ""
@@ -296,12 +298,12 @@ export default function CLSDemo() {
 				</div>
 
 				{/* CLS Score display */}
-				<div className="flex items-center justify-between p-4 bg-zinc-800 rounded-lg">
+				<div className="flex items-center justify-between p-4 bg-surface-secondary rounded-lg">
 					<div>
-						<div className="text-sm font-semibold text-zinc-300">
+						<div className="text-sm font-semibold text-text-secondary">
 							Cumulative Layout Shift
 						</div>
-						<div className="text-xs text-zinc-500 mt-1">
+						<div className="text-xs text-text-muted mt-1">
 							{shifts > 0
 								? `${shifts} layout shift${shifts > 1 ? "s" : ""} detected`
 								: "No shifts detected"}
@@ -313,7 +315,7 @@ export default function CLSDemo() {
 						>
 							{clsScore.toFixed(3)}
 						</div>
-						<div className="text-xs text-zinc-500 mt-1">
+						<div className="text-xs text-text-muted mt-1">
 							{clsScore <= 0.1
 								? "Good"
 								: clsScore <= 0.25
@@ -327,15 +329,17 @@ export default function CLSDemo() {
 				<div className="flex gap-4 text-xs">
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-green-500" />
-						<span className="text-zinc-400">Good: ≤0.1</span>
+						<span className="text-text-tertiary">Good: ≤0.1</span>
 					</div>
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-yellow-500" />
-						<span className="text-zinc-400">Needs Improvement: 0.1-0.25</span>
+						<span className="text-text-tertiary">
+							Needs Improvement: 0.1-0.25
+						</span>
 					</div>
 					<div className="flex items-center gap-2">
 						<div className="w-3 h-3 rounded-full bg-rose-500" />
-						<span className="text-zinc-400">Poor: &gt;0.25</span>
+						<span className="text-text-tertiary">Poor: &gt;0.25</span>
 					</div>
 				</div>
 			</div>
@@ -343,7 +347,7 @@ export default function CLSDemo() {
 			{/* Code examples */}
 			<div className="grid md:grid-cols-2 gap-4">
 				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						Before (Causes Shifts)
 					</h4>
 					<ShikiCode
@@ -368,7 +372,7 @@ img {
 					/>
 				</div>
 				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
+					<h4 className="text-sm font-semibold text-text-tertiary">
 						After (Prevents Shifts)
 					</h4>
 					<ShikiCode

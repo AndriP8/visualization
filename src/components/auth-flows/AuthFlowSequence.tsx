@@ -226,7 +226,7 @@ export function AuthFlowSequence({
 										className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap"
 									>
 										<div
-											className="text-xs font-medium px-2 py-1 rounded bg-zinc-800 border"
+											className="text-xs font-medium px-2 py-1 rounded bg-surface-secondary border"
 											style={{
 												borderColor: colors.border,
 												color: colors.light,
@@ -247,14 +247,14 @@ export function AuthFlowSequence({
 											}}
 											className="absolute top-10 left-1/2 -translate-x-1/2 w-48"
 										>
-											<div className="text-xs bg-zinc-900 border border-zinc-700 rounded p-2 space-y-1">
+											<div className="text-xs bg-surface-primary border border-border-secondary rounded p-2 space-y-1">
 												{step.data.map((item) => (
 													<div
 														key={item.key}
 														className="flex justify-between gap-2"
 													>
-														<span className="text-zinc-500">{item.key}:</span>
-														<span className="text-zinc-300 font-mono truncate">
+														<span className="text-text-muted">{item.key}:</span>
+														<span className="text-text-secondary font-mono truncate">
 															{item.value}
 														</span>
 													</div>

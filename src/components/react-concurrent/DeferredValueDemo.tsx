@@ -96,7 +96,7 @@ export function DeferredValueDemo() {
 			<div className="space-y-6">
 				{/* Mode Toggle */}
 				<div className="flex items-center justify-between">
-					<div className="flex bg-zinc-800 rounded-lg p-1">
+					<div className="flex bg-surface-secondary rounded-lg p-1">
 						<button
 							type="button"
 							onClick={() => {
@@ -105,8 +105,8 @@ export function DeferredValueDemo() {
 							}}
 							className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 								mode === "immediate"
-									? "bg-red-500/20 text-red-400"
-									: "text-zinc-400 hover:text-white"
+									? "bg-red-500/20 text-accent-red-soft"
+									: "text-text-tertiary hover:text-text-primary"
 							}`}
 						>
 							Immediate
@@ -119,8 +119,8 @@ export function DeferredValueDemo() {
 							}}
 							className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 								mode === "deferred"
-									? "bg-emerald-500/20 text-emerald-400"
-									: "text-zinc-400 hover:text-white"
+									? "bg-emerald-500/20 text-accent-emerald-soft"
+									: "text-text-tertiary hover:text-text-primary"
 							}`}
 						>
 							Deferred
@@ -131,7 +131,7 @@ export function DeferredValueDemo() {
 						<motion.span
 							initial={{ opacity: 0, scale: 0.8 }}
 							animate={{ opacity: 1, scale: 1 }}
-							className="px-2 py-1 rounded text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30"
+							className="px-2 py-1 rounded text-xs bg-amber-500/20 text-accent-amber-soft border border-amber-500/30"
 						>
 							Stale
 						</motion.span>
@@ -144,19 +144,19 @@ export function DeferredValueDemo() {
 					value={query}
 					onChange={(e) => handleInput(e.target.value)}
 					placeholder="Type fast (try 'useEffect', 'useState')..."
-					className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-violet-500 transition-colors"
+					className="w-full px-4 py-3 rounded-lg bg-surface-secondary border border-border-secondary text-text-primary placeholder-text-muted focus:outline-none focus:border-violet-500 transition-colors"
 				/>
 
 				{/* Keystroke Timeline */}
 				{events.length > 0 && (
-					<div className="bg-zinc-800/50 rounded-lg p-4 space-y-2">
-						<h4 className="text-sm font-medium text-zinc-300">
+					<div className="bg-surface-secondary/50 rounded-lg p-4 space-y-2">
+						<h4 className="text-sm font-medium text-text-secondary">
 							Event Timeline
 						</h4>
-						<div className="relative h-16 rounded bg-zinc-900 overflow-hidden">
+						<div className="relative h-16 rounded bg-surface-primary overflow-hidden">
 							{/* Input events - top row */}
 							<div className="absolute top-0 left-0 right-0 h-8 flex items-center">
-								<span className="absolute left-1 text-[10px] text-violet-400 z-10">
+								<span className="absolute left-1 text-[10px] text-accent-violet-soft z-10">
 									Input
 								</span>
 								{events
@@ -176,7 +176,7 @@ export function DeferredValueDemo() {
 							</div>
 							{/* Render events - bottom row */}
 							<div className="absolute bottom-0 left-0 right-0 h-8 flex items-center">
-								<span className="absolute left-1 text-[10px] text-emerald-400 z-10">
+								<span className="absolute left-1 text-[10px] text-accent-emerald-soft z-10">
 									Render
 								</span>
 								{events
@@ -195,7 +195,7 @@ export function DeferredValueDemo() {
 									))}
 							</div>
 						</div>
-						<p className="text-[10px] text-zinc-500">
+						<p className="text-[10px] text-text-muted">
 							In deferred mode, input events (violet) fire immediately while
 							render events (green) batch and trail behind.
 						</p>
@@ -207,21 +207,21 @@ export function DeferredValueDemo() {
 					className={`transition-opacity duration-200 ${isStale ? "opacity-60" : "opacity-100"}`}
 				>
 					<div className="flex items-center justify-between mb-2">
-						<span className="text-sm text-zinc-400">
+						<span className="text-sm text-text-tertiary">
 							{filtered.length} results
 							{filtered.length === 200 ? " (capped)" : ""}
 						</span>
 						{mode === "deferred" && (
-							<span className="text-xs text-zinc-500">
+							<span className="text-xs text-text-muted">
 								Showing: "{activeQuery || "(all)"}"
 							</span>
 						)}
 					</div>
-					<div className="h-40 overflow-y-auto rounded-lg bg-zinc-800/50 border border-zinc-700/50">
+					<div className="h-40 overflow-y-auto rounded-lg bg-surface-secondary/50 border border-border-secondary/50">
 						{filtered.map((item) => (
 							<div
 								key={item.id}
-								className="px-3 py-1.5 text-sm text-zinc-300 border-b border-zinc-800/50 last:border-b-0"
+								className="px-3 py-1.5 text-sm text-text-secondary border-b border-border-primary/50 last:border-b-0"
 							>
 								{item.name}
 							</div>
@@ -232,19 +232,19 @@ export function DeferredValueDemo() {
 				{/* When to use which */}
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					<div className="bg-violet-500/5 border border-violet-500/20 rounded-lg p-4">
-						<h5 className="text-sm font-semibold text-violet-300 mb-2">
+						<h5 className="text-sm font-semibold text-accent-violet mb-2">
 							useDeferredValue
 						</h5>
-						<p className="text-xs text-zinc-400">
+						<p className="text-xs text-text-tertiary">
 							Use when you receive a value as a prop or can't wrap the setter.
 							It wraps the <em>value</em>.
 						</p>
 					</div>
 					<div className="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-4">
-						<h5 className="text-sm font-semibold text-emerald-300 mb-2">
+						<h5 className="text-sm font-semibold text-accent-emerald mb-2">
 							useTransition
 						</h5>
-						<p className="text-xs text-zinc-400">
+						<p className="text-xs text-text-tertiary">
 							Use when you own the state setter. It wraps the{" "}
 							<em>state update</em>.
 						</p>
@@ -272,7 +272,7 @@ export function DeferredValueDemo() {
 					className="text-xs"
 				/>
 
-				<p className="text-xs text-zinc-500 italic">
+				<p className="text-xs text-text-muted italic">
 					useDeferredValue does NOT debounce — it shows the latest value React
 					has time for. Under light load, it's nearly instant.
 				</p>

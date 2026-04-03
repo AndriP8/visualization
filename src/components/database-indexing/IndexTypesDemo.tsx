@@ -49,16 +49,16 @@ function ClusteredPanel({ phase }: { phase: LookupPhase }) {
 	return (
 		<div className="flex-1 rounded-xl border border-violet-500/20 bg-violet-500/5 p-4">
 			<div className="mb-3">
-				<span className="text-sm font-semibold text-violet-300">
+				<span className="text-sm font-semibold text-accent-violet">
 					Clustered Index
 				</span>
-				<div className="text-xs text-zinc-500 mt-0.5">
+				<div className="text-xs text-text-muted mt-0.5">
 					Data rows stored in key order — the index IS the data.
 				</div>
 			</div>
 
 			{/* The data rows (ARE the index) */}
-			<div className="mb-2 text-[10px] text-zinc-500 uppercase tracking-wider">
+			<div className="mb-2 text-[10px] text-text-muted uppercase tracking-wider">
 				Data (sorted by name = index order)
 			</div>
 			<div className="space-y-1">
@@ -81,14 +81,14 @@ function ClusteredPanel({ phase }: { phase: LookupPhase }) {
 							transition={{ duration: 0.3, delay: isActive ? i * 0.02 : 0 }}
 							className="flex gap-3 px-2 py-1 rounded border text-xs font-mono"
 						>
-							<span className="w-4 text-zinc-600">{i + 1}</span>
-							<span className="w-14 text-zinc-300">{row.name}</span>
-							<span className="w-6 text-zinc-500">{row.score}</span>
+							<span className="w-4 text-text-faint">{i + 1}</span>
+							<span className="w-14 text-text-secondary">{row.name}</span>
+							<span className="w-6 text-text-muted">{row.score}</span>
 							{isActive && (
 								<motion.span
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
-									className="ml-auto text-violet-400 text-[10px]"
+									className="ml-auto text-accent-violet-soft text-[10px]"
 								>
 									✓ direct
 								</motion.span>
@@ -103,7 +103,7 @@ function ClusteredPanel({ phase }: { phase: LookupPhase }) {
 					<motion.div
 						initial={{ opacity: 0, y: 4 }}
 						animate={{ opacity: 1, y: 0 }}
-						className="mt-3 text-xs px-3 py-2 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-300"
+						className="mt-3 text-xs px-3 py-2 rounded-lg bg-violet-500/10 border border-violet-500/20 text-accent-violet"
 					>
 						✅ Leaf node <em>contains</em> the full data row — no extra I/O
 						after tree traversal (position {TARGET_CLUSTERED_POS + 1}).
@@ -118,16 +118,16 @@ function NonClusteredPanel({ phase }: { phase: LookupPhase }) {
 	return (
 		<div className="flex-1 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
 			<div className="mb-3">
-				<span className="text-sm font-semibold text-amber-300">
+				<span className="text-sm font-semibold text-accent-amber">
 					Non-Clustered Index
 				</span>
-				<div className="text-xs text-zinc-500 mt-0.5">
+				<div className="text-xs text-text-muted mt-0.5">
 					Separate index structure + pointer to heap row.
 				</div>
 			</div>
 
 			{/* Index structure */}
-			<div className="mb-2 text-[10px] text-zinc-500 uppercase tracking-wider">
+			<div className="mb-2 text-[10px] text-text-muted uppercase tracking-wider">
 				Index (sorted)
 			</div>
 			<div className="space-y-0.5 mb-3">
@@ -150,13 +150,13 @@ function NonClusteredPanel({ phase }: { phase: LookupPhase }) {
 							transition={{ duration: 0.3 }}
 							className="flex gap-2 px-2 py-0.5 rounded border text-xs font-mono items-center"
 						>
-							<span className="w-14 text-zinc-300">{entry.name}</span>
-							<span className="text-zinc-600">→ heap[{entry.heapPos}]</span>
+							<span className="w-14 text-text-secondary">{entry.name}</span>
+							<span className="text-text-faint">→ heap[{entry.heapPos}]</span>
 							{isActive && (
 								<motion.span
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
-									className="ml-auto text-amber-400 text-[10px]"
+									className="ml-auto text-accent-amber-soft text-[10px]"
 								>
 									found!
 								</motion.span>
@@ -174,13 +174,15 @@ function NonClusteredPanel({ phase }: { phase: LookupPhase }) {
 						animate={{ opacity: 1 }}
 						className="flex justify-center my-1"
 					>
-						<div className="text-amber-400 text-sm">↓ follow pointer</div>
+						<div className="text-accent-amber-soft text-sm">
+							↓ follow pointer
+						</div>
 					</motion.div>
 				) : null}
 			</AnimatePresence>
 
 			{/* Heap (unsorted) */}
-			<div className="mb-2 text-[10px] text-zinc-500 uppercase tracking-wider">
+			<div className="mb-2 text-[10px] text-text-muted uppercase tracking-wider">
 				Heap (insertion order)
 			</div>
 			<div className="space-y-0.5">
@@ -202,14 +204,14 @@ function NonClusteredPanel({ phase }: { phase: LookupPhase }) {
 							transition={{ duration: 0.3 }}
 							className="flex gap-3 px-2 py-0.5 rounded border text-xs font-mono"
 						>
-							<span className="w-4 text-zinc-600">{i}</span>
-							<span className="w-14 text-zinc-300">{row.name}</span>
-							<span className="w-6 text-zinc-500">{row.score}</span>
+							<span className="w-4 text-text-faint">{i}</span>
+							<span className="w-14 text-text-secondary">{row.name}</span>
+							<span className="w-6 text-text-muted">{row.score}</span>
 							{isHighlighted && (
 								<motion.span
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
-									className="ml-auto text-amber-400 text-[10px]"
+									className="ml-auto text-accent-amber-soft text-[10px]"
 								>
 									✓ found
 								</motion.span>
@@ -224,7 +226,7 @@ function NonClusteredPanel({ phase }: { phase: LookupPhase }) {
 					<motion.div
 						initial={{ opacity: 0, y: 4 }}
 						animate={{ opacity: 1, y: 0 }}
-						className="mt-3 text-xs px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300"
+						className="mt-3 text-xs px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-accent-amber"
 					>
 						⚠️ Leaf node has only a <em>pointer</em> — one extra I/O to fetch the
 						actual row from heap position {TARGET_HEAP_POS}.
@@ -270,7 +272,7 @@ export function IndexTypesDemo() {
 				<button
 					type="button"
 					onClick={runLookup}
-					className="px-4 py-1.5 rounded-lg text-sm font-medium bg-teal-600/20 text-teal-300 border border-teal-500/30 hover:bg-teal-600/30 transition-colors"
+					className="px-4 py-1.5 rounded-lg text-sm font-medium bg-teal-600/20 text-accent-teal border border-teal-500/30 hover:bg-teal-600/30 transition-colors"
 				>
 					{phase === "idle" ? `▶ Lookup "${TARGET_NAME}"` : "↺ Reset"}
 				</button>
@@ -281,17 +283,19 @@ export function IndexTypesDemo() {
 				<NonClusteredPanel phase={phase} />
 			</div>
 
-			<div className="mt-4 p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50 text-xs text-zinc-400 space-y-1">
+			<div className="mt-4 p-3 rounded-lg bg-surface-secondary/30 border border-border-secondary/50 text-xs text-text-tertiary space-y-1">
 				<p>
-					<strong className="text-violet-300">Clustered:</strong> The B-Tree
+					<strong className="text-accent-violet">Clustered:</strong> The B-Tree
 					leaf pages <em>contain the actual data rows</em>, stored in index-key
 					order. After tree traversal you already have the data — no extra I/O.
 					Range scans (e.g.{" "}
-					<code className="text-zinc-300">WHERE name BETWEEN 'A' AND 'E'</code>)
-					are extremely fast because matching rows are physically adjacent.
+					<code className="text-text-secondary">
+						WHERE name BETWEEN 'A' AND 'E'
+					</code>
+					) are extremely fast because matching rows are physically adjacent.
 				</p>
 				<p>
-					<strong className="text-amber-300">Non-Clustered:</strong> The leaf
+					<strong className="text-accent-amber">Non-Clustered:</strong> The leaf
 					pages store only the <em>search key + a pointer</em> (row ID or PK)
 					back to the heap. Each match requires a second lookup to fetch the
 					actual row. Range scans can cause many random I/Os — the "index scan +

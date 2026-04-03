@@ -36,12 +36,12 @@ function ReactConcurrentPage() {
 				<SuspenseStreamingDemo />
 
 				{/* Decision Matrix */}
-				<div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
-					<div className="px-6 py-4 border-b border-zinc-800">
-						<h3 className="text-lg font-semibold text-white">
+				<div className="rounded-xl border border-border-primary bg-surface-primary/50 overflow-hidden">
+					<div className="px-6 py-4 border-b border-border-primary">
+						<h3 className="text-lg font-semibold text-text-primary">
 							When to Use What
 						</h3>
-						<p className="text-sm text-zinc-400 mt-1">
+						<p className="text-sm text-text-tertiary mt-1">
 							Common misconceptions addressed
 						</p>
 					</div>
@@ -50,44 +50,48 @@ function ReactConcurrentPage() {
 						<div className="overflow-x-auto">
 							<table className="w-full text-sm">
 								<thead>
-									<tr className="border-b border-zinc-700">
-										<th className="text-left py-2 pr-4 text-zinc-400 font-medium">
+									<tr className="border-b border-border-secondary">
+										<th className="text-left py-2 pr-4 text-text-tertiary font-medium">
 											Scenario
 										</th>
-										<th className="text-left py-2 text-zinc-400 font-medium">
+										<th className="text-left py-2 text-text-tertiary font-medium">
 											Tool
 										</th>
 									</tr>
 								</thead>
-								<tbody className="text-zinc-300">
-									<tr className="border-b border-zinc-800">
+								<tbody className="text-text-secondary">
+									<tr className="border-b border-border-primary">
 										<td className="py-2 pr-4">
 											Heavy list filtered on every keystroke
 										</td>
 										<td className="py-2">
-											<code className="text-emerald-400">useDeferredValue</code>
+											<code className="text-accent-emerald-soft">
+												useDeferredValue
+											</code>
 										</td>
 									</tr>
-									<tr className="border-b border-zinc-800">
+									<tr className="border-b border-border-primary">
 										<td className="py-2 pr-4">
 											Tab switch triggers expensive render
 										</td>
 										<td className="py-2">
-											<code className="text-emerald-400">useTransition</code>
+											<code className="text-accent-emerald-soft">
+												useTransition
+											</code>
 										</td>
 									</tr>
-									<tr className="border-b border-zinc-800">
+									<tr className="border-b border-border-primary">
 										<td className="py-2 pr-4">
 											Data-fetching component needs loading state
 										</td>
 										<td className="py-2">
-											<code className="text-emerald-400">Suspense</code>
+											<code className="text-accent-emerald-soft">Suspense</code>
 										</td>
 									</tr>
-									<tr className="border-b border-zinc-800">
+									<tr className="border-b border-border-primary">
 										<td className="py-2 pr-4">Page navigation feels janky</td>
 										<td className="py-2">
-											<code className="text-emerald-400">
+											<code className="text-accent-emerald-soft">
 												startTransition on route change
 											</code>
 										</td>
@@ -97,7 +101,7 @@ function ReactConcurrentPage() {
 											User input blocked by background work
 										</td>
 										<td className="py-2">
-											<code className="text-emerald-400">
+											<code className="text-accent-emerald-soft">
 												useTransition or useDeferredValue (opt-in)
 											</code>
 										</td>
@@ -131,12 +135,14 @@ function ReactConcurrentPage() {
 							].map((item) => (
 								<div
 									key={item.myth}
-									className="bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50"
+									className="bg-surface-secondary/50 rounded-lg p-3 border border-border-secondary/50"
 								>
-									<p className="text-xs text-red-400 line-through mb-1">
+									<p className="text-xs text-accent-red-soft line-through mb-1">
 										{item.myth}
 									</p>
-									<p className="text-xs text-emerald-400">{item.truth}</p>
+									<p className="text-xs text-accent-emerald-soft">
+										{item.truth}
+									</p>
 								</div>
 							))}
 						</div>

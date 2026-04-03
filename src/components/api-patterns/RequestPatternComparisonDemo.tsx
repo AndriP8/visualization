@@ -220,23 +220,23 @@ export function RequestPatternComparisonDemo() {
 					const className = match({ isSelected, color: p.color })
 						.with(
 							{ isSelected: true, color: "rose" },
-							() => "bg-rose-500/15 text-rose-300 border-rose-500/40",
+							() => "bg-rose-500/15 text-accent-rose border-rose-500/40",
 						)
 						.with(
 							{ isSelected: true, color: "amber" },
-							() => "bg-amber-500/15 text-amber-300 border-amber-500/40",
+							() => "bg-amber-500/15 text-accent-amber border-amber-500/40",
 						)
 						.with(
 							{ isSelected: true, color: "cyan" },
-							() => "bg-cyan-500/15 text-cyan-300 border-cyan-500/40",
+							() => "bg-cyan-500/15 text-accent-cyan border-cyan-500/40",
 						)
 						.with(
 							{ isSelected: true, color: "violet" },
-							() => "bg-violet-500/15 text-violet-300 border-violet-500/40",
+							() => "bg-violet-500/15 text-accent-violet border-violet-500/40",
 						)
 						.otherwise(
 							() =>
-								"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+								"bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary",
 						);
 
 					return (
@@ -253,46 +253,46 @@ export function RequestPatternComparisonDemo() {
 				})}
 			</div>
 
-			<p className="text-sm text-zinc-400">{pattern.description}</p>
+			<p className="text-sm text-text-tertiary">{pattern.description}</p>
 
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 				{/* Animation */}
 				<div className="space-y-4">
 					{/* Metrics */}
 					<div className="grid grid-cols-3 gap-3">
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
-							<div className="text-xs text-zinc-500 mb-1">Requests</div>
-							<div className="text-2xl font-bold text-white">
+						<div className="bg-surface-primary border border-border-secondary rounded-lg p-3">
+							<div className="text-xs text-text-muted mb-1">Requests</div>
+							<div className="text-2xl font-bold text-text-primary">
 								{pattern.requestCount}
 							</div>
 						</div>
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
-							<div className="text-xs text-zinc-500 mb-1">Data (KB)</div>
-							<div className="text-2xl font-bold text-white">
+						<div className="bg-surface-primary border border-border-secondary rounded-lg p-3">
+							<div className="text-xs text-text-muted mb-1">Data (KB)</div>
+							<div className="text-2xl font-bold text-text-primary">
 								{pattern.totalBytes}
 							</div>
 						</div>
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
+						<div className="bg-surface-primary border border-border-secondary rounded-lg p-3">
 							<div
-								className="text-xs text-zinc-500 mb-1"
+								className="text-xs text-text-muted mb-1"
 								title="Number of sequential round trips required"
 							>
 								Waterfall Depth
 							</div>
-							<div className="text-2xl font-bold text-white">
+							<div className="text-2xl font-bold text-text-primary">
 								{pattern.waterfallDepth}
 							</div>
 						</div>
 					</div>
 
 					{/* Waterfall visualization */}
-					<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 min-h-75">
+					<div className="bg-surface-primary border border-border-secondary rounded-xl p-6 min-h-75">
 						<div className="flex items-center justify-between mb-4">
-							<div className="text-xs text-zinc-500 font-mono">
+							<div className="text-xs text-text-muted font-mono">
 								Network Waterfall
 							</div>
 							{selected === "rest-waterfall" && requests.length > 0 && (
-								<div className="text-xs text-zinc-400 flex items-center gap-1">
+								<div className="text-xs text-text-tertiary flex items-center gap-1">
 									<span>→</span>
 									<span>Indentation = Sequential dependency</span>
 								</div>
@@ -306,8 +306,8 @@ export function RequestPatternComparisonDemo() {
 									className="flex items-center gap-3"
 									style={{ paddingLeft: `${req.depth * 20}px` }}
 								>
-									<div className="flex-1 relative h-8 bg-zinc-800 rounded overflow-hidden">
-										<div className="absolute left-2 top-1/2 -translate-y-1/2 text-xs font-mono text-zinc-400 z-10">
+									<div className="flex-1 relative h-8 bg-surface-secondary rounded overflow-hidden">
+										<div className="absolute left-2 top-1/2 -translate-y-1/2 text-xs font-mono text-text-tertiary z-10">
 											{req.label}
 										</div>
 
@@ -338,7 +338,7 @@ export function RequestPatternComparisonDemo() {
 										)}
 									</div>
 
-									<div className="text-xs text-zinc-500 font-mono w-12">
+									<div className="text-xs text-text-muted font-mono w-12">
 										{req.bytes}KB
 									</div>
 								</div>
@@ -346,9 +346,9 @@ export function RequestPatternComparisonDemo() {
 						</div>
 
 						{requests.length > 0 && (
-							<div className="mt-4 pt-4 border-t border-zinc-800 text-sm text-zinc-400">
+							<div className="mt-4 pt-4 border-t border-border-primary text-sm text-text-tertiary">
 								{completedCount === requests.length ? (
-									<span className="text-green-400">
+									<span className="text-accent-green-soft">
 										✓ All requests completed
 									</span>
 								) : running ? (
@@ -356,7 +356,7 @@ export function RequestPatternComparisonDemo() {
 										Loading... ({completedCount}/{requests.length})
 									</span>
 								) : (
-									<span className="text-zinc-500">Ready to simulate</span>
+									<span className="text-text-muted">Ready to simulate</span>
 								)}
 							</div>
 						)}
@@ -367,8 +367,8 @@ export function RequestPatternComparisonDemo() {
 						onClick={running ? reset : runAnimation}
 						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
 							running
-								? "bg-zinc-700 text-zinc-300"
-								: "bg-violet-600 hover:bg-violet-500 text-white"
+								? "bg-surface-tertiary text-text-secondary"
+								: "bg-violet-600 hover:bg-violet-500 text-text-primary"
 						}`}
 					>
 						{running
@@ -381,7 +381,7 @@ export function RequestPatternComparisonDemo() {
 
 				{/* Code example */}
 				<div className="space-y-4">
-					<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+					<h4 className="text-sm font-semibold text-text-tertiary uppercase tracking-wider">
 						Implementation
 					</h4>
 
@@ -400,7 +400,7 @@ const authors = await fetch(\`/api/posts/authors?ids=\${posts.map(p => p.authorI
 								showLineNumbers={false}
 								className="text-xs"
 							/>
-							<div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs">
+							<div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-accent-rose text-xs">
 								⚠️ Each request waits for the previous one. Depth-4 waterfall
 								kills performance.
 							</div>
@@ -427,7 +427,7 @@ const data = await fetch('/api/user/123?embed=posts,likes,authors');
 								showLineNumbers={false}
 								className="text-xs"
 							/>
-							<div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs">
+							<div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-accent-amber text-xs">
 								⚠️ Fast but wastes bandwidth. Returns 45KB when you only need
 								12KB.
 							</div>
@@ -459,7 +459,7 @@ query GetUserProfile($id: ID!) {
 								showLineNumbers={false}
 								className="text-xs"
 							/>
-							<div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs">
+							<div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-accent-cyan text-xs">
 								✓ Solves both over-fetching and under-fetching. Single request,
 								exact data.
 							</div>
@@ -490,7 +490,7 @@ export const appRouter = router({
 								showLineNumbers={false}
 								className="text-xs"
 							/>
-							<div className="p-3 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-300 text-xs">
+							<div className="p-3 rounded-lg bg-violet-500/10 border border-violet-500/20 text-accent-violet text-xs">
 								✓ Perfect for TS monorepos. No GraphQL schema, no codegen. Just
 								functions.
 							</div>

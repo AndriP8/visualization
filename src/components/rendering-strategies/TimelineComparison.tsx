@@ -25,13 +25,13 @@ export function TimelineComparison() {
 					onClick={() => setSlowNetwork(!slowNetwork)}
 					className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
 						slowNetwork
-							? "bg-orange-500/20 text-orange-300 border border-orange-500/30"
-							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300"
+							? "bg-orange-500/20 text-accent-orange border border-orange-500/30"
+							: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary"
 					}`}
 				>
 					{slowNetwork ? "🐌 Slow 3G" : "⚡ Fast Network"}
 				</button>
-				<span className="text-xs text-zinc-500">
+				<span className="text-xs text-text-muted">
 					{slowNetwork
 						? "Exaggerated delays show CSR's blank screen problem"
 						: "Normal network conditions"}
@@ -53,17 +53,17 @@ export function TimelineComparison() {
 							<div className="flex items-center gap-3 mb-3">
 								<span className="text-2xl">{timeline.icon}</span>
 								<div>
-									<h4 className="text-sm font-semibold text-white">
+									<h4 className="text-sm font-semibold text-text-primary">
 										{timeline.strategy}
 									</h4>
-									<p className="text-xs text-zinc-500">
+									<p className="text-xs text-text-muted">
 										{timeline.description}
 									</p>
 								</div>
 							</div>
 
 							{/* Timeline Bar */}
-							<div className="relative h-12 bg-zinc-800/50 rounded-lg border border-zinc-700/50 overflow-hidden">
+							<div className="relative h-12 bg-surface-secondary/50 rounded-lg border border-border-secondary/50 overflow-hidden">
 								{/* Events */}
 								{timeline.events.map((event, eventIdx) => {
 									const position = scaleTime(
@@ -97,7 +97,7 @@ export function TimelineComparison() {
 											<div
 												className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
 												text-[10px] font-medium whitespace-nowrap px-1.5 py-0.5 rounded
-												bg-zinc-900/80 border border-zinc-700/50 opacity-0 group-hover:opacity-100 transition-opacity"
+												bg-surface-primary/80 border border-border-secondary/50 opacity-0 group-hover:opacity-100 transition-opacity"
 											>
 												{event.label}
 											</div>
@@ -118,7 +118,7 @@ export function TimelineComparison() {
 									return (
 										<div
 											key={event.label}
-											className="absolute text-[10px] text-zinc-400 whitespace-nowrap"
+											className="absolute text-[10px] text-text-tertiary whitespace-nowrap"
 											style={{
 												left: `${position}px`,
 												transform: isLastEvent
@@ -137,9 +137,9 @@ export function TimelineComparison() {
 			</div>
 
 			{/* Legend */}
-			<div className="mt-6 p-4 rounded-lg bg-zinc-800/30 border border-zinc-700/50 text-xs text-zinc-400 space-y-2">
+			<div className="mt-6 p-4 rounded-lg bg-surface-secondary/30 border border-border-secondary/50 text-xs text-text-tertiary space-y-2">
 				<div className="flex items-center gap-2">
-					<div className="w-3 h-3 rounded-full bg-zinc-500" />
+					<div className="w-3 h-3 rounded-full bg-text-muted" />
 					<span>Request/Wait</span>
 				</div>
 				<div className="flex items-center gap-2">
@@ -157,27 +157,27 @@ export function TimelineComparison() {
 			</div>
 
 			{/* Key Insights */}
-			<div className="mt-4 p-4 rounded-lg bg-violet-500/10 border border-violet-500/20 text-sm text-zinc-300 space-y-2">
-				<p className="font-semibold text-violet-300">Key Insights:</p>
+			<div className="mt-4 p-4 rounded-lg bg-violet-500/10 border border-violet-500/20 text-sm text-text-secondary space-y-2">
+				<p className="font-semibold text-accent-violet">Key Insights:</p>
 				<ul className="list-disc list-inside space-y-1 text-xs">
 					<li>
-						<strong className="text-red-400">CSR</strong> - Long blank screen
-						until JS executes. Poor on slow networks.
+						<strong className="text-accent-red-soft">CSR</strong> - Long blank
+						screen until JS executes. Poor on slow networks.
 					</li>
 					<li>
-						<strong className="text-blue-400">SSR</strong> - Fast FCP (user sees
-						content), but TTI delayed by hydration.
+						<strong className="text-accent-blue-soft">SSR</strong> - Fast FCP
+						(user sees content), but TTI delayed by hydration.
 					</li>
 					<li>
-						<strong className="text-green-400">SSG</strong> - Fastest delivery
-						(CDN edge), but content is static.
+						<strong className="text-accent-green-soft">SSG</strong> - Fastest
+						delivery (CDN edge), but content is static.
 					</li>
 					<li>
-						<strong className="text-cyan-400">ISR</strong> - Best of both: fast
-						like SSG, updates in background.
+						<strong className="text-accent-cyan-soft">ISR</strong> - Best of
+						both: fast like SSG, updates in background.
 					</li>
 					<li>
-						<strong className="text-purple-400">Streaming SSR</strong> -
+						<strong className="text-accent-purple-soft">Streaming SSR</strong> -
 						Progressive rendering: shell appears instantly, content fills in.
 					</li>
 				</ul>

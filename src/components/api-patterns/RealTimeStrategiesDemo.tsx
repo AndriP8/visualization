@@ -294,27 +294,27 @@ export function RealTimeStrategiesDemo() {
 					const className = match({ isSelected, color: s.color })
 						.with(
 							{ isSelected: true, color: "rose" },
-							() => "bg-rose-500/15 text-rose-300 border-rose-500/40",
+							() => "bg-rose-500/15 text-accent-rose border-rose-500/40",
 						)
 						.with(
 							{ isSelected: true, color: "amber" },
-							() => "bg-amber-500/15 text-amber-300 border-amber-500/40",
+							() => "bg-amber-500/15 text-accent-amber border-amber-500/40",
 						)
 						.with(
 							{ isSelected: true, color: "cyan" },
-							() => "bg-cyan-500/15 text-cyan-300 border-cyan-500/40",
+							() => "bg-cyan-500/15 text-accent-cyan border-cyan-500/40",
 						)
 						.with(
 							{ isSelected: true, color: "green" },
-							() => "bg-green-500/15 text-green-300 border-green-500/40",
+							() => "bg-green-500/15 text-accent-green border-green-500/40",
 						)
 						.with(
 							{ isSelected: true, color: "violet" },
-							() => "bg-violet-500/15 text-violet-300 border-violet-500/40",
+							() => "bg-violet-500/15 text-accent-violet border-violet-500/40",
 						)
 						.otherwise(
 							() =>
-								"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+								"bg-surface-secondary text-text-tertiary border-border-secondary hover:border-border-tertiary",
 						);
 
 					return (
@@ -335,12 +335,12 @@ export function RealTimeStrategiesDemo() {
 				{/* Live dashboard simulation */}
 				<div className="space-y-4">
 					{/* Stock price widget */}
-					<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6">
-						<div className="text-xs text-zinc-500 mb-2">ACME Stock Price</div>
-						<div className="text-4xl font-bold text-white mb-4">
+					<div className="bg-surface-primary border border-border-secondary rounded-xl p-6">
+						<div className="text-xs text-text-muted mb-2">ACME Stock Price</div>
+						<div className="text-4xl font-bold text-text-primary mb-4">
 							${stockPrice}
 						</div>
-						<div className="h-24 bg-zinc-800 rounded flex items-end gap-1 px-2 overflow-hidden">
+						<div className="h-24 bg-surface-secondary rounded flex items-end gap-1 px-2 overflow-hidden">
 							{activities.slice(-20).map((act) => (
 								<motion.div
 									key={act.id}
@@ -354,27 +354,29 @@ export function RealTimeStrategiesDemo() {
 
 					{/* Metrics */}
 					<div className="grid grid-cols-3 gap-3">
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
-							<div className="text-xs text-zinc-500 mb-1">Latency</div>
-							<div className="text-lg font-bold text-white">
+						<div className="bg-surface-primary border border-border-secondary rounded-lg p-3">
+							<div className="text-xs text-text-muted mb-1">Latency</div>
+							<div className="text-lg font-bold text-text-primary">
 								{strategy.latency}
 							</div>
 						</div>
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
-							<div className="text-xs text-zinc-500 mb-1">Bandwidth</div>
-							<div className="text-lg font-bold text-white">
+						<div className="bg-surface-primary border border-border-secondary rounded-lg p-3">
+							<div className="text-xs text-text-muted mb-1">Bandwidth</div>
+							<div className="text-lg font-bold text-text-primary">
 								{strategy.bandwidth}
 							</div>
 						</div>
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
-							<div className="text-xs text-zinc-500 mb-1">Time</div>
-							<div className="text-lg font-bold text-white">{elapsedTime}s</div>
+						<div className="bg-surface-primary border border-border-secondary rounded-lg p-3">
+							<div className="text-xs text-text-muted mb-1">Time</div>
+							<div className="text-lg font-bold text-text-primary">
+								{elapsedTime}s
+							</div>
 						</div>
 					</div>
 
 					{/* Network activity log */}
-					<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-4 h-64 overflow-y-auto">
-						<div className="text-xs text-zinc-500 mb-3 font-mono">
+					<div className="bg-surface-primary border border-border-secondary rounded-xl p-4 h-64 overflow-y-auto">
+						<div className="text-xs text-text-muted mb-3 font-mono">
 							Network Activity ({totalBytes.toFixed(1)} KB total)
 						</div>
 						<div className="space-y-1">
@@ -390,14 +392,14 @@ export function RealTimeStrategiesDemo() {
 											exit={{ opacity: 0 }}
 											className="flex items-center gap-2 text-xs font-mono"
 										>
-											<span className="text-zinc-600">
+											<span className="text-text-faint">
 												{new Date(act.timestamp).toLocaleTimeString()}
 											</span>
 											<span
 												className={match(act.type)
-													.with("request", () => "text-amber-400")
-													.with("response", () => "text-cyan-400")
-													.with("push", () => "text-green-400")
+													.with("request", () => "text-accent-amber-soft")
+													.with("response", () => "text-accent-cyan-soft")
+													.with("push", () => "text-accent-green-soft")
 													.exhaustive()}
 											>
 												{match(act.type)
@@ -406,8 +408,8 @@ export function RealTimeStrategiesDemo() {
 													.with("push", () => "↓")
 													.exhaustive()}
 											</span>
-											<span className="text-zinc-400">{act.type}</span>
-											<span className="text-zinc-600">{act.bytes}KB</span>
+											<span className="text-text-tertiary">{act.type}</span>
+											<span className="text-text-faint">{act.bytes}KB</span>
 										</motion.div>
 									))}
 							</AnimatePresence>
@@ -419,8 +421,8 @@ export function RealTimeStrategiesDemo() {
 						onClick={running ? reset : runAnimation}
 						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
 							running
-								? "bg-zinc-700 text-zinc-300"
-								: "bg-violet-600 hover:bg-violet-500 text-white"
+								? "bg-surface-tertiary text-text-secondary"
+								: "bg-violet-600 hover:bg-violet-500 text-text-primary"
 						}`}
 					>
 						{running ? "⏹ Stop" : "▶ Start Monitoring"}
@@ -429,7 +431,7 @@ export function RealTimeStrategiesDemo() {
 
 				{/* Implementation */}
 				<div className="space-y-4">
-					<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+					<h4 className="text-sm font-semibold text-text-tertiary uppercase tracking-wider">
 						Implementation
 					</h4>
 
@@ -449,7 +451,7 @@ setInterval(async () => {
 								showLineNumbers={false}
 								className="text-xs"
 							/>
-							<div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs">
+							<div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-accent-rose text-xs">
 								⚠️ High bandwidth waste. Most polls return "no updates". Slow
 								latency.
 							</div>
@@ -473,7 +475,7 @@ async function longPoll() {
 								showLineNumbers={false}
 								className="text-xs"
 							/>
-							<div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs">
+							<div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-accent-amber text-xs">
 								Better than polling but still uses HTTP overhead for each
 								update.
 							</div>
@@ -498,7 +500,7 @@ eventSource.onmessage = (event) => {
 								showLineNumbers={false}
 								className="text-xs"
 							/>
-							<div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs">
+							<div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-accent-cyan text-xs">
 								✓ Simpler than WebSocket. Perfect for server → client updates
 								(logs, notifications).
 							</div>
@@ -526,7 +528,7 @@ ws.onmessage = (event) => {
 								showLineNumbers={false}
 								className="text-xs"
 							/>
-							<div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-300 text-xs">
+							<div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-accent-green text-xs">
 								✓ Lowest latency, most efficient. Use when &lt;1s latency
 								required.
 							</div>
@@ -554,7 +556,7 @@ const [result] = useSubscription({
 								showLineNumbers={false}
 								className="text-xs"
 							/>
-							<div className="p-3 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-300 text-xs">
+							<div className="p-3 rounded-lg bg-violet-500/10 border border-violet-500/20 text-accent-violet text-xs">
 								✓ WebSocket under the hood. GraphQL syntax for subscriptions.
 							</div>
 						</div>

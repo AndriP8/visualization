@@ -150,11 +150,11 @@ export function LeastConnectionsDemo() {
 				<button
 					type="button"
 					onClick={reset}
-					className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg font-medium transition-colors"
+					className="px-4 py-2 bg-surface-tertiary hover:bg-surface-tertiary rounded-lg font-medium transition-colors"
 				>
 					Reset
 				</button>
-				<label className="flex items-center gap-2 px-4 py-2 bg-zinc-800 rounded-lg cursor-pointer">
+				<label className="flex items-center gap-2 px-4 py-2 bg-surface-secondary rounded-lg cursor-pointer">
 					<input
 						type="checkbox"
 						checked={longRequestMode}
@@ -166,7 +166,7 @@ export function LeastConnectionsDemo() {
 			</div>
 
 			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-8">
+			<div className="bg-surface-primary border border-border-primary rounded-xl p-8">
 				<div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
 					{servers.map((server) => {
 						const isLeastLoaded =
@@ -182,24 +182,26 @@ export function LeastConnectionsDemo() {
 								className={`border-2 rounded-lg p-4 transition-all ${
 									isLeastLoaded
 										? "border-cyan-500 ring-2 ring-cyan-400/50"
-										: "border-zinc-700"
-								} bg-zinc-800`}
+										: "border-border-secondary"
+								} bg-surface-secondary`}
 								animate={{
 									scale: isLeastLoaded ? 1.05 : 1,
 								}}
 							>
-								<h4 className="font-semibold text-white mb-4">{server.name}</h4>
+								<h4 className="font-semibold text-text-primary mb-4">
+									{server.name}
+								</h4>
 
 								<div className="space-y-3">
 									{/* Active Connections Bar */}
 									<div>
-										<div className="flex justify-between text-xs text-zinc-400 mb-1">
+										<div className="flex justify-between text-xs text-text-tertiary mb-1">
 											<span>Active</span>
-											<span className="font-mono text-white">
+											<span className="font-mono text-text-primary">
 												{server.activeConnections}
 											</span>
 										</div>
-										<div className="h-3 bg-zinc-900 rounded-full overflow-hidden">
+										<div className="h-3 bg-surface-primary rounded-full overflow-hidden">
 											<motion.div
 												className="h-full bg-cyan-400"
 												initial={{ width: 0 }}
@@ -212,9 +214,9 @@ export function LeastConnectionsDemo() {
 									</div>
 
 									{/* Total Processed */}
-									<div className="flex justify-between text-sm text-zinc-400">
+									<div className="flex justify-between text-sm text-text-tertiary">
 										<span>Processed:</span>
-										<span className="text-white font-mono">
+										<span className="text-text-primary font-mono">
 											{server.totalProcessed}
 										</span>
 									</div>
@@ -246,8 +248,8 @@ export function LeastConnectionsDemo() {
 								</div>
 
 								{isLeastLoaded && (
-									<div className="mt-3 pt-3 border-t border-zinc-700">
-										<span className="text-xs text-cyan-400 font-medium">
+									<div className="mt-3 pt-3 border-t border-border-secondary">
+										<span className="text-xs text-accent-cyan-soft font-medium">
 											← Least loaded
 										</span>
 									</div>
@@ -258,14 +260,14 @@ export function LeastConnectionsDemo() {
 				</div>
 
 				{/* Stats Summary */}
-				<div className="mt-6 pt-6 border-t border-zinc-800 grid grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+				<div className="mt-6 pt-6 border-t border-border-primary grid grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
 					{servers.map((server) => (
 						<div key={server.id} className="text-center">
-							<div className="text-zinc-400">{server.name}</div>
-							<div className="text-2xl font-mono text-white mt-1">
+							<div className="text-text-tertiary">{server.name}</div>
+							<div className="text-2xl font-mono text-text-primary mt-1">
 								{server.activeConnections}
 							</div>
-							<div className="text-xs text-zinc-500">active connections</div>
+							<div className="text-xs text-text-muted">active connections</div>
 						</div>
 					))}
 				</div>
@@ -304,24 +306,26 @@ export function LeastConnectionsDemo() {
 			/>
 
 			{/* Comparison Callout */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-				<h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6">
+				<h4 className="font-semibold text-text-primary mb-3 flex items-center gap-2">
 					<span>⚖️</span>
 					Comparison: Round-Robin vs Least Connections
 				</h4>
 				<div className="grid md:grid-cols-2 gap-4 text-sm">
 					<div>
-						<div className="font-medium text-violet-400 mb-2">Round-Robin</div>
-						<p className="text-zinc-400">
+						<div className="font-medium text-accent-violet-soft mb-2">
+							Round-Robin
+						</div>
+						<p className="text-text-tertiary">
 							With variable request durations, some servers may have many
 							slow-running requests while others sit idle after quick requests.
 						</p>
 					</div>
 					<div>
-						<div className="font-medium text-cyan-400 mb-2">
+						<div className="font-medium text-accent-cyan-soft mb-2">
 							Least Connections
 						</div>
-						<p className="text-zinc-400">
+						<p className="text-text-tertiary">
 							Automatically balances load by routing to less-busy servers.
 							Handles variable durations gracefully.
 						</p>

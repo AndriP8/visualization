@@ -112,18 +112,18 @@ type StatusBadge = "yes" | "no" | "partial";
 function Badge({ status }: { status: StatusBadge }) {
 	if (status === "yes")
 		return (
-			<span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+			<span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-500/20 text-accent-emerald-soft border border-emerald-500/40">
 				YES
 			</span>
 		);
 	if (status === "partial")
 		return (
-			<span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/40">
+			<span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-amber-500/20 text-accent-amber-soft border border-amber-500/40">
 				Partial
 			</span>
 		);
 	return (
-		<span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-zinc-700 text-zinc-500 border border-zinc-600">
+		<span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-surface-tertiary text-text-muted border border-border-tertiary">
 			No
 		</span>
 	);
@@ -164,26 +164,30 @@ export function PreventionMatrixDemo() {
 			<div className="overflow-x-auto">
 				<table className="w-full text-sm border-collapse">
 					<thead>
-						<tr className="border-b border-zinc-700">
-							<th className="text-left py-2 px-3 text-zinc-400 font-semibold text-xs uppercase tracking-wider w-40">
+						<tr className="border-b border-border-secondary">
+							<th className="text-left py-2 px-3 text-text-tertiary font-semibold text-xs uppercase tracking-wider w-40">
 								&nbsp;
 							</th>
-							<th className="text-left py-2 px-3 text-red-400 font-semibold text-xs uppercase tracking-wider">
+							<th className="text-left py-2 px-3 text-accent-red-soft font-semibold text-xs uppercase tracking-wider">
 								XSS
 							</th>
-							<th className="text-left py-2 px-3 text-red-400 font-semibold text-xs uppercase tracking-wider">
+							<th className="text-left py-2 px-3 text-accent-red-soft font-semibold text-xs uppercase tracking-wider">
 								CSRF
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						{COMPARISON.map((row) => (
-							<tr key={row.label} className="border-b border-zinc-800">
-								<td className="py-2 px-3 text-zinc-400 text-xs font-medium">
+							<tr key={row.label} className="border-b border-border-primary">
+								<td className="py-2 px-3 text-text-tertiary text-xs font-medium">
 									{row.label}
 								</td>
-								<td className="py-2 px-3 text-zinc-300 text-xs">{row.xss}</td>
-								<td className="py-2 px-3 text-zinc-300 text-xs">{row.csrf}</td>
+								<td className="py-2 px-3 text-text-secondary text-xs">
+									{row.xss}
+								</td>
+								<td className="py-2 px-3 text-text-secondary text-xs">
+									{row.csrf}
+								</td>
 							</tr>
 						))}
 					</tbody>
@@ -199,9 +203,9 @@ export function PreventionMatrixDemo() {
 							: "bg-red-500/10 border-red-500/40"
 					}`}
 				>
-					<p className="text-xs text-zinc-400 mb-1">XSS</p>
+					<p className="text-xs text-text-tertiary mb-1">XSS</p>
 					<p
-						className={`text-sm font-bold ${xssBlocked ? "text-emerald-400" : "text-red-400"}`}
+						className={`text-sm font-bold ${xssBlocked ? "text-accent-emerald-soft" : "text-accent-red-soft"}`}
 					>
 						{xssBlocked ? "✓ Blocked" : "🔴 Active"}
 					</p>
@@ -213,9 +217,9 @@ export function PreventionMatrixDemo() {
 							: "bg-red-500/10 border-red-500/40"
 					}`}
 				>
-					<p className="text-xs text-zinc-400 mb-1">CSRF</p>
+					<p className="text-xs text-text-tertiary mb-1">CSRF</p>
 					<p
-						className={`text-sm font-bold ${csrfBlocked ? "text-emerald-400" : "text-red-400"}`}
+						className={`text-sm font-bold ${csrfBlocked ? "text-accent-emerald-soft" : "text-accent-red-soft"}`}
 					>
 						{csrfBlocked ? "✓ Blocked" : "🔴 Active"}
 					</p>
@@ -225,10 +229,10 @@ export function PreventionMatrixDemo() {
 			{/* Prevention matrix */}
 			<div>
 				<div className="flex items-center justify-between mb-3">
-					<p className="text-xs text-zinc-400 uppercase tracking-wider font-semibold">
+					<p className="text-xs text-text-tertiary uppercase tracking-wider font-semibold">
 						Toggle to enable — click label for explanation
 					</p>
-					<div className="flex gap-3 text-xs text-zinc-500">
+					<div className="flex gap-3 text-xs text-text-muted">
 						<span>XSS</span>
 						<span>CSRF</span>
 					</div>
@@ -243,7 +247,7 @@ export function PreventionMatrixDemo() {
 								className={`rounded-lg border transition-colors ${
 									active
 										? "bg-violet-500/10 border-violet-500/40"
-										: "bg-zinc-800 border-zinc-700"
+										: "bg-surface-secondary border-border-secondary"
 								}`}
 							>
 								<div className="flex items-center gap-3 px-3 py-2.5">
@@ -251,19 +255,21 @@ export function PreventionMatrixDemo() {
 									<button
 										type="button"
 										onClick={() => toggleControl(c.id)}
-										className="text-xs shrink-0 w-5 h-5 rounded border border-zinc-600 flex items-center justify-center hover:border-violet-400 transition-colors"
+										className="text-xs shrink-0 w-5 h-5 rounded border border-border-tertiary flex items-center justify-center hover:border-violet-400 transition-colors"
 										aria-label={`${active ? "Disable" : "Enable"} ${c.label}`}
 									>
-										{active && <span className="text-violet-400">✓</span>}
+										{active && (
+											<span className="text-accent-violet-soft">✓</span>
+										)}
 									</button>
 									{/* Label — clicking opens/closes explanation */}
 									<button
 										type="button"
 										onClick={() => toggleExpanded(c.id)}
-										className="flex-1 text-left text-sm text-zinc-200 hover:text-white transition-colors"
+										className="flex-1 text-left text-sm text-text-secondary hover:text-text-primary transition-colors"
 									>
 										{c.label}
-										<span className="ml-2 text-xs text-zinc-500">
+										<span className="ml-2 text-xs text-text-muted">
 											{expanded ? "▲" : "▼"}
 										</span>
 									</button>
@@ -280,7 +286,7 @@ export function PreventionMatrixDemo() {
 											exit={{ height: 0, opacity: 0 }}
 											className="overflow-hidden"
 										>
-											<p className="px-3 pb-3 text-xs text-zinc-400 border-t border-zinc-700/50 pt-2">
+											<p className="px-3 pb-3 text-xs text-text-tertiary border-t border-border-secondary/50 pt-2">
 												{c.explanation}
 											</p>
 										</motion.div>
@@ -294,15 +300,15 @@ export function PreventionMatrixDemo() {
 
 			{/* Misconceptions */}
 			<div className="space-y-3">
-				<p className="text-sm font-semibold text-zinc-300">
+				<p className="text-sm font-semibold text-text-secondary">
 					Common Misconceptions
 				</p>
 
 				<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 space-y-1">
-					<p className="text-red-400 font-semibold text-xs uppercase tracking-wider">
+					<p className="text-accent-red-soft font-semibold text-xs uppercase tracking-wider">
 						Misconception: CORS prevents CSRF
 					</p>
-					<p className="text-zinc-300 text-xs">
+					<p className="text-text-secondary text-xs">
 						CORS does NOT prevent CSRF. HTML form POST does not trigger a CORS
 						preflight — the browser sends the request (and attaches the cookie)
 						without asking. CORS only restricts what JavaScript can read from
@@ -311,10 +317,10 @@ export function PreventionMatrixDemo() {
 				</div>
 
 				<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 space-y-1">
-					<p className="text-red-400 font-semibold text-xs uppercase tracking-wider">
+					<p className="text-accent-red-soft font-semibold text-xs uppercase tracking-wider">
 						Misconception: httpOnly prevents CSRF
 					</p>
-					<p className="text-zinc-300 text-xs">
+					<p className="text-text-secondary text-xs">
 						httpOnly prevents JavaScript from reading the cookie value via
 						document.cookie — so XSS cannot directly steal it. But the browser
 						still automatically sends the cookie in cross-origin form POST
@@ -323,10 +329,10 @@ export function PreventionMatrixDemo() {
 				</div>
 
 				<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 space-y-1">
-					<p className="text-red-400 font-semibold text-xs uppercase tracking-wider">
+					<p className="text-accent-red-soft font-semibold text-xs uppercase tracking-wider">
 						Misconception: CSP prevents CSRF
 					</p>
-					<p className="text-zinc-300 text-xs">
+					<p className="text-text-secondary text-xs">
 						A strong CSP reduces XSS impact by blocking inline scripts. It does
 						NOT prevent CSRF — HTML form submissions are unaffected by CSP. The
 						two attack classes require different defenses.

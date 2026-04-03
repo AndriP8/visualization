@@ -275,10 +275,10 @@ export function JWTAuthDemo() {
 
 	const expiryColor =
 		tokenExpiry > 10
-			? "text-emerald-400"
+			? "text-accent-emerald-soft"
 			: tokenExpiry > 5
-				? "text-amber-400"
-				: "text-rose-400";
+				? "text-accent-amber-soft"
+				: "text-accent-rose-soft";
 
 	return (
 		<div className="space-y-8">
@@ -293,7 +293,7 @@ export function JWTAuthDemo() {
 							phase === "making-request" ||
 							phase === "refreshing"
 						}
-						className="px-6 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-600 disabled:bg-zinc-700 disabled:text-zinc-500 text-white font-medium transition-colors"
+						className="px-6 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-600 disabled:bg-surface-tertiary disabled:text-text-muted text-text-primary font-medium transition-colors"
 					>
 						{getButtonLabel()}
 					</button>
@@ -303,7 +303,7 @@ export function JWTAuthDemo() {
 							initial={{ opacity: 0, scale: 0.9 }}
 							animate={{ opacity: 1, scale: 1 }}
 							onClick={handleTamper}
-							className="px-6 py-2.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white font-medium transition-colors"
+							className="px-6 py-2.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-text-primary font-medium transition-colors"
 						>
 							Tamper with Token
 						</motion.button>
@@ -317,15 +317,15 @@ export function JWTAuthDemo() {
 						animate={{ opacity: 1, y: 0 }}
 						className="flex flex-wrap gap-4"
 					>
-						<div className="flex items-center gap-3 bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2">
-							<span className="text-sm text-zinc-400">Storage:</span>
+						<div className="flex items-center gap-3 bg-surface-primary border border-border-primary rounded-lg px-4 py-2">
+							<span className="text-sm text-text-tertiary">Storage:</span>
 							<button
 								type="button"
 								onClick={() => setStorageType("localStorage")}
 								className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
 									storageType === "localStorage"
-										? "bg-cyan-500 text-white"
-										: "bg-zinc-800 text-zinc-400 hover:text-white"
+										? "bg-cyan-500 text-text-primary"
+										: "bg-surface-secondary text-text-tertiary hover:text-text-primary"
 								}`}
 							>
 								localStorage
@@ -335,16 +335,19 @@ export function JWTAuthDemo() {
 								onClick={() => setStorageType("httpOnly")}
 								className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
 									storageType === "httpOnly"
-										? "bg-cyan-500 text-white"
-										: "bg-zinc-800 text-zinc-400 hover:text-white"
+										? "bg-cyan-500 text-text-primary"
+										: "bg-surface-secondary text-text-tertiary hover:text-text-primary"
 								}`}
 							>
 								httpOnly Cookie
 							</button>
 						</div>
 
-						<div className="flex items-center gap-3 bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2">
-							<label htmlFor="refresh-toggle" className="text-sm text-zinc-400">
+						<div className="flex items-center gap-3 bg-surface-primary border border-border-primary rounded-lg px-4 py-2">
+							<label
+								htmlFor="refresh-toggle"
+								className="text-sm text-text-tertiary"
+							>
 								With refresh tokens:
 							</label>
 							<button
@@ -352,7 +355,7 @@ export function JWTAuthDemo() {
 								type="button"
 								onClick={() => setShowRefresh(!showRefresh)}
 								className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-									showRefresh ? "bg-cyan-500" : "bg-zinc-700"
+									showRefresh ? "bg-cyan-500" : "bg-surface-tertiary"
 								}`}
 							>
 								<span
@@ -377,62 +380,62 @@ export function JWTAuthDemo() {
 					className="space-y-4"
 				>
 					{/* JWT Structure */}
-					<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
-						<h4 className="text-sm font-semibold text-cyan-300 mb-3">
+					<div className="bg-surface-primary border border-border-primary rounded-lg p-4">
+						<h4 className="text-sm font-semibold text-accent-cyan mb-3">
 							JWT Structure
 						</h4>
 						<button
 							type="button"
 							onClick={() => setInspecting(true)}
-							className="w-full text-left bg-zinc-800 border border-cyan-500/30 rounded p-3 hover:border-cyan-500/50 transition-colors font-mono text-xs break-all"
+							className="w-full text-left bg-surface-secondary border border-cyan-500/30 rounded p-3 hover:border-cyan-500/50 transition-colors font-mono text-xs break-all"
 						>
-							<span className="text-rose-300">
+							<span className="text-accent-rose">
 								{ACCESS_TOKEN.split(".")[0]}
 							</span>
-							<span className="text-zinc-600">.</span>
-							<span className="text-violet-300">
+							<span className="text-text-faint">.</span>
+							<span className="text-accent-violet">
 								{ACCESS_TOKEN.split(".")[1]}
 							</span>
-							<span className="text-zinc-600">.</span>
-							<span className="text-cyan-300">
+							<span className="text-text-faint">.</span>
+							<span className="text-accent-cyan">
 								{ACCESS_TOKEN.split(".")[2]}
 							</span>
 						</button>
 						<div className="flex items-center gap-4 mt-3 text-xs">
 							<div className="flex items-center gap-2">
 								<div className="w-3 h-3 rounded-full bg-rose-400" />
-								<span className="text-zinc-500">Header</span>
+								<span className="text-text-muted">Header</span>
 							</div>
 							<div className="flex items-center gap-2">
 								<div className="w-3 h-3 rounded-full bg-violet-400" />
-								<span className="text-zinc-500">Payload</span>
+								<span className="text-text-muted">Payload</span>
 							</div>
 							<div className="flex items-center gap-2">
 								<div className="w-3 h-3 rounded-full bg-cyan-400" />
-								<span className="text-zinc-500">Signature</span>
+								<span className="text-text-muted">Signature</span>
 							</div>
 						</div>
-						<p className="text-xs text-zinc-500 mt-2">
+						<p className="text-xs text-text-muted mt-2">
 							Click to inspect token contents
 						</p>
 					</div>
 
 					{/* Token Status */}
 					<div className="grid md:grid-cols-2 gap-4">
-						<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
-							<h4 className="text-sm font-semibold text-amber-300 mb-3">
+						<div className="bg-surface-primary border border-border-primary rounded-lg p-4">
+							<h4 className="text-sm font-semibold text-accent-amber mb-3">
 								Access Token
 							</h4>
-							<div className="bg-zinc-800 rounded p-3">
+							<div className="bg-surface-secondary rounded p-3">
 								<div className="flex items-center justify-between mb-2">
-									<span className="text-xs text-zinc-500">Expires in:</span>
+									<span className="text-xs text-text-muted">Expires in:</span>
 									<span
 										className={`text-sm font-mono font-bold ${expiryColor}`}
 									>
 										{tokenExpiry}s
 									</span>
 								</div>
-								<div className="w-full bg-zinc-700 rounded-full h-2 overflow-hidden">
+								<div className="w-full bg-surface-tertiary rounded-full h-2 overflow-hidden">
 									<motion.div
 										className={`h-full ${
 											tokenExpiry > 10
@@ -452,15 +455,15 @@ export function JWTAuthDemo() {
 						</div>
 
 						{showRefresh && (
-							<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
-								<h4 className="text-sm font-semibold text-violet-300 mb-3">
+							<div className="bg-surface-primary border border-border-primary rounded-lg p-4">
+								<h4 className="text-sm font-semibold text-accent-violet mb-3">
 									Refresh Token
 								</h4>
-								<div className="bg-zinc-800 rounded p-3">
-									<div className="font-mono text-xs text-violet-300 break-all mb-2">
+								<div className="bg-surface-secondary rounded p-3">
+									<div className="font-mono text-xs text-accent-violet break-all mb-2">
 										{REFRESH_TOKEN}
 									</div>
-									<div className="text-xs text-zinc-500">
+									<div className="text-xs text-text-muted">
 										Long-lived (7 days), one-time use
 									</div>
 								</div>
@@ -475,7 +478,7 @@ export function JWTAuthDemo() {
 							animate={{ opacity: 1, scale: 1 }}
 							className={`border rounded-lg p-4 ${
 								verifySuccess === null
-									? "bg-zinc-900 border-zinc-800"
+									? "bg-surface-primary border-border-primary"
 									: verifySuccess
 										? "bg-emerald-500/10 border-emerald-500/30"
 										: "bg-rose-500/10 border-rose-500/30"
@@ -520,10 +523,10 @@ export function JWTAuthDemo() {
 									<div
 										className={`text-sm font-semibold ${
 											verifying
-												? "text-cyan-300"
+												? "text-accent-cyan"
 												: verifySuccess
-													? "text-emerald-300"
-													: "text-rose-300"
+													? "text-accent-emerald"
+													: "text-accent-rose"
 										}`}
 									>
 										{verifying && "Verifying signature..."}
@@ -551,7 +554,7 @@ export function JWTAuthDemo() {
 				<motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
-					className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden"
+					className="bg-surface-primary border border-border-primary rounded-lg overflow-hidden"
 				>
 					<AuthFlowSequence
 						steps={getSteps()}
@@ -567,19 +570,23 @@ export function JWTAuthDemo() {
 					className={`border rounded-lg p-4 ${
 						storageType === "localStorage"
 							? "bg-rose-500/10 border-rose-500/30"
-							: "bg-zinc-900 border-zinc-800"
+							: "bg-surface-primary border-border-primary"
 					}`}
 				>
 					<h4
 						className={`text-sm font-semibold mb-2 ${
-							storageType === "localStorage" ? "text-rose-300" : "text-zinc-500"
+							storageType === "localStorage"
+								? "text-accent-rose"
+								: "text-text-muted"
 						}`}
 					>
 						{storageType === "localStorage" ? "⚠️" : ""} localStorage Storage
 					</h4>
 					<p
 						className={`text-sm ${
-							storageType === "localStorage" ? "text-rose-200" : "text-zinc-600"
+							storageType === "localStorage"
+								? "text-rose-200"
+								: "text-text-faint"
 						}`}
 					>
 						Vulnerable to XSS attacks. Any JavaScript can access the token.
@@ -591,19 +598,23 @@ export function JWTAuthDemo() {
 					className={`border rounded-lg p-4 ${
 						storageType === "httpOnly"
 							? "bg-emerald-500/10 border-emerald-500/30"
-							: "bg-zinc-900 border-zinc-800"
+							: "bg-surface-primary border-border-primary"
 					}`}
 				>
 					<h4
 						className={`text-sm font-semibold mb-2 ${
-							storageType === "httpOnly" ? "text-emerald-300" : "text-zinc-500"
+							storageType === "httpOnly"
+								? "text-accent-emerald"
+								: "text-text-muted"
 						}`}
 					>
 						{storageType === "httpOnly" ? "✓" : ""} httpOnly Cookie
 					</h4>
 					<p
 						className={`text-sm ${
-							storageType === "httpOnly" ? "text-emerald-200" : "text-zinc-600"
+							storageType === "httpOnly"
+								? "text-emerald-200"
+								: "text-text-faint"
 						}`}
 					>
 						XSS-safe. JavaScript cannot access. Use SameSite=Strict for CSRF
@@ -614,7 +625,7 @@ export function JWTAuthDemo() {
 
 			{/* Code Example */}
 			<div>
-				<h4 className="text-sm font-semibold text-white mb-3">
+				<h4 className="text-sm font-semibold text-text-primary mb-3">
 					JWT Implementation
 				</h4>
 				<ShikiCode

@@ -310,7 +310,7 @@ function Index() {
 						Under the Hood
 					</span>
 				</h2>
-				<p className="text-zinc-400 mb-8 text-lg">
+				<p className="text-text-tertiary mb-8 text-lg">
 					Interactive visualizations to understand how the full stack actually
 					works — from browser internals and React to databases and system
 					design.
@@ -326,10 +326,10 @@ function Index() {
 							transition={{ duration: 0.4, delay: 0.1 + groupIndex * 0.1 }}
 							className="mb-4"
 						>
-							<h3 className="text-xl font-bold text-white mb-1">
+							<h3 className="text-xl font-bold text-text-primary mb-1">
 								{group.title}
 							</h3>
-							<p className="text-zinc-400 text-sm">{group.description}</p>
+							<p className="text-text-tertiary text-sm">{group.description}</p>
 						</motion.div>
 
 						<div className="grid gap-4 sm:grid-cols-2">
@@ -353,17 +353,17 @@ function Index() {
 										`}
 									>
 										<div className="text-2xl mb-3">{concept.icon}</div>
-										<h3 className="text-lg font-semibold text-white mb-1 group-hover:text-violet-300 transition-colors">
+										<h3 className="text-lg font-semibold text-text-primary mb-1 group-hover:text-accent-violet transition-colors">
 											{concept.title}
 										</h3>
-										<p className="text-sm text-zinc-400 mb-3">
+										<p className="text-sm text-text-tertiary mb-3">
 											{concept.description}
 										</p>
 										<div className="flex flex-wrap gap-1.5">
 											{concept.tags.map((tag) => (
 												<span
 													key={tag}
-													className="px-2 py-0.5 text-xs rounded-full bg-zinc-800/60 text-zinc-400 border border-zinc-700/50"
+													className="px-2 py-0.5 text-xs rounded-full bg-surface-secondary/60 text-text-tertiary border border-border-secondary/50"
 												>
 													{tag}
 												</span>

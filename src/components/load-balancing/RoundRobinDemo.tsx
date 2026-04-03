@@ -117,14 +117,14 @@ export function RoundRobinDemo() {
 				<button
 					type="button"
 					onClick={reset}
-					className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg font-medium transition-colors"
+					className="px-4 py-2 bg-surface-tertiary hover:bg-surface-tertiary rounded-lg font-medium transition-colors"
 				>
 					Reset
 				</button>
 			</div>
 
 			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-8">
+			<div className="bg-surface-primary border border-border-primary rounded-xl p-8">
 				<div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
 					{servers.map((server, index) => {
 						const isNext = index === currentIndex;
@@ -137,15 +137,17 @@ export function RoundRobinDemo() {
 								<motion.div
 									className={`border-2 rounded-lg p-4 transition-all ${
 										server.healthy
-											? "border-emerald-500 bg-zinc-800"
-											: "border-red-500 bg-zinc-800/50"
+											? "border-emerald-500 bg-surface-secondary"
+											: "border-red-500 bg-surface-secondary/50"
 									} ${isNext && server.healthy ? "ring-2 ring-violet-400" : ""}`}
 									animate={{
 										scale: isNext && server.healthy ? 1.05 : 1,
 									}}
 								>
 									<div className="flex items-center justify-between mb-3">
-										<h4 className="font-semibold text-white">{server.name}</h4>
+										<h4 className="font-semibold text-text-primary">
+											{server.name}
+										</h4>
 										<button
 											type="button"
 											onClick={() => toggleHealth(server.id)}
@@ -160,10 +162,10 @@ export function RoundRobinDemo() {
 										/>
 									</div>
 
-									<div className="space-y-2 text-sm text-zinc-400">
+									<div className="space-y-2 text-sm text-text-tertiary">
 										<div className="flex justify-between">
 											<span>Requests:</span>
-											<span className="text-white font-mono">
+											<span className="text-text-primary font-mono">
 												{server.requestCount}
 											</span>
 										</div>
@@ -171,7 +173,9 @@ export function RoundRobinDemo() {
 											<span>Status:</span>
 											<span
 												className={
-													server.healthy ? "text-emerald-400" : "text-red-400"
+													server.healthy
+														? "text-accent-emerald-soft"
+														: "text-accent-red-soft"
 												}
 											>
 												{server.healthy ? "Healthy" : "Unhealthy"}
@@ -180,8 +184,8 @@ export function RoundRobinDemo() {
 									</div>
 
 									{isNext && server.healthy && (
-										<div className="mt-3 pt-3 border-t border-zinc-700">
-											<span className="text-xs text-violet-400 font-medium">
+										<div className="mt-3 pt-3 border-t border-border-secondary">
+											<span className="text-xs text-accent-violet-soft font-medium">
 												← Next in rotation
 											</span>
 										</div>
@@ -207,10 +211,12 @@ export function RoundRobinDemo() {
 				</div>
 
 				{/* Next pointer indicator */}
-				<div className="mt-6 pt-6 border-t border-zinc-800">
-					<div className="flex items-center gap-2 text-sm text-zinc-400">
-						<span className="font-medium text-violet-400">Current Index:</span>
-						<span className="font-mono text-white">{currentIndex}</span>
+				<div className="mt-6 pt-6 border-t border-border-primary">
+					<div className="flex items-center gap-2 text-sm text-text-tertiary">
+						<span className="font-medium text-accent-violet-soft">
+							Current Index:
+						</span>
+						<span className="font-mono text-text-primary">{currentIndex}</span>
 						<span className="mx-2">→</span>
 						<span>
 							{servers[currentIndex]?.healthy
@@ -258,8 +264,10 @@ export function RoundRobinDemo() {
 				<div className="flex items-start gap-3">
 					<div className="text-2xl">💡</div>
 					<div>
-						<h4 className="font-semibold text-amber-300 mb-1">Key Insight</h4>
-						<p className="text-sm text-zinc-300">
+						<h4 className="font-semibold text-accent-amber mb-1">
+							Key Insight
+						</h4>
+						<p className="text-sm text-text-secondary">
 							Simple and fair distribution, but ignores server load — all
 							healthy servers are treated equally. A fast server and a slow
 							server receive the same number of requests.

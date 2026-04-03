@@ -70,7 +70,7 @@ const AFTER_TREE: FiberNodeData = {
 };
 
 const STATUS_LEGEND = [
-	{ status: "unchanged", color: "#3f3f46", label: "Unchanged" },
+	{ status: "unchanged", color: "var(--svg-border)", label: "Unchanged" },
 	{ status: "updated", color: "#ca8a04", label: "Updated" },
 	{ status: "added", color: "#16a34a", label: "Added" },
 	{ status: "removed", color: "#dc2626", label: "Removed" },
@@ -89,7 +89,7 @@ export function TreeDiffDemo() {
 				{STATUS_LEGEND.map((item) => (
 					<div
 						key={item.status}
-						className="flex items-center gap-1.5 text-xs text-zinc-400"
+						className="flex items-center gap-1.5 text-xs text-text-tertiary"
 					>
 						<span
 							className="w-3 h-3 rounded-full border-2"
@@ -110,8 +110,8 @@ export function TreeDiffDemo() {
 					onClick={() => setShowAfter(false)}
 					className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
 						!showAfter
-							? "bg-violet-500/20 text-violet-300 border border-violet-500/30"
-							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300"
+							? "bg-violet-500/20 text-accent-violet border border-violet-500/30"
+							: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary"
 					}`}
 				>
 					Before setState
@@ -121,8 +121,8 @@ export function TreeDiffDemo() {
 					onClick={() => setShowAfter(true)}
 					className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
 						showAfter
-							? "bg-violet-500/20 text-violet-300 border border-violet-500/30"
-							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300"
+							? "bg-violet-500/20 text-accent-violet border border-violet-500/30"
+							: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary"
 					}`}
 				>
 					After setState
@@ -149,18 +149,25 @@ export function TreeDiffDemo() {
 
 			{/* Explanation */}
 			{showAfter && (
-				<div className="mt-5 p-4 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-sm text-zinc-300 space-y-1">
+				<div className="mt-5 p-4 rounded-lg bg-surface-secondary/50 border border-border-secondary/50 text-sm text-text-secondary space-y-1">
 					<p>
-						<span className="text-yellow-400 font-mono">&lt;h1&gt;</span> — Same
-						type, text prop changed → <strong>UPDATE</strong> (patch props only)
+						<span className="text-accent-yellow-soft font-mono">
+							&lt;h1&gt;
+						</span>{" "}
+						— Same type, text prop changed → <strong>UPDATE</strong> (patch
+						props only)
 					</p>
 					<p>
-						<span className="text-red-400 font-mono">&lt;p&gt; Item 2</span> —
-						Removed from tree → <strong>DELETE</strong> (unmount)
+						<span className="text-accent-red-soft font-mono">
+							&lt;p&gt; Item 2
+						</span>{" "}
+						— Removed from tree → <strong>DELETE</strong> (unmount)
 					</p>
 					<p>
-						<span className="text-green-400 font-mono">&lt;p&gt; Item 3</span> —
-						New node → <strong>INSERT</strong> (mount)
+						<span className="text-accent-green-soft font-mono">
+							&lt;p&gt; Item 3
+						</span>{" "}
+						— New node → <strong>INSERT</strong> (mount)
 					</p>
 				</div>
 			)}

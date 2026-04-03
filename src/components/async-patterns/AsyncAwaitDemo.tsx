@@ -101,17 +101,17 @@ const STEPS: Step[] = [
 
 const PHASE_COLORS = {
 	sync: {
-		text: "text-violet-300",
+		text: "text-accent-violet",
 		bg: "bg-violet-500/10",
 		border: "border-violet-500/20",
 	},
 	await: {
-		text: "text-amber-300",
+		text: "text-accent-amber",
 		bg: "bg-amber-500/10",
 		border: "border-amber-500/20",
 	},
 	microtask: {
-		text: "text-emerald-300",
+		text: "text-accent-emerald",
 		bg: "bg-emerald-500/10",
 		border: "border-emerald-500/20",
 	},
@@ -127,7 +127,7 @@ export function AsyncAwaitDemo() {
 			<div className="flex flex-col lg:flex-row gap-6">
 				{/* Code panel */}
 				<div className="flex-1 min-w-0">
-					<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+					<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 						Source Code
 					</div>
 					<ShikiCode
@@ -141,13 +141,13 @@ export function AsyncAwaitDemo() {
 				<div className="flex-1 min-w-0 space-y-3">
 					{/* Call Stack */}
 					<div>
-						<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+						<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 							Call Stack
 						</div>
-						<div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 min-h-20 flex flex-col-reverse gap-1">
+						<div className="p-3 rounded-lg bg-surface-primary border border-border-primary min-h-20 flex flex-col-reverse gap-1">
 							<AnimatePresence>
 								{current.stack.length === 0 ? (
-									<span className="text-xs text-zinc-600 text-center py-2">
+									<span className="text-xs text-text-faint text-center py-2">
 										(empty)
 									</span>
 								) : (
@@ -157,7 +157,7 @@ export function AsyncAwaitDemo() {
 											initial={{ opacity: 0, x: -10 }}
 											animate={{ opacity: 1, x: 0 }}
 											exit={{ opacity: 0, x: -10 }}
-											className="px-3 py-1.5 rounded bg-violet-500/10 border border-violet-500/20 text-xs font-mono text-violet-300"
+											className="px-3 py-1.5 rounded bg-violet-500/10 border border-violet-500/20 text-xs font-mono text-accent-violet"
 										>
 											{frame}
 										</motion.div>
@@ -169,13 +169,13 @@ export function AsyncAwaitDemo() {
 
 					{/* Microtask Queue */}
 					<div>
-						<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+						<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 							Microtask Queue
 						</div>
-						<div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 min-h-14 flex flex-col gap-1">
+						<div className="p-3 rounded-lg bg-surface-primary border border-border-primary min-h-14 flex flex-col gap-1">
 							<AnimatePresence>
 								{current.microtasks.length === 0 ? (
-									<span className="text-xs text-zinc-600 text-center py-1">
+									<span className="text-xs text-text-faint text-center py-1">
 										(empty)
 									</span>
 								) : (
@@ -185,7 +185,7 @@ export function AsyncAwaitDemo() {
 											initial={{ opacity: 0, scale: 0.9 }}
 											animate={{ opacity: 1, scale: 1 }}
 											exit={{ opacity: 0, scale: 0.9 }}
-											className="px-3 py-1.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-300"
+											className="px-3 py-1.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-accent-emerald"
 										>
 											{task}
 										</motion.div>
@@ -214,7 +214,7 @@ export function AsyncAwaitDemo() {
 					type="button"
 					onClick={() => setStep((s) => Math.max(0, s - 1))}
 					disabled={step <= 0}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					← Back
 				</button>
@@ -222,18 +222,18 @@ export function AsyncAwaitDemo() {
 					type="button"
 					onClick={() => setStep((s) => Math.min(STEPS.length - 1, s + 1))}
 					disabled={step >= STEPS.length - 1}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-accent-emerald border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					Next →
 				</button>
 				<button
 					type="button"
 					onClick={() => setStep(0)}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 				>
 					↺ Reset
 				</button>
-				<span className="text-xs text-zinc-600 ml-auto">
+				<span className="text-xs text-text-faint ml-auto">
 					Step {step + 1} / {STEPS.length}
 				</span>
 			</div>
@@ -249,14 +249,15 @@ export function AsyncAwaitDemo() {
 			</motion.div>
 
 			{/* Key insight */}
-			<div className="p-4 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-zinc-400 space-y-1">
-				<p className="text-zinc-200 font-medium">Key insight</p>
+			<div className="p-4 rounded-lg bg-surface-primary border border-border-primary text-sm text-text-tertiary space-y-1">
+				<p className="text-text-secondary font-medium">Key insight</p>
 				<p>
-					<code className="text-emerald-400">await</code> doesn't block the
-					thread — it suspends the <em>current async function</em> and queues
-					its continuation as a microtask when the awaited value settles.
+					<code className="text-accent-emerald-soft">await</code> doesn't block
+					the thread — it suspends the <em>current async function</em> and
+					queues its continuation as a microtask when the awaited value settles.
 					Synchronous code after the{" "}
-					<code className="text-emerald-400">await</code> call site runs first.
+					<code className="text-accent-emerald-soft">await</code> call site runs
+					first.
 				</p>
 			</div>
 		</div>

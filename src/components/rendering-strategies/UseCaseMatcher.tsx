@@ -178,9 +178,9 @@ export function UseCaseMatcher() {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: idx * 0.1 }}
-						className="p-4 rounded-lg bg-zinc-800/30 border border-zinc-700/50"
+						className="p-4 rounded-lg bg-surface-secondary/30 border border-border-secondary/50"
 					>
-						<h4 className="text-sm font-semibold text-white mb-3">
+						<h4 className="text-sm font-semibold text-text-primary mb-3">
 							{question.text}
 						</h4>
 						<div className="flex flex-wrap gap-2">
@@ -191,8 +191,8 @@ export function UseCaseMatcher() {
 									onClick={() => handleAnswer(question.id, option.value)}
 									className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors ${
 										answers[question.id] === option.value
-											? "bg-violet-500/20 text-violet-300 border border-violet-500/30"
-											: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300"
+											? "bg-violet-500/20 text-accent-violet border border-violet-500/30"
+											: "bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary"
 									}`}
 								>
 									{option.label}
@@ -209,14 +209,14 @@ export function UseCaseMatcher() {
 					type="button"
 					onClick={handleCalculate}
 					disabled={Object.keys(answers).length === 0}
-					className="px-6 py-2.5 rounded-lg bg-violet-500 text-white text-sm font-semibold hover:bg-violet-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+					className="px-6 py-2.5 rounded-lg bg-violet-500 text-text-primary text-sm font-semibold hover:bg-violet-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
 				>
 					Get Recommendation
 				</button>
 				<button
 					type="button"
 					onClick={handleReset}
-					className="px-6 py-2.5 rounded-lg bg-zinc-800 text-zinc-300 text-sm font-medium hover:bg-zinc-700 transition-colors border border-zinc-700"
+					className="px-6 py-2.5 rounded-lg bg-surface-secondary text-text-secondary text-sm font-medium hover:bg-surface-tertiary transition-colors border border-border-secondary"
 				>
 					Reset
 				</button>
@@ -232,14 +232,14 @@ export function UseCaseMatcher() {
 					{/* Eliminated Strategies */}
 					{eliminated.size > 0 && (
 						<div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-							<h5 className="text-sm font-semibold text-red-300 mb-2">
+							<h5 className="text-sm font-semibold text-accent-red mb-2">
 								❌ Eliminated:
 							</h5>
 							<div className="flex gap-2 flex-wrap">
 								{Array.from(eliminated).map((strategy) => (
 									<span
 										key={strategy}
-										className="px-3 py-1 rounded-full bg-red-500/20 text-red-300 text-xs font-medium opacity-50 line-through"
+										className="px-3 py-1 rounded-full bg-red-500/20 text-accent-red text-xs font-medium opacity-50 line-through"
 									>
 										{strategy}
 									</span>
@@ -251,25 +251,27 @@ export function UseCaseMatcher() {
 					{/* Recommended Strategies */}
 					{recommendedStrategies.length > 0 ? (
 						<div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
-							<h5 className="text-sm font-semibold text-green-300 mb-3">
+							<h5 className="text-sm font-semibold text-accent-green mb-3">
 								✅ Recommended Strategies:
 							</h5>
 							<div className="space-y-2">
 								{recommendedStrategies.slice(0, 3).map((strategy, idx) => (
 									<div
 										key={strategy}
-										className="flex items-center gap-3 p-3 rounded-lg bg-zinc-800/50"
+										className="flex items-center gap-3 p-3 rounded-lg bg-surface-secondary/50"
 									>
 										<span className="text-2xl">
 											{idx === 0 ? "🥇" : idx === 1 ? "🥈" : "🥉"}
 										</span>
-										<span className="font-semibold text-white">{strategy}</span>
+										<span className="font-semibold text-text-primary">
+											{strategy}
+										</span>
 									</div>
 								))}
 							</div>
 						</div>
 					) : (
-						<div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-sm text-yellow-300">
+						<div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-sm text-accent-yellow">
 							All strategies eliminated! Review your requirements.
 						</div>
 					)}
@@ -277,10 +279,10 @@ export function UseCaseMatcher() {
 					{/* Hybrid Architecture Suggestions */}
 					{shouldShowHybrid && (
 						<div className="p-4 rounded-lg bg-violet-500/10 border border-violet-500/20">
-							<h5 className="text-sm font-semibold text-violet-300 mb-2">
+							<h5 className="text-sm font-semibold text-accent-violet mb-2">
 								💡 Consider Hybrid Architecture:
 							</h5>
-							<p className="text-xs text-zinc-400 mb-3">
+							<p className="text-xs text-text-tertiary mb-3">
 								Real applications often mix strategies. Here are common hybrid
 								patterns:
 							</p>
@@ -288,15 +290,15 @@ export function UseCaseMatcher() {
 								{HYBRID_RECOMMENDATIONS.map((hybrid) => (
 									<div
 										key={hybrid.pattern}
-										className="p-3 rounded-lg bg-zinc-800/50 border border-zinc-700/50"
+										className="p-3 rounded-lg bg-surface-secondary/50 border border-border-secondary/50"
 									>
-										<h6 className="text-sm font-semibold text-white mb-1">
+										<h6 className="text-sm font-semibold text-text-primary mb-1">
 											{hybrid.name}
 										</h6>
-										<p className="text-xs text-zinc-400 mb-1">
+										<p className="text-xs text-text-tertiary mb-1">
 											{hybrid.description}
 										</p>
-										<p className="text-xs text-violet-300 italic">
+										<p className="text-xs text-accent-violet italic">
 											Example: {hybrid.example}
 										</p>
 									</div>

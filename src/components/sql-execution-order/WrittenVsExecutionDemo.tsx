@@ -16,7 +16,7 @@ const CLAUSES: Clause[] = [
 		id: "select",
 		clause: "SELECT",
 		code: "SELECT department, COUNT(*) as total, AVG(salary) as avg_salary",
-		color: "bg-blue-500/20 border-blue-500/30 text-blue-300",
+		color: "bg-blue-500/20 border-blue-500/30 text-accent-blue",
 		writtenOrder: 0,
 		executionOrder: 4,
 		explanation: "Step 5: Picks the final columns to return.",
@@ -25,7 +25,7 @@ const CLAUSES: Clause[] = [
 		id: "from",
 		clause: "FROM",
 		code: "FROM employees",
-		color: "bg-emerald-500/20 border-emerald-500/30 text-emerald-300",
+		color: "bg-emerald-500/20 border-emerald-500/30 text-accent-emerald",
 		writtenOrder: 1,
 		executionOrder: 0,
 		explanation: "Step 1: Identifies the root dataset (table or tables).",
@@ -34,7 +34,7 @@ const CLAUSES: Clause[] = [
 		id: "where",
 		clause: "WHERE",
 		code: "WHERE status = 'active'",
-		color: "bg-amber-500/20 border-amber-500/30 text-amber-300",
+		color: "bg-amber-500/20 border-amber-500/30 text-accent-amber",
 		writtenOrder: 2,
 		executionOrder: 1,
 		explanation: "Step 2: Filters out individual rows before grouping.",
@@ -43,7 +43,7 @@ const CLAUSES: Clause[] = [
 		id: "group-by",
 		clause: "GROUP BY",
 		code: "GROUP BY department",
-		color: "bg-purple-500/20 border-purple-500/30 text-purple-300",
+		color: "bg-purple-500/20 border-purple-500/30 text-accent-purple",
 		writtenOrder: 3,
 		executionOrder: 2,
 		explanation: "Step 3: Buckets remaining rows into distinct groups.",
@@ -52,7 +52,7 @@ const CLAUSES: Clause[] = [
 		id: "having",
 		clause: "HAVING",
 		code: "HAVING COUNT(*) > 4",
-		color: "bg-rose-500/20 border-rose-500/30 text-rose-300",
+		color: "bg-rose-500/20 border-rose-500/30 text-accent-rose",
 		writtenOrder: 4,
 		executionOrder: 3,
 		explanation: "Step 4: Keeps only groups with more than 4 members (5+).",
@@ -61,7 +61,7 @@ const CLAUSES: Clause[] = [
 		id: "order-by",
 		clause: "ORDER BY",
 		code: "ORDER BY avg_salary DESC",
-		color: "bg-teal-500/20 border-teal-500/30 text-teal-300",
+		color: "bg-teal-500/20 border-teal-500/30 text-accent-teal",
 		writtenOrder: 5,
 		executionOrder: 5,
 		explanation: "Step 6: Sorts the final selected rows.",
@@ -70,7 +70,7 @@ const CLAUSES: Clause[] = [
 		id: "limit",
 		clause: "LIMIT",
 		code: "LIMIT 10",
-		color: "bg-zinc-500/20 border-zinc-500/30 text-zinc-300",
+		color: "bg-text-muted/20 border-text-muted/30 text-text-secondary",
 		writtenOrder: 6,
 		executionOrder: 6,
 		explanation: "Step 7: Truncates the total results returned.",
@@ -87,22 +87,22 @@ export function WrittenVsExecutionDemo() {
 	});
 
 	return (
-		<div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl font-mono text-sm relative">
-			<div className="flex bg-zinc-950 p-2 border-b border-zinc-800 self-center">
-				<div className="flex bg-zinc-900 rounded-lg p-1 relative w-full max-w-md mx-auto">
+		<div className="bg-surface-primary border border-border-primary rounded-xl overflow-hidden shadow-xl font-mono text-sm relative">
+			<div className="flex bg-surface-base p-2 border-b border-border-primary self-center">
+				<div className="flex bg-surface-primary rounded-lg p-1 relative w-full max-w-md mx-auto">
 					<button
 						type="button"
 						className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold rounded-md transition-colors ${
 							mode === "written"
-								? "text-white"
-								: "text-zinc-500 hover:text-zinc-300"
+								? "text-text-primary"
+								: "text-text-muted hover:text-text-secondary"
 						}`}
 						onClick={() => setMode("written")}
 					>
 						{mode === "written" && (
 							<motion.span
 								layoutId="writtenVsExecutionTab"
-								className="absolute inset-0 bg-zinc-800 rounded-md border border-zinc-700/50 shadow-sm -z-10"
+								className="absolute inset-0 bg-surface-secondary rounded-md border border-border-secondary/50 shadow-sm -z-10"
 								transition={{ type: "spring", stiffness: 400, damping: 30 }}
 							/>
 						)}
@@ -112,15 +112,15 @@ export function WrittenVsExecutionDemo() {
 						type="button"
 						className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold rounded-md transition-colors ${
 							mode === "execution"
-								? "text-white"
-								: "text-zinc-500 hover:text-zinc-300"
+								? "text-text-primary"
+								: "text-text-muted hover:text-text-secondary"
 						}`}
 						onClick={() => setMode("execution")}
 					>
 						{mode === "execution" && (
 							<motion.span
 								layoutId="writtenVsExecutionTab"
-								className="absolute inset-0 bg-zinc-800 rounded-md border border-zinc-700/50 shadow-sm -z-10"
+								className="absolute inset-0 bg-surface-secondary rounded-md border border-border-secondary/50 shadow-sm -z-10"
 								transition={{ type: "spring", stiffness: 400, damping: 30 }}
 							/>
 						)}

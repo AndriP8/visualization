@@ -33,43 +33,43 @@ const TOPIC_COLORS: Record<
 > = {
 	orange: {
 		bg: "bg-orange-500/10",
-		text: "text-orange-400",
+		text: "text-accent-orange-soft",
 		dot: "bg-orange-400",
 		border: "border-orange-500/20",
 	},
 	emerald: {
 		bg: "bg-emerald-500/10",
-		text: "text-emerald-400",
+		text: "text-accent-emerald-soft",
 		dot: "bg-emerald-400",
 		border: "border-emerald-500/20",
 	},
 	violet: {
 		bg: "bg-violet-500/10",
-		text: "text-violet-400",
+		text: "text-accent-violet-soft",
 		dot: "bg-violet-400",
 		border: "border-violet-500/20",
 	},
 	amber: {
 		bg: "bg-amber-500/10",
-		text: "text-amber-400",
+		text: "text-accent-amber-soft",
 		dot: "bg-amber-400",
 		border: "border-amber-500/20",
 	},
 	blue: {
 		bg: "bg-blue-500/10",
-		text: "text-blue-400",
+		text: "text-accent-blue-soft",
 		dot: "bg-blue-400",
 		border: "border-blue-500/20",
 	},
 	rose: {
 		bg: "bg-rose-500/10",
-		text: "text-rose-400",
+		text: "text-accent-rose-soft",
 		dot: "bg-rose-400",
 		border: "border-rose-500/20",
 	},
 	purple: {
 		bg: "bg-purple-500/10",
-		text: "text-purple-400",
+		text: "text-accent-purple-soft",
 		dot: "bg-purple-400",
 		border: "border-purple-500/20",
 	},
@@ -150,7 +150,7 @@ export function PageHeader({
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5, delay: 0.2 }}
-				className="text-lg text-gray-400 mb-8"
+				className="text-lg text-text-tertiary mb-8"
 			>
 				{subtitle}
 			</motion.p>
@@ -160,7 +160,7 @@ export function PageHeader({
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5, delay: 0.3 }}
-					className="bg-zinc-800/30 border border-zinc-800 rounded-lg p-6 mb-8"
+					className="bg-surface-secondary/30 border border-border-primary rounded-lg p-6 mb-8"
 				>
 					{explanation.content}
 				</motion.div>

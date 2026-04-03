@@ -324,10 +324,10 @@ function TimelineRow({
 					className="inline-block w-2.5 h-2.5 rounded-full shrink-0"
 					style={{ backgroundColor: strategy.color }}
 				/>
-				<span className="text-xs font-semibold text-zinc-300">
+				<span className="text-xs font-semibold text-text-secondary">
 					{strategy.label}
 				</span>
-				<span className="text-xs text-zinc-600 ml-auto">
+				<span className="text-xs text-text-faint ml-auto">
 					~{duration}s{slowNetwork ? " (3G)" : ""}
 				</span>
 			</div>
@@ -335,7 +335,7 @@ function TimelineRow({
 			{/* Timeline track */}
 			<div
 				className={clsx(
-					"relative h-6 rounded-full bg-zinc-800/80 border overflow-visible mb-1",
+					"relative h-6 rounded-full bg-surface-secondary/80 border overflow-visible mb-1",
 					strategy.borderColor,
 				)}
 			>
@@ -355,7 +355,7 @@ function TimelineRow({
 								"block w-3 h-3 rounded-full border-2 transition-all duration-200",
 								activeMilestone !== null && i <= activeMilestone
 									? "border-transparent scale-125"
-									: "border-zinc-600 bg-zinc-800",
+									: "border-border-tertiary bg-surface-secondary",
 								hoveredMilestone === i ? "ring-2 ring-white/40 scale-150" : "",
 							)}
 							style={
@@ -364,7 +364,7 @@ function TimelineRow({
 									: undefined
 							}
 						/>
-						<span className="absolute top-4 left-1/2 -translate-x-1/2 text-[9px] text-zinc-500 whitespace-nowrap font-mono">
+						<span className="absolute top-4 left-1/2 -translate-x-1/2 text-[9px] text-text-muted whitespace-nowrap font-mono">
 							{m.label}
 						</span>
 					</button>
@@ -390,7 +390,7 @@ function TimelineRow({
 						key={displayedMilestone}
 						initial={{ opacity: 0, y: 4 }}
 						animate={{ opacity: 1, y: 0 }}
-						className="text-[10px] text-zinc-400 leading-relaxed"
+						className="text-[10px] text-text-tertiary leading-relaxed"
 					>
 						<span
 							className="font-semibold mr-1"
@@ -440,14 +440,14 @@ export function TimelineComparisonDemo({
 					className={clsx(
 						"px-4 py-2 rounded-lg text-sm font-semibold transition-all",
 						playing
-							? "bg-zinc-700 text-zinc-500 cursor-not-allowed"
-							: "bg-violet-600 hover:bg-violet-500 text-white shadow-lg shadow-violet-500/20",
+							? "bg-surface-tertiary text-text-muted cursor-not-allowed"
+							: "bg-violet-600 hover:bg-violet-500 text-text-primary shadow-lg shadow-violet-500/20",
 					)}
 				>
 					{playing ? "⏳ Animating…" : "▶ Play All Timelines"}
 				</button>
 
-				<label className="flex items-center gap-2 text-sm text-zinc-400 cursor-pointer select-none ml-auto">
+				<label className="flex items-center gap-2 text-sm text-text-tertiary cursor-pointer select-none ml-auto">
 					<span className="text-xs">🐇 Fast</span>
 					{/* A real <input type="checkbox"> is hidden; the visible toggle is a styled div controlled by the label */}
 					<input
@@ -460,7 +460,7 @@ export function TimelineComparisonDemo({
 						aria-hidden="true"
 						className={clsx(
 							"relative inline-block w-10 h-5 rounded-full transition-colors pointer-events-none",
-							slowNetwork ? "bg-amber-500" : "bg-zinc-700",
+							slowNetwork ? "bg-amber-500" : "bg-surface-tertiary",
 						)}
 					>
 						<span
@@ -488,7 +488,7 @@ export function TimelineComparisonDemo({
 				))}
 			</div>
 
-			<p className="text-xs text-zinc-600 mt-4">
+			<p className="text-xs text-text-faint mt-4">
 				💡 Hover milestone nodes for explanations. Use Case Matcher (below) dims
 				strategies that don't fit your answers.
 			</p>

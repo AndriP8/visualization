@@ -157,7 +157,7 @@ export function ReflowRepaintDemo() {
 		>
 			{/* Cost hierarchy */}
 			<div className="flex items-center gap-2 mb-5">
-				<span className="text-xs text-zinc-500">Cost:</span>
+				<span className="text-xs text-text-muted">Cost:</span>
 				{PIPELINE_STAGES.map((stage, i) => (
 					<div key={stage.id} className="flex items-center gap-2">
 						<motion.div
@@ -182,17 +182,17 @@ export function ReflowRepaintDemo() {
 							{stage.label}
 						</motion.div>
 						{i < PIPELINE_STAGES.length - 1 && (
-							<span className="text-zinc-600 text-xs">→</span>
+							<span className="text-text-faint text-xs">→</span>
 						)}
 					</div>
 				))}
-				<span className="text-xs text-zinc-500 ml-2">
+				<span className="text-xs text-text-muted ml-2">
 					{selected ? COST_LABELS[selected.triggers] : "(click a property)"}
 				</span>
 			</div>
 
 			{/* Pipeline bar visualization */}
-			<div className="mb-6 rounded-lg bg-zinc-800/30 border border-zinc-800 p-4">
+			<div className="mb-6 rounded-lg bg-surface-secondary/30 border border-border-primary p-4">
 				<div className="flex gap-1 h-8 rounded-lg overflow-hidden">
 					{PIPELINE_STAGES.map((stage) => (
 						<motion.div
@@ -222,7 +222,7 @@ export function ReflowRepaintDemo() {
 						key={selected.property}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
-						className="text-xs text-zinc-500 mt-2 text-center"
+						className="text-xs text-text-muted mt-2 text-center"
 					>
 						{
 							PIPELINE_STAGES.find((s) => s.id === selected.triggers)
@@ -247,8 +247,8 @@ export function ReflowRepaintDemo() {
 							whileTap={{ scale: 0.97 }}
 							className={`p-3 rounded-lg text-left transition-all border ${
 								isActive
-									? "bg-zinc-800 border-white/20"
-									: "bg-zinc-900/50 border-zinc-800 hover:border-zinc-700"
+									? "bg-surface-secondary border-white/20"
+									: "bg-surface-primary/50 border-border-primary hover:border-border-secondary"
 							}`}
 						>
 							<div className="flex items-center gap-1.5 mb-1">
@@ -256,7 +256,7 @@ export function ReflowRepaintDemo() {
 									className="w-2 h-2 rounded-full"
 									style={{ backgroundColor: costColor }}
 								/>
-								<span className="text-sm font-mono text-white">
+								<span className="text-sm font-mono text-text-primary">
 									{prop.property}
 								</span>
 							</div>
@@ -281,7 +281,7 @@ export function ReflowRepaintDemo() {
 					key={selected.property}
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
-					className="mt-5 p-4 rounded-lg border bg-zinc-800/50"
+					className="mt-5 p-4 rounded-lg border bg-surface-secondary/50"
 					style={{
 						borderColor: `${COST_COLORS[selected.triggers]}33`,
 					}}
@@ -293,10 +293,12 @@ export function ReflowRepaintDemo() {
 						>
 							{selected.property}
 						</code>
-						<span className="text-xs text-zinc-500">—</span>
-						<span className="text-xs text-zinc-400">{selected.example}</span>
+						<span className="text-xs text-text-muted">—</span>
+						<span className="text-xs text-text-tertiary">
+							{selected.example}
+						</span>
 					</div>
-					<p className="text-sm text-zinc-400">{selected.explanation}</p>
+					<p className="text-sm text-text-tertiary">{selected.explanation}</p>
 				</motion.div>
 			)}
 		</DemoSection>

@@ -17,11 +17,11 @@ export function UseCasesDemo() {
 					className={`p-4 rounded-lg border-2 transition-all text-left ${
 						activeCase === "image"
 							? "border-violet-500 bg-violet-500/20"
-							: "border-zinc-700 bg-zinc-800 hover:border-zinc-600"
+							: "border-border-secondary bg-surface-secondary hover:border-border-tertiary"
 					}`}
 				>
 					<div className="text-lg mb-1">🎨 Image Processing</div>
-					<div className="text-xs text-zinc-400">
+					<div className="text-xs text-text-tertiary">
 						Apply filters without blocking UI
 					</div>
 				</button>
@@ -32,11 +32,11 @@ export function UseCasesDemo() {
 					className={`p-4 rounded-lg border-2 transition-all text-left ${
 						activeCase === "csv"
 							? "border-emerald-500 bg-emerald-500/20"
-							: "border-zinc-700 bg-zinc-800 hover:border-zinc-600"
+							: "border-border-secondary bg-surface-secondary hover:border-border-tertiary"
 					}`}
 				>
 					<div className="text-lg mb-1">📊 Data Parsing</div>
-					<div className="text-xs text-zinc-400">
+					<div className="text-xs text-text-tertiary">
 						Parse large CSV/JSON in background
 					</div>
 				</button>
@@ -47,11 +47,11 @@ export function UseCasesDemo() {
 					className={`p-4 rounded-lg border-2 transition-all text-left ${
 						activeCase === "crypto"
 							? "border-cyan-500 bg-cyan-500/20"
-							: "border-zinc-700 bg-zinc-800 hover:border-zinc-600"
+							: "border-border-secondary bg-surface-secondary hover:border-border-tertiary"
 					}`}
 				>
 					<div className="text-lg mb-1">🔐 Cryptography</div>
-					<div className="text-xs text-zinc-400">
+					<div className="text-xs text-text-tertiary">
 						Hash passwords without freezing form
 					</div>
 				</button>
@@ -63,58 +63,58 @@ export function UseCasesDemo() {
 			{activeCase === "crypto" && <CryptoDemo />}
 
 			{/* Decision matrix */}
-			<div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-zinc-300 mb-4">
+			<div className="bg-surface-primary/50 border border-border-primary rounded-lg p-6">
+				<h4 className="text-sm font-semibold text-text-secondary mb-4">
 					When to Use Web Workers
 				</h4>
 				<div className="overflow-x-auto">
 					<table className="w-full text-sm">
 						<thead>
-							<tr className="border-b border-zinc-800">
-								<th className="text-left py-2 text-zinc-400 font-medium">
+							<tr className="border-b border-border-primary">
+								<th className="text-left py-2 text-text-tertiary font-medium">
 									Task Type
 								</th>
-								<th className="text-center py-2 text-zinc-400 font-medium">
+								<th className="text-center py-2 text-text-tertiary font-medium">
 									Use Worker?
 								</th>
-								<th className="text-left py-2 text-zinc-400 font-medium">
+								<th className="text-left py-2 text-text-tertiary font-medium">
 									Reason
 								</th>
 							</tr>
 						</thead>
-						<tbody className="text-zinc-400">
-							<tr className="border-b border-zinc-800/50">
+						<tbody className="text-text-tertiary">
+							<tr className="border-b border-border-primary/50">
 								<td className="py-3">Heavy computation (&gt;50ms)</td>
 								<td className="text-center">
-									<span className="text-emerald-400">✅ Yes</span>
+									<span className="text-accent-emerald-soft">✅ Yes</span>
 								</td>
 								<td>Prevents UI jank</td>
 							</tr>
-							<tr className="border-b border-zinc-800/50">
+							<tr className="border-b border-border-primary/50">
 								<td className="py-3">Quick DOM updates</td>
 								<td className="text-center">
-									<span className="text-red-400">❌ No</span>
+									<span className="text-accent-red-soft">❌ No</span>
 								</td>
 								<td>postMessage overhead &gt; task cost</td>
 							</tr>
-							<tr className="border-b border-zinc-800/50">
+							<tr className="border-b border-border-primary/50">
 								<td className="py-3">Real-time data processing</td>
 								<td className="text-center">
-									<span className="text-emerald-400">✅ Yes</span>
+									<span className="text-accent-emerald-soft">✅ Yes</span>
 								</td>
 								<td>Stream processing in background</td>
 							</tr>
-							<tr className="border-b border-zinc-800/50">
+							<tr className="border-b border-border-primary/50">
 								<td className="py-3">Simple calculations (&lt;16ms)</td>
 								<td className="text-center">
-									<span className="text-red-400">❌ No</span>
+									<span className="text-accent-red-soft">❌ No</span>
 								</td>
 								<td>requestAnimationFrame sufficient</td>
 							</tr>
 							<tr>
 								<td className="py-3">User input handling</td>
 								<td className="text-center">
-									<span className="text-red-400">❌ No</span>
+									<span className="text-accent-red-soft">❌ No</span>
 								</td>
 								<td>Must happen on main thread</td>
 							</tr>
@@ -126,10 +126,10 @@ export function UseCasesDemo() {
 			{/* Trade-offs */}
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-6">
-					<h4 className="text-sm font-semibold text-emerald-300 mb-3">
+					<h4 className="text-sm font-semibold text-accent-emerald mb-3">
 						✅ Advantages
 					</h4>
-					<ul className="space-y-2 text-sm text-zinc-400">
+					<ul className="space-y-2 text-sm text-text-tertiary">
 						<li>• Non-blocking - better UX</li>
 						<li>• True parallelism on multi-core CPUs</li>
 						<li>• Isolates crashes (worker failure won't crash main thread)</li>
@@ -138,10 +138,10 @@ export function UseCasesDemo() {
 				</div>
 
 				<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-6">
-					<h4 className="text-sm font-semibold text-red-300 mb-3">
+					<h4 className="text-sm font-semibold text-accent-red mb-3">
 						❌ Trade-offs
 					</h4>
-					<ul className="space-y-2 text-sm text-zinc-400">
+					<ul className="space-y-2 text-sm text-text-tertiary">
 						<li>• No DOM access (must use postMessage)</li>
 						<li>• Serialization overhead for non-transferable data</li>
 						<li>• Debugging complexity (separate contexts)</li>
@@ -302,17 +302,17 @@ function ImageProcessingDemo() {
 
 	return (
 		<div className="space-y-6">
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					<div>
-						<h4 className="text-sm font-semibold text-zinc-300 mb-4">
+						<h4 className="text-sm font-semibold text-text-secondary mb-4">
 							Image Preview
 						</h4>
 						<canvas
 							ref={canvasRef}
 							width={600}
 							height={600}
-							className="border border-zinc-700 rounded w-full max-w-[300px]"
+							className="border border-border-secondary rounded w-full max-w-[300px]"
 						/>
 					</div>
 
@@ -320,7 +320,7 @@ function ImageProcessingDemo() {
 						<div>
 							<label
 								htmlFor="filter-select"
-								className="block text-sm text-zinc-400 mb-2"
+								className="block text-sm text-text-tertiary mb-2"
 							>
 								Select Filter:
 							</label>
@@ -331,7 +331,7 @@ function ImageProcessingDemo() {
 									setFilter(e.target.value as "grayscale" | "blur" | "sepia")
 								}
 								disabled={processing}
-								className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded text-sm focus:outline-none focus:border-violet-500"
+								className="w-full px-3 py-2 bg-surface-secondary border border-border-secondary rounded text-sm focus:outline-none focus:border-violet-500"
 							>
 								<option value="grayscale">Grayscale</option>
 								<option value="blur">Blur</option>
@@ -344,7 +344,7 @@ function ImageProcessingDemo() {
 								type="button"
 								onClick={applyFilter}
 								disabled={processing}
-								className="flex-1 px-4 py-2 bg-violet-500 hover:bg-violet-600 disabled:bg-zinc-700 disabled:text-zinc-500 rounded text-sm font-medium transition-colors"
+								className="flex-1 px-4 py-2 bg-violet-500 hover:bg-violet-600 disabled:bg-surface-tertiary disabled:text-text-muted rounded text-sm font-medium transition-colors"
 							>
 								{processing ? "Processing..." : "Apply Filter"}
 							</button>
@@ -352,7 +352,7 @@ function ImageProcessingDemo() {
 								type="button"
 								onClick={resetImage}
 								disabled={processing}
-								className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 disabled:bg-zinc-800 disabled:text-zinc-500 rounded text-sm font-medium transition-colors"
+								className="px-4 py-2 bg-surface-tertiary hover:bg-surface-tertiary disabled:bg-surface-secondary disabled:text-text-muted rounded text-sm font-medium transition-colors"
 							>
 								Reset
 							</button>
@@ -360,11 +360,11 @@ function ImageProcessingDemo() {
 
 						{processing && (
 							<div className="space-y-2">
-								<div className="flex justify-between text-xs text-zinc-400">
+								<div className="flex justify-between text-xs text-text-tertiary">
 									<span>Progress</span>
 									<span>{Math.round(progress)}%</span>
 								</div>
-								<div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
+								<div className="h-2 bg-surface-secondary rounded-full overflow-hidden">
 									<motion.div
 										className="h-full bg-violet-500"
 										initial={{ width: 0 }}
@@ -477,14 +477,14 @@ function CSVParsingDemo() {
 
 	return (
 		<div className="space-y-6">
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6">
 				<div className="space-y-4">
 					<div className="flex items-center justify-between">
 						<div>
-							<h4 className="text-sm font-semibold text-zinc-300">
+							<h4 className="text-sm font-semibold text-text-secondary">
 								Parse 10,000 Row CSV
 							</h4>
-							<p className="text-xs text-zinc-500">
+							<p className="text-xs text-text-muted">
 								Process large datasets without blocking UI
 							</p>
 						</div>
@@ -492,7 +492,7 @@ function CSVParsingDemo() {
 							type="button"
 							onClick={parseCSV}
 							disabled={parsing}
-							className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 disabled:bg-zinc-700 disabled:text-zinc-500 rounded text-sm font-medium transition-colors"
+							className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 disabled:bg-surface-tertiary disabled:text-text-muted rounded text-sm font-medium transition-colors"
 						>
 							{parsing ? "Parsing..." : "Parse CSV"}
 						</button>
@@ -500,11 +500,11 @@ function CSVParsingDemo() {
 
 					{parsing && (
 						<div className="space-y-2">
-							<div className="flex justify-between text-xs text-zinc-400">
+							<div className="flex justify-between text-xs text-text-tertiary">
 								<span>Progress</span>
 								<span>{Math.round(progress)}%</span>
 							</div>
-							<div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
+							<div className="h-2 bg-surface-secondary rounded-full overflow-hidden">
 								<motion.div
 									className="h-full bg-emerald-500"
 									initial={{ width: 0 }}
@@ -522,16 +522,18 @@ function CSVParsingDemo() {
 						>
 							<div className="grid grid-cols-2 gap-4 text-center">
 								<div>
-									<div className="text-2xl font-bold text-emerald-300">
+									<div className="text-2xl font-bold text-accent-emerald">
 										{result.rows.toLocaleString()}
 									</div>
-									<div className="text-xs text-zinc-400">Rows Parsed</div>
+									<div className="text-xs text-text-tertiary">Rows Parsed</div>
 								</div>
 								<div>
-									<div className="text-2xl font-bold text-emerald-300">
+									<div className="text-2xl font-bold text-accent-emerald">
 										{result.avgValue.toFixed(2)}
 									</div>
-									<div className="text-xs text-zinc-400">Average Value</div>
+									<div className="text-xs text-text-tertiary">
+										Average Value
+									</div>
 								</div>
 							</div>
 						</motion.div>
@@ -623,12 +625,12 @@ function CryptoDemo() {
 
 	return (
 		<div className="space-y-6">
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+			<div className="bg-surface-primary border border-border-primary rounded-lg p-6">
 				<div className="space-y-4">
 					<div>
 						<label
 							htmlFor="password-input"
-							className="block text-sm text-zinc-400 mb-2"
+							className="block text-sm text-text-tertiary mb-2"
 						>
 							Enter Password:
 						</label>
@@ -640,7 +642,7 @@ function CryptoDemo() {
 							onKeyDown={(e) => e.key === "Enter" && handleHash()}
 							placeholder="Type a password..."
 							disabled={hashing}
-							className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded text-sm focus:outline-none focus:border-cyan-500"
+							className="w-full px-3 py-2 bg-surface-secondary border border-border-secondary rounded text-sm focus:outline-none focus:border-cyan-500"
 						/>
 					</div>
 
@@ -648,7 +650,7 @@ function CryptoDemo() {
 						type="button"
 						onClick={handleHash}
 						disabled={hashing || !password}
-						className="w-full px-4 py-2 bg-cyan-500 hover:bg-cyan-600 disabled:bg-zinc-700 disabled:text-zinc-500 rounded text-sm font-medium transition-colors"
+						className="w-full px-4 py-2 bg-cyan-500 hover:bg-cyan-600 disabled:bg-surface-tertiary disabled:text-text-muted rounded text-sm font-medium transition-colors"
 					>
 						{hashing ? "Hashing (10,000 iterations)..." : "Hash Password"}
 					</button>
@@ -659,15 +661,17 @@ function CryptoDemo() {
 							animate={{ opacity: 1, y: 0 }}
 							className="p-4 bg-cyan-500/10 border border-cyan-500/30 rounded"
 						>
-							<div className="text-xs text-zinc-400 mb-1">Hashed Result:</div>
-							<div className="font-mono text-sm text-cyan-300 break-all">
+							<div className="text-xs text-text-tertiary mb-1">
+								Hashed Result:
+							</div>
+							<div className="font-mono text-sm text-accent-cyan break-all">
 								{hash}
 							</div>
 						</motion.div>
 					)}
 
 					<div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded">
-						<p className="text-xs text-amber-300">
+						<p className="text-xs text-accent-amber">
 							💡 Form remains interactive during hashing. Try typing while
 							hashing runs!
 						</p>

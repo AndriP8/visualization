@@ -70,14 +70,14 @@ export function ConcurrentRenderingDemo() {
 			<div className="space-y-6">
 				{/* Mode Toggle */}
 				<div className="flex items-center justify-between">
-					<div className="flex bg-zinc-800 rounded-lg p-1">
+					<div className="flex bg-surface-secondary rounded-lg p-1">
 						<button
 							type="button"
 							onClick={() => setMode("synchronous")}
 							className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 								mode === "synchronous"
-									? "bg-red-500/20 text-red-400"
-									: "text-zinc-400 hover:text-white"
+									? "bg-red-500/20 text-accent-red-soft"
+									: "text-text-tertiary hover:text-text-primary"
 							}`}
 						>
 							Synchronous
@@ -87,8 +87,8 @@ export function ConcurrentRenderingDemo() {
 							onClick={() => setMode("deferred")}
 							className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 								mode === "deferred"
-									? "bg-emerald-500/20 text-emerald-400"
-									: "text-zinc-400 hover:text-white"
+									? "bg-emerald-500/20 text-accent-emerald-soft"
+									: "text-text-tertiary hover:text-text-primary"
 							}`}
 						>
 							Deferred
@@ -100,12 +100,12 @@ export function ConcurrentRenderingDemo() {
 							<motion.span
 								initial={{ opacity: 0, scale: 0.8 }}
 								animate={{ opacity: 1, scale: 1 }}
-								className="px-2 py-1 rounded text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30"
+								className="px-2 py-1 rounded text-xs bg-amber-500/20 text-accent-amber-soft border border-amber-500/30"
 							>
 								Rendering...
 							</motion.span>
 						)}
-						<span className="text-xs text-zinc-500">
+						<span className="text-xs text-text-muted">
 							Last render: {renderTime.toFixed(0)}ms
 						</span>
 					</div>
@@ -117,12 +117,12 @@ export function ConcurrentRenderingDemo() {
 					value={query}
 					onChange={(e) => setQuery(e.target.value)}
 					placeholder="Type to filter (try 'react', 'vue', 'angular')..."
-					className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-violet-500 transition-colors"
+					className="w-full px-4 py-3 rounded-lg bg-surface-secondary border border-border-secondary text-text-primary placeholder-text-muted focus:outline-none focus:border-violet-500 transition-colors"
 				/>
 
 				{/* Thread Timeline Visualization */}
-				<div className="bg-zinc-800/50 rounded-lg p-4 space-y-3">
-					<h4 className="text-sm font-medium text-zinc-300">
+				<div className="bg-surface-secondary/50 rounded-lg p-4 space-y-3">
+					<h4 className="text-sm font-medium text-text-secondary">
 						Main Thread Timeline
 					</h4>
 
@@ -135,11 +135,11 @@ export function ConcurrentRenderingDemo() {
 								exit={{ opacity: 0 }}
 								className="space-y-2"
 							>
-								<div className="flex items-center gap-2 text-xs text-zinc-400">
+								<div className="flex items-center gap-2 text-xs text-text-tertiary">
 									<span className="w-16 shrink-0">Blocking</span>
 									<div className="flex-1 flex h-8 rounded overflow-hidden">
 										<motion.div
-											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300"
+											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-accent-violet"
 											style={{ width: "10%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -148,7 +148,7 @@ export function ConcurrentRenderingDemo() {
 											Input
 										</motion.div>
 										<motion.div
-											className="bg-red-500/30 border border-red-500/50 flex items-center justify-center text-[10px] text-red-300"
+											className="bg-red-500/30 border border-red-500/50 flex items-center justify-center text-[10px] text-accent-red"
 											style={{ width: "70%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -157,7 +157,7 @@ export function ConcurrentRenderingDemo() {
 											Filter + Render (UI frozen)
 										</motion.div>
 										<motion.div
-											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300"
+											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-accent-violet"
 											style={{ width: "10%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -166,7 +166,7 @@ export function ConcurrentRenderingDemo() {
 											Input
 										</motion.div>
 										<motion.div
-											className="bg-red-500/30 border border-red-500/50 flex items-center justify-center text-[10px] text-red-300"
+											className="bg-red-500/30 border border-red-500/50 flex items-center justify-center text-[10px] text-accent-red"
 											style={{ width: "10%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -176,7 +176,7 @@ export function ConcurrentRenderingDemo() {
 										</motion.div>
 									</div>
 								</div>
-								<p className="text-[10px] text-zinc-500">
+								<p className="text-[10px] text-text-muted">
 									Every keystroke blocks until filter completes. Input can't
 									update until render finishes.
 								</p>
@@ -189,11 +189,11 @@ export function ConcurrentRenderingDemo() {
 								exit={{ opacity: 0 }}
 								className="space-y-2"
 							>
-								<div className="flex items-center gap-2 text-xs text-zinc-400">
+								<div className="flex items-center gap-2 text-xs text-text-tertiary">
 									<span className="w-16 shrink-0">Deferred</span>
 									<div className="flex-1 flex h-8 rounded overflow-hidden gap-0.5">
 										<motion.div
-											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300"
+											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-accent-violet"
 											style={{ width: "8%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -202,7 +202,7 @@ export function ConcurrentRenderingDemo() {
 											r
 										</motion.div>
 										<motion.div
-											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300"
+											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-accent-violet"
 											style={{ width: "8%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -211,7 +211,7 @@ export function ConcurrentRenderingDemo() {
 											e
 										</motion.div>
 										<motion.div
-											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300"
+											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-accent-violet"
 											style={{ width: "8%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -220,7 +220,7 @@ export function ConcurrentRenderingDemo() {
 											a
 										</motion.div>
 										<motion.div
-											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300"
+											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-accent-violet"
 											style={{ width: "8%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -229,7 +229,7 @@ export function ConcurrentRenderingDemo() {
 											c
 										</motion.div>
 										<motion.div
-											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300"
+											className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-accent-violet"
 											style={{ width: "8%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -238,7 +238,7 @@ export function ConcurrentRenderingDemo() {
 											t
 										</motion.div>
 										<motion.div
-											className="bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] text-amber-300"
+											className="bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] text-accent-amber"
 											style={{ width: "12%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -247,7 +247,7 @@ export function ConcurrentRenderingDemo() {
 											idle
 										</motion.div>
 										<motion.div
-											className="bg-emerald-500/30 border border-emerald-500/50 flex items-center justify-center text-[10px] text-emerald-300"
+											className="bg-emerald-500/30 border border-emerald-500/50 flex items-center justify-center text-[10px] text-accent-emerald"
 											style={{ width: "38%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -256,7 +256,7 @@ export function ConcurrentRenderingDemo() {
 											Deferred render ("react")
 										</motion.div>
 										<motion.div
-											className="bg-zinc-600/50 flex items-center justify-center text-[10px] text-zinc-400"
+											className="bg-surface-tertiary/50 flex items-center justify-center text-[10px] text-text-tertiary"
 											style={{ width: "10%" }}
 											initial={{ scaleX: 0 }}
 											animate={{ scaleX: 1 }}
@@ -266,7 +266,7 @@ export function ConcurrentRenderingDemo() {
 										</motion.div>
 									</div>
 								</div>
-								<p className="text-[10px] text-zinc-500">
+								<p className="text-[10px] text-text-muted">
 									Input updates at high priority. The deferred render runs at
 									lower priority — React may skip superseded intermediate
 									values.
@@ -281,16 +281,16 @@ export function ConcurrentRenderingDemo() {
 					className={`transition-opacity duration-200 ${isStale ? "opacity-60" : "opacity-100"}`}
 				>
 					<div className="flex items-center justify-between mb-2">
-						<span className="text-sm text-zinc-400">
+						<span className="text-sm text-text-tertiary">
 							{filtered.length} results
 							{filtered.length === 200 ? " (capped)" : ""}
 						</span>
 					</div>
-					<div className="h-48 overflow-y-auto rounded-lg bg-zinc-800/50 border border-zinc-700/50">
+					<div className="h-48 overflow-y-auto rounded-lg bg-surface-secondary/50 border border-border-secondary/50">
 						{filtered.map((item) => (
 							<div
 								key={item.id}
-								className="px-3 py-1.5 text-sm text-zinc-300 border-b border-zinc-800/50 last:border-b-0"
+								className="px-3 py-1.5 text-sm text-text-secondary border-b border-border-primary/50 last:border-b-0"
 							>
 								{item.name}
 							</div>
@@ -317,7 +317,7 @@ function DeferredList({ query }: { query: string }) {
 					className="text-xs"
 				/>
 
-				<p className="text-xs text-zinc-500 italic">
+				<p className="text-xs text-text-muted italic">
 					React 18 concurrent rendering doesn't make computation faster — it
 					makes the UI feel faster by keeping high-priority work (user input)
 					unblocked.

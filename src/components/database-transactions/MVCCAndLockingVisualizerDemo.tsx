@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { useColorScheme } from "../../hooks/useColorScheme";
+import { THEME_COLORS } from "../../theme/tokens";
 
 type TabType = "traditional" | "mvcc" | "deadlock";
 
@@ -10,7 +12,7 @@ export function MVCCAndLockingVisualizerDemo() {
 	return (
 		<div className="flex flex-col gap-6">
 			{/* Tabs */}
-			<div className="flex flex-wrap gap-2 border-b border-zinc-800 pb-4">
+			<div className="flex flex-wrap gap-2 border-b border-border-primary pb-4">
 				<TabButton
 					active={activeTab === "traditional"}
 					onClick={() => setActiveTab("traditional")}
@@ -32,7 +34,7 @@ export function MVCCAndLockingVisualizerDemo() {
 			</div>
 
 			{/* Content area */}
-			<div className="bg-zinc-900/40 border border-zinc-800 rounded-lg p-5 min-h-90 flex flex-col justify-center relative overflow-hidden">
+			<div className="bg-surface-primary/40 border border-border-primary rounded-lg p-5 min-h-90 flex flex-col justify-center relative overflow-hidden">
 				<AnimatePresence mode="wait">
 					{activeTab === "traditional" && <TraditionalKey key="trad" />}
 					{activeTab === "mvcc" && <MVCCDemo key="mvcc" />}
@@ -59,8 +61,8 @@ function TabButton({ active, onClick, children }: TabButtonProps) {
 			className={clsx(
 				"px-4 py-2 rounded-md text-sm font-semibold transition-all",
 				active
-					? "bg-violet-600 text-white shadow-[0_0_15px_rgba(124,58,237,0.3)] border border-violet-500"
-					: "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800",
+					? "bg-violet-600 text-text-primary shadow-[0_0_15px_rgba(124,58,237,0.3)] border border-violet-500"
+					: "bg-surface-primary border border-border-primary text-text-tertiary hover:text-text-secondary hover:bg-surface-secondary",
 			)}
 		>
 			{children}
@@ -71,6 +73,7 @@ function TabButton({ active, onClick, children }: TabButtonProps) {
 // ----- Sub Demos -----
 
 function TraditionalKey() {
+	const t = THEME_COLORS[useColorScheme()];
 	const [step, setStep] = useState(0);
 
 	useEffect(() => {
@@ -87,28 +90,30 @@ function TraditionalKey() {
 			exit={{ opacity: 0 }}
 			className="space-y-6 w-full max-w-2xl mx-auto"
 		>
-			<p className="text-sm text-zinc-400 text-center mb-8">
+			<p className="text-sm text-text-tertiary text-center mb-8">
 				Older databases (like early SQL Server) secure data by physically
 				locking rows.
-				<strong className="text-violet-400 block mt-1">
+				<strong className="text-accent-violet-soft block mt-1">
 					Writers block everyone. Readers block writers but allow other readers.
 				</strong>
 			</p>
 
 			<div className="flex justify-between items-center px-8 relative">
 				{/* T1 */}
-				<div className="w-48 bg-zinc-800/80 p-3 rounded-lg border border-zinc-700">
-					<h5 className="text-violet-400 font-bold mb-2">T1 (Reader)</h5>
-					<div className="text-xs text-zinc-300 font-mono space-y-1 h-12">
+				<div className="w-48 bg-surface-secondary/80 p-3 rounded-lg border border-border-secondary">
+					<h5 className="text-accent-violet-soft font-bold mb-2">
+						T1 (Reader)
+					</h5>
+					<div className="text-xs text-text-secondary font-mono space-y-1 h-12">
 						{step >= 0 && <div>SELECT balance...</div>}
-						{step >= 3 && <div className="text-green-400">COMMIT;</div>}
+						{step >= 3 && <div className="text-accent-green-soft">COMMIT;</div>}
 					</div>
 					<div
 						className={clsx(
 							"mt-3 text-[10px] uppercase font-bold tracking-widest text-center py-1 rounded",
 							step >= 0 && step < 3
-								? "bg-amber-500/20 text-amber-400 border border-amber-500/50"
-								: "bg-black/20 text-zinc-600",
+								? "bg-amber-500/20 text-accent-amber-soft border border-amber-500/50"
+								: "bg-black/20 text-text-faint",
 						)}
 					>
 						Shared Lock
@@ -116,7 +121,7 @@ function TraditionalKey() {
 				</div>
 
 				{/* The Row */}
-				<div className="relative z-10 w-24 h-16 bg-zinc-950 rounded border border-zinc-700 flex flex-col items-center justify-center shadow-lg">
+				<div className="relative z-10 w-24 h-16 bg-surface-base rounded border border-border-secondary flex flex-col items-center justify-center shadow-lg">
 					<div className="absolute -top-3 -right-3">
 						<AnimatePresence>
 							{step >= 0 && step < 3 && (
@@ -141,11 +146,11 @@ function TraditionalKey() {
 							)}
 						</AnimatePresence>
 					</div>
-					<span className="text-xs text-zinc-500">Row 1</span>
+					<span className="text-xs text-text-muted">Row 1</span>
 					<motion.span
 						key={step >= 4 ? "v2" : "v1"}
 						initial={{ scale: 1.2, color: "#fff" }}
-						animate={{ scale: 1, color: step >= 4 ? "#4ade80" : "#a1a1aa" }}
+						animate={{ scale: 1, color: step >= 4 ? "#4ade80" : t.svgText }}
 						className="font-mono"
 					>
 						{step >= 4 ? "$150" : "$100"}
@@ -153,13 +158,15 @@ function TraditionalKey() {
 				</div>
 
 				{/* T2 */}
-				<div className="w-48 bg-zinc-800/80 p-3 rounded-lg border border-zinc-700">
-					<h5 className="text-cyan-400 font-bold mb-2">T2 (Writer)</h5>
-					<div className="text-xs text-zinc-300 font-mono space-y-1 h-12">
+				<div className="w-48 bg-surface-secondary/80 p-3 rounded-lg border border-border-secondary">
+					<h5 className="text-accent-cyan-soft font-bold mb-2">T2 (Writer)</h5>
+					<div className="text-xs text-text-secondary font-mono space-y-1 h-12">
 						{step >= 1 && step < 4 && (
-							<div className="text-red-400">UPDATE... (WAITING)</div>
+							<div className="text-accent-red-soft">UPDATE... (WAITING)</div>
 						)}
-						{step >= 4 && <div className="text-cyan-300">UPDATE $150 (OK)</div>}
+						{step >= 4 && (
+							<div className="text-accent-cyan">UPDATE $150 (OK)</div>
+						)}
 					</div>
 					<div
 						className={clsx(
@@ -167,8 +174,8 @@ function TraditionalKey() {
 							step >= 1 && step < 4
 								? "bg-red-500/10 text-red-500 border border-red-500/30 overflow-hidden"
 								: step >= 4
-									? "bg-red-500/20 text-red-400 border border-red-500/50"
-									: "bg-black/20 text-zinc-600",
+									? "bg-red-500/20 text-accent-red-soft border border-red-500/50"
+									: "bg-black/20 text-text-faint",
 						)}
 					>
 						{step >= 1 && step < 4 && (
@@ -185,12 +192,14 @@ function TraditionalKey() {
 				</div>
 			</div>
 
-			<div className="text-center font-mono text-xs text-zinc-500 mt-8">
+			<div className="text-center font-mono text-xs text-text-muted mt-8">
 				Timeline:
-				<span className="text-violet-400 mx-2">T1 reads</span> →
-				<span className="text-cyan-400 mx-2 text-opacity-50">T2 waits</span> →
-				<span className="text-violet-400 mx-2">T1 finish</span> →
-				<span className="text-cyan-400 mx-2">T2 writes</span>
+				<span className="text-accent-violet-soft mx-2">T1 reads</span> →
+				<span className="text-accent-cyan-soft mx-2 text-opacity-50">
+					T2 waits
+				</span>{" "}
+				→<span className="text-accent-violet-soft mx-2">T1 finish</span> →
+				<span className="text-accent-cyan-soft mx-2">T2 writes</span>
 			</div>
 		</motion.div>
 	);
@@ -213,17 +222,19 @@ function MVCCDemo() {
 			exit={{ opacity: 0 }}
 			className="space-y-6 w-full max-w-3xl mx-auto"
 		>
-			<p className="text-sm text-zinc-400 text-center mb-8">
+			<p className="text-sm text-text-tertiary text-center mb-8">
 				In PostgreSQL (MVCC), writers do not block readers. Instead of locks, it
 				creates a{" "}
-				<strong className="text-violet-400">new version (snapshot)</strong> of
-				the row.
+				<strong className="text-accent-violet-soft">
+					new version (snapshot)
+				</strong>{" "}
+				of the row.
 			</p>
 
 			<div className="flex justify-between relative px-4 text-center">
 				{/* Reader */}
 				<div className="w-1/3 p-4">
-					<div className="text-sm font-bold text-violet-400 mb-4">
+					<div className="text-sm font-bold text-accent-violet-soft mb-4">
 						T1 (Reader) sees:
 					</div>
 					<AnimatePresence>
@@ -231,14 +242,14 @@ function MVCCDemo() {
 							<motion.div
 								initial={{ opacity: 0, y: 20 }}
 								animate={{ opacity: 1, y: 0 }}
-								className="bg-zinc-800/80 p-3 rounded border-2 border-violet-500/50 shadow-[0_0_15px_rgba(139,92,246,0.2)]"
+								className="bg-surface-secondary/80 p-3 rounded border-2 border-violet-500/50 shadow-[0_0_15px_rgba(139,92,246,0.2)]"
 							>
-								<div className="text-[10px] text-zinc-500 font-mono mb-2 border-b border-zinc-700 pb-1">
+								<div className="text-[10px] text-text-muted font-mono mb-2 border-b border-border-secondary pb-1">
 									SNAPSHOT (T1_START)
 								</div>
-								<div className="font-mono text-zinc-300">age: 30</div>
+								<div className="font-mono text-text-secondary">age: 30</div>
 								{step >= 2 && (
-									<div className="text-[10px] text-teal-400 mt-2 bg-teal-500/10 py-1 rounded">
+									<div className="text-[10px] text-accent-teal-soft mt-2 bg-teal-500/10 py-1 rounded">
 										Isolated from T2!
 									</div>
 								)}
@@ -249,7 +260,7 @@ function MVCCDemo() {
 
 				{/* The Disk */}
 				<div className="w-1/3 flex flex-col items-center justify-center gap-3">
-					<div className="text-xs font-bold uppercase tracking-widest text-zinc-500">
+					<div className="text-xs font-bold uppercase tracking-widest text-text-muted">
 						Physical Disk
 					</div>
 
@@ -261,9 +272,9 @@ function MVCCDemo() {
 								scale: step >= 2 ? 0.9 : 1,
 								opacity: step >= 2 ? 0.5 : 1,
 							}}
-							className="bg-zinc-950 p-3 rounded border border-zinc-700 w-32 shadow-lg relative z-10"
+							className="bg-surface-base p-3 rounded border border-border-secondary w-32 shadow-lg relative z-10"
 						>
-							<div className="text-[10px] text-zinc-500 mb-1">Row1 (v1)</div>
+							<div className="text-[10px] text-text-muted mb-1">Row1 (v1)</div>
 							<div className="font-mono text-sm">age: 30</div>
 						</motion.div>
 
@@ -274,12 +285,14 @@ function MVCCDemo() {
 									initial={{ opacity: 0, scale: 0.8, y: -30 }}
 									animate={{ opacity: 1, scale: 1, y: 30 }}
 									exit={{ opacity: 0, scale: 0.8 }}
-									className="bg-zinc-950 p-3 rounded border-2 border-cyan-500/50 w-32 shadow-lg absolute inset-0 z-20"
+									className="bg-surface-base p-3 rounded border-2 border-cyan-500/50 w-32 shadow-lg absolute inset-0 z-20"
 								>
 									<div className="text-[10px] text-cyan-500 mb-1">
 										Row1 (v2)
 									</div>
-									<div className="font-mono text-sm text-cyan-300">age: 31</div>
+									<div className="font-mono text-sm text-accent-cyan">
+										age: 31
+									</div>
 									<motion.div
 										initial={{ width: 0 }}
 										animate={{ width: "100%" }}
@@ -293,7 +306,7 @@ function MVCCDemo() {
 
 				{/* Writer */}
 				<div className="w-1/3 p-4">
-					<div className="text-sm font-bold text-cyan-400 mb-4">
+					<div className="text-sm font-bold text-accent-cyan-soft mb-4">
 						T2 (Writer) sees:
 					</div>
 					<AnimatePresence>
@@ -302,23 +315,23 @@ function MVCCDemo() {
 								initial={{ opacity: 0, y: 20 }}
 								animate={{ opacity: 1, y: 0 }}
 								className={clsx(
-									"bg-zinc-800/80 p-3 rounded border-2 transition-colors",
+									"bg-surface-secondary/80 p-3 rounded border-2 transition-colors",
 									step >= 2
 										? "border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.2)]"
-										: "border-zinc-700",
+										: "border-border-secondary",
 								)}
 							>
 								{step === 1 && (
-									<div className="text-xs text-yellow-400 font-mono py-4">
+									<div className="text-xs text-accent-yellow-soft font-mono py-4">
 										UPDATE starts...
 									</div>
 								)}
 								{step >= 2 && (
 									<>
-										<div className="text-[10px] text-zinc-500 font-mono mb-2 border-b border-zinc-700 pb-1">
+										<div className="text-[10px] text-text-muted font-mono mb-2 border-b border-border-secondary pb-1">
 											OWN writes visible
 										</div>
-										<div className="font-mono text-cyan-300">age: 31</div>
+										<div className="font-mono text-accent-cyan">age: 31</div>
 									</>
 								)}
 							</motion.div>
@@ -327,7 +340,7 @@ function MVCCDemo() {
 				</div>
 			</div>
 
-			<div className="text-center font-mono text-xs mt-12 bg-zinc-950 p-3 rounded border border-zinc-800 text-zinc-400">
+			<div className="text-center font-mono text-xs mt-12 bg-surface-base p-3 rounded border border-border-primary text-text-tertiary">
 				{step === 0 && "T1 begins, taking a snapshot of data."}
 				{step === 1 && "T2 begins an update without waiting for T1."}
 				{step === 2 &&
@@ -357,20 +370,20 @@ function DeadlockDemo() {
 			exit={{ opacity: 0 }}
 			className="space-y-6 w-full max-w-2xl mx-auto flex flex-col items-center"
 		>
-			<p className="text-sm text-zinc-400 text-center mb-4 max-w-xl">
-				A <strong className="text-red-400">Deadlock</strong> occurs when two
-				transactions wait for locks held by each other. Database deadlock
+			<p className="text-sm text-text-tertiary text-center mb-4 max-w-xl">
+				A <strong className="text-accent-red-soft">Deadlock</strong> occurs when
+				two transactions wait for locks held by each other. Database deadlock
 				detectors automatically pick a "victim" and kill it.
 			</p>
 
-			<div className="relative w-96 h-64 bg-zinc-900/50 rounded-lg border border-zinc-800">
+			<div className="relative w-96 h-64 bg-surface-primary/50 rounded-lg border border-border-primary">
 				{/* Row A */}
 				<div
 					className={clsx(
 						"absolute top-4 left-1/2 -ml-10 w-20 h-10 rounded border flex items-center justify-center font-mono text-xs transition-colors",
 						step >= 1 && step < 5
-							? "bg-violet-500/10 border-violet-500 text-violet-300 shadow-[0_0_10px_rgba(139,92,246,0.3)]"
-							: "bg-zinc-950 border-zinc-700 text-zinc-500",
+							? "bg-violet-500/10 border-violet-500 text-accent-violet shadow-[0_0_10px_rgba(139,92,246,0.3)]"
+							: "bg-surface-base border-border-secondary text-text-muted",
 					)}
 				>
 					Row A
@@ -384,10 +397,10 @@ function DeadlockDemo() {
 					className={clsx(
 						"absolute bottom-4 left-1/2 -ml-10 w-20 h-10 rounded border flex items-center justify-center font-mono text-xs transition-colors",
 						step >= 2 && step < 4
-							? "bg-cyan-500/10 border-cyan-500 text-cyan-300 shadow-[0_0_10px_rgba(6,182,212,0.3)]"
+							? "bg-cyan-500/10 border-cyan-500 text-accent-cyan shadow-[0_0_10px_rgba(6,182,212,0.3)]"
 							: step === 4
-								? "bg-violet-500/10 border-violet-500 text-violet-300 shadow-[0_0_10px_rgba(139,92,246,0.3)]"
-								: "bg-zinc-950 border-zinc-700 text-zinc-500",
+								? "bg-violet-500/10 border-violet-500 text-accent-violet shadow-[0_0_10px_rgba(139,92,246,0.3)]"
+								: "bg-surface-base border-border-secondary text-text-muted",
 					)}
 				>
 					Row B
@@ -397,16 +410,16 @@ function DeadlockDemo() {
 				</div>
 
 				{/* T1 */}
-				<div className="absolute top-1/2 -mt-6 left-4 bg-zinc-800 p-2 rounded border border-zinc-600 w-24 text-center">
-					<div className="text-violet-400 font-bold text-sm">T1</div>
+				<div className="absolute top-1/2 -mt-6 left-4 bg-surface-secondary p-2 rounded border border-border-tertiary w-24 text-center">
+					<div className="text-accent-violet-soft font-bold text-sm">T1</div>
 				</div>
 
 				{/* T2 */}
-				<div className="absolute top-1/2 -mt-6 right-4 bg-zinc-800 p-2 rounded border border-zinc-600 w-24 text-center">
+				<div className="absolute top-1/2 -mt-6 right-4 bg-surface-secondary p-2 rounded border border-border-tertiary w-24 text-center">
 					<div
 						className={clsx(
 							"font-bold text-sm transition-colors",
-							step === 4 ? "text-red-500" : "text-cyan-400",
+							step === 4 ? "text-red-500" : "text-accent-cyan-soft",
 						)}
 					>
 						{step === 4 ? "☠️ KILLED" : "T2"}
@@ -546,7 +559,7 @@ function DeadlockDemo() {
 							initial={{ scale: 0.8, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
 							exit={{ scale: 0.8, opacity: 0 }}
-							className="absolute top-1/2 left-1/2 -mt-10 -ml-24 w-48 bg-red-500/90 text-white p-2 rounded shadow-2xl text-center border-2 border-red-300 z-50"
+							className="absolute top-1/2 left-1/2 -mt-10 -ml-24 w-48 bg-red-500/90 text-text-primary p-2 rounded shadow-2xl text-center border-2 border-red-300 z-50"
 						>
 							<div className="font-bold text-sm">⚠️ DEADLOCK</div>
 							<div className="text-[10px] opacity-80 mt-1">
@@ -569,18 +582,18 @@ function DeadlockDemo() {
 				</AnimatePresence>
 			</div>
 
-			<div className="w-full bg-zinc-950 border border-zinc-800 rounded p-2 text-center text-xs text-zinc-400 font-mono">
+			<div className="w-full bg-surface-base border border-border-primary rounded p-2 text-center text-xs text-text-tertiary font-mono">
 				{step === 0 && "Idle state"}
 				{step === 1 && "T1 locks Row A"}
 				{step === 2 && "T2 locks Row B"}
 				{step === 3 && (
-					<span className="text-red-400">
+					<span className="text-accent-red-soft">
 						T1 requests Row B (Blocked) &amp; T2 requests Row A (Blocked) {"->"}
 						DEADLOCK CYCLE!
 					</span>
 				)}
 				{step === 4 && (
-					<span className="text-yellow-400">
+					<span className="text-accent-yellow-soft">
 						DB Deadlock Detector kicks in: Kills T2. T1 proceeds.
 					</span>
 				)}

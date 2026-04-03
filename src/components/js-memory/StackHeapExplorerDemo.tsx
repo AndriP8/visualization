@@ -289,7 +289,7 @@ const STEPS: Step[] = [
 			{
 				id: "str_alice",
 				label: '"Alice" ☠️',
-				color: "#52525b",
+				color: "var(--svg-text-muted)",
 				x: 0.65,
 				y: 0.15,
 				properties: [],
@@ -297,7 +297,7 @@ const STEPS: Step[] = [
 			{
 				id: "str_hello",
 				label: '"Hello, " ☠️',
-				color: "#52525b",
+				color: "var(--svg-text-muted)",
 				x: 0.65,
 				y: 0.5,
 				properties: [],
@@ -305,7 +305,7 @@ const STEPS: Step[] = [
 			{
 				id: "result_obj",
 				label: "{ text: … } ☠️",
-				color: "#52525b",
+				color: "var(--svg-text-muted)",
 				x: 0.2,
 				y: 0.65,
 				properties: [],
@@ -343,7 +343,7 @@ function HeapPanel({
 		<svg
 			width="100%"
 			viewBox={`0 0 ${W} ${H}`}
-			className="rounded-lg bg-zinc-900 border border-zinc-800"
+			className="rounded-lg bg-surface-primary border border-border-primary"
 			role="img"
 			aria-label="Heap visualization"
 		>
@@ -354,7 +354,7 @@ function HeapPanel({
 					<path
 						d="M 20 0 L 0 0 0 20"
 						fill="none"
-						stroke="#27272a"
+						stroke="var(--svg-bg)"
 						strokeWidth="0.5"
 					/>
 				</pattern>
@@ -455,7 +455,7 @@ function HeapPanel({
 				y={H - 6}
 				textAnchor="middle"
 				fontSize={9}
-				fill="#52525b"
+				fill="var(--svg-text-muted)"
 				fontFamily="monospace"
 			>
 				HEAP
@@ -495,7 +495,7 @@ function StackPanel({ stack }: { stack: StackFrame[] }) {
 									key={v.label}
 									className="flex justify-between text-xs font-mono"
 								>
-									<span className="text-zinc-400">{v.label}</span>
+									<span className="text-text-tertiary">{v.label}</span>
 									<span
 										className="font-semibold"
 										style={{
@@ -511,11 +511,11 @@ function StackPanel({ stack }: { stack: StackFrame[] }) {
 				))}
 			</AnimatePresence>
 			{stack.length === 0 && (
-				<div className="text-center text-zinc-600 text-xs font-mono py-8">
+				<div className="text-center text-text-faint text-xs font-mono py-8">
 					(empty)
 				</div>
 			)}
-			<div className="text-center text-zinc-600 text-xs font-mono border-t border-zinc-700 pt-1">
+			<div className="text-center text-text-faint text-xs font-mono border-t border-border-secondary pt-1">
 				STACK BOTTOM
 			</div>
 		</div>
@@ -535,11 +535,11 @@ export function StackHeapExplorerDemo() {
 		>
 			{/* Stack vs Heap intro */}
 			<div className="mb-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
-				<div className="rounded-lg bg-zinc-900 border border-zinc-800 p-4">
-					<div className="text-xs font-bold text-violet-400 uppercase tracking-wider mb-2">
+				<div className="rounded-lg bg-surface-primary border border-border-primary p-4">
+					<div className="text-xs font-bold text-accent-violet-soft uppercase tracking-wider mb-2">
 						Stack
 					</div>
-					<ul className="text-xs text-zinc-400 space-y-1 leading-relaxed">
+					<ul className="text-xs text-text-tertiary space-y-1 leading-relaxed">
 						<li>Fixed-size memory region per thread</li>
 						<li>LIFO — frames push/pop with function calls</li>
 						<li>
@@ -548,11 +548,11 @@ export function StackHeapExplorerDemo() {
 						<li>Auto-freed when a frame is popped — no GC needed</li>
 					</ul>
 				</div>
-				<div className="rounded-lg bg-zinc-900 border border-zinc-800 p-4">
-					<div className="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">
+				<div className="rounded-lg bg-surface-primary border border-border-primary p-4">
+					<div className="text-xs font-bold text-accent-amber-soft uppercase tracking-wider mb-2">
 						Heap
 					</div>
-					<ul className="text-xs text-zinc-400 space-y-1 leading-relaxed">
+					<ul className="text-xs text-text-tertiary space-y-1 leading-relaxed">
 						<li>Dynamic, unbounded memory region</li>
 						<li>
 							Stores objects, arrays, and Strings{" "}
@@ -560,7 +560,7 @@ export function StackHeapExplorerDemo() {
 								href="https://v8.dev/blog/pointer-compression"
 								target="_blank"
 								rel="noopener"
-								className="underline text-blue-400"
+								className="underline text-accent-blue-soft"
 							>
 								(even "primitive" strings in V8)
 							</a>
@@ -574,7 +574,7 @@ export function StackHeapExplorerDemo() {
 			{/* Code + description */}
 			<div className="mb-6 flex flex-col lg:flex-row gap-4">
 				<div className="flex-1 min-w-0">
-					<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+					<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 						Source Code
 					</div>
 					<ShikiCode
@@ -584,10 +584,10 @@ export function StackHeapExplorerDemo() {
 					/>
 				</div>
 				<div className="lg:w-80 flex flex-col gap-3">
-					<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+					<div className="text-xs font-semibold text-text-muted uppercase tracking-wider">
 						Key Insight
 					</div>
-					<div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20 text-xs text-amber-300/80 leading-relaxed">
+					<div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20 text-xs text-accent-amber/80 leading-relaxed">
 						⚠️ In V8, <strong>strings are heap-allocated</strong> even though
 						they behave as primitives. The stack holds a{" "}
 						<em>value reference</em> (tagged pointer). Numbers (Smi) and
@@ -597,7 +597,7 @@ export function StackHeapExplorerDemo() {
 						key={step}
 						initial={{ opacity: 0, y: 4 }}
 						animate={{ opacity: 1, y: 0 }}
-						className="p-3 rounded-lg bg-violet-500/5 border border-violet-500/20 text-sm text-violet-300 leading-relaxed flex-1"
+						className="p-3 rounded-lg bg-violet-500/5 border border-violet-500/20 text-sm text-accent-violet leading-relaxed flex-1"
 					>
 						{current.description}
 					</motion.div>
@@ -607,13 +607,13 @@ export function StackHeapExplorerDemo() {
 			{/* Visualization panels */}
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-5">
 				<div>
-					<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+					<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 						Call Stack (top is newest)
 					</div>
 					<StackPanel stack={current.stack} />
 				</div>
 				<div>
-					<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+					<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 						Heap — dashed lines are reference arrows from stack
 					</div>
 					<HeapPanel heap={current.heap} stack={current.stack} />
@@ -626,7 +626,7 @@ export function StackHeapExplorerDemo() {
 					type="button"
 					onClick={() => setStep((s) => Math.max(0, s - 1))}
 					disabled={step === 0}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					← Back
 				</button>
@@ -634,18 +634,18 @@ export function StackHeapExplorerDemo() {
 					type="button"
 					onClick={() => setStep((s) => Math.min(STEPS.length - 1, s + 1))}
 					disabled={step === STEPS.length - 1}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-violet-300 border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-accent-violet border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					Next →
 				</button>
 				<button
 					type="button"
 					onClick={() => setStep(0)}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 				>
 					↺ Reset
 				</button>
-				<span className="text-xs text-zinc-600 ml-auto">
+				<span className="text-xs text-text-faint ml-auto">
 					Step {step + 1} / {STEPS.length}
 				</span>
 			</div>

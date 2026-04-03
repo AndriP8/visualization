@@ -69,7 +69,7 @@ function LoopDiagram({
 				cy={cy}
 				r={r}
 				fill="none"
-				stroke="#27272a"
+				stroke="var(--svg-bg)"
 				strokeWidth={2}
 				strokeDasharray="6 3"
 			/>
@@ -78,7 +78,7 @@ function LoopDiagram({
 			<motion.path
 				d={`M ${cx + r - 5} ${cy - 15} L ${cx + r} ${cy - 5} L ${cx + r - 10} ${cy - 5}`}
 				fill="none"
-				stroke="#52525b"
+				stroke="var(--svg-text-muted)"
 				strokeWidth={1.5}
 				animate={{ opacity: [0.3, 1, 0.3] }}
 				transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
@@ -100,7 +100,7 @@ function LoopDiagram({
 							cx={x}
 							cy={y}
 							r={isActive ? 28 : 22}
-							fill={isActive ? `${phase.color}33` : "#18181b"}
+							fill={isActive ? `${phase.color}33` : "var(--svg-bg)"}
 							stroke={phase.color}
 							strokeWidth={isActive ? 2.5 : 1.5}
 							animate={{
@@ -123,7 +123,7 @@ function LoopDiagram({
 							y={y + 1}
 							textAnchor="middle"
 							dominantBaseline="middle"
-							fill={isActive ? phase.color : "#a1a1aa"}
+							fill={isActive ? phase.color : "var(--svg-text)"}
 							fontSize={8}
 							fontWeight={isActive ? "700" : "500"}
 							fontFamily="system-ui"
@@ -139,7 +139,7 @@ function LoopDiagram({
 				x={cx}
 				y={cy - 6}
 				textAnchor="middle"
-				fill="#52525b"
+				fill="var(--svg-text-muted)"
 				fontSize={10}
 				fontFamily="system-ui"
 			>
@@ -149,7 +149,7 @@ function LoopDiagram({
 				x={cx}
 				y={cy + 8}
 				textAnchor="middle"
-				fill="#52525b"
+				fill="var(--svg-text-muted)"
 				fontSize={10}
 				fontFamily="system-ui"
 			>
@@ -215,16 +215,16 @@ function AnimationComparison() {
 
 	return (
 		<div className="space-y-4">
-			<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+			<div className="text-xs font-semibold text-text-muted uppercase tracking-wider">
 				Animation Comparison
 			</div>
 
 			<div className="space-y-3">
-				<div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800">
-					<div className="text-xs text-orange-400 font-mono mb-2">
+				<div className="p-3 rounded-lg bg-surface-primary border border-border-primary">
+					<div className="text-xs text-accent-orange-soft font-mono mb-2">
 						setTimeout(fn, 0) — not synced to display
 					</div>
-					<div className="h-6 bg-zinc-800/50 rounded relative overflow-hidden">
+					<div className="h-6 bg-surface-secondary/50 rounded relative overflow-hidden">
 						<div
 							ref={setTimeoutRef}
 							className="absolute top-0.5 left-0 w-5 h-5 rounded bg-orange-500"
@@ -232,11 +232,11 @@ function AnimationComparison() {
 					</div>
 				</div>
 
-				<div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800">
-					<div className="text-xs text-emerald-400 font-mono mb-2">
+				<div className="p-3 rounded-lg bg-surface-primary border border-border-primary">
+					<div className="text-xs text-accent-emerald-soft font-mono mb-2">
 						requestAnimationFrame — synced to display refresh
 					</div>
-					<div className="h-6 bg-zinc-800/50 rounded relative overflow-hidden">
+					<div className="h-6 bg-surface-secondary/50 rounded relative overflow-hidden">
 						<div
 							ref={rafRef}
 							className="absolute top-0.5 left-0 w-5 h-5 rounded bg-emerald-500"
@@ -250,8 +250,8 @@ function AnimationComparison() {
 				onClick={running ? stopAnimation : startAnimation}
 				className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors border ${
 					running
-						? "bg-red-500/20 text-red-300 border-red-500/30 hover:bg-red-500/30"
-						: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30"
+						? "bg-red-500/20 text-accent-red border-red-500/30 hover:bg-red-500/30"
+						: "bg-emerald-500/20 text-accent-emerald border-emerald-500/30 hover:bg-emerald-500/30"
 				}`}
 			>
 				{running ? "⏹ Stop" : "▶ Start Both"}
@@ -261,12 +261,13 @@ function AnimationComparison() {
 				<motion.p
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
-					className="text-xs text-zinc-400"
+					className="text-xs text-text-tertiary"
 				>
-					Watch closely — the <span className="text-emerald-400">rAF</span> ball
-					moves smoothly while the{" "}
-					<span className="text-orange-400">setTimeout</span> one may jitter,
-					especially under load.
+					Watch closely — the{" "}
+					<span className="text-accent-emerald-soft">rAF</span> ball moves
+					smoothly while the{" "}
+					<span className="text-accent-orange-soft">setTimeout</span> one may
+					jitter, especially under load.
 				</motion.p>
 			)}
 		</div>
@@ -305,11 +306,11 @@ export function RAFDemo() {
 				{/* Loop diagram */}
 				<div className="lg:w-1/2">
 					<div className="flex items-center justify-between mb-3">
-						<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+						<div className="text-xs font-semibold text-text-muted uppercase tracking-wider">
 							Event Loop Cycle
 						</div>
 						<label className="flex items-center gap-2 cursor-pointer">
-							<span className="text-xs text-zinc-400">Show rAF</span>
+							<span className="text-xs text-text-tertiary">Show rAF</span>
 							<button
 								type="button"
 								onClick={() => {
@@ -317,7 +318,7 @@ export function RAFDemo() {
 									setActivePhase(-1);
 								}}
 								className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
-									hasRaf ? "bg-emerald-500" : "bg-zinc-600"
+									hasRaf ? "bg-emerald-500" : "bg-surface-tertiary"
 								}`}
 							>
 								<span
@@ -349,9 +350,9 @@ export function RAFDemo() {
 					)}
 
 					{activePhase === -1 && (
-						<p className="mt-3 text-sm text-zinc-500 text-center">
-							Click <strong className="text-emerald-400">Start</strong> to step
-							through the event loop cycle.
+						<p className="mt-3 text-sm text-text-muted text-center">
+							Click <strong className="text-accent-emerald-soft">Start</strong>{" "}
+							to step through the event loop cycle.
 						</p>
 					)}
 				</div>
@@ -360,29 +361,29 @@ export function RAFDemo() {
 				<div className="lg:w-1/2">
 					<AnimationComparison />
 
-					<div className="mt-5 p-3 rounded-lg bg-zinc-800/30 border border-zinc-800">
-						<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+					<div className="mt-5 p-3 rounded-lg bg-surface-secondary/30 border border-border-primary">
+						<div className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
 							Why rAF over setTimeout?
 						</div>
-						<ul className="text-xs text-zinc-400 space-y-1.5">
+						<ul className="text-xs text-text-tertiary space-y-1.5">
 							<li className="flex gap-2">
-								<span className="text-emerald-400 shrink-0">✓</span>
+								<span className="text-accent-emerald-soft shrink-0">✓</span>
 								<span>
 									Synced to the display refresh rate (~60fps = 16.67ms)
 								</span>
 							</li>
 							<li className="flex gap-2">
-								<span className="text-emerald-400 shrink-0">✓</span>
+								<span className="text-accent-emerald-soft shrink-0">✓</span>
 								<span>
 									Automatically paused in background tabs (saves CPU/battery)
 								</span>
 							</li>
 							<li className="flex gap-2">
-								<span className="text-emerald-400 shrink-0">✓</span>
+								<span className="text-accent-emerald-soft shrink-0">✓</span>
 								<span>Runs right before paint — no wasted frames</span>
 							</li>
 							<li className="flex gap-2">
-								<span className="text-red-400 shrink-0">✗</span>
+								<span className="text-accent-red-soft shrink-0">✗</span>
 								<span>
 									setTimeout(fn, 0) minimum is ~4ms and not synced to refresh
 								</span>
@@ -398,7 +399,7 @@ export function RAFDemo() {
 					type="button"
 					onClick={prevPhase}
 					disabled={activePhase <= -1}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					← Back
 				</button>
@@ -406,14 +407,14 @@ export function RAFDemo() {
 					type="button"
 					onClick={nextPhase}
 					disabled={activePhase >= LOOP_PHASES.length - 1}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-accent-emerald border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					{activePhase === -1 ? "▶ Start" : "Next →"}
 				</button>
 				<button
 					type="button"
 					onClick={resetPhase}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 				>
 					↺ Reset
 				</button>

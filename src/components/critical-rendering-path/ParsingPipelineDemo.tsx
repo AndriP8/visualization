@@ -173,7 +173,7 @@ function renderTreeSvg(node: TreeNode, parentX?: number, parentY?: number) {
 				y1={parentY + 16}
 				x2={node.x}
 				y2={node.y - 4}
-				stroke="#3f3f46"
+				stroke="var(--svg-border)"
 				strokeWidth={2}
 				initial={{ pathLength: 0, opacity: 0 }}
 				animate={{ pathLength: 1, opacity: 1 }}
@@ -195,7 +195,7 @@ function renderTreeSvg(node: TreeNode, parentX?: number, parentY?: number) {
 				width={64}
 				height={28}
 				rx={6}
-				fill="#18181b"
+				fill="var(--svg-bg)"
 				stroke="#34d399"
 				strokeWidth={1.5}
 			/>
@@ -246,16 +246,16 @@ export function ParsingPipelineDemo() {
 						onClick={() => setStage(i)}
 						className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all border ${
 							i === stage
-								? "border-white/20 bg-zinc-800 text-white scale-105"
+								? "border-white/20 bg-surface-secondary text-text-primary scale-105"
 								: i < stage
-									? "border-zinc-700/50 bg-zinc-800/50 text-zinc-400"
-									: "border-zinc-800 bg-zinc-900/50 text-zinc-600"
+									? "border-border-secondary/50 bg-surface-secondary/50 text-text-tertiary"
+									: "border-border-primary bg-surface-primary/50 text-text-faint"
 						}`}
 					>
 						<span
 							className="inline-block w-2 h-2 rounded-full mr-1.5"
 							style={{
-								backgroundColor: i <= stage ? s.color : "#3f3f46",
+								backgroundColor: i <= stage ? s.color : "var(--svg-border)",
 							}}
 						/>
 						{s.title}
@@ -269,7 +269,7 @@ export function ParsingPipelineDemo() {
 					type="button"
 					onClick={prev}
 					disabled={stage <= -1}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					← Back
 				</button>
@@ -277,14 +277,14 @@ export function ParsingPipelineDemo() {
 					type="button"
 					onClick={next}
 					disabled={stage >= STAGES.length - 1}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-amber-500/20 text-accent-amber border border-amber-500/30 hover:bg-amber-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					{stage === -1 ? "▶ Start" : "Next →"}
 				</button>
 				<button
 					type="button"
 					onClick={reset}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-surface-secondary text-text-tertiary border border-border-secondary hover:text-text-secondary transition-colors"
 				>
 					↺ Reset
 				</button>
@@ -298,11 +298,11 @@ export function ParsingPipelineDemo() {
 						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -10 }}
-						className="p-6 rounded-lg bg-zinc-800/30 border border-zinc-800 text-center"
+						className="p-6 rounded-lg bg-surface-secondary/30 border border-border-primary text-center"
 					>
-						<p className="text-zinc-500 text-sm">
-							Click <strong className="text-amber-400">Start</strong> to begin
-							the parsing pipeline.
+						<p className="text-text-muted text-sm">
+							Click <strong className="text-accent-amber-soft">Start</strong> to
+							begin the parsing pipeline.
 						</p>
 						<div className="mt-4 text-left">
 							<ShikiCode code={HTML_SNIPPET} language="html" />
@@ -318,8 +318,8 @@ export function ParsingPipelineDemo() {
 						exit={{ opacity: 0, y: -10 }}
 						className="space-y-3"
 					>
-						<div className="p-4 rounded-lg bg-zinc-800/50 border border-zinc-700/50">
-							<p className="text-xs text-zinc-400 mb-3">
+						<div className="p-4 rounded-lg bg-surface-secondary/50 border border-border-secondary/50">
+							<p className="text-xs text-text-tertiary mb-3">
 								{STAGES[0].description}
 							</p>
 							<div className="flex flex-wrap gap-1">
@@ -328,12 +328,12 @@ export function ParsingPipelineDemo() {
 										key={item.key}
 										initial={{ opacity: 0, scale: 0.5 }}
 										animate={{ opacity: 1, scale: 1 }}
-										className="px-1.5 py-0.5 text-xs font-mono rounded bg-red-500/10 text-red-400 border border-red-500/20"
+										className="px-1.5 py-0.5 text-xs font-mono rounded bg-red-500/10 text-accent-red-soft border border-red-500/20"
 									>
 										0x{item.hex}
 									</motion.span>
 								))}
-								<span className="px-1.5 py-0.5 text-xs font-mono text-zinc-600">
+								<span className="px-1.5 py-0.5 text-xs font-mono text-text-faint">
 									…
 								</span>
 							</div>
@@ -349,11 +349,11 @@ export function ParsingPipelineDemo() {
 						exit={{ opacity: 0, y: -10 }}
 						className="space-y-3"
 					>
-						<div className="p-4 rounded-lg bg-zinc-800/50 border border-zinc-700/50">
-							<p className="text-xs text-zinc-400 mb-3">
+						<div className="p-4 rounded-lg bg-surface-secondary/50 border border-border-secondary/50">
+							<p className="text-xs text-text-tertiary mb-3">
 								{STAGES[1].description}
 							</p>
-							<pre className="p-4 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono overflow-x-auto">
+							<pre className="p-4 rounded-lg bg-surface-primary border border-border-primary text-xs font-mono overflow-x-auto">
 								{HTML_CHARS.map((item) => (
 									<motion.span
 										key={item.key}
@@ -377,8 +377,8 @@ export function ParsingPipelineDemo() {
 						exit={{ opacity: 0, y: -10 }}
 						className="space-y-3"
 					>
-						<div className="p-4 rounded-lg bg-zinc-800/50 border border-zinc-700/50">
-							<p className="text-xs text-zinc-400 mb-3">
+						<div className="p-4 rounded-lg bg-surface-secondary/50 border border-border-secondary/50">
+							<p className="text-xs text-text-tertiary mb-3">
 								{STAGES[2].description}
 							</p>
 							<div className="flex flex-wrap gap-1.5">
@@ -395,13 +395,13 @@ export function ParsingPipelineDemo() {
 											color: token.color,
 										}}
 									>
-										<span className="text-zinc-600 mr-1">{token.type}:</span>
+										<span className="text-text-faint mr-1">{token.type}:</span>
 										{token.value}
 									</motion.span>
 								))}
 							</div>
 						</div>
-						<div className="flex gap-3 text-xs text-zinc-500">
+						<div className="flex gap-3 text-xs text-text-muted">
 							<span>
 								<span
 									className="inline-block w-2 h-2 rounded-full mr-1"
@@ -435,8 +435,8 @@ export function ParsingPipelineDemo() {
 						exit={{ opacity: 0, y: -10 }}
 						className="space-y-3"
 					>
-						<div className="p-4 rounded-lg bg-zinc-800/50 border border-zinc-700/50">
-							<p className="text-xs text-zinc-400 mb-3">
+						<div className="p-4 rounded-lg bg-surface-secondary/50 border border-border-secondary/50">
+							<p className="text-xs text-text-tertiary mb-3">
 								{STAGES[3].description}
 							</p>
 							<div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -446,16 +446,16 @@ export function ParsingPipelineDemo() {
 										initial={{ opacity: 0, y: 10 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ delay: i * 0.08 }}
-										className="p-3 rounded-lg bg-zinc-900 border border-violet-500/20"
+										className="p-3 rounded-lg bg-surface-primary border border-violet-500/20"
 									>
-										<div className="text-xs text-zinc-500 mb-1">
+										<div className="text-xs text-text-muted mb-1">
 											{node.text ? "Text Node" : "Element Node"}
 										</div>
-										<div className="text-sm font-mono text-violet-400">
+										<div className="text-sm font-mono text-accent-violet-soft">
 											{node.tag}
 										</div>
 										{node.text && (
-											<div className="text-xs text-zinc-400 mt-1">
+											<div className="text-xs text-text-tertiary mt-1">
 												text: "{node.text}"
 											</div>
 										)}
@@ -474,8 +474,8 @@ export function ParsingPipelineDemo() {
 						exit={{ opacity: 0, y: -10 }}
 						className="space-y-3"
 					>
-						<div className="p-4 rounded-lg bg-zinc-800/50 border border-zinc-700/50">
-							<p className="text-xs text-zinc-400 mb-3">
+						<div className="p-4 rounded-lg bg-surface-secondary/50 border border-border-secondary/50">
+							<p className="text-xs text-text-tertiary mb-3">
 								{STAGES[4].description}
 							</p>
 							<svg

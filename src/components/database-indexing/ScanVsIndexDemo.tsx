@@ -61,8 +61,8 @@ function TableRowEl({
 			: state === "scanning"
 				? "bg-amber-500/15 border-amber-500/40"
 				: state === "missed"
-					? "bg-zinc-800/20 border-zinc-700/20 opacity-40"
-					: "bg-zinc-800/40 border-zinc-700/30";
+					? "bg-surface-secondary/20 border-border-secondary/20 opacity-40"
+					: "bg-surface-secondary/40 border-border-secondary/30";
 	return (
 		<motion.div
 			layout
@@ -70,9 +70,9 @@ function TableRowEl({
 			transition={{ duration: 0.15 }}
 			className={`flex gap-2 px-2 py-1 rounded border text-xs font-mono transition-colors ${bg}`}
 		>
-			<span className="w-5 text-zinc-500">{row.id}</span>
-			<span className="w-14 truncate text-zinc-300">{row.name}</span>
-			<span className="w-6 text-zinc-500">{row.age}</span>
+			<span className="w-5 text-text-muted">{row.id}</span>
+			<span className="w-14 truncate text-text-secondary">{row.name}</span>
+			<span className="w-6 text-text-muted">{row.age}</span>
 		</motion.div>
 	);
 }
@@ -82,10 +82,10 @@ type BTNodeState = "idle" | "active" | "found";
 function BTreeNode({ label, state }: { label: string; state: BTNodeState }) {
 	const bg =
 		state === "found"
-			? "bg-teal-500/25 border-teal-400/70 text-teal-300"
+			? "bg-teal-500/25 border-teal-400/70 text-accent-teal"
 			: state === "active"
-				? "bg-amber-500/20 border-amber-400/60 text-amber-300"
-				: "bg-zinc-800 border-zinc-600 text-zinc-400";
+				? "bg-amber-500/20 border-amber-400/60 text-accent-amber"
+				: "bg-surface-secondary border-border-tertiary text-text-tertiary";
 	return (
 		<motion.div
 			initial={{ scale: 0.9, opacity: 0 }}
@@ -221,17 +221,19 @@ export function ScanVsIndexDemo() {
 						reset();
 					}}
 					placeholder="Search name…"
-					className="px-3 py-1.5 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-teal-500/60 w-40"
+					className="px-3 py-1.5 rounded-lg bg-surface-secondary border border-border-secondary text-sm text-text-secondary placeholder-text-faint focus:outline-none focus:border-teal-500/60 w-40"
 				/>
 				<button
 					type="button"
 					onClick={run}
-					className="px-4 py-1.5 rounded-lg text-sm font-medium bg-teal-600/20 text-teal-300 border border-teal-500/30 hover:bg-teal-600/30 transition-colors"
+					className="px-4 py-1.5 rounded-lg text-sm font-medium bg-teal-600/20 text-accent-teal border border-teal-500/30 hover:bg-teal-600/30 transition-colors"
 				>
 					{phase === "idle" ? "▶ Run" : "↺ Reset"}
 				</button>
 				{targetIndex < 0 && query.length > 0 && (
-					<span className="text-xs text-red-400">"{query}" not in dataset</span>
+					<span className="text-xs text-accent-red-soft">
+						"{query}" not in dataset
+					</span>
 				)}
 			</div>
 
@@ -241,20 +243,20 @@ export function ScanVsIndexDemo() {
 				<div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
 					<div className="flex items-center justify-between mb-3">
 						<div>
-							<span className="text-sm font-semibold text-red-300">
+							<span className="text-sm font-semibold text-accent-red">
 								Full Table Scan
 							</span>
-							<span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">
+							<span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-red-500/10 text-accent-red-soft border border-red-500/20">
 								O(n)
 							</span>
 						</div>
-						<span className="text-xs text-zinc-500 font-mono">
+						<span className="text-xs text-text-muted font-mono">
 							{rowsScanned}/{TABLE_DATA.length} rows
 						</span>
 					</div>
 
 					{/* Progress bar */}
-					<div className="h-1 rounded-full bg-zinc-800 mb-3 overflow-hidden">
+					<div className="h-1 rounded-full bg-surface-secondary mb-3 overflow-hidden">
 						<motion.div
 							className="h-full bg-red-500/60 rounded-full"
 							animate={{
@@ -274,7 +276,7 @@ export function ScanVsIndexDemo() {
 							<motion.div
 								initial={{ opacity: 0, y: 4 }}
 								animate={{ opacity: 1, y: 0 }}
-								className={`mt-3 text-xs px-3 py-2 rounded-lg border ${scanFound === -1 ? "bg-zinc-800/30 border-zinc-700 text-zinc-400" : "bg-red-500/10 border-red-500/20 text-red-300"}`}
+								className={`mt-3 text-xs px-3 py-2 rounded-lg border ${scanFound === -1 ? "bg-surface-secondary/30 border-border-secondary text-text-tertiary" : "bg-red-500/10 border-red-500/20 text-accent-red"}`}
 							>
 								{scanFound === -1
 									? "Not found — scanned all 20 rows."
@@ -288,14 +290,14 @@ export function ScanVsIndexDemo() {
 				<div className="rounded-xl border border-teal-500/20 bg-teal-500/5 p-4">
 					<div className="flex items-center justify-between mb-3">
 						<div>
-							<span className="text-sm font-semibold text-teal-300">
+							<span className="text-sm font-semibold text-accent-teal">
 								B-Tree Index Lookup
 							</span>
-							<span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/20">
+							<span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-teal-500/10 text-accent-teal-soft border border-teal-500/20">
 								O(log n)
 							</span>
 						</div>
-						<span className="text-xs text-zinc-500 font-mono">3 hops</span>
+						<span className="text-xs text-text-muted font-mono">3 hops</span>
 					</div>
 
 					{/* Tree visualization */}
@@ -310,7 +312,7 @@ export function ScanVsIndexDemo() {
 						{/* Connector */}
 						<div className="flex justify-center">
 							<div
-								className={`w-px h-5 transition-colors duration-300 ${indexPhase !== "idle" ? "bg-amber-400/60" : "bg-zinc-700"}`}
+								className={`w-px h-5 transition-colors duration-300 ${indexPhase !== "idle" ? "bg-amber-400/60" : "bg-surface-tertiary"}`}
 							/>
 						</div>
 						{/* Internal */}
@@ -323,7 +325,7 @@ export function ScanVsIndexDemo() {
 						{/* Connector */}
 						<div className="flex justify-center">
 							<div
-								className={`w-px h-5 transition-colors duration-300 ${indexPhase === "leaf" || indexPhase === "done" ? "bg-amber-400/60" : "bg-zinc-700"}`}
+								className={`w-px h-5 transition-colors duration-300 ${indexPhase === "leaf" || indexPhase === "done" ? "bg-amber-400/60" : "bg-surface-tertiary"}`}
 							/>
 						</div>
 						{/* Leaf */}
@@ -342,7 +344,7 @@ export function ScanVsIndexDemo() {
 									className="flex flex-col items-center gap-1"
 								>
 									<div className="w-px h-4 bg-teal-400/60" />
-									<div className="px-3 py-1.5 rounded-lg border border-teal-500/50 bg-teal-500/15 text-xs font-mono text-teal-300 text-center">
+									<div className="px-3 py-1.5 rounded-lg border border-teal-500/50 bg-teal-500/15 text-xs font-mono text-accent-teal text-center">
 										→ Row #{(targetIndex >= 0 ? targetIndex : 0) + 1} (direct
 										access)
 									</div>
@@ -356,7 +358,7 @@ export function ScanVsIndexDemo() {
 							<motion.div
 								initial={{ opacity: 0, y: 4 }}
 								animate={{ opacity: 1, y: 0 }}
-								className={`text-xs px-3 py-2 rounded-lg border ${indexFound === -1 ? "bg-zinc-800/30 border-zinc-700 text-zinc-400" : "bg-teal-500/10 border-teal-500/20 text-teal-300"}`}
+								className={`text-xs px-3 py-2 rounded-lg border ${indexFound === -1 ? "bg-surface-secondary/30 border-border-secondary text-text-tertiary" : "bg-teal-500/10 border-teal-500/20 text-accent-teal"}`}
 							>
 								{indexFound === -1
 									? "Not in index — 3 hops to confirm absence."
@@ -368,13 +370,13 @@ export function ScanVsIndexDemo() {
 			</div>
 
 			{/* Insight */}
-			<div className="mt-4 p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50 text-xs text-zinc-400">
-				<strong className="text-zinc-300">Key insight:</strong> A full scan must
-				check <em>every</em> row — 20 comparisons. A B-Tree of{" "}
-				<strong className="text-teal-400">order 3</strong> (max 2 keys/node, 3
-				children) fits all 20 names in{" "}
-				<strong className="text-teal-400">3 levels</strong> — because log₃(20) ≈
-				2.7. On a table with 1 million rows, the scan does 1,000,000
+			<div className="mt-4 p-3 rounded-lg bg-surface-secondary/30 border border-border-secondary/50 text-xs text-text-tertiary">
+				<strong className="text-text-secondary">Key insight:</strong> A full
+				scan must check <em>every</em> row — 20 comparisons. A B-Tree of{" "}
+				<strong className="text-accent-teal-soft">order 3</strong> (max 2
+				keys/node, 3 children) fits all 20 names in{" "}
+				<strong className="text-accent-teal-soft">3 levels</strong> — because
+				log₃(20) ≈ 2.7. On a table with 1 million rows, the scan does 1,000,000
 				comparisons; a B-Tree of order 100 (like PostgreSQL's default) still
 				needs only ~3 levels (log₁₀₀(1,000,000) = 3).
 			</div>
