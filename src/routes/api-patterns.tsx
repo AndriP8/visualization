@@ -17,38 +17,37 @@ function ApiPatternsPage() {
 			<PageHeader
 				topic={{ label: "System Design", color: "blue" }}
 				title="API Communication Patterns"
-				subtitle="Visualize how REST, GraphQL, tRPC, WebSocket, and SSE handle data fetching, updates, and real-time communication"
+				subtitle="REST, GraphQL, tRPC, WebSocket, SSE, and polling are not interchangeable — each pattern optimizes for a different combination of request shape, data freshness, and connection overhead. Choosing the wrong one wastes bandwidth or adds unnecessary latency."
 				gradient={{ from: "blue-400", via: "cyan-400", to: "violet-400" }}
 				explanation={{
 					content: (
-						<div className="space-y-3 text-sm text-zinc-300">
+						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								Different API patterns solve different problems. REST is simple
-								and cache-friendly but can over-fetch. GraphQL gives precise
-								control but adds complexity. WebSocket enables real-time
-								bidirectional communication. SSE is simpler for server → client
-								updates. Polling works when latency isn't critical.
+								The core tension is between{" "}
+								<span className="text-blue-300 font-medium">
+									flexibility and efficiency
+								</span>
+								. REST is cache-friendly and simple but over-fetches when
+								clients need only a subset of fields. GraphQL solves
+								over/under-fetching with declarative queries but sacrifices HTTP
+								caching and adds backend complexity.{" "}
+								<span className="text-cyan-300 font-medium">tRPC</span> gives
+								REST-like simplicity with full TypeScript inference — but only
+								within a TypeScript monorepo.
 							</p>
-							<div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
-								<div className="bg-zinc-900/50 rounded p-3 border border-zinc-700">
-									<div className="text-xs text-zinc-500 mb-1">
-										Best for CRUD
-									</div>
-									<div className="text-white font-semibold">REST</div>
-								</div>
-								<div className="bg-zinc-900/50 rounded p-3 border border-zinc-700">
-									<div className="text-xs text-zinc-500 mb-1">
-										Best for Flexibility
-									</div>
-									<div className="text-white font-semibold">GraphQL</div>
-								</div>
-								<div className="bg-zinc-900/50 rounded p-3 border border-zinc-700">
-									<div className="text-xs text-zinc-500 mb-1">
-										Best for Real-time
-									</div>
-									<div className="text-white font-semibold">WebSocket</div>
-								</div>
-							</div>
+							<p>
+								For real-time data, the choice depends on directionality and
+								latency requirements. WebSocket is bidirectional and low-latency
+								but requires persistent connections. SSE is simpler for
+								unidirectional server-to-client streams and auto-reconnects.
+								Polling is universal but wastes bandwidth when updates are
+								infrequent.
+							</p>
+							<p className="text-zinc-400">
+								The demos below cover request pattern comparison, real-time
+								strategy trade-offs, over/under-fetching, API waterfall
+								optimization, and a WebSocket vs SSE decision tree.
+							</p>
 						</div>
 					),
 				}}

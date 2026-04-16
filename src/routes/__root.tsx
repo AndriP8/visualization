@@ -125,6 +125,21 @@ const NAV_GROUPS = [
 		],
 	},
 	{
+		title: "Data Structures",
+		items: [
+			{
+				to: "/hash-tables" as const,
+				label: "Hash Tables",
+				icon: "#️",
+			},
+			{
+				to: "/linked-lists" as const,
+				label: "Linked Lists",
+				icon: "🔗",
+			},
+		],
+	},
+	{
 		title: "Network",
 		items: [
 			{
@@ -159,7 +174,7 @@ function RootLayout() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	return (
-		<div className="min-h-screen bg-zinc-950 text-gray-100 flex">
+		<div className="min-h-screen bg-zinc-950 text-gray-100">
 			{/* Mobile overlay */}
 			{sidebarOpen && (
 				<button
@@ -173,7 +188,7 @@ function RootLayout() {
 			{/* Sidebar */}
 			<aside
 				className={`
-					fixed lg:sticky top-0 left-0 z-40 h-screen w-64 lg:shrink-0
+					fixed top-0 left-0 z-40 h-screen w-64
 					bg-zinc-900 border-r border-zinc-800
 					flex flex-col
 					transition-transform duration-300
@@ -222,7 +237,7 @@ function RootLayout() {
 			</aside>
 
 			{/* Main content */}
-			<div className="flex-1 flex flex-col min-h-screen">
+			<div className="flex flex-col min-h-screen lg:pl-64">
 				{/* Mobile header */}
 				<header className="lg:hidden sticky top-0 z-20 bg-zinc-900/80 backdrop-blur border-b border-zinc-800 px-4 py-3 flex items-center gap-3">
 					<button

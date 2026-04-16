@@ -23,8 +23,40 @@ function RenderingStrategiesPage() {
 			<PageHeader
 				topic={{ label: "Web Fundamentals", color: "violet" }}
 				title="Rendering Strategies"
-				subtitle="CSR, SSR, SSG, ISR, Streaming SSR — every developer claims to know these, but few can explain when HTML is generated, where, and when the page becomes interactive. Watch the differences play out in real time."
+				subtitle="CSR, SSR, SSG, ISR, and Streaming SSR differ on one axis: where and when HTML is generated. That single decision determines Time to First Byte, Time to Interactive, cache-ability, and infrastructure cost."
 				gradient={{ from: "violet-400", via: "fuchsia-400", to: "cyan-400" }}
+				explanation={{
+					content: (
+						<div className="space-y-2 text-sm text-zinc-300">
+							<p>
+								All rendering strategies share the same goal — deliver a usable
+								page to the user as fast as possible. The differentiator is{" "}
+								<span className="text-violet-300 font-medium">
+									where HTML is produced
+								</span>
+								: in the browser at runtime (CSR), on an origin server per
+								request (SSR), at build time (SSG), incrementally after build
+								(ISR), or streamed in chunks as data resolves (Streaming SSR).
+								Moving work earlier in the timeline (build time vs request time)
+								improves TTFB but reduces freshness.
+							</p>
+							<p>
+								No strategy is universally optimal. SSG is unbeatable for static
+								content but stale for personalized data.{" "}
+								<span className="text-cyan-300 font-medium">SSR</span> is always
+								fresh but adds server latency and cost. CSR maximizes
+								infrastructure simplicity but produces blank screens on slow
+								networks. Choosing correctly requires knowing your data
+								freshness requirements, personalization needs, and latency
+								budget.
+							</p>
+							<p className="text-zinc-400">
+								The demos below cover timeline comparison, where work is done,
+								trade-off matrix, use-case matcher, and an SSR deep dive.
+							</p>
+						</div>
+					),
+				}}
 			/>
 
 			<div className="space-y-16">

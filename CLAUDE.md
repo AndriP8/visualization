@@ -86,10 +86,44 @@ src/components/
 <PageHeader
   topic={{ label: "System Design", color: "amber" }}
   title="Your Title"
-  subtitle="Description text"
+  subtitle="Clear, direct statement of the concept — e.g. 'JavaScript has one call stack and one thread. The event loop coordinates when async callbacks execute.'"
   gradient={{ from: "amber-400", via: "orange-400", to: "rose-400" }}
+  explanation={{
+    content: (
+      <div className="space-y-2 text-sm text-zinc-300">
+        <p>
+          3–4 sentence mental model. Highlight key terms with{" "}
+          <span className="text-amber-300 font-medium">accent color + font-medium</span>.
+          End by naming the tools/concepts the demos will cover.
+        </p>
+      </div>
+    ),
+  }}
 />
 ```
+
+**`explanation` prop guidelines:**
+- Always include for pages with multiple demos — sets the mental model before the first demo
+- Subtitle should be a clear, direct statement (2-3 sentences) — NOT a hook or clickbait question
+- Keep explanation to 2–3 `<p>` tags max; use `text-zinc-300` base, accent color for key terms
+- Final `<p>` names what the demos cover (use `text-zinc-400`)
+
+**Explanation styles — pick the one that fits the topic:**
+
+| Style | When | Subtitle pattern | Explanation structure |
+|---|---|---|---|
+| **First Principles** | How a mechanism works internally | Fundamental constraint + mechanism | Constraint → mechanism → consequence → demo preview |
+| **Problem-Solution** | Engineering problem with trade-offs | Problem + solution approach | Problem → solution → trade-off → demo preview |
+| **Comparative** | Choosing between strategies | Decision space + differentiator | Shared goal → differentiator → demo preview |
+| **Threat Model** | Attacks, failures, perf problems | Problem class + why it's hard | Threat → why non-obvious → defense → demo preview |
+
+**Topic-to-style mapping:**
+- **First Principles:** Event Loop, Critical Rendering Path, JS Memory & GC, Database Query Flow, SQL Execution Order, Resource Priority, Closure & Scope
+- **Problem-Solution:** Reconciliation, Hash Tables, Linked Lists, Database Indexing, Database Transactions, State Machines
+- **Comparative:** Caching Strategies, Load Balancing, API Patterns, Auth Flows, HTTP Versions, Rendering Strategies, Async Patterns
+- **Threat Model:** XSS & CSRF, Web Perf Metrics, React State & Re-renders, React Concurrent, Web Workers
+
+For new topics, pick the style that matches the topic's nature. If unclear, default to First Principles.
 
 ### 4. Animation Patterns
 

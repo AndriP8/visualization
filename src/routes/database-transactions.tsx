@@ -17,32 +17,37 @@ function DatabaseTransactionsPage() {
 			<PageHeader
 				topic={{ label: "Database Internals", color: "violet" }}
 				title="Database Transactions & Isolation"
-				subtitle="Understand ACID, Concurrency Anomalies, and how MVCC prevents data corruption."
+				subtitle="When concurrent transactions interleave without coordination, reads and writes can corrupt each other — producing lost updates, dirty reads, and phantom rows. Databases solve this with ACID guarantees and configurable isolation levels."
 				gradient={{ from: "violet-400", to: "indigo-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								<strong className="text-zinc-300">The problem:</strong> When
-								multiple users read and write to a database at the same time,
-								their queries can interleave and step on each other's toes,
-								leading to things like{" "}
-								<strong className="text-red-400">Lost Updates</strong> or{" "}
-								<strong className="text-red-400">Phantom Reads</strong>.
+								A{" "}
+								<span className="text-violet-300 font-medium">transaction</span>{" "}
+								wraps multiple operations into an atomic unit — either all
+								succeed or all roll back. ACID properties (Atomicity,
+								Consistency, Isolation, Durability) define the guarantees
+								databases provide, but full isolation is expensive. Most
+								databases default to a weaker level that permits some anomalies
+								in exchange for higher throughput.
 							</p>
 							<p>
-								<strong className="text-zinc-300">The solution:</strong>{" "}
-								Databases use{" "}
-								<strong className="text-violet-400">Transactions</strong> (ACID)
-								and{" "}
-								<strong className="text-violet-400">Isolation Levels</strong> to
-								provide concurrency control. Modern databases like PostgreSQL
-								use{" "}
-								<strong className="text-violet-400">
-									MVCC (Multi-Version Concurrency Control)
-								</strong>{" "}
-								to give each transaction a consistent snapshot of the data
-								without blocking readers when someone is writing.
+								<span className="text-violet-300 font-medium">
+									Isolation levels
+								</span>{" "}
+								(Read Uncommitted → Read Committed → Repeatable Read →
+								Serializable) trade consistency for concurrency. Modern
+								databases like PostgreSQL implement this with{" "}
+								<span className="text-violet-300 font-medium">MVCC</span> —
+								Multi-Version Concurrency Control — giving each transaction a
+								consistent snapshot without blocking concurrent readers,
+								avoiding the lock contention that plagued older implementations.
+							</p>
+							<p className="text-zinc-400">
+								The demos below cover ACID properties, transaction anomaly
+								simulation, isolation level comparison, and MVCC vs locking
+								mechanisms.
 							</p>
 						</div>
 					),

@@ -16,25 +16,38 @@ function ReconciliationPage() {
 			<PageHeader
 				topic={{ label: "React Internals", color: "orange" }}
 				title="Reconciliation"
-				subtitle="How React decides what to update in the real DOM."
+				subtitle="Comparing two arbitrary trees is O(n³) — far too slow for UI updates that need to happen in milliseconds. React's reconciliation algorithm reduces this to O(n) by making two practical assumptions about how UIs change."
 				gradient={{ from: "violet-400", to: "cyan-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
-							<p className="mb-1">
-								<strong className="text-zinc-300">The core idea:</strong>{" "}
-								<code className="text-violet-400">UI = f(state)</code>. When
-								state changes, React re-runs your component functions to get a
-								new tree, then
-								<em> diffs</em> it against the previous tree to find the minimum
-								set of DOM mutations.
+						<div className="text-sm text-zinc-300 space-y-2">
+							<p>
+								When state changes, React re-runs your component to produce a
+								new element tree, then diffs it against the previous tree to
+								find the minimum DOM mutations. The general tree diff algorithm
+								requires{" "}
+								<span className="text-violet-400 font-medium">
+									O(n³) comparisons
+								</span>{" "}
+								— for 1,000 elements, that is one billion operations. This is
+								unusable for 60fps rendering.
 							</p>
 							<p>
-								General tree diff is O(n³). React reduces it to{" "}
-								<strong className="text-cyan-400">O(n)</strong> with two
-								heuristics: elements of different types produce different trees,
-								and <code className="text-violet-400">key</code> props hint
-								which children are stable.
+								React solves this with two heuristics:{" "}
+								<span className="text-cyan-400 font-medium">(1)</span> elements
+								of different types produce entirely different subtrees (so skip
+								deep comparison), and{" "}
+								<span className="text-cyan-400 font-medium">(2)</span>{" "}
+								<code>key</code> props identify which children are stable across
+								renders. These assumptions reduce the diff to{" "}
+								<span className="text-cyan-400 font-medium">O(n)</span>. The
+								trade-off: React occasionally destroys and recreates more DOM
+								than strictly necessary when these assumptions are wrong.
+							</p>
+							<p className="text-zinc-400">
+								The demos below visualize the tree diff algorithm, the
+								render-commit phases, key-based list reordering, and what
+								happens when element types change.
 							</p>
 						</div>
 					),

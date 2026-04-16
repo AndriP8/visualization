@@ -20,25 +20,31 @@ function DatabaseIndexingPage() {
 				gradient={{ from: "teal-400", to: "cyan-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								<strong className="text-zinc-300">The problem:</strong> A
-								database table with millions of rows is just a file on disk.
-								Without an index, every query must scan every row —{" "}
-								<strong className="text-red-400">O(n)</strong>. With a{" "}
-								<strong className="text-teal-400">B-Tree index</strong>, the
-								database can navigate a balanced tree to find any value in{" "}
-								<strong className="text-teal-400">O(log n)</strong> comparisons.
+								Without an index, every query performs a{" "}
+								<span className="text-teal-300 font-medium">
+									full table scan
+								</span>{" "}
+								— reading every row from disk. A{" "}
+								<span className="text-cyan-300 font-medium">B-Tree index</span>{" "}
+								organizes values in a self-balancing tree where each node maps
+								to a disk page. With order 100, a B-Tree over one million rows
+								needs only 3 levels — three disk reads instead of millions. The
+								trade-off: indexes must be updated on every write, so adding too
+								many indexes hurts INSERT/UPDATE throughput.
 							</p>
 							<p>
-								<strong className="text-zinc-300">Why B-Trees?</strong> They're
-								optimized for disk I/O — each node maps to a disk page, keeping
-								the number of reads minimal. A B-Tree of order 100 on 1 million
-								rows needs only 3 levels: log₁₀₀(1,000,000) ≈ 3.
+								B-Trees are the default index structure in PostgreSQL, MySQL
+								(InnoDB), SQLite, and MongoDB because they support both equality
+								lookups and range queries efficiently. Hash indexes are faster
+								for exact matches but cannot serve range queries — choosing the
+								wrong index type is a common performance mistake.
 							</p>
-							<p className="text-zinc-500">
-								Used by PostgreSQL, MySQL (InnoDB), SQLite, MongoDB, and most
-								production databases as the default index structure.
+							<p className="text-zinc-400">
+								The demos below cover sequential scan vs index scan, B-Tree
+								structure and traversal, index types (B-Tree, Hash, composite,
+								partial), and when indexes hurt more than they help.
 							</p>
 						</div>
 					),

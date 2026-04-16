@@ -20,28 +20,37 @@ function JsMemoryPage() {
 				gradient={{ from: "emerald-400", via: "violet-400", to: "cyan-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								<strong className="text-zinc-300">The key insight: </strong>
 								Garbage collection never "looks for garbage" — it{" "}
-								<strong className="text-emerald-400">
+								<span className="text-emerald-300 font-medium">
 									traces what is alive
-								</strong>{" "}
-								starting from GC roots, marks everything reachable, then
-								discards the rest. A memory leak is simply an{" "}
-								<strong className="text-violet-400">
+								</span>{" "}
+								starting from GC roots (global scope, stack frames, closures),
+								marks every reachable object, and discards the rest. A memory
+								leak is not a bug in the GC; it is an{" "}
+								<span className="text-violet-300 font-medium">
 									unintended reference
-								</strong>{" "}
-								that keeps an object inside the reachable set.
+								</span>{" "}
+								keeping an object inside the reachable set — a forgotten event
+								listener, a closure capturing a large object, or a global cache
+								with no eviction policy.
 							</p>
-							<p className="text-zinc-500">
-								V8 uses a{" "}
-								<strong className="text-zinc-300">
+							<p>
+								V8 applies the{" "}
+								<span className="text-emerald-300 font-medium">
 									generational hypothesis
-								</strong>
-								: most objects die young. Separating short-lived and long-lived
-								objects lets the engine collect young space cheaply and
-								frequently, while expensive full GCs on old space are rare.
+								</span>
+								: most objects die young. New Space (young gen) is collected
+								cheaply and frequently; survivors promote to Old Space (old gen)
+								where full mark-and-sweep runs rarely. Understanding this split
+								explains why React component state that holds large arrays
+								across re-renders can silently grow Old Space.
+							</p>
+							<p className="text-zinc-400">
+								The demos below cover stack vs heap allocation, mark-and-sweep
+								visualization, generational GC, and common React memory leak
+								patterns.
 							</p>
 						</div>
 					),

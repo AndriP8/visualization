@@ -22,6 +22,43 @@ function ReactConcurrentPage() {
 					via: "purple-400",
 					to: "fuchsia-400",
 				}}
+				explanation={{
+					content: (
+						<div className="space-y-2 text-sm text-zinc-300">
+							<p>
+								React's synchronous rendering model is a hidden threat: a single
+								expensive state update blocks the browser from processing input
+								events until the render commit finishes. Typing in a search box
+								that filters 10,000 rows can drop frames because React cannot
+								interrupt its own work. Concurrent features do not make
+								rendering faster — they make it{" "}
+								<span className="text-violet-300 font-medium">
+									interruptible
+								</span>
+								, so urgent updates (user input) can preempt in-progress
+								non-urgent renders.
+							</p>
+							<p>
+								<span className="text-purple-300 font-medium">
+									useTransition
+								</span>{" "}
+								marks a state update as non-urgent, keeping the current UI
+								responsive while React prepares the next screen.{" "}
+								<span className="text-violet-300 font-medium">
+									useDeferredValue
+								</span>{" "}
+								defers a derived value to render when React has spare capacity —
+								with no timer, unlike debouncing. Suspense integrates with both:
+								it coordinates async data loading with the concurrent scheduler
+								to show loading states without waterfalls.
+							</p>
+							<p className="text-zinc-400">
+								The demos below cover concurrent rendering internals,
+								transitions, deferred values, and Suspense with streaming.
+							</p>
+						</div>
+					),
+				}}
 			/>
 
 			<motion.div

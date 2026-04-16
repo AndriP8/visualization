@@ -20,47 +20,35 @@ function CriticalRenderingPathPage() {
 				gradient={{ from: "amber-400", to: "orange-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								<strong className="text-zinc-300">The pipeline:</strong> When
-								the browser receives an HTML document, it goes through a
-								multi-stage pipeline before anything appears on screen:
+								Before a single pixel appears, the browser runs a six-stage
+								pipeline: parse HTML into a DOM, parse CSS into a CSSOM, merge
+								them into a{" "}
+								<span className="text-amber-300 font-medium">Render Tree</span>,
+								compute geometry in{" "}
+								<span className="text-orange-300 font-medium">Layout</span>,
+								fill pixels in Paint, then composite layers on the GPU. The
+								pipeline is eager — the browser wants to paint as early as
+								possible — but it is blocked by any{" "}
+								<span className="text-amber-300 font-medium">
+									render-blocking resource
+								</span>{" "}
+								(CSS in <code>{"<head>"}</code>, synchronous scripts) before
+								First Paint.
 							</p>
-							<ol className="list-decimal list-inside space-y-1 text-zinc-400">
-								<li>
-									<strong className="text-amber-400">Parse</strong> — Bytes →
-									Characters → Tokens → Nodes → DOM Tree
-								</li>
-								<li>
-									<strong className="text-amber-400">Style</strong> — CSS bytes
-									→ CSSOM Tree
-								</li>
-								<li>
-									<strong className="text-amber-400">Render Tree</strong> — DOM
-									+ CSSOM merged (only visible nodes)
-								</li>
-								<li>
-									<strong className="text-amber-400">Layout</strong> — Compute
-									geometry (position, size)
-								</li>
-								<li>
-									<strong className="text-amber-400">Paint</strong> — Fill in
-									pixels (colors, borders, shadows)
-								</li>
-								<li>
-									<strong className="text-amber-400">Composite</strong> — Layer
-									composition on GPU
-								</li>
-							</ol>
-							<p className="text-zinc-500">
-								The browser{" "}
-								<strong className="text-zinc-300">renders progressively</strong>{" "}
-								— it wants to paint as early as possible, but must wait for the{" "}
-								<strong className="text-orange-400">
-									minimum critical resources
-								</strong>{" "}
-								(CSS in {"<head>"}, synchronous JS) before{" "}
-								<strong className="text-orange-400">First Paint</strong>.
+							<p>
+								Reflow (layout recalculation) and repaint are the most expensive
+								operations in an interactive page because they can cascade — one
+								DOM change can invalidate geometry for thousands of elements.
+								Understanding which CSS properties trigger layout, paint, or
+								composite-only changes is the difference between 60 fps and
+								jank.
+							</p>
+							<p className="text-zinc-400">
+								The demos below cover the parsing pipeline, render tree
+								construction, reflow and repaint triggers, and render-blocking
+								resource impact.
 							</p>
 						</div>
 					),

@@ -21,29 +21,35 @@ function WebWorkersPage() {
 				gradient={{ from: "emerald-400", to: "teal-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-400 space-y-3">
+						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								<strong className="text-zinc-300">The problem:</strong>{" "}
-								JavaScript's main thread handles both UI rendering and code
-								execution. Heavy tasks (image processing, large data parsing)
-								freeze the UI.
+								JavaScript's main thread is responsible for both UI rendering
+								and code execution. Heavy CPU-bound tasks — image processing,
+								large data parsing, cryptographic operations — block the event
+								loop and freeze the UI. This is not a scheduling problem the
+								browser can solve; the single thread is genuinely occupied and
+								cannot process input events or paint frames until the work
+								finishes.
 							</p>
 							<p>
-								<strong className="text-emerald-400">Web Workers</strong> run
-								JavaScript in separate threads - truly parallel execution that
-								keeps the UI responsive. Workers can't access the DOM, but they
-								can handle computationally expensive tasks in the background.
+								<span className="text-emerald-300 font-medium">
+									Web Workers
+								</span>{" "}
+								run JavaScript on a separate OS thread — true parallelism, not
+								cooperative multitasking. Workers cannot access the DOM, but
+								they communicate with the main thread via{" "}
+								<span className="text-teal-300 font-medium">
+									structured-clone message passing
+								</span>
+								. For large binary data, Transferable Objects transfer ownership
+								of ArrayBuffers without copying, making zero-copy off-thread
+								processing practical.
 							</p>
-							<div className="mt-4 p-3 bg-zinc-900/50 border border-zinc-800 rounded-lg">
-								<p className="text-xs text-zinc-500">
-									<strong className="text-zinc-400">
-										Browser Requirements:
-									</strong>{" "}
-									Dedicated Workers (all modern browsers), Transferable Objects
-									(Safari 15+, Chrome 90+, Firefox 88+), Shared Workers (Chrome,
-									Edge, Firefox desktop - not Safari or iOS browsers)
-								</p>
-							</div>
+							<p className="text-zinc-400">
+								The demos below cover main thread blocking, postMessage
+								communication, transferable objects, real-world use cases, and
+								shared workers for cross-tab coordination.
+							</p>
 						</div>
 					),
 				}}

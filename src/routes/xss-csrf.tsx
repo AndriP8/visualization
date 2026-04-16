@@ -16,8 +16,43 @@ function XssCsrfPage() {
 			<PageHeader
 				topic={{ label: "Web Security", color: "rose" }}
 				title="XSS & CSRF Attacks"
-				subtitle="How cross-site scripting and forged requests exploit browser trust — and how to stop them."
+				subtitle="XSS and CSRF exploit the trust relationship between browsers, users, and servers. XSS injects code that runs as the user. CSRF tricks the browser into sending authenticated requests the user never intended."
 				gradient={{ from: "rose-400", via: "red-400", to: "orange-400" }}
+				explanation={{
+					content: (
+						<div className="space-y-2 text-sm text-zinc-300">
+							<p>
+								Both attacks hijack legitimate sessions.{" "}
+								<span className="text-rose-300 font-medium">XSS</span> injects
+								scripts into trusted pages — the browser executes them with full
+								access to the DOM, cookies, and session storage.{" "}
+								<span className="text-orange-300 font-medium">CSRF</span>{" "}
+								exploits automatic cookie attachment — a hidden form or image
+								tag on an attacker's site can trigger authenticated requests to
+								your server without the user's knowledge.
+							</p>
+							<p>
+								These attacks are hard to catch because XSS payloads hide in
+								user-generated content, URL parameters, and even SVG files. CSRF
+								requires no visible interaction at all. Defenses are specific to
+								each vector:{" "}
+								<span className="text-rose-300 font-medium">
+									CSP + output encoding
+								</span>{" "}
+								for XSS,{" "}
+								<span className="text-orange-300 font-medium">
+									SameSite cookies + CSRF tokens
+								</span>{" "}
+								for CSRF.
+							</p>
+							<p className="text-zinc-400">
+								The demos below simulate reflected XSS, stored XSS, and CSRF
+								attacks in a safe sandbox, then map each attack to its
+								prevention strategy.
+							</p>
+						</div>
+					),
+				}}
 			/>
 
 			<DemoSection

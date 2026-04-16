@@ -21,30 +21,32 @@ function AsyncPatternsPage() {
 				gradient={{ from: "emerald-400", via: "cyan-400", to: "blue-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								<strong className="text-zinc-300">async/await</strong> is
-								syntactic sugar over Promises. Every{" "}
-								<code className="text-emerald-400">await</code> suspends the
-								current async function and schedules its continuation as a{" "}
-								<strong className="text-cyan-400">microtask</strong> — it never
-								blocks the thread.
+								<span className="text-emerald-300 font-medium">
+									async/await
+								</span>{" "}
+								is syntactic sugar over Promises — every <code>await</code>{" "}
+								suspends the async function and schedules its continuation as a{" "}
+								<span className="text-cyan-300 font-medium">microtask</span>,
+								never blocking the thread. The four Promise combinators (
+								<code>all</code>, <code>race</code>, <code>allSettled</code>,{" "}
+								<code>any</code>) differ in how they handle partial failures —
+								choosing the wrong one is a common source of silent error
+								swallowing or premature resolution.
 							</p>
 							<p>
-								Promise <strong className="text-zinc-300">combinators</strong> (
-								<code className="text-cyan-400">all</code>,{" "}
-								<code className="text-cyan-400">race</code>,{" "}
-								<code className="text-cyan-400">allSettled</code>,{" "}
-								<code className="text-cyan-400">any</code>) differ in how they
-								handle partial failures and which result wins — choosing the
-								right one prevents subtle bugs.
+								Race conditions emerge when multiple in-flight requests can
+								resolve in any order and the last-response-wins assumption
+								breaks. Fixing them requires explicit cancellation via{" "}
+								<code>AbortController</code> or a request-ID guard — patterns
+								that become second nature once you understand what async
+								operations look like on the event loop.
 							</p>
-							<p>
-								<strong className="text-zinc-300">Race conditions</strong> occur
-								when multiple in-flight requests can resolve in any order. Fix
-								them with{" "}
-								<code className="text-amber-400">AbortController</code> or a
-								request ID guard.
+							<p className="text-zinc-400">
+								The demos below cover async/await internals, Promise combinator
+								behavior, race condition patterns and fixes, and error
+								propagation with retry logic.
 							</p>
 						</div>
 					),

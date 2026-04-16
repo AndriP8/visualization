@@ -18,6 +18,41 @@ function StateMachinesPage() {
 				title="State Machines"
 				subtitle="Eliminate impossible states and entire classes of concurrency bugs through declarative state management. Learn why explicit state machines prevent race conditions that plague boolean-based approaches."
 				gradient={{ from: "violet-400", via: "purple-400", to: "fuchsia-400" }}
+				explanation={{
+					content: (
+						<div className="space-y-2 text-sm text-zinc-300">
+							<p>
+								Boolean flags for async state ( <code>isLoading</code>,{" "}
+								<code>isError</code>, <code>isSuccess</code>) create a
+								combinatorial explosion of possible combinations — most of them
+								meaningless or contradictory. A{" "}
+								<span className="text-violet-300 font-medium">
+									state machine
+								</span>{" "}
+								replaces this with a finite set of named states and explicit
+								transitions. At any moment the system is in exactly one state,
+								and only valid transitions are possible — making impossible
+								states unrepresentable at the type level.
+							</p>
+							<p>
+								The practical payoff is{" "}
+								<span className="text-purple-300 font-medium">
+									deterministic behavior
+								</span>
+								: same event + same state always produces the same next state.
+								Race conditions collapse because concurrent events are processed
+								sequentially through the transition function, not applied
+								independently to separate flags. TypeScript discriminated unions
+								enforce this at compile time without requiring a library.
+							</p>
+							<p className="text-zinc-400">
+								The demos below cover basic finite state machines, boolean soup
+								vs state machine comparison, hierarchical states, and TypeScript
+								implementation patterns with and without XState.
+							</p>
+						</div>
+					),
+				}}
 			/>
 
 			<div className="space-y-16">

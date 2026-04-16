@@ -16,35 +16,41 @@ function EventLoopPage() {
 			<PageHeader
 				topic={{ label: "JavaScript Internals", color: "emerald" }}
 				title="Event Loop"
-				subtitle="How JavaScript handles asynchronous code with a single thread."
+				subtitle="JavaScript has one call stack and one thread — it can only run one piece of code at a time. The event loop is the scheduling mechanism that coordinates when asynchronous callbacks get their turn to execute on that single thread."
 				gradient={{ from: "emerald-400", to: "cyan-400" }}
 				explanation={{
 					content: (
-						<div className="text-sm text-zinc-500 space-y-2">
+						<div className="text-sm text-zinc-300 space-y-2">
 							<p>
-								<strong className="text-zinc-300">The key insight:</strong>{" "}
-								JavaScript is{" "}
-								<strong className="text-emerald-400">single-threaded</strong> —
-								it has one call stack and can only do one thing at a time. So
-								how does it handle timers, network requests, and user events
-								without blocking?
+								JavaScript runs on a{" "}
+								<span className="text-emerald-400 font-medium">
+									single thread
+								</span>{" "}
+								with one call stack — it can execute only one piece of code at a
+								time. Asynchronous operations (timers, network requests, DOM
+								events) are delegated to{" "}
+								<span className="text-cyan-400 font-medium">Web APIs</span>{" "}
+								outside the main thread, but their callbacks must still run on
+								that single thread.
 							</p>
 							<p>
-								The answer is the{" "}
-								<strong className="text-cyan-400">Event Loop</strong> — a
-								coordination mechanism that checks: if the call stack is empty,
-								drain <em>all</em>{" "}
-								<strong className="text-cyan-400">microtasks</strong>{" "}
-								(Promise.then, queueMicrotask), then pick <em>one</em>{" "}
-								<strong className="text-orange-400">macrotask</strong>{" "}
-								(setTimeout, I/O), then repeat.
+								The{" "}
+								<span className="text-emerald-400 font-medium">event loop</span>{" "}
+								is the scheduler that coordinates this. It follows a strict
+								priority order: finish all synchronous code, drain the{" "}
+								<span className="text-cyan-400 font-medium">
+									microtask queue
+								</span>{" "}
+								(Promise callbacks, queueMicrotask), then process one{" "}
+								<span className="text-orange-400 font-medium">macrotask</span>{" "}
+								(setTimeout, I/O callbacks), then repeat. This priority ordering
+								is why <code>Promise.then</code> always runs before{" "}
+								<code>setTimeout</code>, even when both are ready.
 							</p>
-							<p className="text-zinc-500">
-								<strong className="text-zinc-300">Web APIs</strong> (setTimeout,
-								fetch, DOM events) delegate work outside the main thread. When
-								they're done, their callbacks are queued — never interrupting
-								currently running code. The Event Loop decides <em>when</em>{" "}
-								each callback actually runs.
+							<p className="text-zinc-400">
+								The demos below let you step through the call stack, run a full
+								event loop simulation with interleaved micro/macrotasks, and see
+								where requestAnimationFrame fits in the cycle.
 							</p>
 						</div>
 					),

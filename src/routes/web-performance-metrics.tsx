@@ -19,6 +19,39 @@ function WebPerformanceMetricsPage() {
 				title="Web Performance Metrics"
 				subtitle="Core Web Vitals measure real-world user experience. Understanding these metrics helps you identify bottlenecks, prioritize optimizations, and build faster web applications that keep users engaged."
 				gradient={{ from: "blue-400", via: "cyan-400", to: "violet-400" }}
+				explanation={{
+					content: (
+						<div className="space-y-2 text-sm text-zinc-300">
+							<p>
+								Performance bottlenecks are non-obvious because they manifest as
+								user frustration, not errors. A page can pass all automated
+								tests and still feel slow if the{" "}
+								<span className="text-blue-300 font-medium">
+									Largest Contentful Paint
+								</span>{" "}
+								is delayed by an unoptimized hero image, or feel janky if{" "}
+								<span className="text-cyan-300 font-medium">INP</span>{" "}
+								(Interaction to Next Paint) spikes because a click handler
+								triggers a long task. Core Web Vitals translate these perceptual
+								problems into measurable thresholds that correlate with user
+								retention and search ranking.
+							</p>
+							<p>
+								Each metric targets a distinct failure mode: LCP measures
+								loading, CLS measures visual stability (unexpected layout
+								shifts), INP measures responsiveness, FCP measures time to first
+								content, and TTFB measures server response time. Optimizing for
+								one can regress another — preloading fonts improves LCP but
+								increases TTFB. Understanding the interaction between metrics
+								prevents whack-a-mole performance work.
+							</p>
+							<p className="text-zinc-400">
+								The demos below cover LCP, CLS, INP, FCP, and TTFB — each with
+								interactive simulations and optimization strategies.
+							</p>
+						</div>
+					),
+				}}
 			/>
 			<DemoSection
 				title="LCP - Largest Contentful Paint"

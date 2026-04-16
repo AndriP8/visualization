@@ -18,8 +18,41 @@ function DatabaseQueryFlow() {
 			<PageHeader
 				topic={{ label: "Database Internals", color: "violet" }}
 				title="Database Query Engine Flow"
-				subtitle="What actually happens inside a relational database engine (like PostgreSQL) between the moment it receives your raw SQL string and when it returns your data? Explore the incredible architecture of Parser, Planner, Optimizer, and Executor."
+				subtitle="Between receiving a SQL string and returning rows, a relational database runs it through four stages: parse the text into an AST, analyze and rewrite it against the schema, plan and cost multiple execution strategies, then execute the cheapest plan."
 				gradient={{ from: "violet-400", via: "fuchsia-400", to: "cyan-400" }}
+				explanation={{
+					content: (
+						<div className="space-y-2 text-sm text-zinc-300">
+							<p>
+								The <span className="text-violet-300 font-medium">parser</span>{" "}
+								validates syntax and produces an Abstract Syntax Tree. The
+								analyzer resolves identifiers against the catalog (real table
+								and column names), infers types, and rewrites views into their
+								underlying queries. This separation means a syntax error is
+								caught before any catalog lookup happens — but a missing column
+								only surfaces in the analyzer phase.
+							</p>
+							<p>
+								The{" "}
+								<span className="text-fuchsia-300 font-medium">
+									planner/optimizer
+								</span>{" "}
+								is where most of the intelligence lives. It enumerates multiple
+								ways to execute the query (nested loop join vs hash join vs
+								merge join, sequential scan vs index scan) and uses table
+								statistics to estimate row counts and costs. The cheapest plan
+								wins. This is why <code>EXPLAIN ANALYZE</code> is the most
+								powerful debugging tool — it shows you what the planner expected
+								vs what actually happened.
+							</p>
+							<p className="text-zinc-400">
+								The demos below walk through the full pipeline: parser, analyzer
+								and rewriter, planner and optimizer, execution engine, and
+								EXPLAIN ANALYZE output.
+							</p>
+						</div>
+					),
+				}}
 			/>
 
 			<div className="space-y-16">
