@@ -12,6 +12,8 @@ interface Request {
 	resolvedAt?: number;
 	stale: boolean;
 	cancelled: boolean;
+	/** Bar width (0-1) frozen at moment of cancel, only set when cancelled. */
+	cancelledProgress?: number;
 }
 
 const NO_FIX_CODE = `// BUG: stale response overwrites fresh one
@@ -68,11 +70,32 @@ export function RaceConditionsDemo() {
 		const id = ++reqCounter.current;
 		const jitter = Math.random() * latency;
 		const delay = latency * 0.4 + jitter;
+		const startedAt = Date.now();
 
-		// Apply fix logic
+		// Each request captures its OWN controller in closure. The timer checks
+		// this local `ctrl`, not `abortCtrl.current` — which will point at a newer
+		// controller by the time old timers fire.
+		let ctrl: AbortController | null = null;
 		if (mode === "abort") {
+			// Abort all previously-pending requests AND freeze their bars at the
+			// progress they had reached when abort() was called.
 			abortCtrl.current?.abort();
-			abortCtrl.current = new AbortController();
+			const abortMoment = startedAt;
+			setRequests((prev) =>
+				prev.map((r) => {
+					if (r.resolvedAt || r.cancelled) return r;
+					const elapsed = (abortMoment - r.startedAt) / r.delay;
+					const progress = Math.min(1, Math.max(0, elapsed)) * 0.6;
+					return {
+						...r,
+						cancelled: true,
+						resolvedAt: abortMoment,
+						cancelledProgress: progress,
+					};
+				}),
+			);
+			ctrl = new AbortController();
+			abortCtrl.current = ctrl;
 		}
 		if (mode === "requestId") {
 			currentReqId.current = id;
@@ -82,7 +105,7 @@ export function RaceConditionsDemo() {
 			id,
 			query: q,
 			delay,
-			startedAt: Date.now(),
+			startedAt,
 			stale: false,
 			cancelled: false,
 		};
@@ -90,17 +113,9 @@ export function RaceConditionsDemo() {
 		setRequests((prev) => [...prev.slice(-6), req]);
 
 		const timer = setTimeout(() => {
-			if (
-				mode === "abort" &&
-				abortCtrl.current?.signal.aborted &&
-				id !== reqCounter.current
-			) {
-				// Mark as cancelled
-				setRequests((prev) =>
-					prev.map((r) =>
-						r.id === id ? { ...r, cancelled: true, resolvedAt: Date.now() } : r,
-					),
-				);
+			// Abort mode: closure-captured signal is the source of truth. If this
+			// request was aborted, its bar is already frozen — do nothing.
+			if (mode === "abort" && ctrl?.signal.aborted) {
 				return;
 			}
 
@@ -262,9 +277,15 @@ export function RaceConditionsDemo() {
 											}`}
 											initial={{ width: 0 }}
 											animate={{
-												width: req.resolvedAt || req.cancelled ? "100%" : "60%",
+												width: req.cancelled
+													? `${(req.cancelledProgress ?? 0) * 100}%`
+													: req.resolvedAt
+														? "100%"
+														: "60%",
 											}}
-											transition={{ duration: req.delay / 1000 }}
+											transition={{
+												duration: req.cancelled ? 0 : req.delay / 1000,
+											}}
 										/>
 									</div>
 									<span

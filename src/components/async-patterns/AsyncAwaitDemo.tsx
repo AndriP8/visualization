@@ -55,7 +55,7 @@ const STEPS: Step[] = [
 		stack: ["(anonymous)", "fetchUser()"],
 		microtasks: [],
 		description:
-			"await hit! fetchUser() suspends and yields control back to the caller. getUser() is dispatched to Web API.",
+			"await hit! fetchUser() suspends and yields control back to the caller. getUser() starts an async op (e.g. fetch) handled by a Web API — not the microtask queue. fetchUser()'s continuation will be queued as a microtask only when getUser() resolves (step 8).",
 		phase: "await",
 	},
 	{
@@ -254,7 +254,9 @@ export function AsyncAwaitDemo() {
 				<p>
 					<code className="text-emerald-400">await</code> doesn't block the
 					thread — it suspends the <em>current async function</em> and queues
-					its continuation as a microtask when the awaited value settles.
+					its continuation as a microtask{" "}
+					<em>when the awaited value settles</em>, not when{" "}
+					<code className="text-emerald-400">await</code> is first hit.
 					Synchronous code after the{" "}
 					<code className="text-emerald-400">await</code> call site runs first.
 				</p>
