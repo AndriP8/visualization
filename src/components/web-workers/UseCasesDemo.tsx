@@ -109,7 +109,7 @@ export function UseCasesDemo() {
 								<td className="text-center">
 									<span className="text-red-400">❌ No</span>
 								</td>
-								<td>requestAnimationFrame sufficient</td>
+								<td>postMessage overhead exceeds task cost</td>
 							</tr>
 							<tr>
 								<td className="py-3">User input handling</td>

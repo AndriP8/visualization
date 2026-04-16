@@ -90,11 +90,12 @@ export function TransferableDemo() {
 		}
 	};
 
-	// Performance data for different sizes (send time = main thread blocking)
+	// postMessage send time only (excludes buffer allocation and fill)
+	// Transfer is O(1) pointer swap — much faster than copy but not always sub-0.1ms in practice
 	const performanceData = [
-		{ id: "1mb", size: "1 MB", copy: "1–5ms", transfer: "<0.1ms" },
-		{ id: "10mb", size: "10 MB", copy: "5–20ms", transfer: "<0.1ms" },
-		{ id: "100mb", size: "100 MB", copy: "50–200ms", transfer: "<0.1ms" },
+		{ id: "1mb", size: "1 MB", copy: "1–5ms", transfer: "0.1–0.5ms" },
+		{ id: "10mb", size: "10 MB", copy: "5–20ms", transfer: "0.1–1ms" },
+		{ id: "100mb", size: "100 MB", copy: "50–200ms", transfer: "0.5–2ms" },
 	];
 
 	return (
@@ -339,7 +340,8 @@ export function TransferableDemo() {
 				</h4>
 				<p className="text-xs text-zinc-500 mb-4">
 					Send time = main thread blocking during postMessage(). Does not
-					include worker processing or response. Transfer is always O(1).
+					include buffer allocation or worker processing. Transfer is O(1) —
+					only a pointer swap — but still has small runtime variance.
 				</p>
 				<div className="overflow-x-auto">
 					<table className="w-full text-sm">

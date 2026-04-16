@@ -114,9 +114,12 @@ export function BlockingDemo() {
 	};
 
 	const runWorkerThread = () => {
+		// Terminate any existing worker and create a fresh one to avoid stale state
+		workerRef.current?.terminate();
+		workerRef.current = createWorker();
 		setWorkerThreadRunning(true);
 		setWorkerThreadResult(null);
-		workerRef.current?.postMessage(40);
+		workerRef.current.postMessage(40);
 	};
 
 	const cancelWorkerThread = () => {
