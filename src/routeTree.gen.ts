@@ -22,6 +22,7 @@ import { Route as ReactConcurrentRouteImport } from './routes/react-concurrent'
 import { Route as LoadBalancingRouteImport } from './routes/load-balancing'
 import { Route as JsMemoryRouteImport } from './routes/js-memory'
 import { Route as HttpVersionsRouteImport } from './routes/http-versions'
+import { Route as HashTablesRouteImport } from './routes/hash-tables'
 import { Route as EventLoopRouteImport } from './routes/event-loop'
 import { Route as DatabaseTransactionsRouteImport } from './routes/database-transactions'
 import { Route as DatabaseQueryFlowRouteImport } from './routes/database-query-flow'
@@ -99,6 +100,11 @@ const HttpVersionsRoute = HttpVersionsRouteImport.update({
   path: '/http-versions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HashTablesRoute = HashTablesRouteImport.update({
+  id: '/hash-tables',
+  path: '/hash-tables',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventLoopRoute = EventLoopRouteImport.update({
   id: '/event-loop',
   path: '/event-loop',
@@ -167,6 +173,7 @@ export interface FileRoutesByFullPath {
   '/database-query-flow': typeof DatabaseQueryFlowRoute
   '/database-transactions': typeof DatabaseTransactionsRoute
   '/event-loop': typeof EventLoopRoute
+  '/hash-tables': typeof HashTablesRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
   '/load-balancing': typeof LoadBalancingRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/database-query-flow': typeof DatabaseQueryFlowRoute
   '/database-transactions': typeof DatabaseTransactionsRoute
   '/event-loop': typeof EventLoopRoute
+  '/hash-tables': typeof HashTablesRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
   '/load-balancing': typeof LoadBalancingRoute
@@ -220,6 +228,7 @@ export interface FileRoutesById {
   '/database-query-flow': typeof DatabaseQueryFlowRoute
   '/database-transactions': typeof DatabaseTransactionsRoute
   '/event-loop': typeof EventLoopRoute
+  '/hash-tables': typeof HashTablesRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
   '/load-balancing': typeof LoadBalancingRoute
@@ -248,6 +257,7 @@ export interface FileRouteTypes {
     | '/database-query-flow'
     | '/database-transactions'
     | '/event-loop'
+    | '/hash-tables'
     | '/http-versions'
     | '/js-memory'
     | '/load-balancing'
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
     | '/database-query-flow'
     | '/database-transactions'
     | '/event-loop'
+    | '/hash-tables'
     | '/http-versions'
     | '/js-memory'
     | '/load-balancing'
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '/database-query-flow'
     | '/database-transactions'
     | '/event-loop'
+    | '/hash-tables'
     | '/http-versions'
     | '/js-memory'
     | '/load-balancing'
@@ -327,6 +339,7 @@ export interface RootRouteChildren {
   DatabaseQueryFlowRoute: typeof DatabaseQueryFlowRoute
   DatabaseTransactionsRoute: typeof DatabaseTransactionsRoute
   EventLoopRoute: typeof EventLoopRoute
+  HashTablesRoute: typeof HashTablesRoute
   HttpVersionsRoute: typeof HttpVersionsRoute
   JsMemoryRoute: typeof JsMemoryRoute
   LoadBalancingRoute: typeof LoadBalancingRoute
@@ -435,6 +448,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HttpVersionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hash-tables': {
+      id: '/hash-tables'
+      path: '/hash-tables'
+      fullPath: '/hash-tables'
+      preLoaderRoute: typeof HashTablesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/event-loop': {
       id: '/event-loop'
       path: '/event-loop'
@@ -527,6 +547,7 @@ const rootRouteChildren: RootRouteChildren = {
   DatabaseQueryFlowRoute: DatabaseQueryFlowRoute,
   DatabaseTransactionsRoute: DatabaseTransactionsRoute,
   EventLoopRoute: EventLoopRoute,
+  HashTablesRoute: HashTablesRoute,
   HttpVersionsRoute: HttpVersionsRoute,
   JsMemoryRoute: JsMemoryRoute,
   LoadBalancingRoute: LoadBalancingRoute,
