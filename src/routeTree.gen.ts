@@ -20,6 +20,7 @@ import { Route as ReconciliationRouteImport } from './routes/reconciliation'
 import { Route as ReactStateRouteImport } from './routes/react-state'
 import { Route as ReactConcurrentRouteImport } from './routes/react-concurrent'
 import { Route as LoadBalancingRouteImport } from './routes/load-balancing'
+import { Route as LinkedListsRouteImport } from './routes/linked-lists'
 import { Route as JsMemoryRouteImport } from './routes/js-memory'
 import { Route as HttpVersionsRouteImport } from './routes/http-versions'
 import { Route as HashTablesRouteImport } from './routes/hash-tables'
@@ -176,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/hash-tables': typeof HashTablesRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
+  '/linked-lists': typeof LinkedListsRoute
   '/load-balancing': typeof LoadBalancingRoute
   '/react-concurrent': typeof ReactConcurrentRoute
   '/react-state': typeof ReactStateRoute
@@ -203,6 +205,7 @@ export interface FileRoutesByTo {
   '/hash-tables': typeof HashTablesRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
+  '/linked-lists': typeof LinkedListsRoute
   '/load-balancing': typeof LoadBalancingRoute
   '/react-concurrent': typeof ReactConcurrentRoute
   '/react-state': typeof ReactStateRoute
@@ -231,6 +234,7 @@ export interface FileRoutesById {
   '/hash-tables': typeof HashTablesRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
+  '/linked-lists': typeof LinkedListsRoute
   '/load-balancing': typeof LoadBalancingRoute
   '/react-concurrent': typeof ReactConcurrentRoute
   '/react-state': typeof ReactStateRoute
@@ -260,6 +264,7 @@ export interface FileRouteTypes {
     | '/hash-tables'
     | '/http-versions'
     | '/js-memory'
+    | '/linked-lists'
     | '/load-balancing'
     | '/react-concurrent'
     | '/react-state'
@@ -287,6 +292,7 @@ export interface FileRouteTypes {
     | '/hash-tables'
     | '/http-versions'
     | '/js-memory'
+    | '/linked-lists'
     | '/load-balancing'
     | '/react-concurrent'
     | '/react-state'
@@ -314,6 +320,7 @@ export interface FileRouteTypes {
     | '/hash-tables'
     | '/http-versions'
     | '/js-memory'
+    | '/linked-lists'
     | '/load-balancing'
     | '/react-concurrent'
     | '/react-state'
@@ -342,6 +349,7 @@ export interface RootRouteChildren {
   HashTablesRoute: typeof HashTablesRoute
   HttpVersionsRoute: typeof HttpVersionsRoute
   JsMemoryRoute: typeof JsMemoryRoute
+  LinkedListsRoute: typeof LinkedListsRoute
   LoadBalancingRoute: typeof LoadBalancingRoute
   ReactConcurrentRoute: typeof ReactConcurrentRoute
   ReactStateRoute: typeof ReactStateRoute
@@ -432,6 +440,13 @@ declare module '@tanstack/react-router' {
       path: '/load-balancing'
       fullPath: '/load-balancing'
       preLoaderRoute: typeof LoadBalancingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/linked-lists': {
+      id: '/linked-lists'
+      path: '/linked-lists'
+      fullPath: '/linked-lists'
+      preLoaderRoute: typeof LinkedListsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/js-memory': {
@@ -550,6 +565,7 @@ const rootRouteChildren: RootRouteChildren = {
   HashTablesRoute: HashTablesRoute,
   HttpVersionsRoute: HttpVersionsRoute,
   JsMemoryRoute: JsMemoryRoute,
+  LinkedListsRoute: LinkedListsRoute,
   LoadBalancingRoute: LoadBalancingRoute,
   ReactConcurrentRoute: ReactConcurrentRoute,
   ReactStateRoute: ReactStateRoute,
