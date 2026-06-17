@@ -17,6 +17,11 @@ const NAV_GROUPS = [
 				icon: "⚛️",
 			},
 			{ to: "/state-machines" as const, label: "State Machines", icon: "🤖" },
+			{
+				to: "/react-server-components" as const,
+				label: "Server Components",
+				icon: "🌊",
+			},
 		],
 	},
 	{
@@ -197,7 +202,7 @@ function RootLayout() {
 			>
 				<div className="p-5 border-b border-zinc-800">
 					<h1 className="text-lg font-bold bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-						⚡ Full-Stack Visualized
+						⚡ Under the Hood
 					</h1>
 					<p className="text-xs text-zinc-500 mt-1">
 						See every layer come alive
@@ -258,7 +263,7 @@ function RootLayout() {
 						</svg>
 					</button>
 					<span className="text-sm font-semibold bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-						⚡ Full-Stack Visualized
+						⚡ Under the Hood
 					</span>
 				</header>
 

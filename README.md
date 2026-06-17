@@ -1,10 +1,10 @@
-# Full-Stack Concept Visualizer
+# Under the Hood
 
-An interactive platform for learning and internalizing core concepts across the full software engineering stack — from browser internals and React mechanics to database engines, system design patterns, and JavaScript runtime behavior. Every topic is taught through hands-on, animated visualizations rather than static text.
+An interactive platform for learning and internalizing core concepts across software engineering — from browser internals and React mechanics to database engines, system design patterns, and JavaScript runtime behavior. Every topic is taught through hands-on, animated visualizations rather than static text.
 
 ## 🎯 Purpose
 
-This project is a **general-purpose visualization hub** for full-stack engineering concepts. It is built with an extensible, domain-organized architecture that makes it straightforward to add new interactive demos, educational modules, and technical deep-dives over time. The target audience is mid-to-senior engineers preparing for interviews or deepening their mental models.
+This project is a **general-purpose visualization hub** for software engineering concepts. It is built with an extensible, domain-organized architecture that makes it straightforward to add new interactive demos, educational modules, and technical deep-dives over time. The target audience is mid-to-senior engineers preparing for interviews or deepening their mental models.
 
 ## ✨ Current & Planned Visualizations
 

@@ -151,7 +151,7 @@ const CONCEPT_GROUPS = [
 	},
 	{
 		title: "Web",
-		description: "Full-stack rendering approaches and patterns",
+		description: "Rendering approaches and patterns",
 		items: [
 			{
 				to: "/rendering-strategies" as const,
@@ -294,6 +294,32 @@ const CONCEPT_GROUPS = [
 			},
 		],
 	},
+	{
+		title: "Data Structures",
+		description: "Core data structures visualized from first principles",
+		items: [
+			{
+				to: "/hash-tables" as const,
+				title: "Hash Tables",
+				icon: "#️⃣",
+				description:
+					"How hash functions, buckets, and collision resolution turn O(n) lookups into amortized O(1) — and what breaks that guarantee.",
+				tags: ["Hashing", "Collision", "Chaining", "Open Addressing"],
+				color: "from-violet-500/20 to-purple-500/20",
+				borderColor: "border-violet-500/30",
+			},
+			{
+				to: "/linked-lists" as const,
+				title: "Linked Lists",
+				icon: "🔗",
+				description:
+					"O(1) insert/delete at a known position at the cost of O(n) traversal — singly, doubly, and circular variants compared.",
+				tags: ["Singly", "Doubly", "Circular", "Pointer"],
+				color: "from-cyan-500/20 to-teal-500/20",
+				borderColor: "border-cyan-500/30",
+			},
+		],
+	},
 ];
 
 function Index() {
@@ -305,15 +331,13 @@ function Index() {
 				transition={{ duration: 0.5 }}
 			>
 				<h2 className="text-3xl font-bold mb-2">
-					Full-Stack Concepts{" "}
 					<span className="bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
 						Under the Hood
 					</span>
 				</h2>
 				<p className="text-zinc-400 mb-8 text-lg">
-					Interactive visualizations to understand how the full stack actually
-					works — from browser internals and React to databases and system
-					design.
+					Interactive visualizations to understand how things actually work —
+					from browser internals and React to databases and system design.
 				</p>
 			</motion.div>
 
