@@ -282,7 +282,7 @@ function SuspenseDashboard({ fetchTimes }: { fetchTimes: FetchTimes }) {
 
 // ─── Main Demo ───────────────────────────────────────────────────────────────
 
-export function SuspenseStreamingDemo() {
+export function SuspenseBoundariesDemo() {
 	const [mode, setMode] = useState<Mode>("without");
 	const [fetchTimes, setFetchTimes] = useState<FetchTimes>({
 		header: 200,
@@ -291,10 +291,18 @@ export function SuspenseStreamingDemo() {
 	});
 	return (
 		<DemoSection
-			title="Suspense — Progressive Loading"
-			description="Compare all-at-once loading vs Suspense boundaries that stream sections independently as data arrives."
+			title="Suspense — Independent Boundaries"
+			description="Compare all-at-once loading vs Suspense boundaries that resolve sections independently as data arrives."
 		>
 			<div className="space-y-6">
+				{/* Scope note */}
+				<p className="text-xs text-zinc-500">
+					This demo shows client-side parallel boundary resolution. True HTTP
+					streaming requires SSR (
+					<code className="text-cyan-400">renderToPipeableStream</code>) or RSC
+					— out of scope here.
+				</p>
+
 				{/* Mode Toggle */}
 				<div className="flex bg-zinc-800 rounded-lg p-1 w-fit">
 					<button
@@ -506,23 +514,79 @@ function navigate(to: string) {
 					className="text-xs"
 				/>
 
-				<div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-4">
-					<p className="text-sm text-cyan-300">
-						<span className="font-semibold">React 19 note:</span> the{" "}
-						<code className="text-cyan-200">use(promise)</code> hook replaces
-						the manual <code className="text-cyan-200">wrapPromise</code>{" "}
-						pattern shown above. Pass a promise created outside render (e.g.
-						from an event handler) and call{" "}
-						<code className="text-cyan-200">use(promise)</code> inside your
-						component — Suspense handles the rest.
+				{/* React 18 vs 19 comparison */}
+				<div className="space-y-3">
+					<h4 className="text-sm font-medium text-zinc-300">
+						Data Fetching with Suspense: React 18 vs 19
+					</h4>
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<div className="space-y-2">
+							<span className="text-xs font-medium text-zinc-400">
+								React 18 — manual wrapPromise
+							</span>
+							<ShikiCode
+								language="tsx"
+								code={`// Throws the promise while pending
+function wrapPromise<T>(promise: Promise<T>) {
+  let status = 'pending', result: T;
+  const suspender = promise.then(
+    r => { status = 'success'; result = r; },
+    e => { status = 'error'; throw e; }
+  );
+  return {
+    read() {
+      if (status === 'pending') throw suspender;
+      return result;
+    }
+  };
+}
+
+// Usage
+const resource = wrapPromise(fetchData());
+
+function MyComponent() {
+  const data = resource.read(); // suspends
+  return <div>{data}</div>;
+}`}
+								showLineNumbers={false}
+								className="text-xs"
+							/>
+						</div>
+						<div className="space-y-2">
+							<span className="text-xs font-medium text-cyan-400">
+								React 19+ — use() hook
+							</span>
+							<ShikiCode
+								language="tsx"
+								code={`import { use } from 'react';
+
+// Create promise outside render
+// (e.g. in event handler or loader)
+const dataPromise = fetchData();
+
+function MyComponent() {
+  // use() replaces wrapPromise entirely
+  // Suspense handles the pending state
+  const data = use(dataPromise);
+  return <div>{data}</div>;
+}
+
+// Wrap with Suspense as before
+<Suspense fallback={<Skeleton />}>
+  <MyComponent />
+</Suspense>`}
+								showLineNumbers={false}
+								className="text-xs"
+							/>
+						</div>
+					</div>
+					<p className="text-xs text-zinc-500">
+						The <code className="text-cyan-400">use()</code> hook eliminates the
+						boilerplate wrapPromise pattern. Pass a promise created outside
+						render and React handles suspension automatically. The demo above
+						still uses wrapPromise for React 18 compatibility.
 					</p>
 				</div>
-
-				<p className="text-xs text-zinc-500 italic">
-					Without startTransition, navigating to a Suspense-boundary page
-					immediately shows fallbacks (jarring). With it, React keeps the old
-					page visible until enough of the new page is ready.
-				</p>
 			</div>
 		</DemoSection>
 	);

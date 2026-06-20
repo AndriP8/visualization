@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from "motion/react";
-import { useMemo, useState, useTransition } from "react";
+import { motion } from "motion/react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
@@ -90,9 +90,12 @@ export function TransitionDemo() {
 	}
 
 	// Clear pendingTab once the transition completes
-	if (!isPending && pendingTab !== null) {
-		setPendingTab(null);
-	}
+	// Must be in useEffect — setState during render is illegal and causes loops
+	useEffect(() => {
+		if (!isPending && pendingTab !== null) {
+			setPendingTab(null);
+		}
+	}, [isPending, pendingTab]);
 
 	return (
 		<DemoSection
@@ -138,84 +141,91 @@ export function TransitionDemo() {
 					)}
 				</div>
 
-				{/* Timeline Visualization */}
-				<div className="bg-zinc-800/50 rounded-lg p-4 space-y-3">
+				{/* Timeline Visualization — both stacked for comparison */}
+				<div className="bg-zinc-800/50 rounded-lg p-4 space-y-4">
 					<h4 className="text-sm font-medium text-zinc-300">
 						What happens when you click "Charts"
 					</h4>
-					<AnimatePresence mode="wait">
-						{mode === "without" ? (
-							<motion.div
-								key="without"
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								exit={{ opacity: 0 }}
-								className="space-y-2"
-							>
-								<div className="flex items-center gap-2 text-xs text-zinc-400">
-									<span className="w-20 shrink-0">Without</span>
-									<div className="flex-1 flex h-8 rounded overflow-hidden">
-										<div className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300 w-[10%]">
-											Click
-										</div>
-										<motion.div
-											className="bg-red-500/30 border border-red-500/50 flex items-center justify-center text-[10px] text-red-300 w-[75%]"
-											initial={{ scaleX: 0 }}
-											animate={{ scaleX: 1 }}
-											transition={{ duration: 0.5 }}
-										>
-											Render 2000 items (frozen)
-										</motion.div>
-										<div className="bg-zinc-600/50 flex items-center justify-center text-[10px] text-zinc-400 w-[15%]">
-											Done
-										</div>
-									</div>
+
+					{/* Without useTransition */}
+					<div className="space-y-1">
+						<div className="flex items-center gap-2 text-xs text-zinc-400">
+							<span className="w-20 shrink-0 text-red-400 font-medium">
+								Without
+							</span>
+							<div className="flex-1 flex h-8 rounded overflow-hidden">
+								<div className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300 w-[10%]">
+									Click
 								</div>
-							</motion.div>
-						) : (
-							<motion.div
-								key="with"
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								exit={{ opacity: 0 }}
-								className="space-y-2"
-							>
-								<div className="flex items-center gap-2 text-xs text-zinc-400">
-									<span className="w-20 shrink-0">With</span>
-									<div className="flex-1 flex h-8 rounded overflow-hidden gap-0.5">
-										<div className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300 w-[10%]">
-											Click
-										</div>
-										<motion.div
-											className="bg-amber-500/30 border border-amber-500/50 flex items-center justify-center text-[10px] text-amber-300 w-[25%]"
-											initial={{ scaleX: 0 }}
-											animate={{ scaleX: 1 }}
-											transition={{ duration: 0.3, delay: 0.1 }}
-										>
-											isPending
-										</motion.div>
-										<motion.div
-											className="bg-emerald-500/30 border border-emerald-500/50 flex items-center justify-center text-[10px] text-emerald-300 w-[50%]"
-											initial={{ scaleX: 0 }}
-											animate={{ scaleX: 1 }}
-											transition={{ duration: 0.4, delay: 0.3 }}
-										>
-											Low-priority render (can yield to input)
-										</motion.div>
-										<motion.div
-											className="bg-zinc-600/50 flex items-center justify-center text-[10px] text-zinc-400 w-[15%]"
-											initial={{ scaleX: 0 }}
-											animate={{ scaleX: 1 }}
-											transition={{ duration: 0.2, delay: 0.6 }}
-										>
-											Swap
-										</motion.div>
-									</div>
+								<motion.div
+									className="bg-red-500/30 border border-red-500/50 flex items-center justify-center text-[10px] text-red-300 w-[75%]"
+									initial={{ scaleX: 0 }}
+									animate={{ scaleX: 1 }}
+									transition={{ duration: 0.5 }}
+								>
+									Render 2000 items (frozen)
+								</motion.div>
+								<div className="bg-zinc-600/50 flex items-center justify-center text-[10px] text-zinc-400 w-[15%]">
+									Done
 								</div>
-							</motion.div>
-						)}
-					</AnimatePresence>
+							</div>
+						</div>
+					</div>
+
+					{/* With useTransition */}
+					<div className="space-y-1">
+						<div className="flex items-center gap-2 text-xs text-zinc-400">
+							<span className="w-20 shrink-0 text-emerald-400 font-medium">
+								With
+							</span>
+							<div className="flex-1 flex h-8 rounded overflow-hidden gap-0.5">
+								<div className="bg-violet-500/30 border border-violet-500/50 flex items-center justify-center text-[10px] text-violet-300 w-[10%]">
+									Click
+								</div>
+								<motion.div
+									className="bg-amber-500/30 border border-amber-500/50 flex items-center justify-center text-[10px] text-amber-300 w-[20%]"
+									initial={{ scaleX: 0 }}
+									animate={{ scaleX: 1 }}
+									transition={{ duration: 0.3, delay: 0.1 }}
+								>
+									isPending = true
+								</motion.div>
+								<motion.div
+									className="bg-emerald-500/30 border border-emerald-500/50 flex items-center justify-center text-[10px] text-emerald-300 w-[50%]"
+									initial={{ scaleX: 0 }}
+									animate={{ scaleX: 1 }}
+									transition={{ duration: 0.4, delay: 0.3 }}
+								>
+									Render 2000 items (yields to clicks)
+								</motion.div>
+								<motion.div
+									className="bg-zinc-600/50 flex items-center justify-center text-[10px] text-zinc-400 w-[20%]"
+									initial={{ scaleX: 0 }}
+									animate={{ scaleX: 1 }}
+									transition={{ duration: 0.2, delay: 0.6 }}
+								>
+									Swap + Done
+								</motion.div>
+							</div>
+						</div>
+					</div>
+
+					<p className="text-[10px] text-zinc-500">
+						Without: the entire UI freezes during the render. With: you render a
+						spinner using the <code>isPending</code> flag React provides, the
+						render runs at low priority, and new clicks can preempt it
+						mid-render.
+					</p>
 				</div>
+
+				{/* Preemption hint — only shown in "with" mode */}
+				{mode === "with" && (
+					<p className="text-xs text-zinc-500">
+						Try clicking <span className="text-amber-300">Charts</span> then
+						immediately clicking another tab — the pending dot follows your
+						latest click, and React discards the in-flight render.
+					</p>
+				)}
 
 				{/* Tab Bar */}
 				<div className="flex gap-2">
@@ -281,6 +291,35 @@ return (
 					showLineNumbers={false}
 					className="text-xs"
 				/>
+
+				{/* startTransition standalone */}
+				<div className="bg-zinc-800/50 rounded-lg p-4 space-y-3 border border-zinc-700/50">
+					<h5 className="text-sm font-medium text-zinc-300">
+						Standalone <code className="text-emerald-400">startTransition</code>
+					</h5>
+					<p className="text-xs text-zinc-400">
+						You can also import{" "}
+						<code className="text-emerald-400">startTransition</code> directly
+						from React — no hook needed. Useful in router integrations, event
+						handlers outside components, or any non-component code.
+					</p>
+					<ShikiCode
+						language="tsx"
+						code={`import { startTransition } from 'react';
+
+// Inside a router or event handler outside a component
+function onNavigate(url: string) {
+  startTransition(() => {
+    setCurrentPage(url); // low-priority update
+  });
+}
+
+// Difference: no isPending boolean.
+// Use useTransition when you need loading state.`}
+						showLineNumbers={false}
+						className="text-xs"
+					/>
+				</div>
 			</div>
 		</DemoSection>
 	);

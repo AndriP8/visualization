@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as XssCsrfRouteImport } from './routes/xss-csrf'
+import { Route as WebrtcRouteImport } from './routes/webrtc'
 import { Route as WebWorkersRouteImport } from './routes/web-workers'
 import { Route as WebPerformanceMetricsRouteImport } from './routes/web-performance-metrics'
 import { Route as StateMachinesRouteImport } from './routes/state-machines'
@@ -18,6 +19,7 @@ import { Route as ResourcePriorityRouteImport } from './routes/resource-priority
 import { Route as RenderingStrategiesRouteImport } from './routes/rendering-strategies'
 import { Route as ReconciliationRouteImport } from './routes/reconciliation'
 import { Route as ReactStateRouteImport } from './routes/react-state'
+import { Route as ReactServerComponentsRouteImport } from './routes/react-server-components'
 import { Route as ReactConcurrentRouteImport } from './routes/react-concurrent'
 import { Route as LoadBalancingRouteImport } from './routes/load-balancing'
 import { Route as LinkedListsRouteImport } from './routes/linked-lists'
@@ -34,11 +36,17 @@ import { Route as CachingStrategiesRouteImport } from './routes/caching-strategi
 import { Route as AuthFlowsRouteImport } from './routes/auth-flows'
 import { Route as AsyncPatternsRouteImport } from './routes/async-patterns'
 import { Route as ApiPatternsRouteImport } from './routes/api-patterns'
+import { Route as AiTokenizationRouteImport } from './routes/ai-tokenization'
 import { Route as IndexRouteImport } from './routes/index'
 
 const XssCsrfRoute = XssCsrfRouteImport.update({
   id: '/xss-csrf',
   path: '/xss-csrf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WebrtcRoute = WebrtcRouteImport.update({
+  id: '/webrtc',
+  path: '/webrtc',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WebWorkersRoute = WebWorkersRouteImport.update({
@@ -81,6 +89,11 @@ const ReactStateRoute = ReactStateRouteImport.update({
   path: '/react-state',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReactServerComponentsRoute = ReactServerComponentsRouteImport.update({
+  id: '/react-server-components',
+  path: '/react-server-components',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReactConcurrentRoute = ReactConcurrentRouteImport.update({
   id: '/react-concurrent',
   path: '/react-concurrent',
@@ -89,6 +102,11 @@ const ReactConcurrentRoute = ReactConcurrentRouteImport.update({
 const LoadBalancingRoute = LoadBalancingRouteImport.update({
   id: '/load-balancing',
   path: '/load-balancing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LinkedListsRoute = LinkedListsRouteImport.update({
+  id: '/linked-lists',
+  path: '/linked-lists',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JsMemoryRoute = JsMemoryRouteImport.update({
@@ -156,6 +174,11 @@ const ApiPatternsRoute = ApiPatternsRouteImport.update({
   path: '/api-patterns',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiTokenizationRoute = AiTokenizationRouteImport.update({
+  id: '/ai-tokenization',
+  path: '/ai-tokenization',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -164,6 +187,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-tokenization': typeof AiTokenizationRoute
   '/api-patterns': typeof ApiPatternsRoute
   '/async-patterns': typeof AsyncPatternsRoute
   '/auth-flows': typeof AuthFlowsRoute
@@ -180,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/linked-lists': typeof LinkedListsRoute
   '/load-balancing': typeof LoadBalancingRoute
   '/react-concurrent': typeof ReactConcurrentRoute
+  '/react-server-components': typeof ReactServerComponentsRoute
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
@@ -188,10 +213,12 @@ export interface FileRoutesByFullPath {
   '/state-machines': typeof StateMachinesRoute
   '/web-performance-metrics': typeof WebPerformanceMetricsRoute
   '/web-workers': typeof WebWorkersRoute
+  '/webrtc': typeof WebrtcRoute
   '/xss-csrf': typeof XssCsrfRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-tokenization': typeof AiTokenizationRoute
   '/api-patterns': typeof ApiPatternsRoute
   '/async-patterns': typeof AsyncPatternsRoute
   '/auth-flows': typeof AuthFlowsRoute
@@ -208,6 +235,7 @@ export interface FileRoutesByTo {
   '/linked-lists': typeof LinkedListsRoute
   '/load-balancing': typeof LoadBalancingRoute
   '/react-concurrent': typeof ReactConcurrentRoute
+  '/react-server-components': typeof ReactServerComponentsRoute
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
@@ -216,11 +244,13 @@ export interface FileRoutesByTo {
   '/state-machines': typeof StateMachinesRoute
   '/web-performance-metrics': typeof WebPerformanceMetricsRoute
   '/web-workers': typeof WebWorkersRoute
+  '/webrtc': typeof WebrtcRoute
   '/xss-csrf': typeof XssCsrfRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-tokenization': typeof AiTokenizationRoute
   '/api-patterns': typeof ApiPatternsRoute
   '/async-patterns': typeof AsyncPatternsRoute
   '/auth-flows': typeof AuthFlowsRoute
@@ -237,6 +267,7 @@ export interface FileRoutesById {
   '/linked-lists': typeof LinkedListsRoute
   '/load-balancing': typeof LoadBalancingRoute
   '/react-concurrent': typeof ReactConcurrentRoute
+  '/react-server-components': typeof ReactServerComponentsRoute
   '/react-state': typeof ReactStateRoute
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
@@ -245,12 +276,14 @@ export interface FileRoutesById {
   '/state-machines': typeof StateMachinesRoute
   '/web-performance-metrics': typeof WebPerformanceMetricsRoute
   '/web-workers': typeof WebWorkersRoute
+  '/webrtc': typeof WebrtcRoute
   '/xss-csrf': typeof XssCsrfRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-tokenization'
     | '/api-patterns'
     | '/async-patterns'
     | '/auth-flows'
@@ -267,6 +300,7 @@ export interface FileRouteTypes {
     | '/linked-lists'
     | '/load-balancing'
     | '/react-concurrent'
+    | '/react-server-components'
     | '/react-state'
     | '/reconciliation'
     | '/rendering-strategies'
@@ -275,10 +309,12 @@ export interface FileRouteTypes {
     | '/state-machines'
     | '/web-performance-metrics'
     | '/web-workers'
+    | '/webrtc'
     | '/xss-csrf'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-tokenization'
     | '/api-patterns'
     | '/async-patterns'
     | '/auth-flows'
@@ -295,6 +331,7 @@ export interface FileRouteTypes {
     | '/linked-lists'
     | '/load-balancing'
     | '/react-concurrent'
+    | '/react-server-components'
     | '/react-state'
     | '/reconciliation'
     | '/rendering-strategies'
@@ -303,10 +340,12 @@ export interface FileRouteTypes {
     | '/state-machines'
     | '/web-performance-metrics'
     | '/web-workers'
+    | '/webrtc'
     | '/xss-csrf'
   id:
     | '__root__'
     | '/'
+    | '/ai-tokenization'
     | '/api-patterns'
     | '/async-patterns'
     | '/auth-flows'
@@ -323,6 +362,7 @@ export interface FileRouteTypes {
     | '/linked-lists'
     | '/load-balancing'
     | '/react-concurrent'
+    | '/react-server-components'
     | '/react-state'
     | '/reconciliation'
     | '/rendering-strategies'
@@ -331,11 +371,13 @@ export interface FileRouteTypes {
     | '/state-machines'
     | '/web-performance-metrics'
     | '/web-workers'
+    | '/webrtc'
     | '/xss-csrf'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiTokenizationRoute: typeof AiTokenizationRoute
   ApiPatternsRoute: typeof ApiPatternsRoute
   AsyncPatternsRoute: typeof AsyncPatternsRoute
   AuthFlowsRoute: typeof AuthFlowsRoute
@@ -352,6 +394,7 @@ export interface RootRouteChildren {
   LinkedListsRoute: typeof LinkedListsRoute
   LoadBalancingRoute: typeof LoadBalancingRoute
   ReactConcurrentRoute: typeof ReactConcurrentRoute
+  ReactServerComponentsRoute: typeof ReactServerComponentsRoute
   ReactStateRoute: typeof ReactStateRoute
   ReconciliationRoute: typeof ReconciliationRoute
   RenderingStrategiesRoute: typeof RenderingStrategiesRoute
@@ -360,6 +403,7 @@ export interface RootRouteChildren {
   StateMachinesRoute: typeof StateMachinesRoute
   WebPerformanceMetricsRoute: typeof WebPerformanceMetricsRoute
   WebWorkersRoute: typeof WebWorkersRoute
+  WebrtcRoute: typeof WebrtcRoute
   XssCsrfRoute: typeof XssCsrfRoute
 }
 
@@ -370,6 +414,13 @@ declare module '@tanstack/react-router' {
       path: '/xss-csrf'
       fullPath: '/xss-csrf'
       preLoaderRoute: typeof XssCsrfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/webrtc': {
+      id: '/webrtc'
+      path: '/webrtc'
+      fullPath: '/webrtc'
+      preLoaderRoute: typeof WebrtcRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/web-workers': {
@@ -426,6 +477,13 @@ declare module '@tanstack/react-router' {
       path: '/react-state'
       fullPath: '/react-state'
       preLoaderRoute: typeof ReactStateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/react-server-components': {
+      id: '/react-server-components'
+      path: '/react-server-components'
+      fullPath: '/react-server-components'
+      preLoaderRoute: typeof ReactServerComponentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/react-concurrent': {
@@ -540,6 +598,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPatternsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-tokenization': {
+      id: '/ai-tokenization'
+      path: '/ai-tokenization'
+      fullPath: '/ai-tokenization'
+      preLoaderRoute: typeof AiTokenizationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -552,6 +617,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiTokenizationRoute: AiTokenizationRoute,
   ApiPatternsRoute: ApiPatternsRoute,
   AsyncPatternsRoute: AsyncPatternsRoute,
   AuthFlowsRoute: AuthFlowsRoute,
@@ -568,6 +634,7 @@ const rootRouteChildren: RootRouteChildren = {
   LinkedListsRoute: LinkedListsRoute,
   LoadBalancingRoute: LoadBalancingRoute,
   ReactConcurrentRoute: ReactConcurrentRoute,
+  ReactServerComponentsRoute: ReactServerComponentsRoute,
   ReactStateRoute: ReactStateRoute,
   ReconciliationRoute: ReconciliationRoute,
   RenderingStrategiesRoute: RenderingStrategiesRoute,
@@ -576,6 +643,7 @@ const rootRouteChildren: RootRouteChildren = {
   StateMachinesRoute: StateMachinesRoute,
   WebPerformanceMetricsRoute: WebPerformanceMetricsRoute,
   WebWorkersRoute: WebWorkersRoute,
+  WebrtcRoute: WebrtcRoute,
   XssCsrfRoute: XssCsrfRoute,
 }
 export const routeTree = rootRouteImport

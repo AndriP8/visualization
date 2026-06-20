@@ -152,6 +152,11 @@ const NAV_GROUPS = [
 				label: "HTTP/1.1 vs HTTP/2",
 				icon: "🌐",
 			},
+			{
+				to: "/webrtc" as const,
+				label: "WebRTC",
+				icon: "📡",
+			},
 		],
 	},
 	{
@@ -166,6 +171,16 @@ const NAV_GROUPS = [
 				to: "/xss-csrf" as const,
 				label: "XSS & CSRF",
 				icon: "🛡️",
+			},
+		],
+	},
+	{
+		title: "AI Internals",
+		items: [
+			{
+				to: "/ai-tokenization" as const,
+				label: "Tokenization",
+				icon: "🔤",
 			},
 		],
 	},

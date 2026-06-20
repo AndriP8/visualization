@@ -1,5 +1,13 @@
 import { motion } from "motion/react";
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
+import {
+	memo,
+	useCallback,
+	useDeferredValue,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
@@ -15,6 +23,7 @@ function heavyFilter(items: typeof ALL_ITEMS, query: string) {
 	const lower = query.toLowerCase();
 	const results: typeof ALL_ITEMS = [];
 	for (const item of items) {
+		// Synthetic CPU burn; sum check prevents dead-code elimination.
 		let sum = 0;
 		for (let j = 0; j < 200; j++) {
 			sum += Math.sqrt(j);
@@ -32,6 +41,67 @@ interface KeystrokeEvent {
 	timestamp: number;
 }
 
+// ─── Separate component so React can defer this render independently ─────────
+
+const FilteredList = memo(function FilteredList({
+	query,
+	activeQuery,
+	isStale,
+	onRender,
+}: {
+	query: string;
+	activeQuery: string;
+	isStale: boolean;
+	onRender: (timestamp: number) => void;
+}) {
+	const filtered = useMemo(() => heavyFilter(ALL_ITEMS, query), [query]);
+
+	// Fires after this component actually commits — captures the real render time
+	// biome-ignore lint/correctness/useExhaustiveDependencies: report render event after commit
+	useEffect(() => {
+		onRender(performance.now());
+	}, [filtered]);
+
+	return (
+		<div className="relative">
+			<div
+				className={`transition-opacity duration-200 ${isStale ? "opacity-50" : "opacity-100"}`}
+			>
+				<div className="flex items-center justify-between mb-2">
+					<span className="text-sm text-zinc-400">
+						{filtered.length} results
+						{filtered.length === 200 ? " (capped)" : ""}
+					</span>
+					<span className="text-xs text-zinc-500">
+						Showing: "{activeQuery || "(all)"}"
+					</span>
+				</div>
+				<div className="h-40 overflow-y-auto rounded-lg bg-zinc-800/50 border border-zinc-700/50">
+					{filtered.map((item) => (
+						<div
+							key={item.id}
+							className="px-3 py-1.5 text-sm text-zinc-300 border-b border-zinc-800/50 last:border-b-0"
+						>
+							{item.name}
+						</div>
+					))}
+				</div>
+			</div>
+			{isStale && (
+				<motion.div
+					initial={{ opacity: 0, scale: 0.9 }}
+					animate={{ opacity: 1, scale: 1 }}
+					className="absolute inset-0 flex items-center justify-center pointer-events-none"
+				>
+					<span className="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 text-sm font-medium border border-amber-500/30 backdrop-blur-sm">
+						Updating...
+					</span>
+				</motion.div>
+			)}
+		</div>
+	);
+});
+
 export function DeferredValueDemo() {
 	const [query, setQuery] = useState("");
 	const [mode, setMode] = useState<Mode>("immediate");
@@ -40,14 +110,12 @@ export function DeferredValueDemo() {
 	const timelineStartRef = useRef(0);
 
 	const deferredQuery = useDeferredValue(query);
+	// In deferred mode, FilteredList receives deferredQuery — React skips it
+	// during urgent keystroke renders and schedules it at low priority.
 	const activeQuery = mode === "deferred" ? deferredQuery : query;
 	const isStale = mode === "deferred" && query !== deferredQuery;
 
-	const filtered = useMemo(() => {
-		return heavyFilter(ALL_ITEMS, activeQuery);
-	}, [activeQuery]);
-
-	// Track input events
+	// Track input events in the parent (fires on every keystroke immediately)
 	function handleInput(value: string) {
 		if (timelineStartRef.current === 0) {
 			timelineStartRef.current = performance.now();
@@ -64,19 +132,20 @@ export function DeferredValueDemo() {
 		]);
 	}
 
-	// Track render events
-	useEffect(() => {
-		if (!activeQuery || timelineStartRef.current === 0) return;
+	// Callback passed to FilteredList — fires when that component actually renders
+	// Stable reference via useCallback so memo() on FilteredList isn't defeated
+	const handleRender = useCallback((timestamp: number) => {
+		if (timelineStartRef.current === 0) return;
 		const id = ++eventIdRef.current;
 		setEvents((prev) => [
 			...prev.slice(-20),
 			{
 				id,
 				type: "render",
-				timestamp: performance.now() - timelineStartRef.current,
+				timestamp: timestamp - timelineStartRef.current,
 			},
 		]);
-	}, [activeQuery]);
+	}, []);
 
 	// Reset timeline when query is cleared
 	useEffect(() => {
@@ -147,7 +216,33 @@ export function DeferredValueDemo() {
 					className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-violet-500 transition-colors"
 				/>
 
-				{/* Keystroke Timeline */}
+				{/* Live divergence tracker */}
+				{query && mode === "deferred" && (
+					<div className="bg-zinc-800/50 rounded-lg p-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+						<div className="flex items-center gap-2">
+							<span className="text-zinc-500">Input:</span>
+							<code className="text-violet-300 font-mono">"{query}"</code>
+						</div>
+						<div className="text-zinc-700">→</div>
+						<div className="flex items-center gap-2">
+							<span className="text-zinc-500">List filtering:</span>
+							<code
+								className={`font-mono transition-colors ${
+									isStale ? "text-amber-400" : "text-emerald-400"
+								}`}
+							>
+								"{deferredQuery}"
+							</code>
+							{isStale && (
+								<span className="text-amber-500/70 text-[10px]">
+									(deferred value catching up...)
+								</span>
+							)}
+						</div>
+					</div>
+				)}
+
+				{/* Keystroke Timeline — render events now come from FilteredList itself */}
 				{events.length > 0 && (
 					<div className="bg-zinc-800/50 rounded-lg p-4 space-y-2">
 						<h4 className="text-sm font-medium text-zinc-300">
@@ -202,32 +297,13 @@ export function DeferredValueDemo() {
 					</div>
 				)}
 
-				{/* Results */}
-				<div
-					className={`transition-opacity duration-200 ${isStale ? "opacity-60" : "opacity-100"}`}
-				>
-					<div className="flex items-center justify-between mb-2">
-						<span className="text-sm text-zinc-400">
-							{filtered.length} results
-							{filtered.length === 200 ? " (capped)" : ""}
-						</span>
-						{mode === "deferred" && (
-							<span className="text-xs text-zinc-500">
-								Showing: "{activeQuery || "(all)"}"
-							</span>
-						)}
-					</div>
-					<div className="h-40 overflow-y-auto rounded-lg bg-zinc-800/50 border border-zinc-700/50">
-						{filtered.map((item) => (
-							<div
-								key={item.id}
-								className="px-3 py-1.5 text-sm text-zinc-300 border-b border-zinc-800/50 last:border-b-0"
-							>
-								{item.name}
-							</div>
-						))}
-					</div>
-				</div>
+				{/* Results — FilteredList owns its own render, parent just wraps it */}
+				<FilteredList
+					query={activeQuery}
+					activeQuery={activeQuery}
+					isStale={isStale}
+					onRender={handleRender}
+				/>
 
 				{/* When to use which */}
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -254,7 +330,15 @@ export function DeferredValueDemo() {
 				{/* Code Example */}
 				<ShikiCode
 					language="tsx"
-					code={`function SearchPage() {
+					code={`// ✅ The key: FilteredList is a separate memo'd component.
+// React commits the input render immediately (query updates),
+// then defers FilteredList's re-render until the thread is free.
+const FilteredList = memo(({ query }: { query: string }) => {
+  const filtered = useMemo(() => heavyFilter(items, query), [query]);
+  return <ul>{filtered.map(item => <li key={item.id}>{item.name}</li>)}</ul>;
+});
+
+function SearchPage() {
   const [query, setQuery] = useState('');
   const deferredQuery = useDeferredValue(query);
   const isStale = query !== deferredQuery;
@@ -263,7 +347,7 @@ export function DeferredValueDemo() {
     <>
       <input value={query} onChange={e => setQuery(e.target.value)} />
       <div style={{ opacity: isStale ? 0.6 : 1 }}>
-        <ResultsList query={deferredQuery} />
+        <FilteredList query={deferredQuery} />
       </div>
     </>
   );
@@ -274,7 +358,11 @@ export function DeferredValueDemo() {
 
 				<p className="text-xs text-zinc-500 italic">
 					useDeferredValue does NOT debounce — it shows the latest value React
-					has time for. Under light load, it's nearly instant.
+					has time for. Under light load, it's nearly instant. The separation
+					into a child component is what gives React the scheduling flexibility.
+					In deferred mode, React renders the child twice: once with the
+					previous value (committed immediately), then again at low priority
+					with the new value once the thread is free.
 				</p>
 			</div>
 		</DemoSection>

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ConcurrentRenderingDemo } from "../components/react-concurrent/ConcurrentRenderingDemo";
 import { DeferredValueDemo } from "../components/react-concurrent/DeferredValueDemo";
-import { SuspenseStreamingDemo } from "../components/react-concurrent/SuspenseStreamingDemo";
+import { SuspenseBoundariesDemo } from "../components/react-concurrent/SuspenseBoundariesDemo";
 import { TransitionDemo } from "../components/react-concurrent/TransitionDemo";
 import { PageHeader } from "../components/shared/PageHeader";
 
@@ -50,11 +50,12 @@ function ReactConcurrentPage() {
 								defers a derived value to render when React has spare capacity —
 								with no timer, unlike debouncing. Suspense integrates with both:
 								it coordinates async data loading with the concurrent scheduler
-								to show loading states without waterfalls.
+								to show loading states progressively per boundary.
 							</p>
 							<p className="text-zinc-400">
 								The demos below cover concurrent rendering internals,
-								transitions, deferred values, and Suspense with streaming.
+								transitions, deferred values, and Suspense with independent
+								boundaries.
 							</p>
 						</div>
 					),
@@ -70,7 +71,7 @@ function ReactConcurrentPage() {
 				<ConcurrentRenderingDemo />
 				<TransitionDemo />
 				<DeferredValueDemo />
-				<SuspenseStreamingDemo />
+				<SuspenseBoundariesDemo />
 
 				{/* Decision Matrix */}
 				<div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
@@ -125,17 +126,31 @@ function ReactConcurrentPage() {
 										<td className="py-2 pr-4">Page navigation feels janky</td>
 										<td className="py-2">
 											<code className="text-emerald-400">
-												startTransition on route change
+												startTransition on route change — keeps old page visible
+												until the new one is ready
 											</code>
 										</td>
 									</tr>
-									<tr>
+									<tr className="border-b border-zinc-800">
 										<td className="py-2 pr-4">
 											User input blocked by background work
 										</td>
 										<td className="py-2">
 											<code className="text-emerald-400">
-												useTransition or useDeferredValue (opt-in)
+												useTransition (own the setter) or useDeferredValue (wrap
+												the value)
+											</code>
+										</td>
+									</tr>
+									<tr>
+										<td className="py-2 pr-4">
+											Navigating to a Suspense page causes jarring fallback
+											flash
+										</td>
+										<td className="py-2">
+											<code className="text-emerald-400">
+												startTransition wrapping the route update — React holds
+												the old page until the new boundary resolves
 											</code>
 										</td>
 									</tr>
