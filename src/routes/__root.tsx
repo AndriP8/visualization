@@ -182,6 +182,96 @@ const NAV_GROUPS = [
 				label: "Tokenization",
 				icon: "🔤",
 			},
+			{
+				to: "/ai-attention" as const,
+				label: "Attention Mechanism",
+				icon: "🧠",
+			},
+			{
+				to: "/ai-sampling" as const,
+				label: "Sampling & Temperature",
+				icon: "🎲",
+			},
+			{
+				to: "/ai-kv-cache" as const,
+				label: "KV Cache",
+				icon: "💾",
+			},
+			{
+				to: "/ai-context-window" as const,
+				label: "Context Window",
+				icon: "📏",
+			},
+		],
+	},
+	{
+		title: "AI Engineering",
+		items: [
+			{
+				to: "/ai-prompt-engineering" as const,
+				label: "Prompt Engineering",
+				icon: "✍️",
+			},
+			{
+				to: "/ai-chunking" as const,
+				label: "Chunking Strategies",
+				icon: "✂️",
+			},
+			{
+				to: "/ai-embeddings" as const,
+				label: "Vector Embeddings",
+				icon: "🧭",
+			},
+			{
+				to: "/ai-vector-search" as const,
+				label: "Vector Search",
+				icon: "🔍",
+			},
+			{
+				to: "/ai-rag" as const,
+				label: "RAG Pipeline",
+				icon: "📚",
+			},
+			{
+				to: "/ai-fine-tuning" as const,
+				label: "Fine-Tuning vs. RAG",
+				icon: "⚖️",
+			},
+			{
+				to: "/ai-tool-calling" as const,
+				label: "Tool Calling",
+				icon: "🔧",
+			},
+			{
+				to: "/ai-agent-loops" as const,
+				label: "Agent Loops",
+				icon: "🔄",
+			},
+			{
+				to: "/ai-structured-output" as const,
+				label: "Structured Output",
+				icon: "📐",
+			},
+			{
+				to: "/ai-streaming" as const,
+				label: "Streaming & SSE",
+				icon: "🌊",
+			},
+			{
+				to: "/ai-prompt-injection" as const,
+				label: "Prompt Injection",
+				icon: "🛡️",
+			},
+			{
+				to: "/ai-evals-observability" as const,
+				label: "Evals & Observability",
+				icon: "🚥",
+			},
+			{
+				to: "/ai-evals-guardrails" as const,
+				label: "Evaluation & Guardrails",
+				icon: "🛡️",
+			},
 		],
 	},
 ] as const;

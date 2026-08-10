@@ -36,7 +36,23 @@ import { Route as CachingStrategiesRouteImport } from './routes/caching-strategi
 import { Route as AuthFlowsRouteImport } from './routes/auth-flows'
 import { Route as AsyncPatternsRouteImport } from './routes/async-patterns'
 import { Route as ApiPatternsRouteImport } from './routes/api-patterns'
+import { Route as AiVectorSearchRouteImport } from './routes/ai-vector-search'
+import { Route as AiToolCallingRouteImport } from './routes/ai-tool-calling'
 import { Route as AiTokenizationRouteImport } from './routes/ai-tokenization'
+import { Route as AiStructuredOutputRouteImport } from './routes/ai-structured-output'
+import { Route as AiStreamingRouteImport } from './routes/ai-streaming'
+import { Route as AiSamplingRouteImport } from './routes/ai-sampling'
+import { Route as AiRagRouteImport } from './routes/ai-rag'
+import { Route as AiPromptInjectionRouteImport } from './routes/ai-prompt-injection'
+import { Route as AiPromptEngineeringRouteImport } from './routes/ai-prompt-engineering'
+import { Route as AiKvCacheRouteImport } from './routes/ai-kv-cache'
+import { Route as AiFineTuningRouteImport } from './routes/ai-fine-tuning'
+import { Route as AiEvalsObservabilityRouteImport } from './routes/ai-evals-observability'
+import { Route as AiEvalsGuardrailsRouteImport } from './routes/ai-evals-guardrails'
+import { Route as AiEmbeddingsRouteImport } from './routes/ai-embeddings'
+import { Route as AiContextWindowRouteImport } from './routes/ai-context-window'
+import { Route as AiAttentionRouteImport } from './routes/ai-attention'
+import { Route as AiAgentLoopsRouteImport } from './routes/ai-agent-loops'
 import { Route as IndexRouteImport } from './routes/index'
 
 const XssCsrfRoute = XssCsrfRouteImport.update({
@@ -174,9 +190,89 @@ const ApiPatternsRoute = ApiPatternsRouteImport.update({
   path: '/api-patterns',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiVectorSearchRoute = AiVectorSearchRouteImport.update({
+  id: '/ai-vector-search',
+  path: '/ai-vector-search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiToolCallingRoute = AiToolCallingRouteImport.update({
+  id: '/ai-tool-calling',
+  path: '/ai-tool-calling',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AiTokenizationRoute = AiTokenizationRouteImport.update({
   id: '/ai-tokenization',
   path: '/ai-tokenization',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiStructuredOutputRoute = AiStructuredOutputRouteImport.update({
+  id: '/ai-structured-output',
+  path: '/ai-structured-output',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiStreamingRoute = AiStreamingRouteImport.update({
+  id: '/ai-streaming',
+  path: '/ai-streaming',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiSamplingRoute = AiSamplingRouteImport.update({
+  id: '/ai-sampling',
+  path: '/ai-sampling',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiRagRoute = AiRagRouteImport.update({
+  id: '/ai-rag',
+  path: '/ai-rag',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiPromptInjectionRoute = AiPromptInjectionRouteImport.update({
+  id: '/ai-prompt-injection',
+  path: '/ai-prompt-injection',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiPromptEngineeringRoute = AiPromptEngineeringRouteImport.update({
+  id: '/ai-prompt-engineering',
+  path: '/ai-prompt-engineering',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiKvCacheRoute = AiKvCacheRouteImport.update({
+  id: '/ai-kv-cache',
+  path: '/ai-kv-cache',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiFineTuningRoute = AiFineTuningRouteImport.update({
+  id: '/ai-fine-tuning',
+  path: '/ai-fine-tuning',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiEvalsObservabilityRoute = AiEvalsObservabilityRouteImport.update({
+  id: '/ai-evals-observability',
+  path: '/ai-evals-observability',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiEvalsGuardrailsRoute = AiEvalsGuardrailsRouteImport.update({
+  id: '/ai-evals-guardrails',
+  path: '/ai-evals-guardrails',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiEmbeddingsRoute = AiEmbeddingsRouteImport.update({
+  id: '/ai-embeddings',
+  path: '/ai-embeddings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiContextWindowRoute = AiContextWindowRouteImport.update({
+  id: '/ai-context-window',
+  path: '/ai-context-window',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiAttentionRoute = AiAttentionRouteImport.update({
+  id: '/ai-attention',
+  path: '/ai-attention',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiAgentLoopsRoute = AiAgentLoopsRouteImport.update({
+  id: '/ai-agent-loops',
+  path: '/ai-agent-loops',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -187,7 +283,23 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-agent-loops': typeof AiAgentLoopsRoute
+  '/ai-attention': typeof AiAttentionRoute
+  '/ai-context-window': typeof AiContextWindowRoute
+  '/ai-embeddings': typeof AiEmbeddingsRoute
+  '/ai-evals-guardrails': typeof AiEvalsGuardrailsRoute
+  '/ai-evals-observability': typeof AiEvalsObservabilityRoute
+  '/ai-fine-tuning': typeof AiFineTuningRoute
+  '/ai-kv-cache': typeof AiKvCacheRoute
+  '/ai-prompt-engineering': typeof AiPromptEngineeringRoute
+  '/ai-prompt-injection': typeof AiPromptInjectionRoute
+  '/ai-rag': typeof AiRagRoute
+  '/ai-sampling': typeof AiSamplingRoute
+  '/ai-streaming': typeof AiStreamingRoute
+  '/ai-structured-output': typeof AiStructuredOutputRoute
   '/ai-tokenization': typeof AiTokenizationRoute
+  '/ai-tool-calling': typeof AiToolCallingRoute
+  '/ai-vector-search': typeof AiVectorSearchRoute
   '/api-patterns': typeof ApiPatternsRoute
   '/async-patterns': typeof AsyncPatternsRoute
   '/auth-flows': typeof AuthFlowsRoute
@@ -218,7 +330,23 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-agent-loops': typeof AiAgentLoopsRoute
+  '/ai-attention': typeof AiAttentionRoute
+  '/ai-context-window': typeof AiContextWindowRoute
+  '/ai-embeddings': typeof AiEmbeddingsRoute
+  '/ai-evals-guardrails': typeof AiEvalsGuardrailsRoute
+  '/ai-evals-observability': typeof AiEvalsObservabilityRoute
+  '/ai-fine-tuning': typeof AiFineTuningRoute
+  '/ai-kv-cache': typeof AiKvCacheRoute
+  '/ai-prompt-engineering': typeof AiPromptEngineeringRoute
+  '/ai-prompt-injection': typeof AiPromptInjectionRoute
+  '/ai-rag': typeof AiRagRoute
+  '/ai-sampling': typeof AiSamplingRoute
+  '/ai-streaming': typeof AiStreamingRoute
+  '/ai-structured-output': typeof AiStructuredOutputRoute
   '/ai-tokenization': typeof AiTokenizationRoute
+  '/ai-tool-calling': typeof AiToolCallingRoute
+  '/ai-vector-search': typeof AiVectorSearchRoute
   '/api-patterns': typeof ApiPatternsRoute
   '/async-patterns': typeof AsyncPatternsRoute
   '/auth-flows': typeof AuthFlowsRoute
@@ -250,7 +378,23 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-agent-loops': typeof AiAgentLoopsRoute
+  '/ai-attention': typeof AiAttentionRoute
+  '/ai-context-window': typeof AiContextWindowRoute
+  '/ai-embeddings': typeof AiEmbeddingsRoute
+  '/ai-evals-guardrails': typeof AiEvalsGuardrailsRoute
+  '/ai-evals-observability': typeof AiEvalsObservabilityRoute
+  '/ai-fine-tuning': typeof AiFineTuningRoute
+  '/ai-kv-cache': typeof AiKvCacheRoute
+  '/ai-prompt-engineering': typeof AiPromptEngineeringRoute
+  '/ai-prompt-injection': typeof AiPromptInjectionRoute
+  '/ai-rag': typeof AiRagRoute
+  '/ai-sampling': typeof AiSamplingRoute
+  '/ai-streaming': typeof AiStreamingRoute
+  '/ai-structured-output': typeof AiStructuredOutputRoute
   '/ai-tokenization': typeof AiTokenizationRoute
+  '/ai-tool-calling': typeof AiToolCallingRoute
+  '/ai-vector-search': typeof AiVectorSearchRoute
   '/api-patterns': typeof ApiPatternsRoute
   '/async-patterns': typeof AsyncPatternsRoute
   '/auth-flows': typeof AuthFlowsRoute
@@ -283,7 +427,23 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-agent-loops'
+    | '/ai-attention'
+    | '/ai-context-window'
+    | '/ai-embeddings'
+    | '/ai-evals-guardrails'
+    | '/ai-evals-observability'
+    | '/ai-fine-tuning'
+    | '/ai-kv-cache'
+    | '/ai-prompt-engineering'
+    | '/ai-prompt-injection'
+    | '/ai-rag'
+    | '/ai-sampling'
+    | '/ai-streaming'
+    | '/ai-structured-output'
     | '/ai-tokenization'
+    | '/ai-tool-calling'
+    | '/ai-vector-search'
     | '/api-patterns'
     | '/async-patterns'
     | '/auth-flows'
@@ -314,7 +474,23 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-agent-loops'
+    | '/ai-attention'
+    | '/ai-context-window'
+    | '/ai-embeddings'
+    | '/ai-evals-guardrails'
+    | '/ai-evals-observability'
+    | '/ai-fine-tuning'
+    | '/ai-kv-cache'
+    | '/ai-prompt-engineering'
+    | '/ai-prompt-injection'
+    | '/ai-rag'
+    | '/ai-sampling'
+    | '/ai-streaming'
+    | '/ai-structured-output'
     | '/ai-tokenization'
+    | '/ai-tool-calling'
+    | '/ai-vector-search'
     | '/api-patterns'
     | '/async-patterns'
     | '/auth-flows'
@@ -345,7 +521,23 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ai-agent-loops'
+    | '/ai-attention'
+    | '/ai-context-window'
+    | '/ai-embeddings'
+    | '/ai-evals-guardrails'
+    | '/ai-evals-observability'
+    | '/ai-fine-tuning'
+    | '/ai-kv-cache'
+    | '/ai-prompt-engineering'
+    | '/ai-prompt-injection'
+    | '/ai-rag'
+    | '/ai-sampling'
+    | '/ai-streaming'
+    | '/ai-structured-output'
     | '/ai-tokenization'
+    | '/ai-tool-calling'
+    | '/ai-vector-search'
     | '/api-patterns'
     | '/async-patterns'
     | '/auth-flows'
@@ -377,7 +569,23 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiAgentLoopsRoute: typeof AiAgentLoopsRoute
+  AiAttentionRoute: typeof AiAttentionRoute
+  AiContextWindowRoute: typeof AiContextWindowRoute
+  AiEmbeddingsRoute: typeof AiEmbeddingsRoute
+  AiEvalsGuardrailsRoute: typeof AiEvalsGuardrailsRoute
+  AiEvalsObservabilityRoute: typeof AiEvalsObservabilityRoute
+  AiFineTuningRoute: typeof AiFineTuningRoute
+  AiKvCacheRoute: typeof AiKvCacheRoute
+  AiPromptEngineeringRoute: typeof AiPromptEngineeringRoute
+  AiPromptInjectionRoute: typeof AiPromptInjectionRoute
+  AiRagRoute: typeof AiRagRoute
+  AiSamplingRoute: typeof AiSamplingRoute
+  AiStreamingRoute: typeof AiStreamingRoute
+  AiStructuredOutputRoute: typeof AiStructuredOutputRoute
   AiTokenizationRoute: typeof AiTokenizationRoute
+  AiToolCallingRoute: typeof AiToolCallingRoute
+  AiVectorSearchRoute: typeof AiVectorSearchRoute
   ApiPatternsRoute: typeof ApiPatternsRoute
   AsyncPatternsRoute: typeof AsyncPatternsRoute
   AuthFlowsRoute: typeof AuthFlowsRoute
@@ -598,11 +806,123 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPatternsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-vector-search': {
+      id: '/ai-vector-search'
+      path: '/ai-vector-search'
+      fullPath: '/ai-vector-search'
+      preLoaderRoute: typeof AiVectorSearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-tool-calling': {
+      id: '/ai-tool-calling'
+      path: '/ai-tool-calling'
+      fullPath: '/ai-tool-calling'
+      preLoaderRoute: typeof AiToolCallingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ai-tokenization': {
       id: '/ai-tokenization'
       path: '/ai-tokenization'
       fullPath: '/ai-tokenization'
       preLoaderRoute: typeof AiTokenizationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-structured-output': {
+      id: '/ai-structured-output'
+      path: '/ai-structured-output'
+      fullPath: '/ai-structured-output'
+      preLoaderRoute: typeof AiStructuredOutputRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-streaming': {
+      id: '/ai-streaming'
+      path: '/ai-streaming'
+      fullPath: '/ai-streaming'
+      preLoaderRoute: typeof AiStreamingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-sampling': {
+      id: '/ai-sampling'
+      path: '/ai-sampling'
+      fullPath: '/ai-sampling'
+      preLoaderRoute: typeof AiSamplingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-rag': {
+      id: '/ai-rag'
+      path: '/ai-rag'
+      fullPath: '/ai-rag'
+      preLoaderRoute: typeof AiRagRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-prompt-injection': {
+      id: '/ai-prompt-injection'
+      path: '/ai-prompt-injection'
+      fullPath: '/ai-prompt-injection'
+      preLoaderRoute: typeof AiPromptInjectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-prompt-engineering': {
+      id: '/ai-prompt-engineering'
+      path: '/ai-prompt-engineering'
+      fullPath: '/ai-prompt-engineering'
+      preLoaderRoute: typeof AiPromptEngineeringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-kv-cache': {
+      id: '/ai-kv-cache'
+      path: '/ai-kv-cache'
+      fullPath: '/ai-kv-cache'
+      preLoaderRoute: typeof AiKvCacheRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-fine-tuning': {
+      id: '/ai-fine-tuning'
+      path: '/ai-fine-tuning'
+      fullPath: '/ai-fine-tuning'
+      preLoaderRoute: typeof AiFineTuningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-evals-observability': {
+      id: '/ai-evals-observability'
+      path: '/ai-evals-observability'
+      fullPath: '/ai-evals-observability'
+      preLoaderRoute: typeof AiEvalsObservabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-evals-guardrails': {
+      id: '/ai-evals-guardrails'
+      path: '/ai-evals-guardrails'
+      fullPath: '/ai-evals-guardrails'
+      preLoaderRoute: typeof AiEvalsGuardrailsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-embeddings': {
+      id: '/ai-embeddings'
+      path: '/ai-embeddings'
+      fullPath: '/ai-embeddings'
+      preLoaderRoute: typeof AiEmbeddingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-context-window': {
+      id: '/ai-context-window'
+      path: '/ai-context-window'
+      fullPath: '/ai-context-window'
+      preLoaderRoute: typeof AiContextWindowRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-attention': {
+      id: '/ai-attention'
+      path: '/ai-attention'
+      fullPath: '/ai-attention'
+      preLoaderRoute: typeof AiAttentionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-agent-loops': {
+      id: '/ai-agent-loops'
+      path: '/ai-agent-loops'
+      fullPath: '/ai-agent-loops'
+      preLoaderRoute: typeof AiAgentLoopsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -617,7 +937,23 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiAgentLoopsRoute: AiAgentLoopsRoute,
+  AiAttentionRoute: AiAttentionRoute,
+  AiContextWindowRoute: AiContextWindowRoute,
+  AiEmbeddingsRoute: AiEmbeddingsRoute,
+  AiEvalsGuardrailsRoute: AiEvalsGuardrailsRoute,
+  AiEvalsObservabilityRoute: AiEvalsObservabilityRoute,
+  AiFineTuningRoute: AiFineTuningRoute,
+  AiKvCacheRoute: AiKvCacheRoute,
+  AiPromptEngineeringRoute: AiPromptEngineeringRoute,
+  AiPromptInjectionRoute: AiPromptInjectionRoute,
+  AiRagRoute: AiRagRoute,
+  AiSamplingRoute: AiSamplingRoute,
+  AiStreamingRoute: AiStreamingRoute,
+  AiStructuredOutputRoute: AiStructuredOutputRoute,
   AiTokenizationRoute: AiTokenizationRoute,
+  AiToolCallingRoute: AiToolCallingRoute,
+  AiVectorSearchRoute: AiVectorSearchRoute,
   ApiPatternsRoute: ApiPatternsRoute,
   AsyncPatternsRoute: AsyncPatternsRoute,
   AuthFlowsRoute: AuthFlowsRoute,

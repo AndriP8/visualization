@@ -320,6 +320,188 @@ const CONCEPT_GROUPS = [
 			},
 		],
 	},
+	{
+		title: "AI Internals",
+		description: "How models actually work under the hood",
+		items: [
+			{
+				to: "/ai-tokenization" as const,
+				title: "Tokenization",
+				icon: "🔤",
+				description:
+					"Text isn't what the model sees — it's a sequence of integer IDs. BPE is the lossy compression step that decides what the model can represent.",
+				tags: ["BPE", "Vocab", "Token IDs", "Pricing"],
+				color: "from-fuchsia-500/20 to-pink-500/20",
+				borderColor: "border-fuchsia-500/30",
+			},
+			{
+				to: "/ai-attention" as const,
+				title: "Attention Mechanism",
+				icon: "🧠",
+				description:
+					"Every token attends to every other token simultaneously via Q/K/V projections. Multi-head attention runs this in parallel across subspaces.",
+				tags: ["Q/K/V", "Multi-Head", "Softmax", "O(n²)"],
+				color: "from-fuchsia-500/20 to-pink-500/20",
+				borderColor: "border-fuchsia-500/30",
+			},
+			{
+				to: "/ai-sampling" as const,
+				title: "Sampling & Temperature",
+				icon: "🎲",
+				description:
+					"The model outputs a distribution over the vocabulary at each step. Sampling strategy determines how it collapses into a single token — and defines creativity vs. reliability.",
+				tags: ["Greedy", "Top-k", "Top-p", "Temperature"],
+				color: "from-fuchsia-500/20 to-pink-500/20",
+				borderColor: "border-fuchsia-500/30",
+			},
+			{
+				to: "/ai-kv-cache" as const,
+				title: "KV Cache",
+				icon: "💾",
+				description:
+					"Inference happens in two phases — a parallel prefill burst, then sequential token-by-token decode. KV cache is the memory that makes decode fast.",
+				tags: ["Prefill", "Decode", "TTFT", "TPS"],
+				color: "from-fuchsia-500/20 to-pink-500/20",
+				borderColor: "border-fuchsia-500/30",
+			},
+			{
+				to: "/ai-context-window" as const,
+				title: "Context Window",
+				icon: "📏",
+				description:
+					"A large context window doesn't mean uniform attention. Models systematically underweight information in the middle of long contexts.",
+				tags: ["RoPE", "Lost in Middle", "Position"],
+				color: "from-fuchsia-500/20 to-pink-500/20",
+				borderColor: "border-fuchsia-500/30",
+			},
+		],
+	},
+	{
+		title: "AI Engineering",
+		description: "Building production systems with LLMs",
+		items: [
+			{
+				to: "/ai-prompt-engineering" as const,
+				title: "Prompt Engineering",
+				icon: "✍️",
+				description:
+					"Prompt structure changes how a model interprets instructions, examples, and output constraints.",
+				tags: ["Few-Shot", "Hierarchy", "Reasoning"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+			{
+				to: "/ai-embeddings" as const,
+				title: "Vector Embeddings",
+				icon: "🧭",
+				description:
+					"Text is mapped to points in high-dimensional space where semantic similarity becomes geometric proximity — the foundation of search, RAG, and clustering.",
+				tags: ["Cosine", "Analogy", "Projection"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+			{
+				to: "/ai-vector-search" as const,
+				title: "Vector Search",
+				icon: "🔍",
+				description:
+					"Exact kNN over millions of vectors is too slow for production. ANN algorithms like HNSW trade a small recall loss for orders-of-magnitude speedup.",
+				tags: ["HNSW", "ANN", "Recall", "kNN"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+			{
+				to: "/ai-rag" as const,
+				title: "RAG Pipeline",
+				icon: "📚",
+				description:
+					"Retrieval-Augmented Generation grounds the model in external knowledge at inference time. The pipeline is simple; the failure modes are not.",
+				tags: ["Retrieval", "Reranking", "Grounding"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+			{
+				to: "/ai-chunking" as const,
+				title: "Chunking Strategies",
+				icon: "✂️",
+				description:
+					"The same document chunked differently produces drastically different retrieval quality. Chunk size and boundary strategy decide if context is coherent or garbage.",
+				tags: ["Fixed", "Recursive", "Semantic", "Overlap"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+			{
+				to: "/ai-streaming" as const,
+				title: "Streaming & SSE",
+				icon: "🌊",
+				description:
+					"LLM APIs stream tokens over SSE so the UI renders progressively. Handling streams means managing backpressure, partial JSON, and clean cancellation.",
+				tags: ["SSE", "Backpressure", "Abort", "Partial JSON"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+			{
+				to: "/ai-tool-calling" as const,
+				title: "Tool Calling",
+				icon: "🔧",
+				description:
+					"Tool calling lets the model emit structured function invocations. The application executes them and feeds results back — creating an agentic loop.",
+				tags: ["Schema", "Loop", "Parallel", "Failures"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+			{
+				to: "/ai-structured-output" as const,
+				title: "Structured Output",
+				icon: "📐",
+				description:
+					'"Just ask for JSON" fails unpredictably. Constrained decoding guarantees valid structure by restricting which tokens are legal at each generation step.',
+				tags: ["JSON Mode", "Grammar", "FSM", "Constrained"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+			{
+				to: "/ai-prompt-injection" as const,
+				title: "Prompt Injection",
+				icon: "🛡️",
+				description:
+					"Prompt injection exploits the model's inability to distinguish instructions from data. Attacker-controlled content in the context window can hijack behavior.",
+				tags: ["Jailbreak", "Indirect", "Exfiltration", "Guardrails"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+			{
+				to: "/ai-fine-tuning" as const,
+				title: "Fine-Tuning vs. RAG",
+				icon: "⚖️",
+				description:
+					"Choose whether to teach the model how to behave, retrieve what it should know, or combine both.",
+				tags: ["Weights", "Retrieval", "Hybrid"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+			{
+				to: "/ai-agent-loops" as const,
+				title: "Agent Loops",
+				icon: "🔄",
+				description:
+					"Agents alternate between reasoning, tool actions, and observations until they complete or hit a safety limit.",
+				tags: ["ReAct", "Recovery", "Planning"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+			{
+				to: "/ai-evals-guardrails" as const,
+				title: "Evaluation & Guardrails",
+				icon: "🛡️",
+				description:
+					"Measure quality continuously and intercept unsafe inputs or invalid outputs before they reach users.",
+				tags: ["Judge", "Safety", "Regression"],
+				color: "from-indigo-500/20 to-violet-500/20",
+				borderColor: "border-indigo-500/30",
+			},
+		],
+	},
 ];
 
 function Index() {
