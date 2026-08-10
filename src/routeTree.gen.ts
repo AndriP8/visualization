@@ -51,6 +51,7 @@ import { Route as AiEvalsObservabilityRouteImport } from './routes/ai-evals-obse
 import { Route as AiEvalsGuardrailsRouteImport } from './routes/ai-evals-guardrails'
 import { Route as AiEmbeddingsRouteImport } from './routes/ai-embeddings'
 import { Route as AiContextWindowRouteImport } from './routes/ai-context-window'
+import { Route as AiChunkingRouteImport } from './routes/ai-chunking'
 import { Route as AiAttentionRouteImport } from './routes/ai-attention'
 import { Route as AiAgentLoopsRouteImport } from './routes/ai-agent-loops'
 import { Route as IndexRouteImport } from './routes/index'
@@ -265,6 +266,11 @@ const AiContextWindowRoute = AiContextWindowRouteImport.update({
   path: '/ai-context-window',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiChunkingRoute = AiChunkingRouteImport.update({
+  id: '/ai-chunking',
+  path: '/ai-chunking',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AiAttentionRoute = AiAttentionRouteImport.update({
   id: '/ai-attention',
   path: '/ai-attention',
@@ -285,6 +291,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-agent-loops': typeof AiAgentLoopsRoute
   '/ai-attention': typeof AiAttentionRoute
+  '/ai-chunking': typeof AiChunkingRoute
   '/ai-context-window': typeof AiContextWindowRoute
   '/ai-embeddings': typeof AiEmbeddingsRoute
   '/ai-evals-guardrails': typeof AiEvalsGuardrailsRoute
@@ -332,6 +339,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-agent-loops': typeof AiAgentLoopsRoute
   '/ai-attention': typeof AiAttentionRoute
+  '/ai-chunking': typeof AiChunkingRoute
   '/ai-context-window': typeof AiContextWindowRoute
   '/ai-embeddings': typeof AiEmbeddingsRoute
   '/ai-evals-guardrails': typeof AiEvalsGuardrailsRoute
@@ -380,6 +388,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ai-agent-loops': typeof AiAgentLoopsRoute
   '/ai-attention': typeof AiAttentionRoute
+  '/ai-chunking': typeof AiChunkingRoute
   '/ai-context-window': typeof AiContextWindowRoute
   '/ai-embeddings': typeof AiEmbeddingsRoute
   '/ai-evals-guardrails': typeof AiEvalsGuardrailsRoute
@@ -429,6 +438,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-agent-loops'
     | '/ai-attention'
+    | '/ai-chunking'
     | '/ai-context-window'
     | '/ai-embeddings'
     | '/ai-evals-guardrails'
@@ -476,6 +486,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-agent-loops'
     | '/ai-attention'
+    | '/ai-chunking'
     | '/ai-context-window'
     | '/ai-embeddings'
     | '/ai-evals-guardrails'
@@ -523,6 +534,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ai-agent-loops'
     | '/ai-attention'
+    | '/ai-chunking'
     | '/ai-context-window'
     | '/ai-embeddings'
     | '/ai-evals-guardrails'
@@ -571,6 +583,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiAgentLoopsRoute: typeof AiAgentLoopsRoute
   AiAttentionRoute: typeof AiAttentionRoute
+  AiChunkingRoute: typeof AiChunkingRoute
   AiContextWindowRoute: typeof AiContextWindowRoute
   AiEmbeddingsRoute: typeof AiEmbeddingsRoute
   AiEvalsGuardrailsRoute: typeof AiEvalsGuardrailsRoute
@@ -911,6 +924,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AiContextWindowRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-chunking': {
+      id: '/ai-chunking'
+      path: '/ai-chunking'
+      fullPath: '/ai-chunking'
+      preLoaderRoute: typeof AiChunkingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ai-attention': {
       id: '/ai-attention'
       path: '/ai-attention'
@@ -939,6 +959,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiAgentLoopsRoute: AiAgentLoopsRoute,
   AiAttentionRoute: AiAttentionRoute,
+  AiChunkingRoute: AiChunkingRoute,
   AiContextWindowRoute: AiContextWindowRoute,
   AiEmbeddingsRoute: AiEmbeddingsRoute,
   AiEvalsGuardrailsRoute: AiEvalsGuardrailsRoute,
