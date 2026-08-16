@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { BoundaryFailureDemo } from "../components/ai-engineering/BoundaryFailureDemo";
-import { OverlapTradeoffDemo } from "../components/ai-engineering/OverlapTradeoffDemo";
-import { RetrievalComparisonDemo } from "../components/ai-engineering/RetrievalComparisonDemo";
-import { SideBySideChunkerDemo } from "../components/ai-engineering/SideBySideChunkerDemo";
+import { BoundaryFailureDemo } from "../components/ai-chunking/BoundaryFailureDemo";
+import { OverlapTradeoffDemo } from "../components/ai-chunking/OverlapTradeoffDemo";
+import { RetrievalComparisonDemo } from "../components/ai-chunking/RetrievalComparisonDemo";
+import { SideBySideChunkerDemo } from "../components/ai-chunking/SideBySideChunkerDemo";
 import { PageHeader } from "../components/shared/PageHeader";
 
 export const Route = createFileRoute("/ai-chunking")({
@@ -14,7 +14,7 @@ function ChunkingPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "AI Engineering", color: "emerald" }}
+				topic={{ label: "AI Engineering", color: "indigo" }}
 				title="Chunking Strategies"
 				subtitle="A retrieval pipeline never sees your document — it sees the chunks you cut it into. Chunk size and boundary strategy decide whether the LLM gets a coherent passage or a fragment that happens to share a few keywords with the query."
 				gradient={{ from: "emerald-400", via: "cyan-400", to: "violet-400" }}

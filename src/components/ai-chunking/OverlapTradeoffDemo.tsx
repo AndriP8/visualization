@@ -124,9 +124,7 @@ export function OverlapTradeoffDemo() {
 						<div className="grid grid-cols-1 gap-1.5 font-mono text-[11px] leading-relaxed">
 							<div className="rounded border border-zinc-700/60 bg-zinc-900 px-2.5 py-2">
 								<span className="text-zinc-500">Chunk 0 </span>
-								<span className="text-zinc-300">
-									…{boundaryCtx.before}
-								</span>
+								<span className="text-zinc-300">…{boundaryCtx.before}</span>
 								{boundaryCtx.hasOverlap ? (
 									<span className="bg-cyan-500/15 text-cyan-300 border border-cyan-500/25 rounded-sm px-1 ml-0.5">
 										{boundaryCtx.shared.length > 55
@@ -148,9 +146,7 @@ export function OverlapTradeoffDemo() {
 								) : (
 									<span className="text-rose-400/60 mx-1 select-none">╎</span>
 								)}
-								<span className="text-zinc-300">
-									{boundaryCtx.after}…
-								</span>
+								<span className="text-zinc-300">{boundaryCtx.after}…</span>
 							</div>
 						</div>
 						<p className="text-[11px] text-zinc-500">
