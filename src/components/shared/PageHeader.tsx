@@ -8,7 +8,9 @@ type TopicColor =
 	| "amber"
 	| "blue"
 	| "rose"
-	| "purple";
+	| "purple"
+	| "indigo"
+	| "cyan";
 
 interface PageHeaderProps {
 	topic: {
@@ -72,6 +74,18 @@ const TOPIC_COLORS: Record<
 		text: "text-purple-400",
 		dot: "bg-purple-400",
 		border: "border-purple-500/20",
+	},
+	indigo: {
+		bg: "bg-indigo-500/10",
+		text: "text-indigo-400",
+		dot: "bg-indigo-400",
+		border: "border-indigo-500/20",
+	},
+	cyan: {
+		bg: "bg-cyan-500/10",
+		text: "text-cyan-400",
+		dot: "bg-cyan-400",
+		border: "border-cyan-500/20",
 	},
 };
 

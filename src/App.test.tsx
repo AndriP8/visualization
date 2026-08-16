@@ -1,14 +1,23 @@
 /// <reference types="@testing-library/jest-dom/vitest" />
+import {
+	createMemoryHistory,
+	createRouter,
+	RouterProvider,
+} from "@tanstack/react-router";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { Route } from "./routes/index";
+import { routeTree } from "./routeTree.gen";
 
 describe("App", () => {
-	it("renders correctly", () => {
-		const Component = Route.options.component;
-		if (!Component) throw new Error("Component not found");
-		render(<Component />);
-		expect(screen.getByText(/React/)).toBeInTheDocument();
-		expect(screen.getByText(/Under the Hood/)).toBeInTheDocument();
+	it("renders correctly", async () => {
+		const router = createRouter({
+			routeTree,
+			history: createMemoryHistory({ initialEntries: ["/"] }),
+		});
+		render(<RouterProvider router={router} />);
+		expect((await screen.findAllByText(/React/)).length).toBeGreaterThan(0);
+		expect(
+			(await screen.findAllByText(/Under the Hood/)).length,
+		).toBeGreaterThan(0);
 	});
 });

@@ -1,5 +1,10 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
-import { useState } from "react";
+import {
+	createRootRoute,
+	Link,
+	Outlet,
+	useRouterState,
+} from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 
 const NAV_GROUPS = [
 	{
@@ -175,36 +180,6 @@ const NAV_GROUPS = [
 		],
 	},
 	{
-		title: "AI Internals",
-		items: [
-			{
-				to: "/ai-tokenization" as const,
-				label: "Tokenization",
-				icon: "🔤",
-			},
-			{
-				to: "/ai-attention" as const,
-				label: "Attention Mechanism",
-				icon: "🧠",
-			},
-			{
-				to: "/ai-sampling" as const,
-				label: "Sampling & Temperature",
-				icon: "🎲",
-			},
-			{
-				to: "/ai-kv-cache" as const,
-				label: "KV Cache",
-				icon: "💾",
-			},
-			{
-				to: "/ai-context-window" as const,
-				label: "Context Window",
-				icon: "📏",
-			},
-		],
-	},
-	{
 		title: "AI Engineering",
 		items: [
 			{
@@ -282,6 +257,15 @@ export const Route = createRootRoute({
 
 function RootLayout() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+	const pathname = useRouterState({ select: (s) => s.location.pathname });
+	const navRef = useRef<HTMLElement>(null);
+
+	useEffect(() => {
+		const active = navRef.current?.querySelector<HTMLAnchorElement>(
+			`a[href="${pathname}"]`,
+		);
+		active?.scrollIntoView?.({ block: "nearest" });
+	}, [pathname]);
 
 	return (
 		<div className="min-h-screen bg-zinc-950 text-gray-100">
@@ -314,7 +298,7 @@ function RootLayout() {
 					</p>
 				</div>
 
-				<nav className="flex-1 p-3 space-y-6 overflow-y-auto">
+				<nav ref={navRef} className="flex-1 p-3 space-y-6 overflow-y-auto">
 					{NAV_GROUPS.map((group) => (
 						<div key={group.title}>
 							<h3 className="px-3 mb-2 text-xs font-semibold text-zinc-500 uppercase tracking-wider">

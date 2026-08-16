@@ -7,13 +7,15 @@
 		"dev": "vite",
 		"build": "vite build",
 		"lint": "biome check --write .",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"test": "vitest run"
 	},
 	"dependencies": {
 		"@tailwindcss/vite": "^4.2.0",
 		"@tanstack/react-router": "^1.161.4",
 		"@xstate/react": "^6.1.0",
 		"clsx": "^2.1.1",
+		"gpt-tokenizer": "^3.4.0",
 		"lucide-react": "^0.577.0",
 		"motion": "^12.34.3",
 		"react": "^19.2.0",
@@ -34,7 +36,9 @@
 		"@types/react": "^19.2.7",
 		"@types/react-dom": "^19.2.3",
 		"@vitejs/plugin-react": "^5.1.1",
+		"@xenova/transformers": "^2.17.2",
 		"jsdom": "^28.1.0",
+		"tsx": "^4.22.4",
 		"typescript": "~5.9.3",
 		"vite": "^7.3.1",
 		"vitest": "^4.0.18"
