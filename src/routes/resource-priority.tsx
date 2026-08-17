@@ -17,7 +17,7 @@ function ResourcePriorityPage() {
 				topic={{ label: "Browser", color: "orange" }}
 				title="Resource Loading Priority"
 				subtitle="Browsers assign internal priority levels to every resource request — scripts, stylesheets, fonts, images — and developer hints like preload, prefetch, async, and defer shift those priorities, directly affecting when the page becomes interactive."
-				gradient={{ from: "orange-400", via: "amber-400", to: "yellow-400" }}
+				gradient={{ from: "orange-400", to: "amber-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
@@ -78,28 +78,28 @@ function ResourcePriorityPage() {
 			</div>
 
 			<DemoSection
-				title="Priority Queue Simulator"
+				title="Demo 1: Priority Queue Simulator"
 				description="Browsers assign priority levels to resources based on type and attributes. Toggle attributes to see how resources move between priority buckets."
 			>
 				<PriorityQueueDemo protocol={protocol} />
 			</DemoSection>
 
 			<DemoSection
-				title="Blocking vs Non-Blocking Scripts"
+				title="Demo 2: Blocking vs Non-Blocking Scripts"
 				description="Synchronous scripts block HTML parsing, while async and defer scripts allow parsing to continue. See the impact on page load performance."
 			>
 				<BlockingScriptsDemo protocol={protocol} />
 			</DemoSection>
 
 			<DemoSection
-				title="Preload & Prefetch Strategy"
+				title="Demo 3: Preload & Prefetch Strategy"
 				description="Resource hints like preload and prefetch let developers optimize loading. See how they affect metrics like LCP and when to use them."
 			>
 				<PreloadPrefetchDemo protocol={protocol} />
 			</DemoSection>
 
 			<DemoSection
-				title="Critical Request Depth"
+				title="Demo 4: Critical Request Depth"
 				description="Dependency chains (e.g., HTML → CSS → @import → font) increase request depth and delay rendering. Learn how to flatten the waterfall."
 			>
 				<CriticalRequestDepthDemo protocol={protocol} />

@@ -21,17 +21,17 @@ function RenderingStrategiesPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "Web Fundamentals", color: "violet" }}
+				topic={{ label: "Web Fundamentals", color: "indigo" }}
 				title="Rendering Strategies"
 				subtitle="CSR, SSR, SSG, ISR, and Streaming SSR differ on one axis: where and when HTML is generated. That single decision determines Time to First Byte, Time to Interactive, cache-ability, and infrastructure cost."
-				gradient={{ from: "violet-400", via: "fuchsia-400", to: "cyan-400" }}
+				gradient={{ from: "indigo-400", to: "violet-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
 								All rendering strategies share the same goal — deliver a usable
 								page to the user as fast as possible. The differentiator is{" "}
-								<span className="text-violet-300 font-medium">
+								<span className="text-indigo-300 font-medium">
 									where HTML is produced
 								</span>
 								: in the browser at runtime (CSR), on an origin server per

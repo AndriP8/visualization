@@ -15,10 +15,10 @@ function WebPerformanceMetricsPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "Browser", color: "blue" }}
+				topic={{ label: "Browser", color: "orange" }}
 				title="Web Performance Metrics"
 				subtitle="Core Web Vitals measure real-world user experience. Understanding these metrics helps you identify bottlenecks, prioritize optimizations, and build faster web applications that keep users engaged."
-				gradient={{ from: "blue-400", via: "cyan-400", to: "violet-400" }}
+				gradient={{ from: "orange-400", to: "amber-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
@@ -26,7 +26,7 @@ function WebPerformanceMetricsPage() {
 								Performance bottlenecks are non-obvious because they manifest as
 								user frustration, not errors. A page can pass all automated
 								tests and still feel slow if the{" "}
-								<span className="text-blue-300 font-medium">
+								<span className="text-orange-300 font-medium">
 									Largest Contentful Paint
 								</span>{" "}
 								is delayed by an unoptimized hero image, or feel janky if{" "}
@@ -54,35 +54,35 @@ function WebPerformanceMetricsPage() {
 				}}
 			/>
 			<DemoSection
-				title="LCP - Largest Contentful Paint"
+				title="Demo 1: LCP - Largest Contentful Paint"
 				description="Measures loading performance. LCP marks when the largest visible element renders. Good: ≤2.5s, Poor: >4s. Optimize with preload, priority hints, and SSR."
 			>
 				<LCPDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="CLS - Cumulative Layout Shift"
+				title="Demo 2: CLS - Cumulative Layout Shift"
 				description="Measures visual stability. CLS quantifies unexpected layout shifts during page load. Good: ≤0.1, Poor: >0.25. Fix with aspect ratios and reserved space."
 			>
 				<CLSDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="INP - Interaction to Next Paint"
+				title="Demo 3: INP - Interaction to Next Paint"
 				description="Measures responsiveness. INP tracks the time from user interaction to visual feedback. Good: ≤200ms, Poor: >500ms. Optimize with debouncing and optimistic UI."
 			>
 				<INPDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="FCP - First Contentful Paint"
+				title="Demo 4: FCP - First Contentful Paint"
 				description="Measures when first content appears. FCP marks when the browser renders the first DOM element. Good: ≤1.8s, Poor: >3s. Optimize with critical CSS and deferred JS."
 			>
 				<FCPDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="TTFB - Time to First Byte"
+				title="Demo 5: TTFB - Time to First Byte"
 				description="Measures server response time. TTFB is the time between request and first byte received. Good: ≤800ms, Poor: >1800ms. Optimize with CDN, caching, and database indexes."
 			>
 				<TTFBDemo />
