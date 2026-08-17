@@ -15,20 +15,18 @@ function AsyncPatternsPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "JavaScript Internals", color: "emerald" }}
+				topic={{ label: "JavaScript Internals", color: "amber" }}
 				title="Async Patterns & Promises"
 				subtitle="How async/await, Promise combinators, race conditions, and error handling actually work under the hood."
-				gradient={{ from: "emerald-400", via: "cyan-400", to: "blue-400" }}
+				gradient={{ from: "amber-400", to: "yellow-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								<span className="text-emerald-300 font-medium">
-									async/await
-								</span>{" "}
+								<span className="text-amber-300 font-medium">async/await</span>{" "}
 								is syntactic sugar over Promises — every <code>await</code>{" "}
 								suspends the async function and schedules its continuation as a{" "}
-								<span className="text-cyan-300 font-medium">microtask</span>,
+								<span className="text-yellow-300 font-medium">microtask</span>,
 								never blocking the thread. The four Promise combinators (
 								<code>all</code>, <code>race</code>, <code>allSettled</code>,{" "}
 								<code>any</code>) differ in how they handle partial failures —

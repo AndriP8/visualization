@@ -14,22 +14,22 @@ function JsMemoryPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "JavaScript Internals", color: "emerald" }}
+				topic={{ label: "JavaScript Internals", color: "amber" }}
 				title="Memory & Garbage Collection"
 				subtitle="How V8 allocates values on the stack and objects on the heap, traces live objects from GC roots, reclaims unreachable memory through mark-and-sweep, and why most React memory leaks are just a forgotten reference keeping an object alive."
-				gradient={{ from: "emerald-400", via: "violet-400", to: "cyan-400" }}
+				gradient={{ from: "amber-400", to: "yellow-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
 								Garbage collection never "looks for garbage" — it{" "}
-								<span className="text-emerald-300 font-medium">
+								<span className="text-amber-300 font-medium">
 									traces what is alive
 								</span>{" "}
 								starting from GC roots (global scope, stack frames, closures),
 								marks every reachable object, and discards the rest. A memory
 								leak is not a bug in the GC; it is an{" "}
-								<span className="text-violet-300 font-medium">
+								<span className="text-yellow-300 font-medium">
 									unintended reference
 								</span>{" "}
 								keeping an object inside the reachable set — a forgotten event

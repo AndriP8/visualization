@@ -14,15 +14,15 @@ function ClosureScopePage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "JavaScript Internals", color: "emerald" }}
+				topic={{ label: "JavaScript Internals", color: "amber" }}
 				title="Closure & Lexical Scope"
 				subtitle="How JavaScript resolves variable names — and the bugs that emerge when closures aren't fully understood."
-				gradient={{ from: "violet-400", to: "cyan-400" }}
+				gradient={{ from: "amber-400", to: "yellow-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								<span className="text-violet-300 font-medium">
+								<span className="text-amber-300 font-medium">
 									Lexical scope
 								</span>{" "}
 								means a function's accessible variables are determined by where
@@ -32,8 +32,8 @@ function ClosureScopePage() {
 								global scope.
 							</p>
 							<p>
-								A <span className="text-cyan-300 font-medium">closure</span> is
-								a function bundled with a live reference to its outer scope's
+								A <span className="text-yellow-300 font-medium">closure</span>{" "}
+								is a function bundled with a live reference to its outer scope's
 								environment record. The inner function does not copy the values
 								— it holds a pointer to the environment object, keeping it alive
 								even after the outer function returns. This is why a stale{" "}

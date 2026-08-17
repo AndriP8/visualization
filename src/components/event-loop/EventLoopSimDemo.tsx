@@ -394,7 +394,7 @@ export function EventLoopSimDemo() {
 						}}
 						className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors border ${
 							i === snippetIndex
-								? "bg-violet-500/20 text-violet-300 border-violet-500/30"
+								? "bg-amber-500/20 text-amber-300 border-amber-500/30"
 								: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
 						}`}
 					>
@@ -512,7 +512,7 @@ export function EventLoopSimDemo() {
 					type="button"
 					onClick={next}
 					disabled={step >= snippet.steps.length - 1}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-violet-300 border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					Next →
 				</button>

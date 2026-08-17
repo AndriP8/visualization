@@ -16,7 +16,7 @@ export function UseCasesDemo() {
 					onClick={() => setActiveCase("image")}
 					className={`p-4 rounded-lg border-2 transition-all text-left ${
 						activeCase === "image"
-							? "border-violet-500 bg-violet-500/20"
+							? "border-amber-500 bg-amber-500/20 text-amber-200"
 							: "border-zinc-700 bg-zinc-800 hover:border-zinc-600"
 					}`}
 				>

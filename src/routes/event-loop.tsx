@@ -14,35 +14,35 @@ function EventLoopPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "JavaScript Internals", color: "emerald" }}
+				topic={{ label: "JavaScript Internals", color: "amber" }}
 				title="Event Loop"
 				subtitle="JavaScript has one call stack and one thread — it can only run one piece of code at a time. The event loop is the scheduling mechanism that coordinates when asynchronous callbacks get their turn to execute on that single thread."
-				gradient={{ from: "emerald-400", to: "cyan-400" }}
+				gradient={{ from: "amber-400", to: "yellow-400" }}
 				explanation={{
 					content: (
 						<div className="text-sm text-zinc-300 space-y-2">
 							<p>
 								JavaScript runs on a{" "}
-								<span className="text-emerald-400 font-medium">
+								<span className="text-amber-400 font-medium">
 									single thread
 								</span>{" "}
 								with one call stack — it can execute only one piece of code at a
 								time. Asynchronous operations (timers, network requests, DOM
 								events) are delegated to{" "}
-								<span className="text-cyan-400 font-medium">Web APIs</span>{" "}
+								<span className="text-yellow-400 font-medium">Web APIs</span>{" "}
 								outside the main thread, but their callbacks must still run on
 								that single thread.
 							</p>
 							<p>
 								The{" "}
-								<span className="text-emerald-400 font-medium">event loop</span>{" "}
+								<span className="text-amber-400 font-medium">event loop</span>{" "}
 								is the scheduler that coordinates this. It follows a strict
 								priority order: finish all synchronous code, drain the{" "}
-								<span className="text-cyan-400 font-medium">
+								<span className="text-yellow-400 font-medium">
 									microtask queue
 								</span>{" "}
 								(Promise callbacks, queueMicrotask), then process one{" "}
-								<span className="text-orange-400 font-medium">macrotask</span>{" "}
+								<span className="text-amber-300 font-medium">macrotask</span>{" "}
 								(setTimeout, I/O callbacks), then repeat. This priority ordering
 								is why <code>Promise.then</code> always runs before{" "}
 								<code>setTimeout</code>, even when both are ready.

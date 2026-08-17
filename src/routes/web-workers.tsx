@@ -15,10 +15,10 @@ function WebWorkersPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "JavaScript Internals", color: "emerald" }}
+				topic={{ label: "JavaScript Internals", color: "amber" }}
 				title="Web Workers"
 				subtitle="How JavaScript achieves true parallelism - running code on separate threads without blocking the UI."
-				gradient={{ from: "emerald-400", to: "teal-400" }}
+				gradient={{ from: "amber-400", to: "yellow-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
@@ -32,13 +32,11 @@ function WebWorkersPage() {
 								finishes.
 							</p>
 							<p>
-								<span className="text-emerald-300 font-medium">
-									Web Workers
-								</span>{" "}
+								<span className="text-amber-300 font-medium">Web Workers</span>{" "}
 								run JavaScript on a separate OS thread — true parallelism, not
 								cooperative multitasking. Workers cannot access the DOM, but
 								they communicate with the main thread via{" "}
-								<span className="text-teal-300 font-medium">
+								<span className="text-yellow-300 font-medium">
 									structured-clone message passing
 								</span>
 								. For large binary data, Transferable Objects transfer ownership
@@ -55,35 +53,35 @@ function WebWorkersPage() {
 				}}
 			/>
 			<DemoSection
-				title="Main Thread Blocking"
+				title="Demo 1: Main Thread Blocking"
 				description="See the difference between running heavy computations on the main thread vs a worker thread. The FPS counter shows real-time UI responsiveness."
 			>
 				<BlockingDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="postMessage Communication"
+				title="Demo 2: postMessage Communication"
 				description="How the main thread and worker threads communicate through message passing. Structured cloning determines what data can cross thread boundaries."
 			>
 				<PostMessageDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="Transferable Objects (Zero-Copy)"
+				title="Demo 3: Transferable Objects (Zero-Copy)"
 				description="Transfer ownership of ArrayBuffers without copying - critical for performance when working with large datasets."
 			>
 				<TransferableDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="Real-World Use Cases"
+				title="Demo 4: Real-World Use Cases"
 				description="Practical examples showing when to use Web Workers: image processing, data parsing, and cryptographic operations."
 			>
 				<UseCasesDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="Shared Workers (Cross-Tab Communication)"
+				title="Demo 5: Shared Workers (Cross-Tab Communication)"
 				description="Unlike Dedicated Workers, Shared Workers can be accessed from multiple browser tabs/windows - useful for shared state and coordination."
 			>
 				<SharedWorkerDemo />

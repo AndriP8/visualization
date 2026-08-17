@@ -261,7 +261,7 @@ export function MemoryLeakPatternsDemo() {
 						onClick={() => handleScenarioChange(tab.id)}
 						className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
 							scenario === tab.id
-								? "bg-violet-500/20 text-violet-300 border-violet-500/40"
+								? "bg-amber-500/20 text-amber-300 border-amber-500/40"
 								: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-200"
 						}`}
 					>

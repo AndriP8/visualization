@@ -301,7 +301,7 @@ export function GenerationalGCDemo() {
 					type="button"
 					onClick={runYoungGC}
 					disabled={isRunning}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-violet-500/20 text-violet-300 border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					className="px-4 py-2 rounded-lg text-sm font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					🔄 Run Young GC
 				</button>

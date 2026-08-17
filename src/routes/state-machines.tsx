@@ -14,10 +14,10 @@ function StateMachinesPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "Software Architecture", color: "violet" }}
+				topic={{ label: "Software Architecture", color: "cyan" }}
 				title="State Machines"
 				subtitle="Eliminate impossible states and entire classes of concurrency bugs through declarative state management. Learn why explicit state machines prevent race conditions that plague boolean-based approaches."
-				gradient={{ from: "violet-400", via: "purple-400", to: "fuchsia-400" }}
+				gradient={{ from: "cyan-400", to: "blue-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
@@ -26,9 +26,7 @@ function StateMachinesPage() {
 								<code>isError</code>, <code>isSuccess</code>) create a
 								combinatorial explosion of possible combinations — most of them
 								meaningless or contradictory. A{" "}
-								<span className="text-violet-300 font-medium">
-									state machine
-								</span>{" "}
+								<span className="text-cyan-300 font-medium">state machine</span>{" "}
 								replaces this with a finite set of named states and explicit
 								transitions. At any moment the system is in exactly one state,
 								and only valid transitions are possible — making impossible
@@ -36,7 +34,7 @@ function StateMachinesPage() {
 							</p>
 							<p>
 								The practical payoff is{" "}
-								<span className="text-purple-300 font-medium">
+								<span className="text-sky-300 font-medium">
 									deterministic behavior
 								</span>
 								: same event + same state always produces the same next state.
@@ -58,7 +56,7 @@ function StateMachinesPage() {
 			<div className="space-y-16">
 				{/* What is a State Machine */}
 				<DemoSection
-					title="Basic Finite State Machine"
+					title="Demo 1: Basic Finite State Machine"
 					description="A state machine is a mathematical model with a finite number of states and explicit transitions between them. At any moment, it's in exactly one state, and transitions occur in response to events."
 				>
 					<BasicStateMachineDemo />
@@ -66,7 +64,7 @@ function StateMachinesPage() {
 
 				{/* Why: Boolean Soup vs State Machine */}
 				<DemoSection
-					title="State Machine vs Boolean Soup"
+					title="Demo 2: State Machine vs Boolean Soup"
 					description="See how boolean flags create impossible states and race conditions that state machines prevent by design. Click 'Trigger Bug' on the left to see what happens when multiple booleans are true simultaneously."
 				>
 					<BooleanSoupComparisonDemo />
@@ -74,7 +72,7 @@ function StateMachinesPage() {
 
 				{/* Show: Hierarchical and Parallel States */}
 				<DemoSection
-					title="Hierarchical & Parallel States"
+					title="Demo 3: Hierarchical & Parallel States"
 					description="Advanced state machines support nested states (substates within parent states) and parallel states (independent orthogonal regions). This models complex real-world systems like media players."
 				>
 					<HierarchicalStatesDemo />
@@ -82,7 +80,7 @@ function StateMachinesPage() {
 
 				{/* How: Implementation Patterns */}
 				<DemoSection
-					title="Implementation: Manual State Machine"
+					title="Demo 4: Implementation: Manual State Machine"
 					description="Build a type-safe state machine from scratch using TypeScript discriminated unions. Each state is a distinct type, making impossible states unrepresentable."
 				>
 					<div className="space-y-6">
@@ -157,7 +155,7 @@ state = transition(state, { type: "SUCCESS", data: "User data" });`}
 
 				{/* How: XState Library */}
 				<DemoSection
-					title="Implementation: XState Library"
+					title="Demo 5: Implementation: XState Library"
 					description="XState is the industry-standard library for state machines in JavaScript/TypeScript. It provides visualizers, testing tools, and advanced features like guards, actions, and state charts."
 				>
 					<div className="space-y-6">
@@ -301,7 +299,7 @@ function FetchComponent() {
 
 				{/* When: Use Cases and Trade-offs */}
 				<DemoSection
-					title="When to Use State Machines"
+					title="Demo 6: When to Use State Machines"
 					description="State machines excel in specific scenarios but aren't always necessary. Understanding trade-offs helps you choose the right tool."
 				>
 					<div className="grid md:grid-cols-2 gap-6">

@@ -158,7 +158,7 @@ export function ClosureSnapshotDemo() {
 								type="button"
 								onClick={spawnCounter}
 								disabled={instances.length >= 3}
-								className="px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-500/20 text-violet-300 border border-violet-500/30 hover:bg-violet-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+								className="px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
 							>
 								+ makeCounter()
 							</button>
