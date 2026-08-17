@@ -114,7 +114,7 @@ function ASTNodeVisualizer({
 					px-4 py-2 border rounded-lg shadow-sm whitespace-nowrap mb-4
 					${
 						node.type === "Query"
-							? "bg-violet-500/20 border-violet-500 text-violet-200"
+							? "bg-emerald-500/20 border-emerald-500 text-emerald-200"
 							: "bg-zinc-800 border-zinc-600 text-zinc-200"
 					}
 				`}
@@ -163,7 +163,7 @@ export function ParserDemo() {
 							onClick={() => setQuery(t.query)}
 							className={`text-xs px-3 py-1.5 rounded-full transition-colors border ${
 								query === t.query
-									? "bg-violet-500/20 border-violet-500/50 text-violet-300"
+									? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300"
 									: "bg-zinc-800/50 border-zinc-700 text-zinc-400 hover:text-zinc-200"
 							}`}
 						>

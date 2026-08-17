@@ -14,20 +14,20 @@ function DatabaseIndexingPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "Database Internals", color: "violet" }}
+				topic={{ label: "Database Internals", color: "emerald" }}
 				title="Database Indexing"
 				subtitle="How B-Tree indexes make queries fast — and when they make things worse."
-				gradient={{ from: "teal-400", to: "cyan-400" }}
+				gradient={{ from: "emerald-400", to: "teal-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
 								Without an index, every query performs a{" "}
-								<span className="text-teal-300 font-medium">
+								<span className="text-emerald-300 font-medium">
 									full table scan
 								</span>{" "}
 								— reading every row from disk. A{" "}
-								<span className="text-cyan-300 font-medium">B-Tree index</span>{" "}
+								<span className="text-teal-300 font-medium">B-Tree index</span>{" "}
 								organizes values in a self-balancing tree where each node maps
 								to a disk page. With order 100, a B-Tree over one million rows
 								needs only 3 levels — three disk reads instead of millions. The

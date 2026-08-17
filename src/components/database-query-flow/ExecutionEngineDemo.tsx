@@ -152,8 +152,8 @@ export function ExecutionEngineDemo() {
 									: "bg-orange-500/20 border-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.3)]";
 								labelClass = isCached ? "text-emerald-400" : "text-orange-400";
 							} else if (isFound) {
-								bgClass = "bg-violet-500/20 border-violet-500";
-								labelClass = "text-violet-300";
+								bgClass = "bg-emerald-500/20 border-emerald-500";
+								labelClass = "text-emerald-300";
 							} else if (isScanned) {
 								bgClass = "bg-zinc-800 border-zinc-700 opacity-50";
 								labelClass = "text-zinc-500";
@@ -348,7 +348,7 @@ export function ExecutionEngineDemo() {
 														currentStep >= 2 ? { scale: [1, 1.08, 1] } : {}
 													}
 													transition={{ duration: 0.4 }}
-													className={`px-3 py-1.5 border rounded-lg text-xs font-mono transition-all duration-300 ${currentStep === 2 ? "bg-orange-500/20 border-orange-500 text-orange-300" : currentStep >= 3 ? "bg-violet-500/20 border-violet-500 text-violet-300" : "bg-zinc-800 border-zinc-700 text-zinc-600"}`}
+													className={`px-3 py-1.5 border rounded-lg text-xs font-mono transition-all duration-300 ${currentStep === 2 ? "bg-orange-500/20 border-orange-500 text-orange-300" : currentStep >= 3 ? "bg-emerald-500/20 border-emerald-500 text-emerald-300" : "bg-zinc-800 border-zinc-700 text-zinc-600"}`}
 												>
 													Page {TARGET_BLOCK}
 												</motion.div>
@@ -361,7 +361,7 @@ export function ExecutionEngineDemo() {
 											Current Action:
 										</div>
 										<div
-											className={`font-mono px-3 py-1 rounded bg-zinc-950 border border-zinc-800 h-8 flex items-center justify-center min-w-50 ${currentStep >= 3 ? "text-violet-400 font-bold" : "text-cyan-400"}`}
+											className={`font-mono px-3 py-1 rounded bg-zinc-950 border border-zinc-800 h-8 flex items-center justify-center min-w-50 ${currentStep >= 3 ? "text-emerald-400 font-bold" : "text-cyan-400"}`}
 										>
 											{currentStep === 0
 												? "B-Tree: Reading Root..."

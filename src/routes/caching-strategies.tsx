@@ -14,17 +14,17 @@ function CachingStrategiesPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "System Design", color: "amber" }}
+				topic={{ label: "System Design", color: "blue" }}
 				title="Caching Strategies & Layers"
 				subtitle="Every caching strategy makes a different trade-off between freshness, consistency, and latency. The right choice depends on how stale your data can afford to be and how expensive a cache miss is."
-				gradient={{ from: "amber-400", via: "orange-400", to: "rose-400" }}
+				gradient={{ from: "blue-400", to: "sky-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
 								Caching reduces latency and load by serving previously computed
 								results. A request passes through{" "}
-								<span className="text-amber-300 font-medium">
+								<span className="text-blue-300 font-medium">
 									multiple cache layers
 								</span>{" "}
 								— browser memory, CDN edge, application cache, database buffer —

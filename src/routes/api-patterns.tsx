@@ -18,7 +18,7 @@ function ApiPatternsPage() {
 				topic={{ label: "System Design", color: "blue" }}
 				title="API Communication Patterns"
 				subtitle="REST, GraphQL, tRPC, WebSocket, SSE, and polling are not interchangeable — each pattern optimizes for a different combination of request shape, data freshness, and connection overhead. Choosing the wrong one wastes bandwidth or adds unnecessary latency."
-				gradient={{ from: "blue-400", via: "cyan-400", to: "violet-400" }}
+				gradient={{ from: "blue-400", to: "sky-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">

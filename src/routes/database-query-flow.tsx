@@ -16,15 +16,15 @@ function DatabaseQueryFlow() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "Database Internals", color: "violet" }}
+				topic={{ label: "Database Internals", color: "emerald" }}
 				title="Database Query Engine Flow"
 				subtitle="Between receiving a SQL string and returning rows, a relational database runs it through four stages: parse the text into an AST, analyze and rewrite it against the schema, plan and cost multiple execution strategies, then execute the cheapest plan."
-				gradient={{ from: "violet-400", via: "fuchsia-400", to: "cyan-400" }}
+				gradient={{ from: "emerald-400", to: "teal-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								The <span className="text-violet-300 font-medium">parser</span>{" "}
+								The <span className="text-emerald-300 font-medium">parser</span>{" "}
 								validates syntax and produces an Abstract Syntax Tree. The
 								analyzer resolves identifiers against the catalog (real table
 								and column names), infers types, and rewrites views into their

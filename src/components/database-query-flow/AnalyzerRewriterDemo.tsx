@@ -189,7 +189,7 @@ export function AnalyzerRewriterDemo() {
 						onClick={() => setActiveIdx(idx)}
 						className={`text-xs px-3 py-1.5 rounded-full transition-colors border ${
 							activeIdx === idx
-								? "bg-violet-500/20 border-violet-500/50 text-violet-300"
+								? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300"
 								: "bg-zinc-800/50 border-zinc-700 text-zinc-400 hover:text-zinc-200"
 						}`}
 					>

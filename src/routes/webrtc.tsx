@@ -16,10 +16,10 @@ function WebRTCPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "Network", color: "blue" }}
+				topic={{ label: "Network", color: "teal" }}
 				title="WebRTC"
 				subtitle="Browsers behind NATs can't directly address each other. WebRTC negotiates a peer-to-peer path through signaling, ICE, and SDP — then streams media or data without going through your server."
-				gradient={{ from: "blue-400", via: "cyan-400", to: "teal-400" }}
+				gradient={{ from: "teal-400", to: "cyan-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
@@ -60,35 +60,35 @@ function WebRTCPage() {
 			<Glossary />
 
 			<DemoSection
-				title="Signaling & SDP Offer/Answer"
+				title="Demo 1: Signaling & SDP Offer/Answer"
 				description="Step through the handshake with two real RTCPeerConnections in this tab. Notice that the signaling channel is your responsibility — WebRTC only defines what to exchange."
 			>
 				<SignalingDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="ICE Candidates & NAT Traversal"
+				title="Demo 2: ICE Candidates & NAT Traversal"
 				description="Watch ICE gather candidate addresses and probe pairs. host candidates come from your network interfaces; srflx from STUN; relay from TURN as a fallback."
 			>
 				<IceNatDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="Data Channels (RTCDataChannel)"
+				title="Demo 3: Data Channels (RTCDataChannel)"
 				description="Bidirectional messaging between two peers in the same tab. Toggle SCTP reliability to see TCP-like vs UDP-like semantics."
 			>
 				<DataChannelDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="Media Tracks vs Data Channels"
+				title="Demo 4: Media Tracks vs Data Channels"
 				description="When to use a media track vs a data channel. The sender is a canvas (no camera prompt) so you can see both paths side by side."
 			>
 				<MediaVsDataDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="Connection Lifecycle & ICE Restart"
+				title="Demo 5: Connection Lifecycle & ICE Restart"
 				description="iceConnectionState and connectionState transitions, driven by real events. Simulate a drop and trigger ICE restart to see recovery."
 			>
 				<ConnectionLifecycleDemo />

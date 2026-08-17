@@ -14,10 +14,10 @@ function SQLExecutionOrder() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "Database Concepts", color: "blue" }}
+				topic={{ label: "Database Concepts", color: "emerald" }}
 				title="SQL Execution Order"
 				subtitle="How you write a SQL query is fundamentally different from how the database engine executes it. Explore the Standard ANSI SQL execution pipeline to understand filtering, grouping, and rendering phases."
-				gradient={{ from: "blue-400", via: "indigo-400", to: "purple-400" }}
+				gradient={{ from: "emerald-400", to: "teal-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
@@ -27,7 +27,9 @@ function SQLExecutionOrder() {
 								diverges from the written order (SELECT → FROM → WHERE → GROUP
 								BY → HAVING → ORDER BY → LIMIT). The actual logical execution
 								starts with{" "}
-								<span className="text-blue-300 font-medium">FROM and JOIN</span>{" "}
+								<span className="text-emerald-300 font-medium">
+									FROM and JOIN
+								</span>{" "}
 								to build the working dataset, then WHERE filters rows, then
 								GROUP BY aggregates, then HAVING filters groups — SELECT runs
 								near the end, which is why you cannot reference a SELECT alias

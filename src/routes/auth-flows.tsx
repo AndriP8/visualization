@@ -14,10 +14,10 @@ function AuthFlowsPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "Web Security", color: "orange" }}
+				topic={{ label: "Web Security", color: "rose" }}
 				title="Authentication Flows"
 				subtitle="Session cookies, JWTs, and OAuth 2.0 all verify identity but make different trade-offs around statefulness, scalability, and delegated access. Choosing the wrong pattern introduces security holes or unnecessary operational complexity."
-				gradient={{ from: "red-400", via: "rose-400", to: "pink-400" }}
+				gradient={{ from: "rose-400", to: "red-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
@@ -53,28 +53,28 @@ function AuthFlowsPage() {
 			/>
 
 			<DemoSection
-				title="Session-Based Authentication"
+				title="Demo 1: Session-Based Authentication"
 				description="Traditional cookie-based auth with server-side session storage"
 			>
 				<SessionAuthDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="JSON Web Tokens (JWT)"
+				title="Demo 2: JSON Web Tokens (JWT)"
 				description="Stateless authentication with signed tokens and refresh token rotation"
 			>
 				<JWTAuthDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="OAuth 2.0 + PKCE"
+				title="Demo 3: OAuth 2.0 + PKCE"
 				description="Delegated authentication with third-party providers (industry standard for web, mobile, and desktop apps)"
 			>
 				<OAuth2PKCEDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="Comparison & Decision Guide"
+				title="Demo 4: Comparison & Decision Guide"
 				description="When to use each authentication pattern"
 			>
 				<ComparisonTableDemo />

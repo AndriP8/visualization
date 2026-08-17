@@ -14,16 +14,16 @@ function HttpVersionsPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "Network", color: "blue" }}
+				topic={{ label: "Network", color: "teal" }}
 				title="HTTP/1.1 vs HTTP/2"
 				subtitle="How HTTP/2 multiplexing, header compression, and binary framing solve the fundamental performance bottlenecks of HTTP/1.1."
-				gradient={{ from: "blue-400", via: "cyan-400", to: "teal-400" }}
+				gradient={{ from: "teal-400", to: "cyan-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
 								HTTP/1.1's fundamental constraint is{" "}
-								<span className="text-blue-300 font-medium">
+								<span className="text-teal-300 font-medium">
 									head-of-line blocking
 								</span>
 								: on a single TCP connection, responses must be returned in

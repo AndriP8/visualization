@@ -15,16 +15,18 @@ function DatabaseTransactionsPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "Database Internals", color: "violet" }}
+				topic={{ label: "Database Internals", color: "emerald" }}
 				title="Database Transactions & Isolation"
 				subtitle="When concurrent transactions interleave without coordination, reads and writes can corrupt each other — producing lost updates, dirty reads, and phantom rows. Databases solve this with ACID guarantees and configurable isolation levels."
-				gradient={{ from: "violet-400", to: "indigo-400" }}
+				gradient={{ from: "emerald-400", to: "teal-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
 								A{" "}
-								<span className="text-violet-300 font-medium">transaction</span>{" "}
+								<span className="text-emerald-300 font-medium">
+									transaction
+								</span>{" "}
 								wraps multiple operations into an atomic unit — either all
 								succeed or all roll back. ACID properties (Atomicity,
 								Consistency, Isolation, Durability) define the guarantees
@@ -62,25 +64,25 @@ function DatabaseTransactionsPage() {
 				className="space-y-8 pb-12"
 			>
 				<DemoSection
-					title="The ACID Properties"
+					title="Demo 1: The ACID Properties"
 					description="The four theoretical pillars that guarantee database transactions are processed reliably."
 				>
 					<ACIDPropertiesDemo />
 				</DemoSection>
 				<DemoSection
-					title="Transaction Anomalies Simulator"
+					title="Demo 2: Transaction Anomalies Simulator"
 					description="Interactive timeline showing exactly how concurrent transactions step on each other's toes when isolation is too weak."
 				>
 					<AnomaliesSimulatorDemo />
 				</DemoSection>
 				<DemoSection
-					title="Isolation Levels Comparison"
+					title="Demo 3: Isolation Levels Comparison"
 					description="How different levels protect against concurrency anomalies. Notice how the ANSI SQL Standard compares to real-world PostgreSQL."
 				>
 					<IsolationLevelsDemo />
 				</DemoSection>
 				<DemoSection
-					title="MVCC & Under-The-Hood Locking"
+					title="Demo 4: MVCC & Under-The-Hood Locking"
 					description="How databases physically prevent transactions from corrupting data. Choose a concurrency control method to see how it handles contention."
 				>
 					<MVCCAndLockingVisualizerDemo />

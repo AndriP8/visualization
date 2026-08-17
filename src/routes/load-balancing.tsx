@@ -15,10 +15,10 @@ function LoadBalancingPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "System Design", color: "amber" }}
+				topic={{ label: "System Design", color: "blue" }}
 				title="Load Balancing Strategies"
 				subtitle="How distributed systems route requests across multiple servers to maximize throughput and reliability."
-				gradient={{ from: "amber-400", via: "orange-400", to: "rose-400" }}
+				gradient={{ from: "blue-400", to: "sky-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
@@ -26,7 +26,7 @@ function LoadBalancingPage() {
 								All load balancing algorithms share one goal: distribute traffic
 								across a server pool to avoid overloading any single instance.
 								The differentiator is how each algorithm handles{" "}
-								<span className="text-amber-300 font-medium">
+								<span className="text-blue-300 font-medium">
 									uneven request cost
 								</span>
 								. Round-robin treats all requests as equal — fair but blind to
@@ -54,35 +54,35 @@ function LoadBalancingPage() {
 				}}
 			/>
 			<DemoSection
-				title="Round-Robin Algorithm"
+				title="Demo 1: Round-Robin Algorithm"
 				description="Distributes requests sequentially across servers in rotation. Simple and fair, but treats all servers equally regardless of current load."
 			>
 				<RoundRobinDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="Least Connections Algorithm"
+				title="Demo 2: Least Connections Algorithm"
 				description="Routes requests to the server with the fewest active connections. Handles variable request durations better than round-robin."
 			>
 				<LeastConnectionsDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="Weighted Round-Robin"
+				title="Demo 3: Weighted Round-Robin"
 				description="Extends round-robin by assigning capacity weights to servers. Higher-capacity servers receive proportionally more requests."
 			>
 				<WeightedRoundRobinDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="Consistent Hashing"
+				title="Demo 4: Consistent Hashing"
 				description="Maps requests to servers using a hash ring. Minimizes cache invalidation when servers are added or removed — only ~1/N keys need remapping."
 			>
 				<ConsistentHashingDemo />
 			</DemoSection>
 
 			<DemoSection
-				title="Strategy Comparison"
+				title="Demo 5: Strategy Comparison"
 				description="See all algorithms side-by-side handling the same traffic patterns. Compare metrics and understand trade-offs."
 			>
 				<ComparisonDemo />

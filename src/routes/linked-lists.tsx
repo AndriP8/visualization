@@ -17,7 +17,7 @@ function LinkedListsPage() {
 				topic={{ label: "Data Structures", color: "purple" }}
 				title="Linked Lists"
 				subtitle="Arrays store elements in contiguous memory — O(1) index access, but O(n) insertions and deletions because elements must shift. Linked lists flip this: O(1) insert/delete at a known position, at the cost of O(n) traversal for random access."
-				gradient={{ from: "purple-400", to: "indigo-400" }}
+				gradient={{ from: "purple-400", to: "fuchsia-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">

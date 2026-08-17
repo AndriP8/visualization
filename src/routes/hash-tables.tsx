@@ -17,7 +17,7 @@ function HashTablesPage() {
 				topic={{ label: "Data Structures", color: "purple" }}
 				title="Hash Tables"
 				subtitle="Arrays require O(n) linear search, or O(log n) binary search only when sorted. Hash tables map keys directly to array positions via a hash function, achieving O(1) average-case lookup, insert, and delete — the fastest possible for key-value access."
-				gradient={{ from: "purple-400", to: "pink-400" }}
+				gradient={{ from: "purple-400", to: "fuchsia-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
