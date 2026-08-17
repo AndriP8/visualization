@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { DemoSection } from "../shared/DemoSection";
 
 interface TestCase {
@@ -202,12 +202,11 @@ export function EvalRegressionSuiteDemo() {
 		(t) => t.baselineResult === "pass" && t.candidateResult === "fail",
 	).length;
 
-	const gateStatus =
-		isRunning
-			? `EVALUATING (${evalProgress}/${totalCases})`
-			: regressionsCount > 0
-				? "RELEASE BLOCKED"
-				: "APPROVED";
+	const gateStatus = isRunning
+		? `EVALUATING (${evalProgress}/${totalCases})`
+		: regressionsCount > 0
+			? "RELEASE BLOCKED"
+			: "APPROVED";
 
 	const activeTest =
 		GOLDEN_TESTS.find((t) => t.id === activeTestCaseId) || GOLDEN_TESTS[0];
@@ -271,7 +270,9 @@ export function EvalRegressionSuiteDemo() {
 											d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
 										/>
 									</svg>
-									<span>Running Suite ({evalProgress}/{totalCases})...</span>
+									<span>
+										Running Suite ({evalProgress}/{totalCases})...
+									</span>
 								</>
 							) : (
 								<>

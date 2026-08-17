@@ -321,54 +321,6 @@ const CONCEPT_GROUPS: ConceptGroup[] = [
 		],
 	},
 	{
-		title: "AI Internals",
-		description: "How models actually work under the hood",
-		hoverBorder: "hover:border-violet-500/40",
-		hoverText: "group-hover:text-violet-300",
-		items: [
-			{
-				to: "/ai-tokenization",
-				title: "Tokenization",
-				icon: "🔤",
-				description:
-					"Text isn't what the model sees — it's a sequence of integer IDs. BPE is the lossy compression step that decides what the model can represent.",
-				tags: ["BPE", "Vocab", "Token IDs", "Pricing"],
-			},
-			{
-				to: "/ai-attention",
-				title: "Attention Mechanism",
-				icon: "🧠",
-				description:
-					"Every token attends to every other token simultaneously via Q/K/V projections. Multi-head attention runs this in parallel across subspaces.",
-				tags: ["Q/K/V", "Multi-Head", "Softmax", "O(n²)"],
-			},
-			{
-				to: "/ai-sampling",
-				title: "Sampling & Temperature",
-				icon: "🎲",
-				description:
-					"The model outputs a distribution over the vocabulary at each step. Sampling strategy determines how it collapses into a single token — and defines creativity vs. reliability.",
-				tags: ["Greedy", "Top-k", "Top-p", "Temperature"],
-			},
-			{
-				to: "/ai-kv-cache",
-				title: "KV Cache",
-				icon: "💾",
-				description:
-					"Inference happens in two phases — a parallel prefill burst, then sequential token-by-token decode. KV cache is the memory that makes decode fast.",
-				tags: ["Prefill", "Decode", "TTFT", "TPS"],
-			},
-			{
-				to: "/ai-context-window",
-				title: "Context Window",
-				icon: "📏",
-				description:
-					"A large context window doesn't mean uniform attention. Models systematically underweight information in the middle of long contexts.",
-				tags: ["RoPE", "Lost in Middle", "Position"],
-			},
-		],
-	},
-	{
 		title: "AI Engineering",
 		description: "Building production systems with LLMs",
 		hoverBorder: "hover:border-violet-500/40",
