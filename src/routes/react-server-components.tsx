@@ -14,13 +14,12 @@ function ReactServerComponentsPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "React", color: "violet" }}
+				topic={{ label: "React", color: "cyan" }}
 				title="Server Components"
 				subtitle="Server components render to HTML on the server and ship zero JS to the browser. Only client components hydrate — the Flight payload tells React which subtrees need handlers."
 				gradient={{
-					from: "violet-400",
-					via: "blue-400",
-					to: "cyan-400",
+					from: "cyan-400",
+					to: "blue-400",
 				}}
 				explanation={{
 					content: (
@@ -28,7 +27,7 @@ function ReactServerComponentsPage() {
 							<p>
 								React Server Components split the component tree across server
 								and client environments.{" "}
-								<span className="text-emerald-300 font-medium">
+								<span className="text-cyan-300 font-medium">
 									Server components
 								</span>{" "}
 								run exclusively on the server — they ship zero client

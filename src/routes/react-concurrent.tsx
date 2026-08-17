@@ -14,13 +14,12 @@ function ReactConcurrentPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "React", color: "violet" }}
+				topic={{ label: "React", color: "cyan" }}
 				title="Concurrent Features"
 				subtitle="How React 18 transitions, deferred values, and Suspense keep UIs responsive under load."
 				gradient={{
-					from: "violet-400",
-					via: "purple-400",
-					to: "fuchsia-400",
+					from: "cyan-400",
+					to: "blue-400",
 				}}
 				explanation={{
 					content: (
@@ -32,9 +31,7 @@ function ReactConcurrentPage() {
 								that filters 10,000 rows can drop frames because React cannot
 								interrupt its own work. Concurrent features do not make
 								rendering faster — they make it{" "}
-								<span className="text-violet-300 font-medium">
-									interruptible
-								</span>
+								<span className="text-cyan-300 font-medium">interruptible</span>
 								, so urgent updates (user input) can preempt in-progress
 								non-urgent renders.
 							</p>

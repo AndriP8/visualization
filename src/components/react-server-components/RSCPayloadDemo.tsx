@@ -204,7 +204,7 @@ export function RSCPayloadDemo() {
 
 	return (
 		<DemoSection
-			title="RSC Flight Payload"
+			title="Demo 2: RSC Flight Payload"
 			description="The RSC wire format is NOT HTML — it's a serialized React element tree. Click rows to see what each field means."
 		>
 			<div className="space-y-5">

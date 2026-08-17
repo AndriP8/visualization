@@ -171,7 +171,7 @@ function TraditionalDashboard({ fetchTimes }: { fetchTimes: FetchTimes }) {
 			<button
 				type="button"
 				onClick={handleLoad}
-				className="px-4 py-2 rounded-lg bg-violet-500/20 text-violet-300 border border-violet-500/30 text-sm hover:bg-violet-500/30 transition-colors"
+				className="px-4 py-2 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-sm hover:bg-cyan-500/30 transition-colors"
 			>
 				Load Dashboard
 			</button>
@@ -247,7 +247,7 @@ function SuspenseDashboard({ fetchTimes }: { fetchTimes: FetchTimes }) {
 			<button
 				type="button"
 				onClick={handleLoad}
-				className="px-4 py-2 rounded-lg bg-violet-500/20 text-violet-300 border border-violet-500/30 text-sm hover:bg-violet-500/30 transition-colors"
+				className="px-4 py-2 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-sm hover:bg-cyan-500/30 transition-colors"
 			>
 				Load Dashboard
 			</button>
@@ -291,7 +291,7 @@ export function SuspenseBoundariesDemo() {
 	});
 	return (
 		<DemoSection
-			title="Suspense — Independent Boundaries"
+			title="Demo 4: Suspense — Independent Boundaries"
 			description="Compare all-at-once loading vs Suspense boundaries that resolve sections independently as data arrives."
 		>
 			<div className="space-y-6">

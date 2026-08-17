@@ -92,7 +92,8 @@ export function ServerClientBoundaryDemo() {
 		);
 	}
 
-	const selectedProp = PROP_TYPES.find((p) => p.type === propAttempt.type)!;
+	const selectedProp =
+		PROP_TYPES.find((p) => p.type === propAttempt.type) ?? PROP_TYPES[0];
 	const crossingFromServer =
 		tree.find((n) => n.id === "main")?.runtime === "server";
 	const crossingToClient =
@@ -105,7 +106,7 @@ export function ServerClientBoundaryDemo() {
 
 	return (
 		<DemoSection
-			title="Server / Client Boundary"
+			title="Demo 1: Server / Client Boundary"
 			description="Toggle components between server and client. Watch bundle size update and see what breaks when you cross the boundary with non-serializable props."
 		>
 			<div className="space-y-6">

@@ -110,7 +110,7 @@ export function TreeDiffDemo() {
 					onClick={() => setShowAfter(false)}
 					className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
 						!showAfter
-							? "bg-violet-500/20 text-violet-300 border border-violet-500/30"
+							? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
 							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300"
 					}`}
 				>
@@ -121,7 +121,7 @@ export function TreeDiffDemo() {
 					onClick={() => setShowAfter(true)}
 					className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
 						showAfter
-							? "bg-violet-500/20 text-violet-300 border border-violet-500/30"
+							? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
 							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300"
 					}`}
 				>

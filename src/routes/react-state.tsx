@@ -14,16 +14,16 @@ function ReactStatePage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "React Internals", color: "orange" }}
+				topic={{ label: "React Internals", color: "cyan" }}
 				title="State & Re-renders"
 				subtitle="A state update in React triggers a re-render of the owning component and every descendant by default — regardless of whether their props changed. The rendering cost cascades down the component tree, and the fixes are easy to misapply."
-				gradient={{ from: "amber-400", via: "orange-400", to: "rose-400" }}
+				gradient={{ from: "cyan-400", to: "blue-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
 								React's re-render model is opt-out, not opt-in:{" "}
-								<span className="text-amber-300 font-medium">
+								<span className="text-cyan-300 font-medium">
 									any state change
 								</span>{" "}
 								re-renders the component and all its children. React.memo breaks
@@ -36,7 +36,7 @@ function ReactStatePage() {
 							</p>
 							<p>
 								Context is the most common source of invisible re-renders:{" "}
-								<span className="text-orange-300 font-medium">
+								<span className="text-cyan-300 font-medium">
 									every consumer re-renders when the context value changes
 								</span>
 								, even if the specific slice of state it reads is unchanged.

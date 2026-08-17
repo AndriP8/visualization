@@ -72,7 +72,7 @@ export function ConcurrentRenderingDemo() {
 
 	return (
 		<DemoSection
-			title="The Scheduler: Urgent vs Transition Work"
+			title="Demo 1: The Scheduler: Urgent vs Transition Work"
 			description="Click 'Heavy' to trigger a slow render. Toggle modes to see how React's priority scheduler keeps the UI responsive."
 		>
 			<div className="space-y-6">
@@ -121,10 +121,10 @@ export function ConcurrentRenderingDemo() {
 							key={key}
 							type="button"
 							onClick={() => handleDatasetChange(key)}
-							className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors border ${
+							className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
 								dataset === key
-									? "bg-violet-500/20 text-violet-300 border-violet-500/30"
-									: "bg-zinc-800 text-zinc-400 hover:text-white border-zinc-700"
+									? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
+									: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300"
 							}`}
 						>
 							{isPending && mode === "transition" && pendingTarget === key && (

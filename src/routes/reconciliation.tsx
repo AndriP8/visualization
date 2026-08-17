@@ -14,10 +14,10 @@ function ReconciliationPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "React Internals", color: "orange" }}
+				topic={{ label: "React Internals", color: "cyan" }}
 				title="Reconciliation"
 				subtitle="Comparing two arbitrary trees is O(n³) — far too slow for UI updates that need to happen in milliseconds. React's reconciliation algorithm reduces this to O(n) by making two practical assumptions about how UIs change."
-				gradient={{ from: "violet-400", to: "cyan-400" }}
+				gradient={{ from: "cyan-400", to: "blue-400" }}
 				explanation={{
 					content: (
 						<div className="text-sm text-zinc-300 space-y-2">
@@ -26,7 +26,7 @@ function ReconciliationPage() {
 								new element tree, then diffs it against the previous tree to
 								find the minimum DOM mutations. The general tree diff algorithm
 								requires{" "}
-								<span className="text-violet-400 font-medium">
+								<span className="text-cyan-400 font-medium">
 									O(n³) comparisons
 								</span>{" "}
 								— for 1,000 elements, that is one billion operations. This is

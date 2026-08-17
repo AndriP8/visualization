@@ -377,7 +377,7 @@ function Parent() {
 							type="button"
 							onClick={triggerRender}
 							disabled={phase === "running"}
-							className="flex-1 px-3 py-2 rounded-md text-sm font-semibold bg-violet-500/10 text-violet-300 border border-violet-500/30 hover:bg-violet-500/20 transition-colors disabled:opacity-40"
+							className="flex-1 px-3 py-2 rounded-md text-sm font-semibold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/20 transition-colors disabled:opacity-40"
 						>
 							{phase === "running" ? "Running…" : "▶ Re-render Parent"}
 						</button>

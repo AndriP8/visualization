@@ -140,7 +140,7 @@ export function RSCvsSSRDemo() {
 
 	return (
 		<DemoSection
-			title="RSC vs SSR — They're Orthogonal"
+			title="Demo 4: RSC vs SSR — They're Orthogonal"
 			description="RSC is about WHERE code runs (server vs client). SSR is about WHEN HTML is generated (server at request vs client). Toggle each independently to see the trade-offs."
 		>
 			<div className="space-y-6">

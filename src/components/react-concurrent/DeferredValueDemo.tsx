@@ -159,7 +159,7 @@ export function DeferredValueDemo() {
 
 	return (
 		<DemoSection
-			title="useDeferredValue — Keeping Input Snappy"
+			title="Demo 3: useDeferredValue — Keeping Input Snappy"
 			description="Type fast to see how useDeferredValue keeps the input responsive while the expensive list update trails behind."
 		>
 			<div className="space-y-6">

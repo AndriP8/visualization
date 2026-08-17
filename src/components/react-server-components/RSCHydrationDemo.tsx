@@ -179,7 +179,7 @@ export function RSCHydrationDemo() {
 
 	return (
 		<DemoSection
-			title="Selective Hydration"
+			title="Demo 3: Selective Hydration"
 			description="RSC doesn't eliminate hydration — it makes it selective. Only Client Components ($L refs) get event handlers attached. Server nodes ship zero JS."
 		>
 			<div className="space-y-6">
@@ -219,7 +219,7 @@ export function RSCHydrationDemo() {
 						<button
 							type="button"
 							onClick={runPlayback}
-							className="px-4 py-2 rounded-lg bg-violet-500/20 text-violet-300 border border-violet-500/30 text-sm hover:bg-violet-500/30 transition-colors"
+							className="px-4 py-2 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-sm hover:bg-cyan-500/30 transition-colors"
 						>
 							{phase === "idle" ? "Load Page" : "Replay"}
 						</button>

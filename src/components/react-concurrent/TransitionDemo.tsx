@@ -99,7 +99,7 @@ export function TransitionDemo() {
 
 	return (
 		<DemoSection
-			title="useTransition — Low-Priority Updates"
+			title="Demo 2: useTransition — Low-Priority Updates"
 			description="Switch between tabs with different render costs. With useTransition, heavy tab switches don't freeze the UI."
 		>
 			<div className="space-y-6">
