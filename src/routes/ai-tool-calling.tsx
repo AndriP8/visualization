@@ -14,15 +14,17 @@ function ToolCallingPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "AI Engineering", color: "indigo" }}
+				topic={{ label: "AI Engineering", color: "violet" }}
 				title="Tool Calling Loop"
 				subtitle="Tool calling lets the model emit structured function invocations instead of text. The application executes them and feeds results back — creating an agentic loop that can interact with the real world."
-				gradient={{ from: "amber-400", via: "orange-400", to: "rose-400" }}
+				gradient={{ from: "violet-400", to: "indigo-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								<span className="text-amber-300 font-medium">The problem:</span>{" "}
+								<span className="text-violet-300 font-medium">
+									The problem:
+								</span>{" "}
 								LLMs are text-in / text-out. Anything outside the model —
 								database lookups, API calls, code execution — requires the
 								application to step in. Without structure, the model would emit
@@ -30,26 +32,26 @@ function ToolCallingPage() {
 								brittle and unpredictable.
 							</p>
 							<p>
-								<span className="text-amber-300 font-medium">
+								<span className="text-indigo-300 font-medium">
 									The solution:
 								</span>{" "}
 								A turn-based loop. The model emits a structured{" "}
-								<span className="font-mono text-amber-200">tool_use</span> block
-								matching a declared JSON Schema. The{" "}
+								<span className="font-mono text-indigo-200">tool_use</span>{" "}
+								block matching a declared JSON Schema. The{" "}
 								<span className="font-medium">application</span> runs the tool,
 								appends a{" "}
-								<span className="font-mono text-amber-200">tool_result</span> to
-								the conversation as a user-role message, and re-invokes the
+								<span className="font-mono text-indigo-200">tool_result</span>{" "}
+								to the conversation as a user-role message, and re-invokes the
 								model with the full history. This repeats until the model
 								returns a response with no{" "}
-								<span className="font-mono text-amber-200">tool_use</span>{" "}
+								<span className="font-mono text-indigo-200">tool_use</span>{" "}
 								block.{" "}
 								<span className="font-medium">
 									The model never executes anything — it only describes intent.
 								</span>
 							</p>
 							<p>
-								<span className="text-amber-300 font-medium">
+								<span className="text-violet-300 font-medium">
 									The trade-off:
 								</span>{" "}
 								The loop is controlled by your code, not the model. Termination,

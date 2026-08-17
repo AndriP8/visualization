@@ -14,16 +14,16 @@ function EmbeddingsPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "AI Engineering", color: "indigo" }}
+				topic={{ label: "AI Engineering", color: "violet" }}
 				title="Vector Embeddings"
 				subtitle="Text is mapped to a fixed-length vector in a high-dimensional space. The geometry of that space — distances and angles — encodes semantic similarity. Embeddings are the substrate of search, RAG, clustering, and classification."
-				gradient={{ from: "cyan-400", via: "blue-400", to: "violet-400" }}
+				gradient={{ from: "violet-400", to: "indigo-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
 								An{" "}
-								<span className="text-cyan-300 font-medium">
+								<span className="text-violet-300 font-medium">
 									embedding model
 								</span>{" "}
 								is a neural network that maps a string of text to a fixed-size
@@ -32,7 +32,7 @@ function EmbeddingsPage() {
 								for OpenAI's{" "}
 								<code className="text-zinc-200">text-embedding-3-small</code>.
 								Most are trained with a{" "}
-								<span className="text-violet-300 font-medium">
+								<span className="text-indigo-300 font-medium">
 									contrastive objective
 								</span>
 								: pairs known to be similar are pulled together in the space;
@@ -43,7 +43,9 @@ function EmbeddingsPage() {
 							<p>
 								Once you have vectors, similarity becomes geometry. Production
 								APIs return{" "}
-								<span className="text-cyan-300 font-medium">L2-normalized</span>{" "}
+								<span className="text-violet-300 font-medium">
+									L2-normalized
+								</span>{" "}
 								vectors — every output sits on the surface of the unit sphere.
 								For unit vectors, cosine similarity and Euclidean distance rank
 								points identically, so you can treat the choice as a convention

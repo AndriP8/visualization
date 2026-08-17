@@ -13,10 +13,10 @@ function PromptEngineeringPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "AI Engineering", color: "indigo" }}
+				topic={{ label: "AI Engineering", color: "violet" }}
 				title="Prompt Engineering"
 				subtitle="The foundational interface to the model. How you structure the context determines the quality, reliability, and tone of the output."
-				gradient={{ from: "violet-400", via: "cyan-400", to: "blue-400" }}
+				gradient={{ from: "violet-400", to: "indigo-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">

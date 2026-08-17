@@ -13,10 +13,10 @@ function FineTuningPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "AI Engineering", color: "indigo" }}
+				topic={{ label: "AI Engineering", color: "violet" }}
 				title="Fine-Tuning vs. RAG"
 				subtitle="When to bake knowledge into the model's weights versus when to provide it in the context window."
-				gradient={{ from: "violet-400", via: "cyan-400", to: "blue-400" }}
+				gradient={{ from: "violet-400", to: "indigo-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">

@@ -14,10 +14,10 @@ function AgentLoopsPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "AI Engineering", color: "indigo" }}
+				topic={{ label: "AI Engineering", color: "violet" }}
 				title="Agent Loops"
 				subtitle="Equipping a model with tools is not enough. Agents need a structured reasoning loop to plan, act, observe, and adjust dynamically."
-				gradient={{ from: "violet-400", via: "cyan-400", to: "blue-400" }}
+				gradient={{ from: "violet-400", to: "indigo-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
@@ -38,7 +38,7 @@ function AgentLoopsPage() {
 									Loop patterns & boundaries:
 								</span>{" "}
 								Iterative loops adapt dynamically to unexpected outputs, while{" "}
-								<span className="font-medium text-cyan-300">
+								<span className="font-medium text-indigo-300">
 									Plan-and-Execute
 								</span>{" "}
 								creates an explicit dependency graph upfront for parallel

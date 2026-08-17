@@ -14,23 +14,23 @@ function StreamingPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "AI Engineering", color: "indigo" }}
+				topic={{ label: "AI Engineering", color: "violet" }}
 				title="Streaming & SSE"
 				subtitle="LLM responses arrive token-by-token over Server-Sent Events. Rendering them correctly means parsing a line-delimited wire format, buffering partial JSON, and cancelling fetches cleanly — none of which the underlying fetch API does for you."
-				gradient={{ from: "cyan-400", via: "violet-400", to: "rose-400" }}
+				gradient={{ from: "violet-400", to: "indigo-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								<span className="text-cyan-300 font-medium">
+								<span className="text-violet-300 font-medium">
 									Server-Sent Events (SSE)
 								</span>{" "}
 								are a one-way streaming format over a normal HTTP response. The
 								server keeps the connection open and writes newline-delimited{" "}
-								<span className="font-mono text-cyan-300">data:</span> frames as
-								soon as each token is decoded. The client reads from{" "}
+								<span className="font-mono text-indigo-300">data:</span> frames
+								as soon as each token is decoded. The client reads from{" "}
 								<span className="font-mono">response.body</span> as a{" "}
-								<span className="text-cyan-300 font-medium">
+								<span className="text-indigo-300 font-medium">
 									ReadableStream
 								</span>{" "}
 								and renders incrementally — that's why the first word appears

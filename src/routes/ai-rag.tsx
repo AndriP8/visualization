@@ -14,19 +14,19 @@ function RAGPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "AI Engineering", color: "indigo" }}
+				topic={{ label: "AI Engineering", color: "violet" }}
 				title="RAG Pipeline"
 				subtitle="Retrieval-Augmented Generation injects external facts into the prompt at query time, so the model can answer questions about content it was never trained on. The pipeline is short; the failure modes are subtle and cascade across stages."
-				gradient={{ from: "emerald-400", via: "cyan-400", to: "violet-400" }}
+				gradient={{ from: "violet-400", to: "indigo-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
 								RAG splits into two pipelines.{" "}
-								<span className="text-emerald-300 font-medium">Offline</span>{" "}
+								<span className="text-violet-300 font-medium">Offline</span>{" "}
 								(run once per document change): chunk the source, embed each
 								chunk, store vectors in an ANN index.{" "}
-								<span className="text-cyan-300 font-medium">Online</span> (run
+								<span className="text-indigo-300 font-medium">Online</span> (run
 								per user query): embed the query, retrieve the nearest chunks,
 								optionally rerank for precision, assemble them into a prompt,
 								and generate.

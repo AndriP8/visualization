@@ -14,28 +14,28 @@ function StructuredOutputPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "AI Engineering", color: "indigo" }}
+				topic={{ label: "AI Engineering", color: "violet" }}
 				title="Structured Output"
 				subtitle="Asking a model for JSON in the prompt fails in predictable ways — missing braces, hallucinated keys, wrong types. Constrained decoding eliminates these failures by restricting which tokens are legal at each decode step."
-				gradient={{ from: "emerald-400", via: "cyan-400", to: "violet-400" }}
+				gradient={{ from: "violet-400", to: "indigo-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
 								There are three levels of guarantee for structured output, and
 								most engineers conflate them.{" "}
-								<span className="text-emerald-300 font-medium">
+								<span className="text-violet-300 font-medium">
 									Prompt-only JSON
 								</span>{" "}
 								(“return your answer as JSON”) is plain text generation —
 								failures are silent and unbounded.{" "}
-								<span className="text-emerald-300 font-medium">JSON mode</span>{" "}
+								<span className="text-violet-300 font-medium">JSON mode</span>{" "}
 								(OpenAI <code>response_format: json_object</code>, similar on
 								other providers) guarantees the output is parseable JSON, but
 								says nothing about field names, types, or required keys.
 							</p>
 							<p>
-								<span className="text-cyan-300 font-medium">
+								<span className="text-indigo-300 font-medium">
 									Constrained decoding
 								</span>{" "}
 								is the only level that mathematically guarantees the output
