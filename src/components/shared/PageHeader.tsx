@@ -10,7 +10,10 @@ type TopicColor =
 	| "rose"
 	| "purple"
 	| "indigo"
-	| "cyan";
+	| "cyan"
+	| "teal"
+	| "sky"
+	| "yellow";
 
 interface PageHeaderProps {
 	topic: {
@@ -57,6 +60,12 @@ const TOPIC_COLORS: Record<
 		dot: "bg-amber-400",
 		border: "border-amber-500/20",
 	},
+	yellow: {
+		bg: "bg-yellow-500/10",
+		text: "text-yellow-400",
+		dot: "bg-yellow-400",
+		border: "border-yellow-500/20",
+	},
 	blue: {
 		bg: "bg-blue-500/10",
 		text: "text-blue-400",
@@ -87,6 +96,18 @@ const TOPIC_COLORS: Record<
 		dot: "bg-cyan-400",
 		border: "border-cyan-500/20",
 	},
+	sky: {
+		bg: "bg-sky-500/10",
+		text: "text-sky-400",
+		dot: "bg-sky-400",
+		border: "border-sky-500/20",
+	},
+	teal: {
+		bg: "bg-teal-500/10",
+		text: "text-teal-400",
+		dot: "bg-teal-400",
+		border: "border-teal-500/20",
+	},
 };
 
 // Map Tailwind color names to hex values for gradients
@@ -105,6 +126,24 @@ const COLOR_MAP: Record<string, string> = {
 	"indigo-400": "#818cf8",
 	"teal-400": "#2dd4bf",
 	"yellow-400": "#facc15",
+	"sky-400": "#38bdf8",
+	"lime-400": "#a3e635",
+	"green-400": "#4ade80",
+	"amber-500": "#f59e0b",
+	"orange-500": "#f97316",
+	"red-500": "#ef4444",
+	"rose-500": "#f43f5e",
+	"pink-500": "#ec4899",
+	"violet-500": "#8b5cf6",
+	"purple-500": "#a855f7",
+	"fuchsia-500": "#d946ef",
+	"cyan-500": "#06b6d4",
+	"emerald-500": "#10b981",
+	"blue-500": "#3b82f6",
+	"indigo-500": "#6366f1",
+	"teal-500": "#14b8a6",
+	"yellow-500": "#eab308",
+	"sky-500": "#0ea5e9",
 };
 
 export function PageHeader({
@@ -117,11 +156,16 @@ export function PageHeader({
 	const colors = TOPIC_COLORS[topic.color];
 
 	// Build gradient style inline using hex colors
-	const fromColor = COLOR_MAP[gradient.from] || gradient.from;
+	const fromColor =
+		COLOR_MAP[gradient.from] ||
+		(gradient.from.startsWith("#") ? gradient.from : "#60a5fa");
 	const viaColor = gradient.via
-		? COLOR_MAP[gradient.via] || gradient.via
+		? COLOR_MAP[gradient.via] ||
+			(gradient.via.startsWith("#") ? gradient.via : null)
 		: null;
-	const toColor = COLOR_MAP[gradient.to] || gradient.to;
+	const toColor =
+		COLOR_MAP[gradient.to] ||
+		(gradient.to.startsWith("#") ? gradient.to : "#38bdf8");
 
 	const gradientStyle = {
 		backgroundImage: viaColor
@@ -174,7 +218,7 @@ export function PageHeader({
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5, delay: 0.3 }}
-					className="bg-zinc-800/30 border border-zinc-800 rounded-lg p-6 mb-8"
+					className="bg-zinc-900/60 border border-zinc-800 rounded-xl p-6 mb-8 text-sm text-zinc-300 leading-relaxed"
 				>
 					{explanation.content}
 				</motion.div>
