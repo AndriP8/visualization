@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 
 interface Control {
 	id: string;
@@ -159,180 +160,187 @@ export function PreventionMatrixDemo() {
 		activeControls.has("origin-referer");
 
 	return (
-		<div className="space-y-6">
-			{/* Comparison table */}
-			<div className="overflow-x-auto">
-				<table className="w-full text-sm border-collapse">
-					<thead>
-						<tr className="border-b border-zinc-700">
-							<th className="text-left py-2 px-3 text-zinc-400 font-semibold text-xs uppercase tracking-wider w-40">
-								&nbsp;
-							</th>
-							<th className="text-left py-2 px-3 text-red-400 font-semibold text-xs uppercase tracking-wider">
-								XSS
-							</th>
-							<th className="text-left py-2 px-3 text-red-400 font-semibold text-xs uppercase tracking-wider">
-								CSRF
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{COMPARISON.map((row) => (
-							<tr key={row.label} className="border-b border-zinc-800">
-								<td className="py-2 px-3 text-zinc-400 text-xs font-medium">
-									{row.label}
-								</td>
-								<td className="py-2 px-3 text-zinc-300 text-xs">{row.xss}</td>
-								<td className="py-2 px-3 text-zinc-300 text-xs">{row.csrf}</td>
+		<DemoSection
+			title="Demo 4: Prevention Matrix — What Stops What"
+			description="Not all security controls stop both attacks. Toggle each control to see which attack it blocks. Click any row for a plain-language explanation. Pay attention to the common misconceptions section."
+		>
+			<div className="space-y-6">
+				{/* Comparison table */}
+				<div className="overflow-x-auto">
+					<table className="w-full text-sm border-collapse">
+						<thead>
+							<tr className="border-b border-zinc-700">
+								<th className="text-left py-2 px-3 text-zinc-400 font-semibold text-xs uppercase tracking-wider w-40">
+									&nbsp;
+								</th>
+								<th className="text-left py-2 px-3 text-red-400 font-semibold text-xs uppercase tracking-wider">
+									XSS
+								</th>
+								<th className="text-left py-2 px-3 text-red-400 font-semibold text-xs uppercase tracking-wider">
+									CSRF
+								</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
-
-			{/* Attack status */}
-			<div className="grid grid-cols-2 gap-3">
-				<div
-					className={`rounded-lg p-3 border text-center ${
-						xssBlocked
-							? "bg-emerald-500/10 border-emerald-500/40"
-							: "bg-red-500/10 border-red-500/40"
-					}`}
-				>
-					<p className="text-xs text-zinc-400 mb-1">XSS</p>
-					<p
-						className={`text-sm font-bold ${xssBlocked ? "text-emerald-400" : "text-red-400"}`}
-					>
-						{xssBlocked ? "✓ Blocked" : "🔴 Active"}
-					</p>
+						</thead>
+						<tbody>
+							{COMPARISON.map((row) => (
+								<tr key={row.label} className="border-b border-zinc-800">
+									<td className="py-2 px-3 text-zinc-400 text-xs font-medium">
+										{row.label}
+									</td>
+									<td className="py-2 px-3 text-zinc-300 text-xs">{row.xss}</td>
+									<td className="py-2 px-3 text-zinc-300 text-xs">
+										{row.csrf}
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
 				</div>
-				<div
-					className={`rounded-lg p-3 border text-center ${
-						csrfBlocked
-							? "bg-emerald-500/10 border-emerald-500/40"
-							: "bg-red-500/10 border-red-500/40"
-					}`}
-				>
-					<p className="text-xs text-zinc-400 mb-1">CSRF</p>
-					<p
-						className={`text-sm font-bold ${csrfBlocked ? "text-emerald-400" : "text-red-400"}`}
-					>
-						{csrfBlocked ? "✓ Blocked" : "🔴 Active"}
-					</p>
-				</div>
-			</div>
 
-			{/* Prevention matrix */}
-			<div>
-				<div className="flex items-center justify-between mb-3">
-					<p className="text-xs text-zinc-400 uppercase tracking-wider font-semibold">
-						Toggle to enable — click label for explanation
-					</p>
-					<div className="flex gap-3 text-xs text-zinc-500">
-						<span>XSS</span>
-						<span>CSRF</span>
+				{/* Attack status */}
+				<div className="grid grid-cols-2 gap-3">
+					<div
+						className={`rounded-lg p-3 border text-center ${
+							xssBlocked
+								? "bg-emerald-500/10 border-emerald-500/40"
+								: "bg-red-500/10 border-red-500/40"
+						}`}
+					>
+						<p className="text-xs text-zinc-400 mb-1">XSS</p>
+						<p
+							className={`text-sm font-bold ${xssBlocked ? "text-emerald-400" : "text-red-400"}`}
+						>
+							{xssBlocked ? "✓ Blocked" : "🔴 Active"}
+						</p>
+					</div>
+					<div
+						className={`rounded-lg p-3 border text-center ${
+							csrfBlocked
+								? "bg-emerald-500/10 border-emerald-500/40"
+								: "bg-red-500/10 border-red-500/40"
+						}`}
+					>
+						<p className="text-xs text-zinc-400 mb-1">CSRF</p>
+						<p
+							className={`text-sm font-bold ${csrfBlocked ? "text-emerald-400" : "text-red-400"}`}
+						>
+							{csrfBlocked ? "✓ Blocked" : "🔴 Active"}
+						</p>
 					</div>
 				</div>
-				<div className="space-y-2">
-					{CONTROLS.map((c) => {
-						const active = activeControls.has(c.id);
-						const expanded = expandedId === c.id;
-						return (
-							<div
-								key={c.id}
-								className={`rounded-lg border transition-colors ${
-									active
-										? "bg-violet-500/10 border-violet-500/40"
-										: "bg-zinc-800 border-zinc-700"
-								}`}
-							>
-								<div className="flex items-center gap-3 px-3 py-2.5">
-									{/* Checkbox toggle — independent from label/explanation click */}
-									<button
-										type="button"
-										onClick={() => toggleControl(c.id)}
-										className="text-xs shrink-0 w-5 h-5 rounded border border-zinc-600 flex items-center justify-center hover:border-violet-400 transition-colors"
-										aria-label={`${active ? "Disable" : "Enable"} ${c.label}`}
-									>
-										{active && <span className="text-violet-400">✓</span>}
-									</button>
-									{/* Label — clicking opens/closes explanation */}
-									<button
-										type="button"
-										onClick={() => toggleExpanded(c.id)}
-										className="flex-1 text-left text-sm text-zinc-200 hover:text-white transition-colors"
-									>
-										{c.label}
-										<span className="ml-2 text-xs text-zinc-500">
-											{expanded ? "▲" : "▼"}
-										</span>
-									</button>
-									<div className="flex items-center gap-2 shrink-0">
-										<Badge status={c.stopsXSS} />
-										<Badge status={c.stopsCSSRF} />
-									</div>
-								</div>
-								<AnimatePresence>
-									{expanded && (
-										<motion.div
-											initial={{ height: 0, opacity: 0 }}
-											animate={{ height: "auto", opacity: 1 }}
-											exit={{ height: 0, opacity: 0 }}
-											className="overflow-hidden"
+
+				{/* Prevention matrix */}
+				<div>
+					<div className="flex items-center justify-between mb-3">
+						<p className="text-xs text-zinc-400 uppercase tracking-wider font-semibold">
+							Toggle to enable — click label for explanation
+						</p>
+						<div className="flex gap-3 text-xs text-zinc-500">
+							<span>XSS</span>
+							<span>CSRF</span>
+						</div>
+					</div>
+					<div className="space-y-2">
+						{CONTROLS.map((c) => {
+							const active = activeControls.has(c.id);
+							const expanded = expandedId === c.id;
+							return (
+								<div
+									key={c.id}
+									className={`rounded-lg border transition-colors ${
+										active
+											? "bg-violet-500/10 border-violet-500/40"
+											: "bg-zinc-800 border-zinc-700"
+									}`}
+								>
+									<div className="flex items-center gap-3 px-3 py-2.5">
+										{/* Checkbox toggle — independent from label/explanation click */}
+										<button
+											type="button"
+											onClick={() => toggleControl(c.id)}
+											className="text-xs shrink-0 w-5 h-5 rounded border border-zinc-600 flex items-center justify-center hover:border-violet-400 transition-colors"
+											aria-label={`${active ? "Disable" : "Enable"} ${c.label}`}
 										>
-											<p className="px-3 pb-3 text-xs text-zinc-400 border-t border-zinc-700/50 pt-2">
-												{c.explanation}
-											</p>
-										</motion.div>
-									)}
-								</AnimatePresence>
-							</div>
-						);
-					})}
+											{active && <span className="text-violet-400">✓</span>}
+										</button>
+										{/* Label — clicking opens/closes explanation */}
+										<button
+											type="button"
+											onClick={() => toggleExpanded(c.id)}
+											className="flex-1 text-left text-sm text-zinc-200 hover:text-white transition-colors"
+										>
+											{c.label}
+											<span className="ml-2 text-xs text-zinc-500">
+												{expanded ? "▲" : "▼"}
+											</span>
+										</button>
+										<div className="flex items-center gap-2 shrink-0">
+											<Badge status={c.stopsXSS} />
+											<Badge status={c.stopsCSSRF} />
+										</div>
+									</div>
+									<AnimatePresence>
+										{expanded && (
+											<motion.div
+												initial={{ height: 0, opacity: 0 }}
+												animate={{ height: "auto", opacity: 1 }}
+												exit={{ height: 0, opacity: 0 }}
+												className="overflow-hidden"
+											>
+												<p className="px-3 pb-3 text-xs text-zinc-400 border-t border-zinc-700/50 pt-2">
+													{c.explanation}
+												</p>
+											</motion.div>
+										)}
+									</AnimatePresence>
+								</div>
+							);
+						})}
+					</div>
+				</div>
+
+				{/* Misconceptions */}
+				<div className="space-y-3">
+					<p className="text-sm font-semibold text-zinc-300">
+						Common Misconceptions
+					</p>
+
+					<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 space-y-1">
+						<p className="text-red-400 font-semibold text-xs uppercase tracking-wider">
+							Misconception: CORS prevents CSRF
+						</p>
+						<p className="text-zinc-300 text-xs">
+							CORS does NOT prevent CSRF. HTML form POST does not trigger a CORS
+							preflight — the browser sends the request (and attaches the
+							cookie) without asking. CORS only restricts what JavaScript can
+							read from cross-origin responses via fetch/XHR.
+						</p>
+					</div>
+
+					<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 space-y-1">
+						<p className="text-red-400 font-semibold text-xs uppercase tracking-wider">
+							Misconception: httpOnly prevents CSRF
+						</p>
+						<p className="text-zinc-300 text-xs">
+							httpOnly prevents JavaScript from reading the cookie value via
+							document.cookie — so XSS cannot directly steal it. But the browser
+							still automatically sends the cookie in cross-origin form POST
+							requests. httpOnly provides no CSRF protection.
+						</p>
+					</div>
+
+					<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 space-y-1">
+						<p className="text-red-400 font-semibold text-xs uppercase tracking-wider">
+							Misconception: CSP prevents CSRF
+						</p>
+						<p className="text-zinc-300 text-xs">
+							A strong CSP reduces XSS impact by blocking inline scripts. It
+							does NOT prevent CSRF — HTML form submissions are unaffected by
+							CSP. The two attack classes require different defenses.
+						</p>
+					</div>
 				</div>
 			</div>
-
-			{/* Misconceptions */}
-			<div className="space-y-3">
-				<p className="text-sm font-semibold text-zinc-300">
-					Common Misconceptions
-				</p>
-
-				<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 space-y-1">
-					<p className="text-red-400 font-semibold text-xs uppercase tracking-wider">
-						Misconception: CORS prevents CSRF
-					</p>
-					<p className="text-zinc-300 text-xs">
-						CORS does NOT prevent CSRF. HTML form POST does not trigger a CORS
-						preflight — the browser sends the request (and attaches the cookie)
-						without asking. CORS only restricts what JavaScript can read from
-						cross-origin responses via fetch/XHR.
-					</p>
-				</div>
-
-				<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 space-y-1">
-					<p className="text-red-400 font-semibold text-xs uppercase tracking-wider">
-						Misconception: httpOnly prevents CSRF
-					</p>
-					<p className="text-zinc-300 text-xs">
-						httpOnly prevents JavaScript from reading the cookie value via
-						document.cookie — so XSS cannot directly steal it. But the browser
-						still automatically sends the cookie in cross-origin form POST
-						requests. httpOnly provides no CSRF protection.
-					</p>
-				</div>
-
-				<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 space-y-1">
-					<p className="text-red-400 font-semibold text-xs uppercase tracking-wider">
-						Misconception: CSP prevents CSRF
-					</p>
-					<p className="text-zinc-300 text-xs">
-						A strong CSP reduces XSS impact by blocking inline scripts. It does
-						NOT prevent CSRF — HTML form submissions are unaffected by CSP. The
-						two attack classes require different defenses.
-					</p>
-				</div>
-			</div>
-		</div>
+		</DemoSection>
 	);
 }

@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 const VULNERABLE_CODE = `// Vulnerable: no origin verification
@@ -111,158 +112,165 @@ export function CSRFDemo() {
 	}
 
 	return (
-		<div className="space-y-6">
-			{/* Protection toggles */}
-			<div className="flex flex-wrap gap-3">
-				<button
-					type="button"
-					onClick={() => switchMode(false)}
-					className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
-						!protected_
-							? "bg-red-500/20 text-red-400 border border-red-500"
-							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-zinc-600"
-					}`}
-				>
-					Without CSRF Protection
-				</button>
-				<button
-					type="button"
-					onClick={() => switchMode(true)}
-					className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
-						protected_
-							? "bg-emerald-500/20 text-emerald-400 border border-emerald-500"
-							: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-zinc-600"
-					}`}
-				>
-					With CSRF Token + SameSite=Strict
-				</button>
-			</div>
-
-			{/* CSRF token note — shown only in protected mode */}
-			{protected_ && (
-				<div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-xs text-amber-300">
-					<strong>CSRF Token Rule:</strong> The token must NOT be stored in a
-					cookie — that defeats the purpose. It must be embedded in the HTML
-					form or sent in a request header, and verified server-side against the
-					user session.
+		<DemoSection
+			title="Demo 3: CSRF — Forged Requests from Another Origin"
+			description="The victim is authenticated to bank.example.com. The attacker's page on evil.com submits a hidden form to the bank. The browser automatically attaches the session cookie — the bank cannot tell the request is forged. CSRF doesn't steal data; it forges actions."
+		>
+			<div className="space-y-6">
+				{/* Protection toggles */}
+				<div className="flex flex-wrap gap-3">
+					<button
+						type="button"
+						onClick={() => switchMode(false)}
+						className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+							!protected_
+								? "bg-red-500/20 text-red-400 border border-red-500"
+								: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-zinc-600"
+						}`}
+					>
+						Without CSRF Protection
+					</button>
+					<button
+						type="button"
+						onClick={() => switchMode(true)}
+						className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+							protected_
+								? "bg-emerald-500/20 text-emerald-400 border border-emerald-500"
+								: "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-zinc-600"
+						}`}
+					>
+						With CSRF Token + SameSite=Strict
+					</button>
 				</div>
-			)}
 
-			{/* Attack flow */}
-			<div>
-				<div className="flex items-center justify-between mb-3">
-					<p className="text-sm font-semibold text-zinc-300">
-						Attack Flow (Step-Through)
-					</p>
-					<div className="flex gap-2">
-						{!isRunning ? (
-							<button
-								type="button"
-								onClick={() => setStep(0)}
-								className="px-3 py-1.5 bg-red-500/20 text-red-400 border border-red-500 rounded text-xs font-medium hover:bg-red-500/30 transition-colors"
-							>
-								▶ Start
-							</button>
-						) : (
-							<>
-								{step < steps.length - 1 && (
-									<button
-										type="button"
-										onClick={advance}
-										className="px-3 py-1.5 bg-zinc-700 text-zinc-300 rounded text-xs font-medium hover:bg-zinc-600 transition-colors"
-									>
-										Next →
-									</button>
-								)}
+				{/* CSRF token note — shown only in protected mode */}
+				{protected_ && (
+					<div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-xs text-amber-300">
+						<strong>CSRF Token Rule:</strong> The token must NOT be stored in a
+						cookie — that defeats the purpose. It must be embedded in the HTML
+						form or sent in a request header, and verified server-side against
+						the user session.
+					</div>
+				)}
+
+				{/* Attack flow */}
+				<div>
+					<div className="flex items-center justify-between mb-3">
+						<p className="text-sm font-semibold text-zinc-300">
+							Attack Flow (Step-Through)
+						</p>
+						<div className="flex gap-2">
+							{!isRunning ? (
 								<button
 									type="button"
-									onClick={reset}
-									className="px-3 py-1.5 bg-zinc-800 text-zinc-400 rounded text-xs font-medium hover:bg-zinc-700 transition-colors"
+									onClick={() => setStep(0)}
+									className="px-3 py-1.5 bg-red-500/20 text-red-400 border border-red-500 rounded text-xs font-medium hover:bg-red-500/30 transition-colors"
 								>
-									Reset
+									▶ Start
 								</button>
-							</>
-						)}
+							) : (
+								<>
+									{step < steps.length - 1 && (
+										<button
+											type="button"
+											onClick={advance}
+											className="px-3 py-1.5 bg-zinc-700 text-zinc-300 rounded text-xs font-medium hover:bg-zinc-600 transition-colors"
+										>
+											Next →
+										</button>
+									)}
+									<button
+										type="button"
+										onClick={reset}
+										className="px-3 py-1.5 bg-zinc-800 text-zinc-400 rounded text-xs font-medium hover:bg-zinc-700 transition-colors"
+									>
+										Reset
+									</button>
+								</>
+							)}
+						</div>
+					</div>
+
+					<div className="space-y-2">
+						{steps.map((s, i) => (
+							// biome-ignore lint/suspicious/noArrayIndexKey: static constant arrays, never reordered
+							<AnimatePresence key={i}>
+								{i <= step && (
+									<motion.div
+										initial={{ opacity: 0, x: -12 }}
+										animate={{ opacity: 1, x: 0 }}
+										className={`rounded-lg p-3 border text-sm ${
+											protected_ && i >= 2
+												? "bg-emerald-500/10 border-emerald-500/40"
+												: !protected_ && i === steps.length - 1
+													? "bg-red-500/20 border-red-500/60"
+													: "bg-zinc-800 border-zinc-700"
+										}`}
+									>
+										<div className="flex items-start justify-between gap-2">
+											<p
+												className={`font-semibold text-xs ${actorColors[s.actor]}`}
+											>
+												Step {i + 1}: {s.title}
+											</p>
+											{protected_ && i === steps.length - 1 && (
+												<span className="text-emerald-400 text-xs font-bold shrink-0">
+													✓ BLOCKED
+												</span>
+											)}
+											{!protected_ && i === steps.length - 1 && (
+												<span className="text-red-400 text-xs font-bold shrink-0">
+													🔴 TRANSFER SENT
+												</span>
+											)}
+										</div>
+										<p className="text-zinc-400 text-xs mt-1">
+											{s.description}
+										</p>
+										{s.cookie && (
+											<p
+												className={`mt-2 text-xs font-mono px-2 py-1 rounded ${
+													protected_ && i === 2
+														? "text-emerald-400 bg-emerald-500/10"
+														: "text-amber-400 bg-amber-500/10"
+												}`}
+											>
+												{s.cookie}
+											</p>
+										)}
+									</motion.div>
+								)}
+							</AnimatePresence>
+						))}
 					</div>
 				</div>
 
-				<div className="space-y-2">
-					{steps.map((s, i) => (
-						// biome-ignore lint/suspicious/noArrayIndexKey: static constant arrays, never reordered
-						<AnimatePresence key={i}>
-							{i <= step && (
-								<motion.div
-									initial={{ opacity: 0, x: -12 }}
-									animate={{ opacity: 1, x: 0 }}
-									className={`rounded-lg p-3 border text-sm ${
-										protected_ && i >= 2
-											? "bg-emerald-500/10 border-emerald-500/40"
-											: !protected_ && i === steps.length - 1
-												? "bg-red-500/20 border-red-500/60"
-												: "bg-zinc-800 border-zinc-700"
-									}`}
-								>
-									<div className="flex items-start justify-between gap-2">
-										<p
-											className={`font-semibold text-xs ${actorColors[s.actor]}`}
-										>
-											Step {i + 1}: {s.title}
-										</p>
-										{protected_ && i === steps.length - 1 && (
-											<span className="text-emerald-400 text-xs font-bold shrink-0">
-												✓ BLOCKED
-											</span>
-										)}
-										{!protected_ && i === steps.length - 1 && (
-											<span className="text-red-400 text-xs font-bold shrink-0">
-												🔴 TRANSFER SENT
-											</span>
-										)}
-									</div>
-									<p className="text-zinc-400 text-xs mt-1">{s.description}</p>
-									{s.cookie && (
-										<p
-											className={`mt-2 text-xs font-mono px-2 py-1 rounded ${
-												protected_ && i === 2
-													? "text-emerald-400 bg-emerald-500/10"
-													: "text-amber-400 bg-amber-500/10"
-											}`}
-										>
-											{s.cookie}
-										</p>
-									)}
-								</motion.div>
-							)}
-						</AnimatePresence>
-					))}
+				{/* Key distinction */}
+				<div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-4 text-sm">
+					<p className="text-violet-300 font-semibold mb-1">
+						XSS vs CSRF — The Core Difference
+					</p>
+					<p className="text-zinc-300 text-xs">
+						<strong className="text-red-400">CSRF</strong> doesn&apos;t steal
+						data — it forges actions. It exploits the browser&apos;s automatic
+						cookie behavior. <strong className="text-red-400">XSS</strong>{" "}
+						exploits the browser&apos;s script execution. They are different
+						attack classes — do not conflate them with clickjacking.
+					</p>
+				</div>
+
+				{/* Code */}
+				<div>
+					<p className="text-xs text-zinc-400 mb-2 font-semibold uppercase tracking-wider">
+						{protected_ ? "Secure Implementation" : "Vulnerable Implementation"}
+					</p>
+					<ShikiCode
+						language="typescript"
+						code={protected_ ? SECURE_CODE : VULNERABLE_CODE}
+						className="text-xs"
+					/>
 				</div>
 			</div>
-
-			{/* Key distinction */}
-			<div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-4 text-sm">
-				<p className="text-violet-300 font-semibold mb-1">
-					XSS vs CSRF — The Core Difference
-				</p>
-				<p className="text-zinc-300 text-xs">
-					<strong className="text-red-400">CSRF</strong> doesn&apos;t steal data
-					— it forges actions. It exploits the browser&apos;s automatic cookie
-					behavior. <strong className="text-red-400">XSS</strong> exploits the
-					browser&apos;s script execution. They are different attack classes —
-					do not conflate them with clickjacking.
-				</p>
-			</div>
-
-			{/* Code */}
-			<div>
-				<p className="text-xs text-zinc-400 mb-2 font-semibold uppercase tracking-wider">
-					{protected_ ? "Secure Implementation" : "Vulnerable Implementation"}
-				</p>
-				<ShikiCode
-					language="typescript"
-					code={protected_ ? SECURE_CODE : VULNERABLE_CODE}
-					className="text-xs"
-				/>
-			</div>
-		</div>
+		</DemoSection>
 	);
 }
