@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ALL_STRATEGIES, STRATEGY_COLORS, type Strategy } from "./constants";
 
 type Factor =
@@ -298,114 +299,119 @@ export function TradeoffMatrixDemo() {
 		: null;
 
 	return (
-		<div className="space-y-4">
-			{/* Table */}
-			<div className="overflow-x-auto">
-				<table className="w-full text-xs border-collapse">
-					<thead>
-						<tr>
-							<th className="text-left p-2 text-zinc-500 font-medium w-12" />
-							{FACTORS.map((f) => (
-								<th
-									key={f}
-									className="text-center p-2 text-zinc-400 font-semibold whitespace-nowrap"
-								>
-									{f}
-								</th>
-							))}
-						</tr>
-					</thead>
-					<tbody>
-						{ALL_STRATEGIES.map((strategy) => (
-							<tr key={strategy} className="border-t border-zinc-800/50">
-								<td className="p-2">
-									<span
-										className="font-bold text-xs"
-										style={{ color: STRATEGY_COLORS[strategy] }}
+		<DemoSection
+			title="Demo 3: Trade-off Matrix"
+			description="No strategy is universally best. Click any cell to understand exactly why that strategy rates well or poorly for that factor — with concrete examples, not vague generalities."
+		>
+			<div className="space-y-4">
+				{/* Table */}
+				<div className="overflow-x-auto">
+					<table className="w-full text-xs border-collapse">
+						<thead>
+							<tr>
+								<th className="text-left p-2 text-zinc-500 font-medium w-12" />
+								{FACTORS.map((f) => (
+									<th
+										key={f}
+										className="text-center p-2 text-zinc-400 font-semibold whitespace-nowrap"
 									>
-										{strategy}
-									</span>
-								</td>
-								{FACTORS.map((factor) => {
-									const cellKey: CellKey = `${strategy}:${factor}`;
-									const rating = MATRIX[strategy][factor];
-									const isSelected = selectedCell === cellKey;
-									return (
-										<td key={factor} className="p-1.5 text-center">
-											<button
-												type="button"
-												onClick={() =>
-													setSelectedCell((prev) =>
-														prev === cellKey ? null : cellKey,
-													)
-												}
-												className={clsx(
-													"flex flex-col items-center gap-1 w-full p-2 rounded-lg transition-all cursor-pointer",
-													isSelected
-														? "bg-zinc-700/80 ring-1 ring-white/20"
-														: "hover:bg-zinc-800/50",
-												)}
-												title={rating.label}
-											>
-												<ScoreDots score={rating.score} />
-												<span className="text-[9px] text-zinc-500 leading-tight">
-													{rating.label}
-												</span>
-											</button>
-										</td>
-									);
-								})}
+										{f}
+									</th>
+								))}
 							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
+						</thead>
+						<tbody>
+							{ALL_STRATEGIES.map((strategy) => (
+								<tr key={strategy} className="border-t border-zinc-800/50">
+									<td className="p-2">
+										<span
+											className="font-bold text-xs"
+											style={{ color: STRATEGY_COLORS[strategy] }}
+										>
+											{strategy}
+										</span>
+									</td>
+									{FACTORS.map((factor) => {
+										const cellKey: CellKey = `${strategy}:${factor}`;
+										const rating = MATRIX[strategy][factor];
+										const isSelected = selectedCell === cellKey;
+										return (
+											<td key={factor} className="p-1.5 text-center">
+												<button
+													type="button"
+													onClick={() =>
+														setSelectedCell((prev) =>
+															prev === cellKey ? null : cellKey,
+														)
+													}
+													className={clsx(
+														"flex flex-col items-center gap-1 w-full p-2 rounded-lg transition-all cursor-pointer",
+														isSelected
+															? "bg-zinc-700/80 ring-1 ring-white/20"
+															: "hover:bg-zinc-800/50",
+													)}
+													title={rating.label}
+												>
+													<ScoreDots score={rating.score} />
+													<span className="text-[9px] text-zinc-500 leading-tight">
+														{rating.label}
+													</span>
+												</button>
+											</td>
+										);
+									})}
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 
-			{/* Explanation panel */}
-			<AnimatePresence>
-				{selectedData && (
-					<motion.div
-						initial={{ opacity: 0, height: 0 }}
-						animate={{ opacity: 1, height: "auto" }}
-						exit={{ opacity: 0, height: 0 }}
-						className="overflow-hidden"
-					>
-						<div className="bg-zinc-800/50 border border-zinc-700 rounded-xl p-4 space-y-2">
-							<div className="flex items-center gap-3">
-								<span
-									className="font-bold text-sm px-2 py-0.5 rounded"
-									style={{
-										color: STRATEGY_COLORS[selectedData.strategy],
-										backgroundColor: `${STRATEGY_COLORS[selectedData.strategy]}15`,
-									}}
-								>
-									{selectedData.strategy}
-								</span>
-								<span className="text-zinc-400 text-sm">→</span>
-								<span className="font-semibold text-zinc-200 text-sm">
-									{selectedData.factor}
-								</span>
-								<span className="ml-auto">
-									<ScoreDots score={selectedData.rating.score} />
-								</span>
+				{/* Explanation panel */}
+				<AnimatePresence>
+					{selectedData && (
+						<motion.div
+							initial={{ opacity: 0, height: 0 }}
+							animate={{ opacity: 1, height: "auto" }}
+							exit={{ opacity: 0, height: 0 }}
+							className="overflow-hidden"
+						>
+							<div className="bg-zinc-800/50 border border-zinc-700 rounded-xl p-4 space-y-2">
+								<div className="flex items-center gap-3">
+									<span
+										className="font-bold text-sm px-2 py-0.5 rounded"
+										style={{
+											color: STRATEGY_COLORS[selectedData.strategy],
+											backgroundColor: `${STRATEGY_COLORS[selectedData.strategy]}15`,
+										}}
+									>
+										{selectedData.strategy}
+									</span>
+									<span className="text-zinc-400 text-sm">→</span>
+									<span className="font-semibold text-zinc-200 text-sm">
+										{selectedData.factor}
+									</span>
+									<span className="ml-auto">
+										<ScoreDots score={selectedData.rating.score} />
+									</span>
+								</div>
+								<p className="text-sm text-zinc-300 leading-relaxed">
+									{selectedData.rating.explanation}
+								</p>
 							</div>
-							<p className="text-sm text-zinc-300 leading-relaxed">
-								{selectedData.rating.explanation}
-							</p>
-						</div>
-					</motion.div>
-				)}
-				{!selectedData && (
-					<motion.p
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						className="text-xs text-zinc-600 text-center py-2"
-					>
-						Click any cell to see why it rates that way
-					</motion.p>
-				)}
-			</AnimatePresence>
-		</div>
+						</motion.div>
+					)}
+					{!selectedData && (
+						<motion.p
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							className="text-xs text-zinc-600 text-center py-2"
+						>
+							Click any cell to see why it rates that way
+						</motion.p>
+					)}
+				</AnimatePresence>
+			</div>
+		</DemoSection>
 	);
 }

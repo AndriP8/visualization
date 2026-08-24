@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { motion, useAnimation } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { STRATEGY_COLORS, type Strategy } from "./constants";
 
 interface Milestone {
@@ -430,68 +431,73 @@ export function TimelineComparisonDemo({
 	}
 
 	return (
-		<div className="space-y-4">
-			{/* Controls */}
-			<div className="flex items-center gap-4 flex-wrap">
-				<button
-					type="button"
-					onClick={handlePlay}
-					disabled={playing}
-					className={clsx(
-						"px-4 py-2 rounded-lg text-sm font-semibold transition-all",
-						playing
-							? "bg-zinc-700 text-zinc-500 cursor-not-allowed"
-							: "bg-violet-600 hover:bg-violet-500 text-white shadow-lg shadow-violet-500/20",
-					)}
-				>
-					{playing ? "⏳ Animating…" : "▶ Play All Timelines"}
-				</button>
-
-				<label className="flex items-center gap-2 text-sm text-zinc-400 cursor-pointer select-none ml-auto">
-					<span className="text-xs">🐇 Fast</span>
-					{/* A real <input type="checkbox"> is hidden; the visible toggle is a styled div controlled by the label */}
-					<input
-						type="checkbox"
-						className="sr-only"
-						checked={slowNetwork}
-						onChange={(e) => setSlowNetwork(e.target.checked)}
-					/>
-					<div
-						aria-hidden="true"
+		<DemoSection
+			title="Demo 1: Timeline Comparison"
+			description="All 5 strategies side-by-side on a shared time axis. Click ▶ to animate request balls — each ball's speed reflects the relative performance of that strategy. Toggle 3G mode to exaggerate CSR's blank-screen gap."
+		>
+			<div className="space-y-4">
+				{/* Controls */}
+				<div className="flex items-center gap-4 flex-wrap">
+					<button
+						type="button"
+						onClick={handlePlay}
+						disabled={playing}
 						className={clsx(
-							"relative inline-block w-10 h-5 rounded-full transition-colors pointer-events-none",
-							slowNetwork ? "bg-amber-500" : "bg-zinc-700",
+							"px-4 py-2 rounded-lg text-sm font-semibold transition-all",
+							playing
+								? "bg-zinc-700 text-zinc-500 cursor-not-allowed"
+								: "bg-violet-600 hover:bg-violet-500 text-white shadow-lg shadow-violet-500/20",
 						)}
 					>
-						<span
-							className={clsx(
-								"absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform",
-								slowNetwork ? "translate-x-5" : "translate-x-0.5",
-							)}
+						{playing ? "⏳ Animating…" : "▶ Play All Timelines"}
+					</button>
+
+					<label className="flex items-center gap-2 text-sm text-zinc-400 cursor-pointer select-none ml-auto">
+						<span className="text-xs">🐇 Fast</span>
+						{/* A real <input type="checkbox"> is hidden; the visible toggle is a styled div controlled by the label */}
+						<input
+							type="checkbox"
+							className="sr-only"
+							checked={slowNetwork}
+							onChange={(e) => setSlowNetwork(e.target.checked)}
 						/>
-					</div>
-					<span className="text-xs">🐢 Slow (3G)</span>
-				</label>
-			</div>
+						<div
+							aria-hidden="true"
+							className={clsx(
+								"relative inline-block w-10 h-5 rounded-full transition-colors pointer-events-none",
+								slowNetwork ? "bg-amber-500" : "bg-zinc-700",
+							)}
+						>
+							<span
+								className={clsx(
+									"absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform",
+									slowNetwork ? "translate-x-5" : "translate-x-0.5",
+								)}
+							/>
+						</div>
+						<span className="text-xs">🐢 Slow (3G)</span>
+					</label>
+				</div>
 
-			{/* Timelines */}
-			<div className="space-y-8 pt-2">
-				{STRATEGIES.map((s) => (
-					<TimelineRow
-						key={s.id}
-						strategy={s}
-						playing={playing}
-						playKey={playKey}
-						slowNetwork={slowNetwork}
-						dimmed={eliminatedStrategies.has(s.id)}
-					/>
-				))}
-			</div>
+				{/* Timelines */}
+				<div className="space-y-8 pt-2">
+					{STRATEGIES.map((s) => (
+						<TimelineRow
+							key={s.id}
+							strategy={s}
+							playing={playing}
+							playKey={playKey}
+							slowNetwork={slowNetwork}
+							dimmed={eliminatedStrategies.has(s.id)}
+						/>
+					))}
+				</div>
 
-			<p className="text-xs text-zinc-600 mt-4">
-				💡 Hover milestone nodes for explanations. Use Case Matcher (below) dims
-				strategies that don't fit your answers.
-			</p>
-		</div>
+				<p className="text-xs text-zinc-600 mt-4">
+					💡 Hover milestone nodes for explanations. Use Case Matcher (below)
+					dims strategies that don't fit your answers.
+				</p>
+			</div>
+		</DemoSection>
 	);
 }

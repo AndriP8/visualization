@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import type { Strategy } from "./constants";
 
 interface NodeConfig {
@@ -265,150 +266,169 @@ export function WorkLocationDemo() {
 		WORK_CONFIGS.find((c) => c.strategy === selected) ?? WORK_CONFIGS[0];
 
 	return (
-		<div className="space-y-6">
-			{/* Strategy tabs */}
-			<div className="flex flex-wrap gap-2">
-				{WORK_CONFIGS.map((c) => (
-					<button
-						key={c.strategy}
-						type="button"
-						onClick={() => setSelected(c.strategy)}
-						className={clsx(
-							"px-3 py-1.5 rounded-full text-xs font-semibold border transition-all",
-							selected === c.strategy
-								? "text-zinc-900 border-transparent"
-								: "text-zinc-400 border-zinc-700 hover:border-zinc-500",
-						)}
-						style={
-							selected === c.strategy ? { backgroundColor: c.color } : undefined
-						}
-					>
-						{c.label}
-					</button>
-				))}
-			</div>
+		<DemoSection
+			title="Demo 2: Where Work is Done"
+			description="Select a strategy to see which infrastructure layer generates the HTML, and what payload travels between Client, Edge/CDN, and Origin Server."
+		>
+			<div className="space-y-6">
+				{/* Strategy tabs */}
+				<div className="flex flex-wrap gap-2">
+					{WORK_CONFIGS.map((c) => (
+						<button
+							key={c.strategy}
+							type="button"
+							onClick={() => setSelected(c.strategy)}
+							className={clsx(
+								"px-3 py-1.5 rounded-full text-xs font-semibold border transition-all",
+								selected === c.strategy
+									? "text-zinc-900 border-transparent"
+									: "text-zinc-400 border-zinc-700 hover:border-zinc-500",
+							)}
+							style={
+								selected === c.strategy
+									? { backgroundColor: c.color }
+									: undefined
+							}
+						>
+							{c.label}
+						</button>
+					))}
+				</div>
 
-			{/* 3-column diagram */}
-			<AnimatePresence mode="wait">
-				<motion.div
-					key={selected}
-					initial={{ opacity: 0, y: 8 }}
-					animate={{ opacity: 1, y: 0 }}
-					exit={{ opacity: 0, y: -8 }}
-					transition={{ duration: 0.25 }}
-					className="grid grid-cols-3 gap-3"
-				>
-					{COLUMNS.map((col) => {
-						const isActive = config.workNodes.some((n) => n.column === col);
-						const node = config.workNodes.find((n) => n.column === col);
-						return (
-							<div
-								key={col}
-								className={clsx(
-									"rounded-xl border p-4 transition-all duration-300 min-h-36",
-									isActive
-										? "border-zinc-600 bg-zinc-800/60"
-										: "border-zinc-800 bg-zinc-900/20 opacity-40",
-								)}
-								style={
-									isActive
-										? {
-												boxShadow: `0 0 20px ${config.color}25`,
-												borderColor: `${config.color}50`,
-											}
-										: undefined
-								}
-							>
-								<div className="text-xl mb-2">{COLUMN_ICONS[col]}</div>
-								<div className="text-xs font-bold text-zinc-300 mb-1">
-									{COLUMN_LABELS[col]}
-								</div>
-								{node && (
-									<>
-										<div
-											className="text-xs font-semibold mt-2 mb-1"
-											style={{ color: config.color }}
-										>
-											{node.label}
-										</div>
-										<p className="text-[10px] text-zinc-500 leading-relaxed">
-											{node.description}
-										</p>
-									</>
-								)}
-								{!node && (
-									<p className="text-[10px] text-zinc-700 mt-3">
-										Not involved for {selected}
-									</p>
-								)}
-							</div>
-						);
-					})}
-				</motion.div>
-			</AnimatePresence>
-
-			{/* Data flow arrows */}
-			<div className="space-y-2">
-				<p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-					Data Flow
-				</p>
+				{/* 3-column diagram */}
 				<AnimatePresence mode="wait">
 					<motion.div
-						key={`arrows-${selected}`}
+						key={selected}
+						initial={{ opacity: 0, y: 8 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -8 }}
+						transition={{ duration: 0.25 }}
+						className="grid grid-cols-3 gap-3"
+					>
+						{COLUMNS.map((col) => {
+							const isActive = config.workNodes.some((n) => n.column === col);
+							const node = config.workNodes.find((n) => n.column === col);
+							return (
+								<div
+									key={col}
+									className={clsx(
+										"rounded-xl border p-4 transition-all duration-300 min-h-36",
+										isActive
+											? "border-zinc-600 bg-zinc-800/60"
+											: "border-zinc-800 bg-zinc-900/20 opacity-40",
+									)}
+									style={
+										isActive
+											? {
+													boxShadow: `0 0 20px ${config.color}25`,
+													borderColor: `${config.color}50`,
+												}
+											: undefined
+									}
+								>
+									{/* Column header */}
+									<div className="flex items-center gap-1.5 mb-3">
+										<span className="text-base">{COLUMN_ICONS[col]}</span>
+										<span className="text-xs font-semibold text-zinc-300">
+											{COLUMN_LABELS[col]}
+										</span>
+									</div>
+
+									{/* Work node */}
+									{isActive && node ? (
+										<motion.div
+											initial={{ opacity: 0, scale: 0.95 }}
+											animate={{ opacity: 1, scale: 1 }}
+											className="rounded-lg p-2.5 text-left border"
+											style={{
+												backgroundColor: `${config.color}15`,
+												borderColor: `${config.color}40`,
+											}}
+										>
+											<div
+												className="text-xs font-bold mb-1"
+												style={{ color: config.color }}
+											>
+												{node.label}
+											</div>
+											<div className="text-[11px] text-zinc-400 leading-snug">
+												{node.description}
+											</div>
+										</motion.div>
+									) : (
+										<div className="text-[11px] text-zinc-600 italic mt-4 text-center">
+											Idle / Pass-through
+										</div>
+									)}
+								</div>
+							);
+						})}
+					</motion.div>
+				</AnimatePresence>
+
+				{/* Data flow arrows between columns */}
+				<div className="space-y-2">
+					<div className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+						Data Flow
+					</div>
+					<AnimatePresence mode="wait">
+						<motion.div
+							key={`arrows-${selected}`}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							className="space-y-1.5"
+						>
+							{config.arrows.map((arrow) => (
+								<div
+									key={`${arrow.from}-${arrow.to}-${arrow.label}`}
+									className="flex items-center justify-between px-3 py-2 rounded-lg bg-zinc-900/60 border border-zinc-800 text-xs"
+								>
+									<div className="flex items-center gap-2">
+										<span
+											className="text-xs font-mono font-semibold shrink-0"
+											style={{ color: arrow.color }}
+										>
+											{COLUMN_LABELS[arrow.from]}
+										</span>
+										<span className="text-zinc-600 text-xs shrink-0">→</span>
+										<span
+											className="text-xs font-mono font-semibold shrink-0"
+											style={{ color: arrow.color }}
+										>
+											{COLUMN_LABELS[arrow.to]}
+										</span>
+									</div>
+									<div className="text-right">
+										<div className="text-xs font-semibold text-zinc-300">
+											{arrow.label}
+										</div>
+										<div className="text-[10px] text-zinc-500">
+											{arrow.payload}
+										</div>
+									</div>
+								</div>
+							))}
+						</motion.div>
+					</AnimatePresence>
+				</div>
+
+				{/* Summary */}
+				<AnimatePresence mode="wait">
+					<motion.p
+						key={`summary-${selected}`}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
-						className="space-y-2"
+						className="text-sm text-zinc-400 bg-zinc-900/40 border border-zinc-800 rounded-lg p-4 leading-relaxed"
 					>
-						{config.arrows.map((arrow) => (
-							<div
-								key={arrow.label}
-								className="flex items-center gap-3 bg-zinc-900/50 rounded-lg p-3 border border-zinc-800"
-							>
-								<div className="flex items-center gap-2 min-w-0 flex-1">
-									<span
-										className="text-xs font-mono font-semibold shrink-0"
-										style={{ color: arrow.color }}
-									>
-										{COLUMN_LABELS[arrow.from]}
-									</span>
-									<span className="text-zinc-600 text-xs shrink-0">→</span>
-									<span
-										className="text-xs font-mono font-semibold shrink-0"
-										style={{ color: arrow.color }}
-									>
-										{COLUMN_LABELS[arrow.to]}
-									</span>
-								</div>
-								<div className="text-right">
-									<div className="text-xs font-semibold text-zinc-300">
-										{arrow.label}
-									</div>
-									<div className="text-[10px] text-zinc-500">
-										{arrow.payload}
-									</div>
-								</div>
-							</div>
-						))}
-					</motion.div>
+						<span className="font-semibold" style={{ color: config.color }}>
+							{selected}
+						</span>
+						: {config.summary}
+					</motion.p>
 				</AnimatePresence>
 			</div>
-
-			{/* Summary */}
-			<AnimatePresence mode="wait">
-				<motion.p
-					key={`summary-${selected}`}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					className="text-sm text-zinc-400 bg-zinc-900/40 border border-zinc-800 rounded-lg p-4 leading-relaxed"
-				>
-					<span className="font-semibold" style={{ color: config.color }}>
-						{selected}
-					</span>
-					: {config.summary}
-				</motion.p>
-			</AnimatePresence>
-		</div>
+		</DemoSection>
 	);
 }

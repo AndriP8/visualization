@@ -6,7 +6,6 @@ import { TimelineComparisonDemo } from "../components/rendering-strategies/Timel
 import { TradeoffMatrixDemo } from "../components/rendering-strategies/TradeoffMatrixDemo";
 import { UseCaseMatcherDemo } from "../components/rendering-strategies/UseCaseMatcherDemo";
 import { WorkLocationDemo } from "../components/rendering-strategies/WorkLocationDemo";
-import { DemoSection } from "../components/shared/DemoSection";
 import { PageHeader } from "../components/shared/PageHeader";
 
 export const Route = createFileRoute("/rendering-strategies")({
@@ -21,7 +20,7 @@ function RenderingStrategiesPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "Web Fundamentals", color: "indigo" }}
+				topic={{ label: "Web", color: "indigo" }}
 				title="Rendering Strategies"
 				subtitle="CSR, SSR, SSG, ISR, and Streaming SSR differ on one axis: where and when HTML is generated. That single decision determines Time to First Byte, Time to Interactive, cache-ability, and infrastructure cost."
 				gradient={{ from: "indigo-400", to: "violet-400" }}
@@ -59,40 +58,11 @@ function RenderingStrategiesPage() {
 				}}
 			/>
 
-			<div className="space-y-16">
-				{/* Demo 1: Timeline Comparison */}
-				<DemoSection
-					title="1. Timeline Comparison"
-					description="All 5 strategies side-by-side on a shared time axis. Click ▶ to animate request balls — each ball's speed reflects the relative performance of that strategy. Toggle 3G mode to exaggerate CSR's blank-screen gap."
-				>
-					<TimelineComparisonDemo eliminatedStrategies={eliminatedStrategies} />
-				</DemoSection>
-
-				{/* Demo 2: Where is the Work Done? */}
-				<DemoSection
-					title="2. Where is the Work Done?"
-					description="Select a strategy to see which infrastructure layer generates the HTML, and what payload travels between Client, Edge/CDN, and Origin Server."
-				>
-					<WorkLocationDemo />
-				</DemoSection>
-
-				{/* Demo 3: Trade-off Matrix */}
-				<DemoSection
-					title="3. Trade-off Matrix"
-					description="No strategy is universally best. Click any cell to understand exactly why that strategy rates well or poorly for that factor — with concrete examples, not vague generalities."
-				>
-					<TradeoffMatrixDemo />
-				</DemoSection>
-
-				{/* Demo 4: Use Case Matcher */}
-				<DemoSection
-					title="4. Use Case Matcher"
-					description="Answer 4 yes/no questions about your project. Strategies that can't satisfy your requirements are eliminated — and dimmed on the Timeline above — until only the best fit remains."
-				>
-					<UseCaseMatcherDemo onEliminatedChange={setEliminatedStrategies} />
-				</DemoSection>
-
-				{/* Demo 5: SSR Deep Dive */}
+			<div className="space-y-12">
+				<TimelineComparisonDemo eliminatedStrategies={eliminatedStrategies} />
+				<WorkLocationDemo />
+				<TradeoffMatrixDemo />
+				<UseCaseMatcherDemo onEliminatedChange={setEliminatedStrategies} />
 				<SSRDeepDive />
 			</div>
 		</div>

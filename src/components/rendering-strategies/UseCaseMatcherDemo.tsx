@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ALL_STRATEGIES, STRATEGY_COLORS, type Strategy } from "./constants";
 
 interface Question {
@@ -119,196 +120,188 @@ export function UseCaseMatcherDemo({
 	}
 
 	return (
-		<div className="space-y-6">
-			{/* Strategy pills — live elimination view */}
-			<div className="flex flex-wrap gap-2 items-center">
-				<span className="text-xs text-zinc-500 mr-1">Candidates:</span>
-				{ALL_STRATEGIES.map((s) => (
-					<motion.span
-						key={s}
-						animate={{
-							opacity: eliminated.has(s) ? 0.25 : 1,
-							scale: eliminated.has(s) ? 0.9 : 1,
-						}}
-						transition={{ duration: 0.3 }}
-						className={clsx(
-							"text-xs font-bold px-2 py-0.5 rounded-full",
-							eliminated.has(s) ? "line-through" : "",
-						)}
-						style={{
-							color: STRATEGY_COLORS[s],
-							backgroundColor: `${STRATEGY_COLORS[s]}15`,
-						}}
-					>
-						{eliminated.has(s) ? "✗" : "✓"} {s}
-					</motion.span>
-				))}
-			</div>
-
-			{/* Questions */}
-			<div className="space-y-3">
-				{QUESTIONS.map((q, i) => {
-					const answered = q.id in answers;
-					const answerValue = answers[q.id];
-					const isCurrent = i === currentStep;
-					const isPast = i < currentStep;
-
-					if (!isCurrent && !isPast) return null;
-
-					const explain =
-						answered && answerValue !== undefined
-							? answerValue
-								? q.yesExplain
-								: q.noExplain
-							: null;
-					const eliminated_by_this =
-						answered && answerValue !== undefined
-							? answerValue
-								? q.eliminatedOnYes
-								: q.eliminatedOnNo
-							: [];
-
-					return (
-						<motion.div
-							key={q.id}
-							initial={{ opacity: 0, y: 10 }}
-							animate={{ opacity: 1, y: 0 }}
+		<DemoSection
+			title="Demo 4: Use Case Matcher"
+			description="Answer 4 yes/no questions about your project. Strategies that can't satisfy your requirements are eliminated — and dimmed on the Timeline above — until only the best fit remains."
+		>
+			<div className="space-y-6">
+				{/* Strategy pills — live elimination view */}
+				<div className="flex flex-wrap gap-2 items-center">
+					<span className="text-xs text-zinc-500 mr-1">Candidates:</span>
+					{ALL_STRATEGIES.map((s) => (
+						<motion.span
+							key={s}
+							animate={{
+								opacity: eliminated.has(s) ? 0.25 : 1,
+								scale: eliminated.has(s) ? 0.9 : 1,
+							}}
+							transition={{ duration: 0.3 }}
 							className={clsx(
-								"rounded-xl border p-4 space-y-3 transition-colors",
-								isPast && answered
-									? "border-zinc-800 bg-zinc-900/30"
-									: "border-violet-500/30 bg-violet-500/5",
+								"text-xs font-bold px-2 py-0.5 rounded-full",
+								eliminated.has(s) ? "line-through" : "",
 							)}
+							style={{
+								color: STRATEGY_COLORS[s],
+								backgroundColor: `${STRATEGY_COLORS[s]}15`,
+							}}
 						>
-							<div className="flex items-start gap-3">
-								<span className="text-xs font-bold text-zinc-600 w-5 shrink-0 mt-0.5">
-									Q{i + 1}
-								</span>
-								<p className="text-sm text-zinc-200 font-medium">{q.text}</p>
-							</div>
+							{eliminated.has(s) ? "✗" : "✓"} {s}
+						</motion.span>
+					))}
+				</div>
 
-							{!answered && isCurrent && (
-								<div className="flex gap-3 pl-8">
-									<button
-										type="button"
-										onClick={() => answer(q.id, true)}
-										className="flex-1 px-3 py-2 rounded-lg text-xs font-semibold bg-green-500/15 text-green-400 border border-green-500/30 hover:bg-green-500/25 transition-colors text-left"
+				{/* Questions */}
+				<div className="space-y-3">
+					{QUESTIONS.map((q, i) => {
+						const answered = q.id in answers;
+						const answerValue = answers[q.id];
+						const isCurrent = i === currentStep;
+						const isPast = i < currentStep;
+
+						if (!isCurrent && !isPast) return null;
+
+						const explain =
+							answered && answerValue !== undefined
+								? answerValue
+									? q.yesExplain
+									: q.noExplain
+								: null;
+
+						return (
+							<div
+								key={q.id}
+								className={clsx(
+									"rounded-xl border p-4 transition-all duration-300",
+									isCurrent
+										? "border-violet-500/60 bg-zinc-800/80 shadow-lg shadow-violet-500/10"
+										: "border-zinc-800 bg-zinc-900/40",
+								)}
+							>
+								{/* Question header */}
+								<div className="flex items-center gap-2 mb-3">
+									<span
+										className={clsx(
+											"w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center shrink-0",
+											answered
+												? "bg-zinc-700 text-zinc-300"
+												: "bg-violet-600 text-white",
+										)}
 									>
-										✅ {q.yesLabel}
-									</button>
-									<button
-										type="button"
-										onClick={() => answer(q.id, false)}
-										className="flex-1 px-3 py-2 rounded-lg text-xs font-semibold bg-zinc-800 text-zinc-300 border border-zinc-700 hover:bg-zinc-700 transition-colors text-left"
-									>
-										❌ {q.noLabel}
-									</button>
+										{i + 1}
+									</span>
+									<span className="text-sm font-semibold text-zinc-200">
+										{q.text}
+									</span>
 								</div>
-							)}
 
-							{answered && (
-								<div className="pl-8 space-y-2">
-									<div className="flex gap-2 items-center flex-wrap">
-										<span
-											className={clsx(
-												"text-xs px-2 py-0.5 rounded font-semibold",
-												answerValue
-													? "bg-green-500/15 text-green-400"
-													: "bg-zinc-700 text-zinc-300",
-											)}
+								{/* Yes/No Buttons */}
+								{!answered && (
+									<div className="flex flex-wrap gap-2 pl-7">
+										<button
+											type="button"
+											onClick={() => answer(q.id, true)}
+											className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-zinc-700 hover:bg-emerald-600/30 hover:border-emerald-500/50 hover:text-emerald-300 text-zinc-300 border border-zinc-600 transition-all"
 										>
-											{answerValue ? `✅ ${q.yesLabel}` : `❌ ${q.noLabel}`}
-										</span>
-										{eliminated_by_this.length > 0 && (
-											<span className="text-[10px] text-zinc-500">
-												→ eliminated:{" "}
-												{eliminated_by_this.map((s) => (
-													<span
-														key={s}
-														className="font-bold line-through"
-														style={{ color: STRATEGY_COLORS[s] }}
-													>
-														{s}{" "}
-													</span>
-												))}
+											{q.yesLabel}
+										</button>
+										<button
+											type="button"
+											onClick={() => answer(q.id, false)}
+											className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-zinc-700 hover:bg-zinc-600 text-zinc-300 border border-zinc-600 transition-all"
+										>
+											{q.noLabel}
+										</button>
+									</div>
+								)}
+
+								{/* Answer summary */}
+								{answered && (
+									<div className="pl-7 space-y-1.5">
+										<div className="flex items-center gap-2">
+											<span
+												className={clsx(
+													"text-xs font-bold px-2 py-0.5 rounded",
+													answerValue
+														? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+														: "bg-zinc-700/60 text-zinc-400 border border-zinc-600/30",
+												)}
+											>
+												{answerValue ? "YES" : "NO"}
 											</span>
+											<span className="text-xs text-zinc-400">
+												{answerValue ? q.yesLabel : q.noLabel}
+											</span>
+										</div>
+										{explain && (
+											<p className="text-xs text-zinc-500 leading-relaxed">
+												{explain}
+											</p>
 										)}
 									</div>
-									{explain && (
-										<p className="text-xs text-zinc-400 leading-relaxed">
-											{explain}
-										</p>
-									)}
-								</div>
+								)}
+							</div>
+						);
+					})}
+				</div>
+
+				{/* Result / Recommendation */}
+				<AnimatePresence>
+					{isComplete && (
+						<motion.div
+							initial={{ opacity: 0, scale: 0.96 }}
+							animate={{ opacity: 1, scale: 1 }}
+							exit={{ opacity: 0 }}
+							className="rounded-xl border border-violet-500/40 bg-violet-500/10 p-5 space-y-3"
+						>
+							{remaining.length === 0 ? (
+								<p className="text-sm text-zinc-400">
+									No single strategy perfectly matches all requirements.
+									Consider a hybrid architecture (e.g., SSG marketing + CSR
+									authenticated app).
+								</p>
+							) : (
+								<>
+									<p className="text-sm font-semibold text-zinc-200">
+										🎯 Best fit for your use case:
+									</p>
+									<div className="flex flex-wrap gap-2">
+										{remaining.map((s) => (
+											<span
+												key={s}
+												className="px-3 py-1.5 rounded-lg text-sm font-bold"
+												style={{
+													color: STRATEGY_COLORS[s],
+													backgroundColor: `${STRATEGY_COLORS[s]}20`,
+													border: `1px solid ${STRATEGY_COLORS[s]}40`,
+												}}
+											>
+												✓ {s}
+											</span>
+										))}
+									</div>
+									<p className="text-xs text-zinc-500">
+										💡 The Timeline Comparison above dims the eliminated
+										strategies so you can focus on what fits.
+									</p>
+								</>
 							)}
 						</motion.div>
-					);
-				})}
-			</div>
+					)}
+				</AnimatePresence>
 
-			{/* Result */}
-			<AnimatePresence>
-				{isComplete && (
-					<motion.div
-						initial={{ opacity: 0, y: 12 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0 }}
-						className="rounded-xl border border-violet-500/30 bg-violet-500/5 p-5 space-y-3"
-					>
-						{remaining.length === 0 ? (
-							<>
-								<p className="text-sm font-semibold text-amber-400">
-									⚠️ All strategies eliminated
-								</p>
-								<p className="text-xs text-zinc-400">
-									Your requirements are very strict. In practice, you'd likely
-									use SSR or CSR with careful architecture (e.g., edge SSR +
-									client-side real-time updates), depending on your performance
-									vs. freshness trade-off.
-								</p>
-							</>
-						) : (
-							<>
-								<p className="text-sm font-semibold text-zinc-200">
-									🎯 Best fit for your use case:
-								</p>
-								<div className="flex flex-wrap gap-2">
-									{remaining.map((s) => (
-										<span
-											key={s}
-											className="px-3 py-1.5 rounded-lg text-sm font-bold"
-											style={{
-												color: STRATEGY_COLORS[s],
-												backgroundColor: `${STRATEGY_COLORS[s]}20`,
-												border: `1px solid ${STRATEGY_COLORS[s]}40`,
-											}}
-										>
-											✓ {s}
-										</span>
-									))}
-								</div>
-								<p className="text-xs text-zinc-500">
-									💡 The Timeline Comparison above dims the eliminated
-									strategies so you can focus on what fits.
-								</p>
-							</>
-						)}
+				{/* Reset */}
+				{currentStep > 0 && (
+					<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+						<button
+							type="button"
+							onClick={reset}
+							className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors underline"
+						>
+							↩ Start over
+						</button>
 					</motion.div>
 				)}
-			</AnimatePresence>
-
-			{/* Reset */}
-			{currentStep > 0 && (
-				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-					<button
-						type="button"
-						onClick={reset}
-						className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors underline"
-					>
-						↩ Start over
-					</button>
-				</motion.div>
-			)}
-		</div>
+			</div>
+		</DemoSection>
 	);
 }

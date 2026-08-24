@@ -143,7 +143,7 @@ export function SSRDeepDive() {
 
 	return (
 		<DemoSection
-			title="SSR Deep Dive: Request Flow Internals"
+			title="Demo 5: SSR Request Flow Internals"
 			description="Step-by-step animation of how a server-side rendered page flows from request to interactive."
 		>
 			{/* Controls */}
