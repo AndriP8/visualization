@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { motion } from "motion/react";
 import { AnalyzerRewriterDemo } from "../components/database-query-flow/AnalyzerRewriterDemo";
 import { ExecutionEngineDemo } from "../components/database-query-flow/ExecutionEngineDemo";
 import { ExplainAnalyzeDemo } from "../components/database-query-flow/ExplainAnalyzeDemo";
 import { ParserDemo } from "../components/database-query-flow/ParserDemo";
 import { PipelineOverviewDemo } from "../components/database-query-flow/PipelineOverviewDemo";
 import { PlannerOptimizerDemo } from "../components/database-query-flow/PlannerOptimizerDemo";
-import { DemoSection } from "../components/shared/DemoSection";
 import { PageHeader } from "../components/shared/PageHeader";
 
 export const Route = createFileRoute("/database-query-flow")({
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/database-query-flow")({
 
 function DatabaseQueryFlow() {
 	return (
-		<div className="max-w-6xl mx-auto space-y-12 pb-20">
+		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
 				topic={{ label: "Database Internals", color: "emerald" }}
 				title="Database Query Engine Flow"
@@ -55,49 +55,20 @@ function DatabaseQueryFlow() {
 				}}
 			/>
 
-			<div className="space-y-16">
-				<DemoSection
-					title="1. The Engine Pipeline"
-					description="At a high level, a query must be parsed, semantically validated, planned, cost-optimized, and finally executed to fetch rows."
-				>
-					<PipelineOverviewDemo />
-				</DemoSection>
-
-				<DemoSection
-					title="2. The Parser (SQL to AST)"
-					description="The engine first checks syntax and translates your text query into a structured 'Parse Tree' (Abstract Syntax Tree) that it can understand."
-				>
-					<ParserDemo />
-				</DemoSection>
-
-				<DemoSection
-					title="3. Analyzer & Rewriter"
-					description="Resolves raw identifiers to real catalog objects, checks column types, expands views into base queries, and replaces aliases with fully-qualified names."
-				>
-					<AnalyzerRewriterDemo />
-				</DemoSection>
-
-				<DemoSection
-					title="4. Planner & Optimizer"
-					description="The engine generates multiple ways to execute your query (joins, scans, sorts). It uses statistics to estimate the cost of each, picking the cheapest plan."
-				>
-					<PlannerOptimizerDemo />
-				</DemoSection>
-
-				<DemoSection
-					title="5. Execution Engine"
-					description="Nodes in the optimal plan pull data through an iterator model. Watch how a Sequential Scan differs dramatically from an Index Scan when searching for a row."
-				>
-					<ExecutionEngineDemo />
-				</DemoSection>
-
-				<DemoSection
-					title="6. EXPLAIN ANALYZE"
-					description="The ultimate profiling tool. See the difference between what the Planner estimated and what actually happened during Execution."
-				>
-					<ExplainAnalyzeDemo />
-				</DemoSection>
-			</div>
+			{/* Demos */}
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ delay: 0.2, duration: 0.4 }}
+				className="space-y-8"
+			>
+				<PipelineOverviewDemo />
+				<ParserDemo />
+				<AnalyzerRewriterDemo />
+				<PlannerOptimizerDemo />
+				<ExecutionEngineDemo />
+				<ExplainAnalyzeDemo />
+			</motion.div>
 		</div>
 	);
 }
