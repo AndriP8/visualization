@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type Combinator = "all" | "race" | "allSettled" | "any";
@@ -196,170 +197,177 @@ export function CombinatorsDemo() {
 	const desc = COMBINATOR_DESCRIPTIONS[combinator];
 
 	return (
-		<div className="space-y-5">
-			{/* Combinator selector */}
-			<div className="flex flex-wrap gap-2">
-				{(["all", "race", "allSettled", "any"] as Combinator[]).map((c) => (
-					<button
-						key={c}
-						type="button"
-						onClick={() => {
-							setCombinator(c);
-							setResult(null);
-						}}
-						className={`px-4 py-2 rounded-lg text-sm font-mono font-medium border transition-colors ${
-							combinator === c
-								? "bg-cyan-500/20 text-cyan-300 border-cyan-500/30"
-								: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-200"
-						}`}
-					>
-						Promise.{c}()
-					</button>
-				))}
-			</div>
+		<DemoSection
+			title="Demo 2: Promise Combinators"
+			description="Configure 3 promises with delays and success/failure, then run each combinator to see which result wins."
+		>
+			<div className="space-y-5">
+				{/* Combinator selector */}
+				<div className="flex flex-wrap gap-2">
+					{(["all", "race", "allSettled", "any"] as Combinator[]).map((c) => (
+						<button
+							key={c}
+							type="button"
+							onClick={() => {
+								setCombinator(c);
+								setResult(null);
+							}}
+							className={`px-4 py-2 rounded-lg text-sm font-mono font-medium border transition-colors ${
+								combinator === c
+									? "bg-cyan-500/20 text-cyan-300 border-cyan-500/30"
+									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-200"
+							}`}
+						>
+							Promise.{c}()
+						</button>
+					))}
+				</div>
 
-			<p className="text-sm text-zinc-400">{desc.summary}</p>
+				<p className="text-sm text-zinc-400">{desc.summary}</p>
 
-			{/* Promise configs */}
-			<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-				{promises.map((p, i) => (
-					<div
-						key={p.label}
-						className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 space-y-3"
-					>
-						<div className="text-sm font-semibold text-zinc-300">{p.label}</div>
-						<div className="space-y-2">
-							<div>
-								<label
-									htmlFor={`delay-${i}`}
-									className="text-xs text-zinc-500 block mb-1"
-								>
-									Delay: {p.delay}s
-								</label>
-								<input
-									id={`delay-${i}`}
-									type="range"
-									min={0.5}
-									max={3}
-									step={0.5}
-									value={p.delay}
-									onChange={(e) => {
-										const next = [...promises];
-										next[i] = { ...next[i], delay: Number(e.target.value) };
-										setPromises(next);
-										setResult(null);
-									}}
-									className="w-full accent-cyan-500"
-								/>
+				{/* Promise configs */}
+				<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+					{promises.map((p, i) => (
+						<div
+							key={p.label}
+							className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 space-y-3"
+						>
+							<div className="text-sm font-semibold text-zinc-300">
+								{p.label}
 							</div>
-							<div className="flex items-center gap-2">
-								<button
-									type="button"
-									onClick={() => {
-										const next = [...promises];
-										next[i] = { ...next[i], succeeds: !next[i].succeeds };
-										setPromises(next);
-										setResult(null);
-									}}
-									className={`text-xs px-2 py-1 rounded border transition-colors ${
-										p.succeeds
-											? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-											: "bg-rose-500/10 text-rose-400 border-rose-500/20"
-									}`}
-								>
-									{p.succeeds ? "✓ Fulfills" : "✗ Rejects"}
-								</button>
+							<div className="space-y-2">
+								<div>
+									<label
+										htmlFor={`delay-${i}`}
+										className="text-xs text-zinc-500 block mb-1"
+									>
+										Delay: {p.delay}s
+									</label>
+									<input
+										id={`delay-${i}`}
+										type="range"
+										min={0.5}
+										max={3}
+										step={0.5}
+										value={p.delay}
+										onChange={(e) => {
+											const next = [...promises];
+											next[i] = { ...next[i], delay: Number(e.target.value) };
+											setPromises(next);
+											setResult(null);
+										}}
+										className="w-full accent-cyan-500"
+									/>
+								</div>
+								<div className="flex items-center gap-2">
+									<button
+										type="button"
+										onClick={() => {
+											const next = [...promises];
+											next[i] = { ...next[i], succeeds: !next[i].succeeds };
+											setPromises(next);
+											setResult(null);
+										}}
+										className={`text-xs px-2 py-1 rounded border transition-colors ${
+											p.succeeds
+												? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+												: "bg-rose-500/10 text-rose-400 border-rose-500/20"
+										}`}
+									>
+										{p.succeeds ? "✓ Fulfills" : "✗ Rejects"}
+									</button>
+								</div>
 							</div>
+
+							{/* Progress bar */}
+							{result && (
+								<div className="h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+									<motion.div
+										className={`h-full rounded-full ${
+											result.settled[i]
+												? promises[i].succeeds
+													? "bg-emerald-500"
+													: "bg-rose-500"
+												: "bg-zinc-600"
+										}`}
+										initial={{ width: 0 }}
+										animate={{ width: result.settled[i] ? "100%" : "0%" }}
+										transition={{ duration: p.delay }}
+									/>
+								</div>
+							)}
 						</div>
+					))}
+				</div>
 
-						{/* Progress bar */}
-						{result && (
-							<div className="h-1.5 rounded-full bg-zinc-800 overflow-hidden">
-								<motion.div
-									className={`h-full rounded-full ${
-										result.settled[i]
-											? promises[i].succeeds
-												? "bg-emerald-500"
-												: "bg-rose-500"
-											: "bg-zinc-600"
-									}`}
-									initial={{ width: 0 }}
-									animate={{ width: result.settled[i] ? "100%" : "0%" }}
-									transition={{ duration: p.delay }}
-								/>
-							</div>
-						)}
-					</div>
-				))}
-			</div>
+				{/* Run button */}
+				<button
+					type="button"
+					onClick={run}
+					disabled={running}
+					className="px-5 py-2.5 rounded-lg text-sm font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+				>
+					{running ? "Running..." : "▶ Run"}
+				</button>
 
-			{/* Run button */}
-			<button
-				type="button"
-				onClick={run}
-				disabled={running}
-				className="px-5 py-2.5 rounded-lg text-sm font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-			>
-				{running ? "Running..." : "▶ Run"}
-			</button>
+				{/* Result */}
+				<AnimatePresence>
+					{result && result.status !== "running" && (
+						<motion.div
+							initial={{ opacity: 0, y: 8 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0 }}
+							className={`p-4 rounded-lg border text-sm font-mono ${
+								result.status === "done"
+									? "bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
+									: "bg-rose-500/10 border-rose-500/20 text-rose-300"
+							}`}
+						>
+							<span className="font-semibold">
+								{result.status === "done" ? "Resolved:" : "Rejected:"}
+							</span>{" "}
+							{result.value}
+						</motion.div>
+					)}
+				</AnimatePresence>
 
-			{/* Result */}
-			<AnimatePresence>
-				{result && result.status !== "running" && (
-					<motion.div
-						initial={{ opacity: 0, y: 8 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0 }}
-						className={`p-4 rounded-lg border text-sm font-mono ${
-							result.status === "done"
-								? "bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
-								: "bg-rose-500/10 border-rose-500/20 text-rose-300"
-						}`}
-					>
-						<span className="font-semibold">
-							{result.status === "done" ? "Resolved:" : "Rejected:"}
-						</span>{" "}
-						{result.value}
-					</motion.div>
-				)}
-			</AnimatePresence>
+				{/* Code */}
+				<ShikiCode code={COMBINATOR_CODE[combinator]} language="javascript" />
 
-			{/* Code */}
-			<ShikiCode code={COMBINATOR_CODE[combinator]} language="javascript" />
-
-			{/* Decision table */}
-			<div className="overflow-x-auto">
-				<table className="w-full text-xs text-left border-collapse">
-					<thead>
-						<tr className="border-b border-zinc-800">
-							<th className="pb-2 pr-4 text-zinc-500 font-medium">Method</th>
-							<th className="pb-2 pr-4 text-zinc-500 font-medium">
-								Resolves when
-							</th>
-							<th className="pb-2 text-zinc-500 font-medium">Rejects when</th>
-						</tr>
-					</thead>
-					<tbody className="divide-y divide-zinc-800/50">
-						{(
-							Object.entries(COMBINATOR_DESCRIPTIONS) as [
-								Combinator,
-								typeof desc,
-							][]
-						).map(([key, d]) => (
-							<tr
-								key={key}
-								className={combinator === key ? "bg-cyan-500/5" : ""}
-							>
-								<td className="py-2 pr-4 font-mono text-cyan-400">
-									Promise.{key}()
-								</td>
-								<td className="py-2 pr-4 text-zinc-400">{d.resolves}</td>
-								<td className="py-2 text-zinc-400">{d.rejects}</td>
+				{/* Decision table */}
+				<div className="overflow-x-auto">
+					<table className="w-full text-xs text-left border-collapse">
+						<thead>
+							<tr className="border-b border-zinc-800">
+								<th className="pb-2 pr-4 text-zinc-500 font-medium">Method</th>
+								<th className="pb-2 pr-4 text-zinc-500 font-medium">
+									Resolves when
+								</th>
+								<th className="pb-2 text-zinc-500 font-medium">Rejects when</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+						<tbody className="divide-y divide-zinc-800/50">
+							{(
+								Object.entries(COMBINATOR_DESCRIPTIONS) as [
+									Combinator,
+									typeof desc,
+								][]
+							).map(([key, d]) => (
+								<tr
+									key={key}
+									className={combinator === key ? "bg-cyan-500/5" : ""}
+								>
+									<td className="py-2 pr-4 font-mono text-cyan-400">
+										Promise.{key}()
+									</td>
+									<td className="py-2 pr-4 text-zinc-400">{d.resolves}</td>
+									<td className="py-2 text-zinc-400">{d.rejects}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }

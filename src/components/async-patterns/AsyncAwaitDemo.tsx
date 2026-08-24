@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 interface Step {
@@ -123,144 +124,150 @@ export function AsyncAwaitDemo() {
 	const colors = PHASE_COLORS[current.phase];
 
 	return (
-		<div className="space-y-4">
-			<div className="flex flex-col lg:flex-row gap-6">
-				{/* Code panel */}
-				<div className="flex-1 min-w-0">
-					<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
-						Source Code
-					</div>
-					<ShikiCode
-						code={CODE}
-						language="javascript"
-						highlightLine={current.highlightLine}
-					/>
-				</div>
-
-				{/* Runtime state */}
-				<div className="flex-1 min-w-0 space-y-3">
-					{/* Call Stack */}
-					<div>
+		<DemoSection
+			title="Demo 1: async/await Internals"
+			description="Step through how async functions suspend, yield, and resume via the microtask queue."
+		>
+			<div className="space-y-4">
+				<div className="flex flex-col lg:flex-row gap-6">
+					{/* Code panel */}
+					<div className="flex-1 min-w-0">
 						<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
-							Call Stack
+							Source Code
 						</div>
-						<div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 min-h-20 flex flex-col-reverse gap-1">
-							<AnimatePresence>
-								{current.stack.length === 0 ? (
-									<span className="text-xs text-zinc-600 text-center py-2">
-										(empty)
-									</span>
-								) : (
-									current.stack.map((frame) => (
-										<motion.div
-											key={frame}
-											initial={{ opacity: 0, x: -10 }}
-											animate={{ opacity: 1, x: 0 }}
-											exit={{ opacity: 0, x: -10 }}
-											className="px-3 py-1.5 rounded bg-violet-500/10 border border-violet-500/20 text-xs font-mono text-violet-300"
-										>
-											{frame}
-										</motion.div>
-									))
-								)}
-							</AnimatePresence>
-						</div>
+						<ShikiCode
+							code={CODE}
+							language="javascript"
+							highlightLine={current.highlightLine}
+						/>
 					</div>
 
-					{/* Microtask Queue */}
-					<div>
-						<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
-							Microtask Queue
+					{/* Runtime state */}
+					<div className="flex-1 min-w-0 space-y-3">
+						{/* Call Stack */}
+						<div>
+							<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+								Call Stack
+							</div>
+							<div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 min-h-20 flex flex-col-reverse gap-1">
+								<AnimatePresence>
+									{current.stack.length === 0 ? (
+										<span className="text-xs text-zinc-600 text-center py-2">
+											(empty)
+										</span>
+									) : (
+										current.stack.map((frame) => (
+											<motion.div
+												key={frame}
+												initial={{ opacity: 0, x: -10 }}
+												animate={{ opacity: 1, x: 0 }}
+												exit={{ opacity: 0, x: -10 }}
+												className="px-3 py-1.5 rounded bg-violet-500/10 border border-violet-500/20 text-xs font-mono text-violet-300"
+											>
+												{frame}
+											</motion.div>
+										))
+									)}
+								</AnimatePresence>
+							</div>
 						</div>
-						<div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 min-h-14 flex flex-col gap-1">
-							<AnimatePresence>
-								{current.microtasks.length === 0 ? (
-									<span className="text-xs text-zinc-600 text-center py-1">
-										(empty)
-									</span>
-								) : (
-									current.microtasks.map((task) => (
-										<motion.div
-											key={task}
-											initial={{ opacity: 0, scale: 0.9 }}
-											animate={{ opacity: 1, scale: 1 }}
-											exit={{ opacity: 0, scale: 0.9 }}
-											className="px-3 py-1.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-300"
-										>
-											{task}
-										</motion.div>
-									))
-								)}
-							</AnimatePresence>
-						</div>
-					</div>
 
-					{/* Phase badge */}
-					<div
-						className={`px-3 py-2 rounded-lg ${colors.bg} border ${colors.border}`}
-					>
-						<span
-							className={`text-xs font-semibold uppercase tracking-wide ${colors.text}`}
+						{/* Microtask Queue */}
+						<div>
+							<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+								Microtask Queue
+							</div>
+							<div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 min-h-14 flex flex-col gap-1">
+								<AnimatePresence>
+									{current.microtasks.length === 0 ? (
+										<span className="text-xs text-zinc-600 text-center py-1">
+											(empty)
+										</span>
+									) : (
+										current.microtasks.map((task) => (
+											<motion.div
+												key={task}
+												initial={{ opacity: 0, scale: 0.9 }}
+												animate={{ opacity: 1, scale: 1 }}
+												exit={{ opacity: 0, scale: 0.9 }}
+												className="px-3 py-1.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-300"
+											>
+												{task}
+											</motion.div>
+										))
+									)}
+								</AnimatePresence>
+							</div>
+						</div>
+
+						{/* Phase badge */}
+						<div
+							className={`px-3 py-2 rounded-lg ${colors.bg} border ${colors.border}`}
 						>
-							Phase: {current.phase}
-						</span>
+							<span
+								className={`text-xs font-semibold uppercase tracking-wide ${colors.text}`}
+							>
+								Phase: {current.phase}
+							</span>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			{/* Controls */}
-			<div className="flex items-center gap-3">
-				<button
-					type="button"
-					onClick={() => setStep((s) => Math.max(0, s - 1))}
-					disabled={step <= 0}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-				>
-					← Back
-				</button>
-				<button
-					type="button"
-					onClick={() => setStep((s) => Math.min(STEPS.length - 1, s + 1))}
-					disabled={step >= STEPS.length - 1}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-				>
-					Next →
-				</button>
-				<button
-					type="button"
-					onClick={() => setStep(0)}
-					className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
-				>
-					↺ Reset
-				</button>
-				<span className="text-xs text-zinc-600 ml-auto">
-					Step {step + 1} / {STEPS.length}
-				</span>
-			</div>
+				{/* Controls */}
+				<div className="flex items-center gap-3">
+					<button
+						type="button"
+						onClick={() => setStep((s) => Math.max(0, s - 1))}
+						disabled={step <= 0}
+						className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					>
+						← Back
+					</button>
+					<button
+						type="button"
+						onClick={() => setStep((s) => Math.min(STEPS.length - 1, s + 1))}
+						disabled={step >= STEPS.length - 1}
+						className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+					>
+						Next →
+					</button>
+					<button
+						type="button"
+						onClick={() => setStep(0)}
+						className="px-4 py-2 rounded-lg text-sm font-medium bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-300 transition-colors"
+					>
+						↺ Reset
+					</button>
+					<span className="text-xs text-zinc-600 ml-auto">
+						Step {step + 1} / {STEPS.length}
+					</span>
+				</div>
 
-			{/* Description */}
-			<motion.div
-				key={step}
-				initial={{ opacity: 0, y: 5 }}
-				animate={{ opacity: 1, y: 0 }}
-				className={`p-3 rounded-lg ${colors.bg} border ${colors.border} text-sm ${colors.text}`}
-			>
-				{current.description}
-			</motion.div>
+				{/* Description */}
+				<motion.div
+					key={step}
+					initial={{ opacity: 0, y: 5 }}
+					animate={{ opacity: 1, y: 0 }}
+					className={`p-3 rounded-lg ${colors.bg} border ${colors.border} text-sm ${colors.text}`}
+				>
+					{current.description}
+				</motion.div>
 
-			{/* Key insight */}
-			<div className="p-4 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-zinc-400 space-y-1">
-				<p className="text-zinc-200 font-medium">Key insight</p>
-				<p>
-					<code className="text-emerald-400">await</code> doesn't block the
-					thread — it suspends the <em>current async function</em> and queues
-					its continuation as a microtask{" "}
-					<em>when the awaited value settles</em>, not when{" "}
-					<code className="text-emerald-400">await</code> is first hit.
-					Synchronous code after the{" "}
-					<code className="text-emerald-400">await</code> call site runs first.
-				</p>
+				{/* Key insight */}
+				<div className="p-4 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-zinc-400 space-y-1">
+					<p className="text-zinc-200 font-medium">Key insight</p>
+					<p>
+						<code className="text-emerald-400">await</code> doesn't block the
+						thread — it suspends the <em>current async function</em> and queues
+						its continuation as a microtask{" "}
+						<em>when the awaited value settles</em>, not when{" "}
+						<code className="text-emerald-400">await</code> is first hit.
+						Synchronous code after the{" "}
+						<code className="text-emerald-400">await</code> call site runs
+						first.
+					</p>
+				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }

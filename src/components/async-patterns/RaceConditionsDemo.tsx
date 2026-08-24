@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useRef, useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type FixMode = "none" | "abort" | "requestId";
@@ -172,166 +173,173 @@ export function RaceConditionsDemo() {
 	};
 
 	return (
-		<div className="space-y-5">
-			{/* Mode selector */}
-			<div className="flex flex-wrap gap-2">
-				{(["none", "abort", "requestId"] as FixMode[]).map((m) => (
+		<DemoSection
+			title="Demo 3: Race Conditions"
+			description="Simulate search requests arriving out of order and compare three fix strategies side by side."
+		>
+			<div className="space-y-5">
+				{/* Mode selector */}
+				<div className="flex flex-wrap gap-2">
+					{(["none", "abort", "requestId"] as FixMode[]).map((m) => (
+						<button
+							key={m}
+							type="button"
+							onClick={() => {
+								setMode(m);
+								reset();
+							}}
+							className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
+								mode === m
+									? m === "none"
+										? "bg-rose-500/20 text-rose-300 border-rose-500/30"
+										: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-200"
+							}`}
+						>
+							{FIX_LABELS[m]}
+						</button>
+					))}
+				</div>
+
+				{/* Controls */}
+				<div className="flex flex-col sm:flex-row gap-4">
+					<div className="flex-1">
+						<label
+							htmlFor="race-query"
+							className="text-xs text-zinc-500 block mb-1.5"
+						>
+							Search query (type fast to trigger race condition)
+						</label>
+						<input
+							id="race-query"
+							type="text"
+							value={query}
+							onChange={handleInput}
+							placeholder="Type here..."
+							className="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-cyan-500/50"
+						/>
+					</div>
+					<div className="w-40">
+						<label
+							htmlFor="race-latency"
+							className="text-xs text-zinc-500 block mb-1.5"
+						>
+							Max latency: {latency}ms
+						</label>
+						<input
+							id="race-latency"
+							type="range"
+							min={200}
+							max={2000}
+							step={100}
+							value={latency}
+							onChange={(e) => setLatency(Number(e.target.value))}
+							className="w-full accent-cyan-500"
+						/>
+					</div>
 					<button
-						key={m}
 						type="button"
-						onClick={() => {
-							setMode(m);
-							reset();
-						}}
-						className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
-							mode === m
-								? m === "none"
-									? "bg-rose-500/20 text-rose-300 border-rose-500/30"
-									: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-								: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-200"
+						onClick={reset}
+						className="self-end px-3 py-2 rounded-lg text-sm bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-200 transition-colors"
+					>
+						↺ Reset
+					</button>
+				</div>
+
+				{/* Request timeline */}
+				<div className="p-4 rounded-lg bg-zinc-900 border border-zinc-800 min-h-[120px]">
+					<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
+						Request Timeline
+					</div>
+					<AnimatePresence>
+						{requests.length === 0 ? (
+							<p className="text-xs text-zinc-600 text-center py-4">
+								Type above to fire requests...
+							</p>
+						) : (
+							<div className="space-y-2">
+								{requests.map((req) => (
+									<motion.div
+										key={req.id}
+										initial={{ opacity: 0, x: -10 }}
+										animate={{ opacity: 1, x: 0 }}
+										className="flex items-center gap-3 text-xs"
+									>
+										<span className="text-zinc-600 w-12 shrink-0">
+											#{req.id}
+										</span>
+										<span className="text-zinc-400 w-28 truncate shrink-0 font-mono">
+											"{req.query}"
+										</span>
+										<div className="flex-1 relative h-5 bg-zinc-800 rounded overflow-hidden">
+											<motion.div
+												className={`absolute inset-y-0 left-0 rounded ${
+													req.cancelled
+														? "bg-zinc-600"
+														: req.stale
+															? "bg-rose-500/70"
+															: req.resolvedAt
+																? "bg-emerald-500/70"
+																: "bg-cyan-500/50"
+												}`}
+												initial={{ width: 0 }}
+												animate={{
+													width: req.cancelled
+														? `${(req.cancelledProgress ?? 0) * 100}%`
+														: req.resolvedAt
+															? "100%"
+															: "60%",
+												}}
+												transition={{
+													duration: req.cancelled ? 0 : req.delay / 1000,
+												}}
+											/>
+										</div>
+										<span
+											className={`w-20 shrink-0 text-right ${
+												req.cancelled
+													? "text-zinc-500"
+													: req.stale
+														? "text-rose-400"
+														: req.resolvedAt
+															? "text-emerald-400"
+															: "text-cyan-400"
+											}`}
+										>
+											{req.cancelled
+												? "cancelled"
+												: req.stale
+													? "stale!"
+													: req.resolvedAt
+														? "resolved"
+														: "pending..."}
+										</span>
+									</motion.div>
+								))}
+							</div>
+						)}
+					</AnimatePresence>
+				</div>
+
+				{/* Displayed result */}
+				{displayedResult && (
+					<motion.div
+						key={displayedResult}
+						initial={{ opacity: 0, scale: 0.98 }}
+						animate={{ opacity: 1, scale: 1 }}
+						className={`p-3 rounded-lg border text-sm font-mono ${
+							mode === "none" && requests.some((r) => r.stale && r.resolvedAt)
+								? "bg-rose-500/10 border-rose-500/20 text-rose-300"
+								: "bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
 						}`}
 					>
-						{FIX_LABELS[m]}
-					</button>
-				))}
+						Displayed: {displayedResult}
+					</motion.div>
+				)}
+
+				{/* Code */}
+				<ShikiCode code={codeMap[mode]} language="typescript" />
 			</div>
-
-			{/* Controls */}
-			<div className="flex flex-col sm:flex-row gap-4">
-				<div className="flex-1">
-					<label
-						htmlFor="race-query"
-						className="text-xs text-zinc-500 block mb-1.5"
-					>
-						Search query (type fast to trigger race condition)
-					</label>
-					<input
-						id="race-query"
-						type="text"
-						value={query}
-						onChange={handleInput}
-						placeholder="Type here..."
-						className="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-cyan-500/50"
-					/>
-				</div>
-				<div className="w-40">
-					<label
-						htmlFor="race-latency"
-						className="text-xs text-zinc-500 block mb-1.5"
-					>
-						Max latency: {latency}ms
-					</label>
-					<input
-						id="race-latency"
-						type="range"
-						min={200}
-						max={2000}
-						step={100}
-						value={latency}
-						onChange={(e) => setLatency(Number(e.target.value))}
-						className="w-full accent-cyan-500"
-					/>
-				</div>
-				<button
-					type="button"
-					onClick={reset}
-					className="self-end px-3 py-2 rounded-lg text-sm bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-200 transition-colors"
-				>
-					↺ Reset
-				</button>
-			</div>
-
-			{/* Request timeline */}
-			<div className="p-4 rounded-lg bg-zinc-900 border border-zinc-800 min-h-[120px]">
-				<div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
-					Request Timeline
-				</div>
-				<AnimatePresence>
-					{requests.length === 0 ? (
-						<p className="text-xs text-zinc-600 text-center py-4">
-							Type above to fire requests...
-						</p>
-					) : (
-						<div className="space-y-2">
-							{requests.map((req) => (
-								<motion.div
-									key={req.id}
-									initial={{ opacity: 0, x: -10 }}
-									animate={{ opacity: 1, x: 0 }}
-									className="flex items-center gap-3 text-xs"
-								>
-									<span className="text-zinc-600 w-12 shrink-0">#{req.id}</span>
-									<span className="text-zinc-400 w-28 truncate shrink-0 font-mono">
-										"{req.query}"
-									</span>
-									<div className="flex-1 relative h-5 bg-zinc-800 rounded overflow-hidden">
-										<motion.div
-											className={`absolute inset-y-0 left-0 rounded ${
-												req.cancelled
-													? "bg-zinc-600"
-													: req.stale
-														? "bg-rose-500/70"
-														: req.resolvedAt
-															? "bg-emerald-500/70"
-															: "bg-cyan-500/50"
-											}`}
-											initial={{ width: 0 }}
-											animate={{
-												width: req.cancelled
-													? `${(req.cancelledProgress ?? 0) * 100}%`
-													: req.resolvedAt
-														? "100%"
-														: "60%",
-											}}
-											transition={{
-												duration: req.cancelled ? 0 : req.delay / 1000,
-											}}
-										/>
-									</div>
-									<span
-										className={`w-20 shrink-0 text-right ${
-											req.cancelled
-												? "text-zinc-500"
-												: req.stale
-													? "text-rose-400"
-													: req.resolvedAt
-														? "text-emerald-400"
-														: "text-cyan-400"
-										}`}
-									>
-										{req.cancelled
-											? "cancelled"
-											: req.stale
-												? "stale!"
-												: req.resolvedAt
-													? "resolved"
-													: "pending..."}
-									</span>
-								</motion.div>
-							))}
-						</div>
-					)}
-				</AnimatePresence>
-			</div>
-
-			{/* Displayed result */}
-			{displayedResult && (
-				<motion.div
-					key={displayedResult}
-					initial={{ opacity: 0, scale: 0.98 }}
-					animate={{ opacity: 1, scale: 1 }}
-					className={`p-3 rounded-lg border text-sm font-mono ${
-						mode === "none" && requests.some((r) => r.stale && r.resolvedAt)
-							? "bg-rose-500/10 border-rose-500/20 text-rose-300"
-							: "bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
-					}`}
-				>
-					Displayed: {displayedResult}
-				</motion.div>
-			)}
-
-			{/* Code */}
-			<ShikiCode code={codeMap[mode]} language="typescript" />
-		</div>
+		</DemoSection>
 	);
 }
