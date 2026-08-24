@@ -349,18 +349,18 @@ export function RerenderPropagationDemo() {
 			description="Interactive visualization showing how React re-renders propagate through the component tree."
 		>
 			{/* How to Use */}
-			<div className="mb-4 p-3 rounded-lg bg-violet-500/10 border border-violet-500/30">
-				<div className="text-xs font-semibold text-violet-300 mb-2 flex items-center gap-2">
+			<div className="mb-4 p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/30">
+				<div className="text-xs font-semibold text-cyan-300 mb-2 flex items-center gap-2">
 					<span>💡</span>
 					How to Use
 				</div>
-				<div className="text-xs text-violet-200/80 space-y-1.5">
+				<div className="text-xs text-cyan-200/80 space-y-1.5">
 					<p>
-						<strong className="text-violet-200">1. Click any component</strong>{" "}
-						in the tree below to simulate setState() being called
+						<strong className="text-cyan-200">1. Click any component</strong> in
+						the tree below to simulate setState() being called
 					</p>
 					<p>
-						<strong className="text-violet-200">
+						<strong className="text-cyan-200">
 							2. Toggle React.memo checkboxes
 						</strong>{" "}
 						to see how memoization blocks unnecessary re-renders

@@ -302,20 +302,11 @@ function Parent() {
 						setCallbackMode("without");
 						reset();
 					}}
-					className="px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors"
-					style={
+					className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors border ${
 						callbackMode === "without"
-							? {
-									backgroundColor: "#450a0a",
-									color: "#f87171",
-									border: "1px solid #dc2626",
-								}
-							: {
-									backgroundColor: "#27272a",
-									color: "#71717a",
-									border: "1px solid #3f3f46",
-								}
-					}
+							? "bg-red-500/20 text-red-300 border-red-500/40"
+							: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
+					}`}
 				>
 					❌ Without useCallback
 				</button>
@@ -325,20 +316,11 @@ function Parent() {
 						setCallbackMode("with");
 						reset();
 					}}
-					className="px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors"
-					style={
+					className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors border ${
 						callbackMode === "with"
-							? {
-									backgroundColor: "#052e16",
-									color: "#4ade80",
-									border: "1px solid #16a34a",
-								}
-							: {
-									backgroundColor: "#27272a",
-									color: "#71717a",
-									border: "1px solid #3f3f46",
-								}
-					}
+							? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+							: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
+					}`}
 				>
 					✅ With useCallback
 				</button>

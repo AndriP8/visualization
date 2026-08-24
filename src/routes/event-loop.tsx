@@ -12,7 +12,7 @@ export const Route = createFileRoute("/event-loop")({
 
 function EventLoopPage() {
 	return (
-		<div className="max-w-6xl mx-auto space-y-8">
+		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
 				topic={{ label: "JavaScript Internals", color: "amber" }}
 				title="Event Loop"
@@ -62,7 +62,7 @@ function EventLoopPage() {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ delay: 0.2, duration: 0.4 }}
-				className="space-y-8"
+				className="space-y-12"
 			>
 				<CallStackDemo />
 				<EventLoopSimDemo />

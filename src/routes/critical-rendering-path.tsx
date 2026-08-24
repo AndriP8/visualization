@@ -14,7 +14,7 @@ function CriticalRenderingPathPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "Browser Fundamentals", color: "orange" }}
+				topic={{ label: "Browser", color: "orange" }}
 				title="Critical Rendering Path"
 				subtitle="How the browser turns HTML & CSS bytes into pixels on screen."
 				gradient={{ from: "orange-400", to: "amber-400" }}

@@ -61,8 +61,8 @@ function JsMemoryPage() {
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				transition={{ delay: 0.4, duration: 0.4 }}
-				className="space-y-16"
+				transition={{ delay: 0.2, duration: 0.4 }}
+				className="space-y-12"
 			>
 				<StackHeapExplorerDemo />
 				<MarkAndSweepDemo />

@@ -12,7 +12,7 @@ export const Route = createFileRoute("/closure-scope")({
 
 function ClosureScopePage() {
 	return (
-		<div className="max-w-6xl mx-auto space-y-8">
+		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
 				topic={{ label: "JavaScript Internals", color: "amber" }}
 				title="Closure & Lexical Scope"
@@ -55,7 +55,7 @@ function ClosureScopePage() {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ delay: 0.2, duration: 0.4 }}
-				className="space-y-8"
+				className="space-y-12"
 			>
 				<LexicalScopeExplorerDemo />
 				<ClosureSnapshotDemo />

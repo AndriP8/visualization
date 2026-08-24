@@ -194,20 +194,13 @@ export function ContextRerenderDemo() {
 							setMode(m);
 							setRerenderTarget(null);
 						}}
-						className="px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors"
-						style={
+						className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors border ${
 							mode === m
-								? {
-										backgroundColor: m === "trap" ? "#450a0a" : "#052e16",
-										color: m === "trap" ? "#f87171" : "#34d399",
-										border: `1px solid ${m === "trap" ? "#dc2626" : "#10b981"}`,
-									}
-								: {
-										backgroundColor: "#27272a",
-										color: "#71717a",
-										border: "1px solid #3f3f46",
-									}
-						}
+								? m === "trap"
+									? "bg-red-500/20 text-red-300 border-red-500/40"
+									: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+								: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
+						}`}
 					>
 						{m === "trap"
 							? "🪤 Trap (merged context)"

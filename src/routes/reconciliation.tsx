@@ -14,7 +14,7 @@ function ReconciliationPage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
-				topic={{ label: "React Internals", color: "cyan" }}
+				topic={{ label: "React", color: "cyan" }}
 				title="Reconciliation"
 				subtitle="Comparing two arbitrary trees is O(n³) — far too slow for UI updates that need to happen in milliseconds. React's reconciliation algorithm reduces this to O(n) by making two practical assumptions about how UIs change."
 				gradient={{ from: "cyan-400", to: "blue-400" }}

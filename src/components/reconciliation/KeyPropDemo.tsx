@@ -260,7 +260,7 @@ export function KeyPropDemo() {
 				className={`mb-5 px-4 py-3 rounded-lg text-xs border ${
 					lastAction === "none"
 						? "bg-zinc-800/30 border-zinc-700/50 text-zinc-500"
-						: "bg-violet-500/5 border-violet-500/20 text-violet-300"
+						: "bg-cyan-500/10 border-cyan-500/20 text-cyan-300"
 				}`}
 			>
 				{ACTION_INSIGHTS[lastAction]}

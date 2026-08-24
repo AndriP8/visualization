@@ -14,7 +14,7 @@ function ReactStatePage() {
 	return (
 		<div className="max-w-6xl mx-auto space-y-12 pb-20">
 			<PageHeader
-				topic={{ label: "React Internals", color: "cyan" }}
+				topic={{ label: "React", color: "cyan" }}
 				title="State & Re-renders"
 				subtitle="A state update in React triggers a re-render of the owning component and every descendant by default — regardless of whether their props changed. The rendering cost cascades down the component tree, and the fixes are easy to misapply."
 				gradient={{ from: "cyan-400", to: "blue-400" }}
