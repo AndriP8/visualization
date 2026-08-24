@@ -1,6 +1,7 @@
 import { ChevronDown, ChevronRight, FastForward, Play } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 
 // ============================================================================
 // JOIN DEMO DATA
@@ -58,9 +59,8 @@ const EMPLOYEES: Employee[] = [
 	{ id: 1, name: "Alice", dept: "Engineering", salary: 110000 },
 	{ id: 2, name: "Bob", dept: "Engineering", salary: 95000 },
 	{ id: 3, name: "Charlie", dept: "Sales", salary: 125000 },
-	{ id: 4, name: "Diana", dept: "Sales", salary: 105000 },
-	{ id: 5, name: "Evan", dept: "Marketing", salary: 85000 },
-	{ id: 6, name: "Fiona", dept: "Marketing", salary: 90000 },
+	{ id: 4, name: "Diana", dept: "Engineering", salary: 130000 },
+	{ id: 5, name: "Evan", dept: "Sales", salary: 80000 },
 ];
 
 // ============================================================================
@@ -73,29 +73,36 @@ export function JoinSubqueryDemo() {
 	>("join");
 
 	return (
-		<div className="space-y-6">
-			{/* JOIN Section */}
-			<SubSection
-				title="A. JOIN Visualization"
-				isExpanded={expandedSection === "join"}
-				onToggle={() =>
-					setExpandedSection(expandedSection === "join" ? null : "join")
-				}
-			>
-				<JoinVisualization />
-			</SubSection>
+		<DemoSection
+			title="Demo 4: JOIN & Subquery Execution"
+			description="Understand how JOINs combine tables and how subquery execution differs between correlated and non-correlated queries."
+		>
+			<div className="space-y-6">
+				{/* JOIN Section */}
+				<SubSection
+					title="A. JOIN Visualization"
+					isExpanded={expandedSection === "join"}
+					onToggle={() =>
+						setExpandedSection(expandedSection === "join" ? null : "join")
+					}
+				>
+					<JoinVisualization />
+				</SubSection>
 
-			{/* Subquery Section */}
-			<SubSection
-				title="B. Subquery Execution"
-				isExpanded={expandedSection === "subquery"}
-				onToggle={() =>
-					setExpandedSection(expandedSection === "subquery" ? null : "subquery")
-				}
-			>
-				<SubqueryVisualization />
-			</SubSection>
-		</div>
+				{/* Subquery Section */}
+				<SubSection
+					title="B. Subquery Execution"
+					isExpanded={expandedSection === "subquery"}
+					onToggle={() =>
+						setExpandedSection(
+							expandedSection === "subquery" ? null : "subquery",
+						)
+					}
+				>
+					<SubqueryVisualization />
+				</SubSection>
+			</div>
+		</DemoSection>
 	);
 }
 

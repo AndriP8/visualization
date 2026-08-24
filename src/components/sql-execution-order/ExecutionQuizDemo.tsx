@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 
 type QuizQuestion = {
 	id: string;
@@ -51,7 +52,10 @@ export function ExecutionQuizDemo() {
 	const [activeId, setActiveId] = useState<string | null>(null);
 
 	return (
-		<div className="bg-zinc-950 border border-zinc-800 rounded-xl p-6 lg:p-8 flex flex-col gap-6">
+		<DemoSection
+			title="Demo 3: Common Pitfalls Quiz"
+			description="Test your understanding of SQL execution order and learn why certain syntax errors occur."
+		>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				{QUIZ_DATA.map((q) => {
 					const isFlipped = activeId === q.id;
@@ -73,11 +77,11 @@ export function ExecutionQuizDemo() {
 								<div
 									className={`absolute inset-0 backface-hidden bg-zinc-900 border ${
 										isFlipped
-											? "border-blue-500/50"
+											? "border-emerald-500/50"
 											: "border-zinc-800 group-hover:border-zinc-600"
 									} rounded-xl p-6 flex flex-col justify-center items-center text-center gap-4 shadow-lg transition-colors`}
 								>
-									<div className="w-12 h-12 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xl mb-2">
+									<div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-xl mb-2">
 										?
 									</div>
 									<h3 className="font-semibold text-zinc-200 text-lg md:text-xl px-2">
@@ -90,10 +94,10 @@ export function ExecutionQuizDemo() {
 
 								{/* Back Card */}
 								<div
-									className="absolute inset-0 backface-hidden bg-linear-to-br from-blue-900/30 to-purple-900/30 border border-blue-500/30 rounded-xl p-5 flex flex-col shadow-xl overflow-hidden"
+									className="absolute inset-0 backface-hidden bg-linear-to-br from-emerald-950/40 to-teal-950/40 border border-emerald-500/30 rounded-xl p-5 flex flex-col shadow-xl overflow-hidden"
 									style={{ transform: "rotateY(180deg)" }}
 								>
-									<div className="text-blue-300 font-bold mb-2 uppercase text-[10px] tracking-wider shrink-0">
+									<div className="text-emerald-300 font-bold mb-2 uppercase text-[10px] tracking-wider shrink-0">
 										Answer
 									</div>
 									<h4 className="font-semibold text-white text-[15px] leading-tight mb-2 shrink-0">
@@ -115,6 +119,6 @@ export function ExecutionQuizDemo() {
 					);
 				})}
 			</div>
-		</div>
+		</DemoSection>
 	);
 }

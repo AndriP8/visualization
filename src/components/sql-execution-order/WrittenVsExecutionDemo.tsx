@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 
 type Clause = {
 	id: string;
@@ -61,19 +62,19 @@ const CLAUSES: Clause[] = [
 		id: "order-by",
 		clause: "ORDER BY",
 		code: "ORDER BY avg_salary DESC",
-		color: "bg-teal-500/20 border-teal-500/30 text-teal-300",
+		color: "bg-indigo-500/20 border-indigo-500/30 text-indigo-300",
 		writtenOrder: 5,
 		executionOrder: 5,
-		explanation: "Step 6: Sorts the final selected rows.",
+		explanation: "Step 6: Sorts the final produced rows.",
 	},
 	{
 		id: "limit",
 		clause: "LIMIT",
 		code: "LIMIT 10",
-		color: "bg-zinc-500/20 border-zinc-500/30 text-zinc-300",
+		color: "bg-teal-500/20 border-teal-500/30 text-teal-300",
 		writtenOrder: 6,
 		executionOrder: 6,
-		explanation: "Step 7: Truncates the total results returned.",
+		explanation: "Step 7: Constrains the output volume.",
 	},
 ];
 
@@ -87,91 +88,96 @@ export function WrittenVsExecutionDemo() {
 	});
 
 	return (
-		<div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl font-mono text-sm relative">
-			<div className="flex bg-zinc-950 p-2 border-b border-zinc-800 self-center">
-				<div className="flex bg-zinc-900 rounded-lg p-1 relative w-full max-w-md mx-auto">
-					<button
-						type="button"
-						className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold rounded-md transition-colors ${
-							mode === "written"
-								? "text-white"
-								: "text-zinc-500 hover:text-zinc-300"
-						}`}
-						onClick={() => setMode("written")}
-					>
-						{mode === "written" && (
-							<motion.span
-								layoutId="writtenVsExecutionTab"
-								className="absolute inset-0 bg-zinc-800 rounded-md border border-zinc-700/50 shadow-sm -z-10"
-								transition={{ type: "spring", stiffness: 400, damping: 30 }}
-							/>
-						)}
-						<span className="font-sans">📝</span> Written Syntax
-					</button>
-					<button
-						type="button"
-						className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold rounded-md transition-colors ${
-							mode === "execution"
-								? "text-white"
-								: "text-zinc-500 hover:text-zinc-300"
-						}`}
-						onClick={() => setMode("execution")}
-					>
-						{mode === "execution" && (
-							<motion.span
-								layoutId="writtenVsExecutionTab"
-								className="absolute inset-0 bg-zinc-800 rounded-md border border-zinc-700/50 shadow-sm -z-10"
-								transition={{ type: "spring", stiffness: 400, damping: 30 }}
-							/>
-						)}
-						<span className="font-sans">⚙️</span> Logical Execution
-					</button>
+		<DemoSection
+			title="Demo 1: Written vs. Execution Order"
+			description="Compare how a SQL query is written syntax-wise vs how it is logically executed step-by-step."
+		>
+			<div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl font-mono text-sm relative">
+				<div className="flex bg-zinc-950 p-2 border-b border-zinc-800 self-center">
+					<div className="flex bg-zinc-900 rounded-lg p-1 relative w-full max-w-md mx-auto">
+						<button
+							type="button"
+							className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold rounded-md transition-colors ${
+								mode === "written"
+									? "text-white"
+									: "text-zinc-500 hover:text-zinc-300"
+							}`}
+							onClick={() => setMode("written")}
+						>
+							{mode === "written" && (
+								<motion.span
+									layoutId="writtenVsExecutionTab"
+									className="absolute inset-0 bg-zinc-800 rounded-md border border-zinc-700/50 shadow-sm -z-10"
+									transition={{ type: "spring", stiffness: 400, damping: 30 }}
+								/>
+							)}
+							<span className="font-sans">📝</span> Written Syntax
+						</button>
+						<button
+							type="button"
+							className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold rounded-md transition-colors ${
+								mode === "execution"
+									? "text-white"
+									: "text-zinc-500 hover:text-zinc-300"
+							}`}
+							onClick={() => setMode("execution")}
+						>
+							{mode === "execution" && (
+								<motion.span
+									layoutId="writtenVsExecutionTab"
+									className="absolute inset-0 bg-zinc-800 rounded-md border border-zinc-700/50 shadow-sm -z-10"
+									transition={{ type: "spring", stiffness: 400, damping: 30 }}
+								/>
+							)}
+							<span className="font-sans">⚙️</span> Logical Execution
+						</button>
+					</div>
 				</div>
-			</div>
 
-			<div className="p-6">
-				<div className="flex flex-col gap-3 min-h-100">
-					<AnimatePresence mode="popLayout">
-						{displayedClauses.map((clause) => (
-							<motion.div
-								key={clause.id}
-								layout
-								initial={{ opacity: 0, scale: 0.95 }}
-								animate={{ opacity: 1, scale: 1 }}
-								exit={{ opacity: 0, scale: 0.95 }}
-								transition={{
-									type: "spring",
-									stiffness: 300,
-									damping: 25,
-									mass: 0.8,
-								}}
-								className={`px-4 py-3 rounded-lg border ${clause.color} relative overflow-hidden group`}
-							>
-								{/* Subtle animated background gradient */}
-								<div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+				<div className="p-6">
+					<div className="flex flex-col gap-3 min-h-100">
+						<AnimatePresence mode="popLayout">
+							{displayedClauses.map((clause) => (
+								<motion.div
+									key={clause.id}
+									layout
+									initial={{ opacity: 0, scale: 0.95 }}
+									animate={{ opacity: 1, scale: 1 }}
+									exit={{ opacity: 0, scale: 0.95 }}
+									transition={{
+										type: "spring",
+										stiffness: 300,
+										damping: 25,
+										mass: 0.8,
+									}}
+									className={`px-4 py-3 rounded-lg border ${clause.color} relative overflow-hidden group`}
+								>
+									{/* Subtle animated background gradient */}
+									<div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
 
-								<div className="flex sm:items-center sm:justify-between flex-col sm:flex-row gap-2 relative z-10">
-									<div className="flex items-center gap-3">
+									<div className="flex sm:items-center sm:justify-between flex-col sm:flex-row gap-2 relative z-10">
+										<div className="flex items-center gap-3">
+											{mode === "execution" && (
+												<span className="w-6 h-6 rounded-full bg-black/40 text-xs flex items-center justify-center font-bold">
+													{clause.executionOrder + 1}
+												</span>
+											)}
+											<span className="font-semibold tracking-wide">
+												{clause.code}
+											</span>
+										</div>
 										{mode === "execution" && (
-											<span className="w-6 h-6 rounded-full bg-black/40 text-xs flex items-center justify-center font-bold">
-												{clause.executionOrder + 1}
+											<span className="text-xs opacity-80 max-w-xs text-left sm:text-right italic">
+												{clause.explanation}
 											</span>
 										)}
-										<span className="font-semibold tracking-wide">
-											{clause.code}
-										</span>
 									</div>
-									{mode === "execution" && (
-										<span className="text-xs opacity-80 max-w-xs text-left sm:text-right italic">
-											{clause.explanation}
-										</span>
-									)}
-								</div>
-							</motion.div>
-						))}
-					</AnimatePresence>
+								</motion.div>
+							))}
+						</AnimatePresence>
+					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }

@@ -1,5 +1,6 @@
 import { AnimatePresence, LayoutGroup, motion } from "motion/react";
 import { useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 
 type Employee = {
 	id: number;
@@ -152,145 +153,167 @@ export function DataFlowPipelineDemo() {
 	const isAggregated = step >= 4;
 
 	return (
-		<div className="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden shadow-xl font-mono text-sm flex flex-col min-h-150">
-			{/* SQL Query Display with Highlighting */}
-			<div className="bg-zinc-900 border-b border-zinc-800 p-4">
-				<div className="max-w-3xl mx-auto">
-					<div className="text-zinc-500 text-xs uppercase tracking-wider mb-3 font-semibold">
-						SQL Query
-					</div>
-					<div className="bg-black/40 border border-zinc-800 rounded-lg p-4 space-y-1.5">
-						{[
-							{ id: "select", clause: STEPS[4].sqlClause, active: step === 4 },
-							{ id: "from", clause: STEPS[0].sqlClause, active: step === 0 },
-							{ id: "where", clause: STEPS[1].sqlClause, active: step === 1 },
-							{ id: "groupby", clause: STEPS[2].sqlClause, active: step === 2 },
-							{ id: "having", clause: STEPS[3].sqlClause, active: step === 3 },
-							{ id: "orderby", clause: STEPS[5].sqlClause, active: step === 5 },
-							{ id: "limit", clause: STEPS[6].sqlClause, active: step === 6 },
-						].map((item) => (
-							<motion.div
-								key={item.id}
-								initial={false}
-								animate={{
-									backgroundColor: item.active
-										? "rgba(59, 130, 246, 0.15)"
-										: "transparent",
-									borderColor: item.active
-										? "rgba(59, 130, 246, 0.4)"
-										: "transparent",
-								}}
-								transition={{ duration: 0.3 }}
-								className="px-3 py-1.5 rounded border"
-							>
-								<code
-									className={`transition-colors ${
-										item.active ? "text-blue-300" : "text-zinc-400"
-									}`}
+		<DemoSection
+			title="Demo 2: The Data Flow Pipeline"
+			description="Watch the dataset transform as it passes through each clause of the standard SQL execution pipeline."
+		>
+			<div className="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden shadow-xl font-mono text-sm flex flex-col min-h-150">
+				{/* SQL Query Display with Highlighting */}
+				<div className="bg-zinc-900 border-b border-zinc-800 p-4">
+					<div className="max-w-3xl mx-auto">
+						<div className="text-zinc-500 text-xs uppercase tracking-wider mb-3 font-semibold">
+							SQL Query
+						</div>
+						<div className="bg-black/40 border border-zinc-800 rounded-lg p-4 space-y-1.5">
+							{[
+								{
+									id: "select",
+									clause: STEPS[4].sqlClause,
+									active: step === 4,
+								},
+								{ id: "from", clause: STEPS[0].sqlClause, active: step === 0 },
+								{ id: "where", clause: STEPS[1].sqlClause, active: step === 1 },
+								{
+									id: "groupby",
+									clause: STEPS[2].sqlClause,
+									active: step === 2,
+								},
+								{
+									id: "having",
+									clause: STEPS[3].sqlClause,
+									active: step === 3,
+								},
+								{
+									id: "orderby",
+									clause: STEPS[5].sqlClause,
+									active: step === 5,
+								},
+								{ id: "limit", clause: STEPS[6].sqlClause, active: step === 6 },
+							].map((item) => (
+								<motion.div
+									key={item.id}
+									initial={false}
+									animate={{
+										backgroundColor: item.active
+											? "rgba(59, 130, 246, 0.15)"
+											: "transparent",
+										borderColor: item.active
+											? "rgba(59, 130, 246, 0.4)"
+											: "transparent",
+									}}
+									className="px-3 py-1.5 rounded border transition-colors flex items-center justify-between"
 								>
-									{item.clause}
-								</code>
-							</motion.div>
-						))}
-					</div>
-				</div>
-			</div>
-
-			<div className="flex flex-col lg:flex-row flex-1">
-				{/* Left side: Controls */}
-				<div className="w-full lg:w-64 bg-zinc-900 border-b lg:border-b-0 lg:border-r border-zinc-800 p-4 flex flex-col gap-4 sticky top-0 z-20">
-					<h3 className="text-zinc-400 font-semibold mb-2 uppercase text-xs tracking-wider">
-						Execution Pipeline
-					</h3>
-					<div className="flex flex-col gap-2 relative">
-						{/* Connecting line */}
-						<div className="absolute left-2.75 top-6 bottom-4 w-px bg-zinc-800" />
-
-						{STEPS.map((s, idx) => (
-							<button
-								key={s.id}
-								type="button"
-								onClick={() => setStep(idx)}
-								className={`relative z-10 flex gap-3 text-left p-2 rounded-lg transition-colors group ${
-									step === idx ? "bg-blue-500/10" : "hover:bg-zinc-800/50"
-								}`}
-							>
-								<div
-									className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 border-2 transition-colors ${
-										step >= idx
-											? "bg-blue-500 text-white border-blue-500"
-											: "bg-zinc-900 border-zinc-700 text-zinc-500 group-hover:border-zinc-500"
-									}`}
-								>
-									{step > idx ? "✓" : idx + 1}
-								</div>
-								<div>
-									<div
-										className={`font-bold transition-colors ${step >= idx ? "text-blue-300" : "text-zinc-400"}`}
+									<code
+										className={`text-sm ${
+											item.active
+												? "text-blue-300 font-bold"
+												: "text-zinc-400 opacity-60"
+										}`}
 									>
-										{s.title}
-									</div>
-									<div
-										className={`text-xs transition-colors ${step === idx ? "text-zinc-300" : "text-zinc-500"}`}
-									>
-										{s.desc}
-									</div>
-								</div>
-							</button>
-						))}
+										{item.clause}
+									</code>
+								</motion.div>
+							))}
+						</div>
 					</div>
 				</div>
 
-				{/* Right side: Visualization */}
-				<div className="flex-1 p-6 relative bg-zinc-950 overflow-y-auto overflow-x-hidden">
-					<LayoutGroup>
-						<div className="w-full max-w-2xl mx-auto flex flex-col gap-4">
-							{/* Table Header conditionally showing columns */}
-							<div className="grid grid-cols-12 gap-2 px-4 py-2 border-b border-zinc-800 text-xs font-semibold text-zinc-500">
-								{isAggregated ? (
-									<>
-										<div className="col-span-4">department</div>
-										<div className="col-span-4 text-center">COUNT(*)</div>
-										<div className="col-span-4 text-right">AVG(salary)</div>
-									</>
+				<div className="flex flex-col lg:flex-row flex-1">
+					{/* Left side: Controls */}
+					<div className="w-full lg:w-64 bg-zinc-900 border-b lg:border-b-0 lg:border-r border-zinc-800 p-4 flex flex-col gap-4 sticky top-0 z-20">
+						<h3 className="text-zinc-400 font-semibold mb-2 uppercase text-xs tracking-wider">
+							Execution Pipeline
+						</h3>
+						<div className="flex flex-col gap-2 relative">
+							{/* Connecting line */}
+							<div className="absolute left-2.75 top-6 bottom-4 w-px bg-zinc-800" />
+
+							{STEPS.map((s, idx) => (
+								<button
+									key={s.id}
+									type="button"
+									onClick={() => setStep(idx)}
+									className={`relative z-10 flex gap-3 text-left p-2 rounded-lg transition-colors group ${
+										step === idx ? "bg-blue-500/10" : "hover:bg-zinc-800/50"
+									}`}
+								>
+									<div
+										className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 border-2 transition-colors ${
+											step >= idx
+												? "bg-blue-500 text-white border-blue-500"
+												: "bg-zinc-900 border-zinc-700 text-zinc-500 group-hover:border-zinc-500"
+										}`}
+									>
+										{step > idx ? "✓" : idx + 1}
+									</div>
+									<div>
+										<div
+											className={`font-bold transition-colors ${step >= idx ? "text-blue-300" : "text-zinc-400"}`}
+										>
+											{s.title}
+										</div>
+										<div
+											className={`text-xs transition-colors ${step === idx ? "text-zinc-300" : "text-zinc-500"}`}
+										>
+											{s.desc}
+										</div>
+									</div>
+								</button>
+							))}
+						</div>
+					</div>
+
+					{/* Right side: Visualization */}
+					<div className="flex-1 p-6 relative bg-zinc-950 overflow-y-auto overflow-x-hidden">
+						<LayoutGroup>
+							<div className="w-full max-w-2xl mx-auto flex flex-col gap-4">
+								{/* Table Header conditionally showing columns */}
+								<div className="grid grid-cols-12 gap-2 px-4 py-2 border-b border-zinc-800 text-xs font-semibold text-zinc-500">
+									{isAggregated ? (
+										<>
+											<div className="col-span-4">department</div>
+											<div className="col-span-4 text-center">COUNT(*)</div>
+											<div className="col-span-4 text-right">AVG(salary)</div>
+										</>
+									) : (
+										<>
+											<div className="col-span-2">id</div>
+											<div className="col-span-3">name</div>
+											<div className="col-span-4">department</div>
+											<div className="col-span-2 text-right">salary</div>
+											<div className="col-span-1 text-right">status</div>
+										</>
+									)}
+								</div>
+
+								{/* Rendering logic based on step */}
+								{step < 2 ? (
+									<AnimatePresence>
+										{RAW_DATA.map((row) => (
+											<RawRow
+												key={row.id}
+												row={row}
+												dim={step === 1 && row.status === "inactive"}
+											/>
+										))}
+									</AnimatePresence>
 								) : (
-									<>
-										<div className="col-span-2">id</div>
-										<div className="col-span-3">name</div>
-										<div className="col-span-4">department</div>
-										<div className="col-span-2 text-right">salary</div>
-										<div className="col-span-1 text-right">status</div>
-									</>
+									<AnimatePresence mode="popLayout">
+										{limitedGroups.map((group) => (
+											<GroupedRow
+												key={group.dept}
+												group={group}
+												isAggregated={isAggregated}
+											/>
+										))}
+									</AnimatePresence>
 								)}
 							</div>
-
-							{/* Rendering logic based on step */}
-							{step < 2 ? (
-								<AnimatePresence>
-									{RAW_DATA.map((row) => (
-										<RawRow
-											key={row.id}
-											row={row}
-											dim={step === 1 && row.status === "inactive"}
-										/>
-									))}
-								</AnimatePresence>
-							) : (
-								<AnimatePresence mode="popLayout">
-									{limitedGroups.map((group) => (
-										<GroupedRow
-											key={group.dept}
-											group={group}
-											isAggregated={isAggregated}
-										/>
-									))}
-								</AnimatePresence>
-							)}
-						</div>
-					</LayoutGroup>
+						</LayoutGroup>
+					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }
 
