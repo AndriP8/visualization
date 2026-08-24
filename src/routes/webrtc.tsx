@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DemoSection } from "../components/shared/DemoSection";
+import { motion } from "motion/react";
 import { PageHeader } from "../components/shared/PageHeader";
 import { ConnectionLifecycleDemo } from "../components/webrtc/ConnectionLifecycleDemo";
 import { DataChannelDemo } from "../components/webrtc/DataChannelDemo";
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/webrtc")({
 
 function WebRTCPage() {
 	return (
-		<div className="max-w-6xl mx-auto space-y-12 pb-20">
+		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
 				topic={{ label: "Network", color: "teal" }}
 				title="WebRTC"
@@ -57,42 +57,19 @@ function WebRTCPage() {
 				}}
 			/>
 
-			<Glossary />
-
-			<DemoSection
-				title="Demo 1: Signaling & SDP Offer/Answer"
-				description="Step through the handshake with two real RTCPeerConnections in this tab. Notice that the signaling channel is your responsibility — WebRTC only defines what to exchange."
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ delay: 0.2, duration: 0.4 }}
+				className="space-y-8"
 			>
+				<Glossary />
 				<SignalingDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 2: ICE Candidates & NAT Traversal"
-				description="Watch ICE gather candidate addresses and probe pairs. host candidates come from your network interfaces; srflx from STUN; relay from TURN as a fallback."
-			>
 				<IceNatDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 3: Data Channels (RTCDataChannel)"
-				description="Bidirectional messaging between two peers in the same tab. Toggle SCTP reliability to see TCP-like vs UDP-like semantics."
-			>
 				<DataChannelDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 4: Media Tracks vs Data Channels"
-				description="When to use a media track vs a data channel. The sender is a canvas (no camera prompt) so you can see both paths side by side."
-			>
 				<MediaVsDataDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 5: Connection Lifecycle & ICE Restart"
-				description="iceConnectionState and connectionState transitions, driven by real events. Simulate a drop and trigger ICE restart to see recovery."
-			>
 				<ConnectionLifecycleDemo />
-			</DemoSection>
+			</motion.div>
 		</div>
 	);
 }

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { match } from "ts-pattern";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type Mode = "media" | "data";
@@ -173,151 +174,157 @@ export function MediaVsDataDemo() {
 		.exhaustive();
 
 	return (
-		<div className="space-y-6">
-			<div className="flex flex-wrap items-center justify-between gap-3">
-				<div className="flex gap-2">
-					{(["media", "data"] as const).map((m) => (
+		<DemoSection
+			title="Demo 4: Media Tracks vs Data Channels"
+			description="When to use a media track vs a data channel. The sender is a canvas (no camera prompt) so you can see both paths side by side."
+		>
+			<div className="space-y-6">
+				<div className="flex flex-wrap items-center justify-between gap-3">
+					<div className="flex gap-2">
+						{(["media", "data"] as const).map((m) => (
+							<button
+								key={m}
+								type="button"
+								onClick={() => {
+									if (running) stop();
+									setMode(m);
+								}}
+								className={`px-3 py-2 rounded text-xs font-medium transition-colors ${
+									mode === m
+										? "bg-cyan-500 text-white"
+										: "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+								}`}
+							>
+								{m === "media" ? "Media track" : "Data channel (JPEG)"}
+							</button>
+						))}
+					</div>
+					<div className="flex gap-2">
 						<button
-							key={m}
 							type="button"
-							onClick={() => {
-								if (running) stop();
-								setMode(m);
-							}}
-							className={`px-3 py-2 rounded text-xs font-medium transition-colors ${
-								mode === m
-									? "bg-cyan-500 text-white"
-									: "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
-							}`}
+							onClick={running ? stop : start}
+							className="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 rounded text-sm font-medium transition-colors"
 						>
-							{m === "media" ? "Media track" : "Data channel (JPEG)"}
+							{running ? "Stop" : "Start"}
 						</button>
-					))}
+					</div>
 				</div>
-				<div className="flex gap-2">
-					<button
-						type="button"
-						onClick={running ? stop : start}
-						className="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 rounded text-sm font-medium transition-colors"
-					>
-						{running ? "Stop" : "Start"}
-					</button>
-				</div>
-			</div>
 
-			<p className="text-xs text-zinc-500">{helperLabel}</p>
+				<p className="text-xs text-zinc-500">{helperLabel}</p>
 
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-				<div className="bg-zinc-900 border border-sky-500/40 rounded-lg p-4">
-					<h5 className="text-xs font-semibold text-sky-300 mb-3">
-						Sender (canvas)
-					</h5>
-					<canvas
-						ref={senderCanvasRef}
-						width={320}
-						height={180}
-						className="w-full rounded border border-zinc-800 bg-zinc-950"
-					/>
-				</div>
-				<div className="bg-zinc-900 border border-teal-500/40 rounded-lg p-4">
-					<h5 className="text-xs font-semibold text-teal-300 mb-3">Receiver</h5>
-					{mode === "media" ? (
-						<video
-							ref={receiverVideoRef}
-							autoPlay
-							playsInline
-							muted
-							className="w-full rounded border border-zinc-800 bg-zinc-950 aspect-video"
-						/>
-					) : (
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+					<div className="bg-zinc-900 border border-sky-500/40 rounded-lg p-4">
+						<h5 className="text-xs font-semibold text-sky-300 mb-3">
+							Sender (canvas)
+						</h5>
 						<canvas
-							ref={receiverCanvasRef}
+							ref={senderCanvasRef}
 							width={320}
 							height={180}
 							className="w-full rounded border border-zinc-800 bg-zinc-950"
 						/>
-					)}
+					</div>
+					<div className="bg-zinc-900 border border-teal-500/40 rounded-lg p-4">
+						<h5 className="text-xs font-semibold text-teal-300 mb-3">
+							Receiver
+						</h5>
+						{mode === "media" ? (
+							<video
+								ref={receiverVideoRef}
+								autoPlay
+								playsInline
+								muted
+								className="w-full rounded border border-zinc-800 bg-zinc-950 aspect-video"
+							/>
+						) : (
+							<canvas
+								ref={receiverCanvasRef}
+								width={320}
+								height={180}
+								className="w-full rounded border border-zinc-800 bg-zinc-950"
+							/>
+						)}
+					</div>
 				</div>
-			</div>
 
-			<div className="bg-zinc-900/60 border border-zinc-800 rounded-lg p-4 grid grid-cols-2 gap-4 text-xs">
-				<div>
-					<p className="text-zinc-500">Last 1s bytes sent</p>
-					<p className="text-zinc-200 font-mono">
-						{(stats.rate / 1024).toFixed(1)} KB/s
-					</p>
+				<div className="bg-zinc-900/60 border border-zinc-800 rounded-lg p-4 grid grid-cols-2 gap-4 text-xs">
+					<div>
+						<p className="text-zinc-500">Last 1s bytes sent</p>
+						<p className="text-zinc-200 font-mono">
+							{(stats.rate / 1024).toFixed(1)} KB/s
+						</p>
+					</div>
+					<div>
+						<p className="text-zinc-500">Total this window</p>
+						<p className="text-zinc-200 font-mono">
+							{(stats.bytes / 1024).toFixed(1)} KB
+						</p>
+					</div>
 				</div>
-				<div>
-					<p className="text-zinc-500">Total this window</p>
-					<p className="text-zinc-200 font-mono">
-						{(stats.bytes / 1024).toFixed(1)} KB
-					</p>
-				</div>
-			</div>
 
-			<div className="overflow-x-auto">
-				<table className="min-w-full text-xs">
-					<thead>
-						<tr className="text-zinc-500 border-b border-zinc-800">
-							<th className="text-left py-2 pr-4">&nbsp;</th>
-							<th className="text-left py-2 pr-4">Media (track)</th>
-							<th className="text-left py-2">Data channel</th>
-						</tr>
-					</thead>
-					<tbody className="text-zinc-300">
-						{[
-							{
-								k: "Transport",
-								a: "SRTP over UDP (DTLS keys)",
-								b: "SCTP over DTLS over UDP",
-							},
-							{
-								k: "Reliability",
-								a: "Unreliable by design (drop late frames)",
-								b: "Configurable: reliable or unreliable",
-							},
-							{
-								k: "Ordering",
-								a: "Unordered + jitter buffer",
-								b: "Configurable",
-							},
-							{
-								k: "Codec",
-								a: "Browser-managed (VP8/VP9/H.264/Opus)",
-								b: "None — you encode",
-							},
-							{
-								k: "Congestion control",
-								a: "GCC (Google congestion control)",
-								b: "SCTP's own",
-							},
-							{
-								k: "Use for",
-								a: "Audio/video/screenshare",
-								b: "Chat, files, game state, signaling-in-band",
-							},
-						].map((row) => (
-							<tr key={row.k} className="border-b border-zinc-900">
-								<td className="py-2 pr-4 text-zinc-500">{row.k}</td>
-								<td className="py-2 pr-4">{row.a}</td>
-								<td className="py-2">{row.b}</td>
+				<div className="overflow-x-auto">
+					<table className="min-w-full text-xs">
+						<thead>
+							<tr className="text-zinc-500 border-b border-zinc-800">
+								<th className="text-left py-2 pr-4">&nbsp;</th>
+								<th className="text-left py-2 pr-4">Media (track)</th>
+								<th className="text-left py-2">Data channel</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
+						</thead>
+						<tbody className="text-zinc-300">
+							{[
+								{
+									k: "Transport",
+									a: "SRTP over UDP (DTLS keys)",
+									b: "SCTP over DTLS over UDP",
+								},
+								{
+									k: "Reliability",
+									a: "Unreliable by design (drop late frames)",
+									b: "Configurable: reliable or unreliable",
+								},
+								{
+									k: "Ordering",
+									a: "Unordered + jitter buffer",
+									b: "Configurable",
+								},
+								{
+									k: "Codec",
+									a: "Browser-managed (VP8/VP9/H.264/Opus)",
+									b: "None — you encode",
+								},
+								{
+									k: "Congestion control",
+									a: "GCC (Google congestion control)",
+									b: "SCTP's own",
+								},
+								{
+									k: "Use for",
+									a: "Audio/video/screenshare",
+									b: "Chat, files, game state, signaling-in-band",
+								},
+							].map((row) => (
+								<tr key={row.k} className="border-b border-zinc-900">
+									<td className="py-2 pr-4 text-zinc-500">{row.k}</td>
+									<td className="py-2 pr-4">{row.a}</td>
+									<td className="py-2">{row.b}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 
-			<div className="bg-amber-500/5 border border-amber-500/30 rounded-lg p-4 text-xs text-amber-100/90">
-				<strong className="text-amber-300">Rule of thumb:</strong> if it's
-				audio/video, use a media track — the browser handles encoding, jitter,
-				and adaptive bitrate. Use a data channel for anything else. Sending
-				video as JPEGs over a data channel (like this demo's right mode) wastes
-				bandwidth and loses adaptive bitrate.
-			</div>
+				<div className="bg-amber-500/5 border border-amber-500/30 rounded-lg p-4 text-xs text-amber-100/90">
+					<strong className="text-amber-300">Rule of thumb:</strong> if it's
+					audio/video, use a media track — the browser handles encoding, jitter,
+					and adaptive bitrate. Use a data channel for anything else. Sending
+					video as JPEGs over a data channel (like this demo's right mode)
+					wastes bandwidth and loses adaptive bitrate.
+				</div>
 
-			<ShikiCode
-				language="javascript"
-				code={`// Media: let the browser handle codec + congestion control
+				<ShikiCode
+					language="javascript"
+					code={`// Media: let the browser handle codec + congestion control
 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
 for (const track of stream.getTracks()) {
   pc.addTrack(track, stream);
@@ -330,8 +337,9 @@ pc.ontrack = ({ streams }) => {
 const dc = pc.createDataChannel("game");
 dc.binaryType = "arraybuffer";
 dc.send(new Uint8Array([0x42]));`}
-				className="text-xs"
-			/>
-		</div>
+					className="text-xs"
+				/>
+			</div>
+		</DemoSection>
 	);
 }
