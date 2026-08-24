@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { match } from "ts-pattern";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type Strategy =
@@ -430,226 +431,225 @@ export function CacheInvalidationDemo() {
 	useEffect(() => () => clearTimeouts(), [clearTimeouts]);
 
 	return (
-		<div className="space-y-6">
-			{/* Strategy tabs */}
-			<div className="flex flex-wrap gap-2">
-				{STRATEGIES.map((s) => {
-					const colors = buttonColorClasses[s.color];
-					const className = match(selected === s.id)
-						.with(true, () => colors.active)
-						.with(false, () => colors.inactive)
-						.exhaustive();
+		<DemoSection
+			title="Demo 2: Cache Invalidation Strategies"
+			description="Cache invalidation is one of the hardest problems in distributed systems. Explore the four main patterns (Cache-Aside, Write-Through, Write-Behind, Read-Through) and the fundamental trade-offs between simplicity, consistency, and speed."
+		>
+			<div className="space-y-6">
+				{/* Strategy tabs */}
+				<div className="flex flex-wrap gap-2">
+					{STRATEGIES.map((s) => {
+						const colors = buttonColorClasses[s.color];
+						const className = match(selected === s.id)
+							.with(true, () => colors.active)
+							.with(false, () => colors.inactive)
+							.exhaustive();
 
-					return (
-						<button
-							key={s.id}
-							type="button"
-							onClick={() => setSelected(s.id)}
-							className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${className}`}
-						>
-							{s.name}
-						</button>
-					);
-				})}
-			</div>
-
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-				{/* Left: controls + diagram */}
-				<div className="space-y-4">
-					<div>
-						<p className="text-sm text-zinc-400 mb-1">{strategy.tagline}</p>
-						{strategy.writeRisk && (
-							<p className="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded px-2 py-1">
-								{strategy.writeRisk}
-							</p>
-						)}
-					</div>
-
-					{/* Operation & cache state toggles */}
-					<div className="flex flex-wrap gap-3">
-						<div className="flex rounded-lg overflow-hidden border border-zinc-700">
-							{(["read", "write"] as OperationType[]).map((op) => {
-								const className = match(operation === op)
-									.with(true, () => "bg-violet-600 text-white")
-									.with(
-										false,
-										() => "bg-zinc-800 text-zinc-400 hover:text-white",
-									)
-									.exhaustive();
-
-								const label = match(op)
-									.with("read", () => "📖 Read" as const)
-									.with("write", () => "✏️ Write" as const)
-									.exhaustive();
-
-								return (
-									<button
-										key={op}
-										type="button"
-										onClick={() => setOperation(op)}
-										className={`px-4 py-1.5 text-sm font-medium transition-colors ${className}`}
-									>
-										{label}
-									</button>
-								);
-							})}
-						</div>
-						{operation === "read" && (
+						return (
 							<button
+								key={s.id}
 								type="button"
-								onClick={() => setCacheHit((h) => !h)}
-								className={`px-4 py-1.5 rounded-lg text-sm font-medium border transition-all ${match(
-									cacheHit,
-								)
-									.with(
-										true,
-										() => "bg-green-500/15 text-green-400 border-green-500/30",
-									)
-									.with(
-										false,
-										() =>
-											"bg-orange-500/10 text-orange-400 border-orange-500/30",
-									)
-									.exhaustive()}`}
+								onClick={() => setSelected(s.id)}
+								className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${className}`}
 							>
-								{match(cacheHit)
-									.with(true, () => "🔥 Cache Hit")
-									.with(false, () => "❄️ Cache Miss")
-									.exhaustive()}
+								{s.name}
 							</button>
-						)}
-					</div>
-
-					<FlowDiagram steps={currentSteps} active={activeStep} />
-
-					<button
-						type="button"
-						onClick={running ? reset : runFlow}
-						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${match(
-							running,
-						)
-							.with(true, () => "bg-zinc-700 text-zinc-300")
-							.with(false, () => "bg-violet-600 hover:bg-violet-500 text-white")
-							.exhaustive()}`}
-					>
-						{match({ running, hasPlayed: activeStep >= 0 })
-							.with({ running: true }, () => "⏹ Stop")
-							.with({ running: false, hasPlayed: true }, () => "↺ Replay")
-							.with(
-								{ running: false, hasPlayed: false },
-								() => "▶ Animate Flow",
-							)
-							.exhaustive()}
-					</button>
+						);
+					})}
 				</div>
 
-				{/* Right: trade-offs */}
-				<div className="space-y-4">
-					<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
-						Trade-offs
-					</h4>
-					<div className="space-y-3">
-						<div>
-							<p className="text-xs text-green-400 font-semibold mb-1.5 uppercase tracking-wide">
-								✓ Pros
-							</p>
-							<ul className="space-y-1.5">
-								{strategy.tradeoffs.pro.map((p) => (
-									<li
-										key={p}
-										className="text-sm text-zinc-300 flex items-start gap-2"
-									>
-										<span className="text-green-500 mt-0.5">+</span>
-										{p}
-									</li>
-								))}
-							</ul>
+				<p className="text-sm text-zinc-400">{strategy.tagline}</p>
+
+				{/* Two-column layout: Visual on left, tradeoffs on right */}
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+					{/* Left: Interactive visual */}
+					<div className="space-y-4">
+						<div className="flex items-center gap-3">
+							<span className="text-xs text-zinc-500 font-semibold uppercase tracking-wider">
+								Operation:
+							</span>
+							<div className="flex rounded-lg bg-zinc-800 p-0.5 border border-zinc-700">
+								{(["read", "write"] as OperationType[]).map((op) => {
+									const isActive = operation === op;
+									const className = match(isActive)
+										.with(
+											true,
+											() =>
+												"bg-violet-600 text-white rounded-md shadow-xs font-semibold",
+										)
+										.with(
+											false,
+											() => "text-zinc-400 hover:text-zinc-200 font-medium",
+										)
+										.exhaustive();
+
+									return (
+										<button
+											key={op}
+											type="button"
+											onClick={() => setOperation(op)}
+											className={`px-4 py-1.5 text-sm font-medium transition-colors ${className}`}
+										>
+											{op === "read" ? "📖 Read Flow" : "✏️ Write Flow"}
+										</button>
+									);
+								})}
+							</div>
+
+							{operation === "read" && (
+								<button
+									type="button"
+									onClick={() => setCacheHit((h) => !h)}
+									className={`px-4 py-1.5 rounded-lg text-sm font-medium border transition-all ${match(
+										cacheHit,
+									)
+										.with(
+											true,
+											() =>
+												"bg-green-500/15 text-green-400 border-green-500/30",
+										)
+										.with(
+											false,
+											() =>
+												"bg-orange-500/10 text-orange-400 border-orange-500/30",
+										)
+										.exhaustive()}`}
+								>
+									{match(cacheHit)
+										.with(true, () => "🔥 Cache Hit")
+										.with(false, () => "❄️ Cache Miss")
+										.exhaustive()}
+								</button>
+							)}
 						</div>
-						<div>
-							<p className="text-xs text-red-400 font-semibold mb-1.5 uppercase tracking-wide">
-								✗ Cons
-							</p>
-							<ul className="space-y-1.5">
-								{strategy.tradeoffs.con.map((c) => (
-									<li
-										key={c}
-										className="text-sm text-zinc-300 flex items-start gap-2"
-									>
-										<span className="text-red-500 mt-0.5">−</span>
-										{c}
-									</li>
-								))}
-							</ul>
-						</div>
+
+						<FlowDiagram steps={currentSteps} active={activeStep} />
+
+						<button
+							type="button"
+							onClick={running ? reset : runFlow}
+							className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${match(
+								running,
+							)
+								.with(true, () => "bg-zinc-700 text-zinc-300")
+								.with(
+									false,
+									() => "bg-violet-600 hover:bg-violet-500 text-white",
+								)
+								.exhaustive()}`}
+						>
+							{match({ running, hasPlayed: activeStep >= 0 })
+								.with({ running: true }, () => "⏹ Stop")
+								.with({ running: false, hasPlayed: true }, () => "↺ Replay")
+								.with(
+									{ running: false, hasPlayed: false },
+									() => "▶ Animate Flow",
+								)
+								.exhaustive()}
+						</button>
 					</div>
 
-					<div className="mt-4 p-4 rounded-xl bg-zinc-800/50 border border-zinc-700 space-y-2">
-						<p className="text-xs font-semibold text-zinc-300 uppercase tracking-wide">
-							When to use
-						</p>
-						{match(selected)
-							.with("cache-aside", () => (
-								<div className="space-y-2">
-									<p className="text-sm text-zinc-400">
-										Best default strategy. Use for read-heavy workloads where
-										cache availability is not 100% guaranteed. Common with Redis
-										+ most web backends.
-									</p>
-									<div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300">
-										<strong>Race condition:</strong> Thread A reads DB (miss) →
-										Thread B updates DB + invalidates cache → Thread A writes
-										stale value to cache. Fix: use versioning or Compare-And-Set
-										(CAS).
-									</div>
-								</div>
-							))
-							.with("write-through", () => (
-								<p className="text-sm text-zinc-400">
-									Use when read consistency is critical and write volume is
-									moderate. Good for user profile data, session stores.
+					{/* Right: trade-offs */}
+					<div className="space-y-4">
+						<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+							Trade-offs
+						</h4>
+						<div className="space-y-3">
+							<div>
+								<p className="text-xs text-green-400 font-semibold mb-1.5 uppercase tracking-wide">
+									✓ Pros
 								</p>
-							))
-							.with("write-behind", () => (
-								<p className="text-sm text-zinc-400">
-									Use for high write-throughput systems where slight data loss
-									is acceptable (analytics counters, view counts). Never use for
-									financial data.
+								<ul className="space-y-1.5">
+									{strategy.tradeoffs.pro.map((p) => (
+										<li
+											key={p}
+											className="text-sm text-zinc-300 flex items-start gap-2"
+										>
+											<span className="text-green-500 mt-0.5">+</span>
+											{p}
+										</li>
+									))}
+								</ul>
+							</div>
+							<div>
+								<p className="text-xs text-red-400 font-semibold mb-1.5 uppercase tracking-wide">
+									✗ Cons
 								</p>
-							))
-							.with("read-through", () => (
-								<div className="space-y-2">
-									<p className="text-sm text-zinc-400">
-										App code doesn't need to know whether it's hitting cache or
-										DB. The cache layer handles fetching on miss.
-									</p>
-									<ShikiCode
-										language="javascript"
-										code={`// Using cache-manager (Node.js)
-const cache = await caching('memory', {
-  ttl: 600, // 10 min
-});
+								<ul className="space-y-1.5">
+									{strategy.tradeoffs.con.map((c) => (
+										<li
+											key={c}
+											className="text-sm text-zinc-300 flex items-start gap-2"
+										>
+											<span className="text-red-500 mt-0.5">−</span>
+											{c}
+										</li>
+									))}
+								</ul>
+							</div>
+						</div>
 
-// Auto-populates on miss
-const user = await cache.wrap(
-  'user:123',
-  async () => db.getUser(123)
-);`}
-										showLineNumbers={false}
-										className="text-xs"
-									/>
-									<p className="text-xs text-zinc-500">
-										Libraries:{" "}
-										<code className="text-violet-300">cache-manager</code>,{" "}
-										<code className="text-violet-300">keyv</code>, or{" "}
-										<code className="text-violet-300">node-cache</code> with
-										custom wrapper.
+						<div className="mt-4 p-4 rounded-xl bg-zinc-800/50 border border-zinc-700 space-y-2">
+							<p className="text-xs font-semibold text-zinc-300 uppercase tracking-wide">
+								When to use
+							</p>
+							{match(selected)
+								.with("cache-aside", () => (
+									<div className="space-y-2">
+										<p className="text-sm text-zinc-400">
+											Best default strategy. Use for read-heavy workloads where
+											cache availability is not 100% guaranteed. Common with
+											Redis + most web backends.
+										</p>
+										<div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300">
+											<strong>Race condition:</strong> Thread A reads DB (miss)
+											→ Thread B updates DB + invalidates cache → Thread A
+											writes stale value to cache. Fix: use versioning or
+											Compare-And-Set (CAS).
+										</div>
+									</div>
+								))
+								.with("write-through", () => (
+									<p className="text-sm text-zinc-400">
+										Use when read consistency is critical and write volume is
+										moderate. Good for user profile data, session stores.
 									</p>
-								</div>
-							))
-							.exhaustive()}
+								))
+								.with("write-behind", () => (
+									<p className="text-sm text-zinc-400">
+										Use for high write-throughput systems where slight data loss
+										is acceptable (analytics counters, view counts). Never use
+										for financial data.
+									</p>
+								))
+								.with("read-through", () => (
+									<div className="space-y-2">
+										<p className="text-sm text-zinc-400">
+											App code doesn't need to know whether it's hitting cache
+											or DB. The cache layer handles fetching on miss.
+										</p>
+										<ShikiCode
+											language="javascript"
+											code={
+												"// Using cache-manager (Node.js)\nconst cache = await caching('memory', {\n  ttl: 600, // 10 min\n});\n\n// Auto-populates on miss\nconst user = await cache.wrap(\n  'user:123',\n  async () => db.getUser(123)\n);"
+											}
+											showLineNumbers={false}
+											className="text-xs"
+										/>
+										<p className="text-xs text-zinc-500">
+											Libraries:{" "}
+											<code className="text-violet-300">cache-manager</code>,{" "}
+											<code className="text-violet-300">keyv</code>, or{" "}
+											<code className="text-violet-300">node-cache</code> with
+											custom wrapper.
+										</p>
+									</div>
+								))
+								.exhaustive()}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }

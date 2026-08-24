@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { match } from "ts-pattern";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type Scenario = "max-age" | "no-cache" | "no-store" | "s-maxage";
@@ -368,86 +369,93 @@ export function HttpCacheHeadersDemo() {
 	useEffect(() => () => clearTimeouts(), [clearTimeouts]);
 
 	return (
-		<div className="space-y-6">
-			{/* Scenario tabs */}
-			<div className="flex flex-wrap gap-2">
-				{SCENARIOS.map((s) => {
-					const colors = scenarioButtonClasses[s.color];
-					return (
-						<button
-							key={s.id}
-							type="button"
-							onClick={() => setSelected(s.id)}
-							className={`px-3 py-1.5 rounded-lg text-sm font-mono font-semibold border transition-all ${
-								selected === s.id ? colors.active : colors.inactive
-							}`}
-						>
-							{s.label}
-						</button>
-					);
-				})}
-			</div>
-
-			<p className="text-sm text-zinc-400">{scenario.tagline}</p>
-
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-				{/* Animation */}
-				<div className="space-y-4">
-					<NetworkDiagram steps={scenario.steps} activeStep={activeStep} />
-					<button
-						type="button"
-						onClick={running ? reset : runFlow}
-						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
-							running
-								? "bg-zinc-700 text-zinc-300"
-								: "bg-violet-600 hover:bg-violet-500 text-white"
-						}`}
-					>
-						{match({ running, hasPlayed: activeStep >= 0 })
-							.with({ running: true }, () => "⏹ Stop")
-							.with({ running: false, hasPlayed: true }, () => "↺ Replay")
-							.with({ running: false, hasPlayed: false }, () => "▶ Animate")
-							.exhaustive()}
-					</button>
+		<DemoSection
+			title="Demo 3: HTTP Cache Headers Visualizer"
+			description="HTTP headers are the contract between your server and every cache in the path — browser, CDN, and proxies. See how each header directive changes the caching behavior end-to-end."
+		>
+			<div className="space-y-6">
+				{/* Scenario tabs */}
+				<div className="flex flex-wrap gap-2">
+					{SCENARIOS.map((s) => {
+						const colors = scenarioButtonClasses[s.color];
+						return (
+							<button
+								key={s.id}
+								type="button"
+								onClick={() => setSelected(s.id)}
+								className={`px-3 py-1.5 rounded-lg text-sm font-mono font-semibold border transition-all ${
+									selected === s.id ? colors.active : colors.inactive
+								}`}
+							>
+								{s.label}
+							</button>
+						);
+					})}
 				</div>
 
-				{/* Headers */}
-				<div className="space-y-2">
-					<p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-						HTTP Headers
-					</p>
-					<ShikiCode
-						code={scenario.headerSnippet}
-						language="http"
-						showLineNumbers={false}
-						className="text-xs"
-					/>
-					<div className="mt-3 p-3 rounded-lg bg-zinc-800/50 border border-zinc-700 text-xs text-zinc-400 space-y-1">
-						<strong className="text-zinc-300 text-xs">Quick reference:</strong>
-						<ul className="space-y-1 mt-1">
-							<li>
-								<code className="text-amber-300">max-age</code> — browser TTL
-							</li>
-							<li>
-								<code className="text-sky-300">s-maxage</code> — CDN/shared
-								cache TTL (overrides max-age for CDNs)
-							</li>
-							<li>
-								<code className="text-rose-300">no-cache</code> — must
-								revalidate before serving
-							</li>
-							<li>
-								<code className="text-rose-300">no-store</code> — never cache
-								(even in memory)
-							</li>
-							<li>
-								<code className="text-violet-300">ETag</code> — fingerprint for
-								conditional requests
-							</li>
-						</ul>
+				<p className="text-sm text-zinc-400">{scenario.tagline}</p>
+
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+					{/* Animation */}
+					<div className="space-y-4">
+						<NetworkDiagram steps={scenario.steps} activeStep={activeStep} />
+						<button
+							type="button"
+							onClick={running ? reset : runFlow}
+							className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
+								running
+									? "bg-zinc-700 text-zinc-300"
+									: "bg-violet-600 hover:bg-violet-500 text-white"
+							}`}
+						>
+							{match({ running, hasPlayed: activeStep >= 0 })
+								.with({ running: true }, () => "⏹ Stop")
+								.with({ running: false, hasPlayed: true }, () => "↺ Replay")
+								.with({ running: false, hasPlayed: false }, () => "▶ Animate")
+								.exhaustive()}
+						</button>
+					</div>
+
+					{/* Headers */}
+					<div className="space-y-2">
+						<p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+							HTTP Headers
+						</p>
+						<ShikiCode
+							code={scenario.headerSnippet}
+							language="http"
+							showLineNumbers={false}
+							className="text-xs"
+						/>
+						<div className="mt-3 p-3 rounded-lg bg-zinc-800/50 border border-zinc-700 text-xs text-zinc-400 space-y-1">
+							<strong className="text-zinc-300 text-xs">
+								Quick reference:
+							</strong>
+							<ul className="space-y-1 mt-1">
+								<li>
+									<code className="text-amber-300">max-age</code> — browser TTL
+								</li>
+								<li>
+									<code className="text-sky-300">s-maxage</code> — CDN/shared
+									cache TTL (overrides max-age for CDNs)
+								</li>
+								<li>
+									<code className="text-rose-300">no-cache</code> — must
+									revalidate before serving
+								</li>
+								<li>
+									<code className="text-rose-300">no-store</code> — never cache
+									(even in memory)
+								</li>
+								<li>
+									<code className="text-violet-300">ETag</code> — fingerprint
+									for conditional requests
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }
