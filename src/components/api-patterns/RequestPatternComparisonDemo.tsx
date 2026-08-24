@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { match } from "ts-pattern";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type Pattern = "rest-waterfall" | "rest-embed" | "graphql" | "trpc";
@@ -212,184 +213,189 @@ export function RequestPatternComparisonDemo() {
 	const pattern = PATTERNS.find((p) => p.id === selected) ?? PATTERNS[0];
 
 	return (
-		<div className="space-y-6">
-			{/* Pattern selector */}
-			<div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-				{PATTERNS.map((p) => {
-					const isSelected = selected === p.id;
-					const className = match({ isSelected, color: p.color })
-						.with(
-							{ isSelected: true, color: "rose" },
-							() => "bg-rose-500/15 text-rose-300 border-rose-500/40",
-						)
-						.with(
-							{ isSelected: true, color: "amber" },
-							() => "bg-amber-500/15 text-amber-300 border-amber-500/40",
-						)
-						.with(
-							{ isSelected: true, color: "cyan" },
-							() => "bg-cyan-500/15 text-cyan-300 border-cyan-500/40",
-						)
-						.with(
-							{ isSelected: true, color: "violet" },
-							() => "bg-violet-500/15 text-violet-300 border-violet-500/40",
-						)
-						.otherwise(
-							() =>
-								"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
-						);
+		<DemoSection
+			title="Demo 1: Request Pattern Comparison"
+			description="See how different API patterns fetch a user profile with posts, likes, and authors. Watch how sequential REST creates waterfalls, while GraphQL and tRPC fetch everything in one request."
+		>
+			<div className="space-y-6">
+				{/* Pattern selector */}
+				<div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+					{PATTERNS.map((p) => {
+						const isSelected = selected === p.id;
+						const className = match({ isSelected, color: p.color })
+							.with(
+								{ isSelected: true, color: "rose" },
+								() => "bg-rose-500/15 text-rose-300 border-rose-500/40",
+							)
+							.with(
+								{ isSelected: true, color: "amber" },
+								() => "bg-amber-500/15 text-amber-300 border-amber-500/40",
+							)
+							.with(
+								{ isSelected: true, color: "cyan" },
+								() => "bg-cyan-500/15 text-cyan-300 border-cyan-500/40",
+							)
+							.with(
+								{ isSelected: true, color: "violet" },
+								() => "bg-violet-500/15 text-violet-300 border-violet-500/40",
+							)
+							.otherwise(
+								() =>
+									"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+							);
 
-					return (
-						<button
-							key={p.id}
-							type="button"
-							onClick={() => setSelected(p.id)}
-							className={`px-4 py-3 rounded-lg text-sm font-semibold border transition-all ${className}`}
-						>
-							<div className="text-lg mb-1">{p.icon}</div>
-							<div>{p.label}</div>
-						</button>
-					);
-				})}
-			</div>
-
-			<p className="text-sm text-zinc-400">{pattern.description}</p>
-
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-				{/* Animation */}
-				<div className="space-y-4">
-					{/* Metrics */}
-					<div className="grid grid-cols-3 gap-3">
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
-							<div className="text-xs text-zinc-500 mb-1">Requests</div>
-							<div className="text-2xl font-bold text-white">
-								{pattern.requestCount}
-							</div>
-						</div>
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
-							<div className="text-xs text-zinc-500 mb-1">Data (KB)</div>
-							<div className="text-2xl font-bold text-white">
-								{pattern.totalBytes}
-							</div>
-						</div>
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
-							<div
-								className="text-xs text-zinc-500 mb-1"
-								title="Number of sequential round trips required"
+						return (
+							<button
+								key={p.id}
+								type="button"
+								onClick={() => setSelected(p.id)}
+								className={`px-4 py-3 rounded-lg text-sm font-semibold border transition-all ${className}`}
 							>
-								Waterfall Depth
+								<div className="text-lg mb-1">{p.icon}</div>
+								<div>{p.label}</div>
+							</button>
+						);
+					})}
+				</div>
+
+				<p className="text-sm text-zinc-400">{pattern.description}</p>
+
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+					{/* Animation */}
+					<div className="space-y-4">
+						{/* Metrics */}
+						<div className="grid grid-cols-3 gap-3">
+							<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
+								<div className="text-xs text-zinc-500 mb-1">Requests</div>
+								<div className="text-2xl font-bold text-white">
+									{pattern.requestCount}
+								</div>
 							</div>
-							<div className="text-2xl font-bold text-white">
-								{pattern.waterfallDepth}
+							<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
+								<div className="text-xs text-zinc-500 mb-1">Data (KB)</div>
+								<div className="text-2xl font-bold text-white">
+									{pattern.totalBytes}
+								</div>
+							</div>
+							<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
+								<div
+									className="text-xs text-zinc-500 mb-1"
+									title="Number of sequential round trips required"
+								>
+									Waterfall Depth
+								</div>
+								<div className="text-2xl font-bold text-white">
+									{pattern.waterfallDepth}
+								</div>
 							</div>
 						</div>
-					</div>
 
-					{/* Waterfall visualization */}
-					<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 min-h-75">
-						<div className="flex items-center justify-between mb-4">
-							<div className="text-xs text-zinc-500 font-mono">
-								Network Waterfall
+						{/* Waterfall visualization */}
+						<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 min-h-75">
+							<div className="flex items-center justify-between mb-4">
+								<div className="text-xs text-zinc-500 font-mono">
+									Network Waterfall
+								</div>
+								{selected === "rest-waterfall" && requests.length > 0 && (
+									<div className="text-xs text-zinc-400 flex items-center gap-1">
+										<span>→</span>
+										<span>Indentation = Sequential dependency</span>
+									</div>
+								)}
 							</div>
-							{selected === "rest-waterfall" && requests.length > 0 && (
-								<div className="text-xs text-zinc-400 flex items-center gap-1">
-									<span>→</span>
-									<span>Indentation = Sequential dependency</span>
+
+							<div className="space-y-3">
+								{requests.map((req) => (
+									<div
+										key={req.id}
+										className="flex items-center gap-3"
+										style={{ paddingLeft: `${req.depth * 20}px` }}
+									>
+										<div className="flex-1 relative h-8 bg-zinc-800 rounded overflow-hidden">
+											<div className="absolute left-2 top-1/2 -translate-y-1/2 text-xs font-mono text-zinc-400 z-10">
+												{req.label}
+											</div>
+
+											<AnimatePresence>
+												{req.status !== "pending" && (
+													<motion.div
+														initial={{ width: 0 }}
+														animate={{
+															width:
+																req.status === "completed" ? "100%" : "60%",
+															opacity: req.status === "completed" ? 0.8 : 1,
+														}}
+														transition={{ duration: 0.4 }}
+														className="absolute inset-y-0 left-0"
+														style={{ backgroundColor: req.color }}
+													/>
+												)}
+											</AnimatePresence>
+
+											{req.status === "in-flight" && (
+												<motion.div
+													className="absolute inset-y-0 right-0 w-2 bg-white"
+													animate={{ opacity: [1, 0.3, 1] }}
+													transition={{
+														duration: 0.8,
+														repeat: Number.POSITIVE_INFINITY,
+													}}
+												/>
+											)}
+										</div>
+
+										<div className="text-xs text-zinc-500 font-mono w-12">
+											{req.bytes}KB
+										</div>
+									</div>
+								))}
+							</div>
+
+							{requests.length > 0 && (
+								<div className="mt-4 pt-4 border-t border-zinc-800 text-sm text-zinc-400">
+									{completedCount === requests.length ? (
+										<span className="text-green-400">
+											✓ All requests completed
+										</span>
+									) : running ? (
+										<span>
+											Loading... ({completedCount}/{requests.length})
+										</span>
+									) : (
+										<span className="text-zinc-500">Ready to simulate</span>
+									)}
 								</div>
 							)}
 						</div>
 
-						<div className="space-y-3">
-							{requests.map((req) => (
-								<div
-									key={req.id}
-									className="flex items-center gap-3"
-									style={{ paddingLeft: `${req.depth * 20}px` }}
-								>
-									<div className="flex-1 relative h-8 bg-zinc-800 rounded overflow-hidden">
-										<div className="absolute left-2 top-1/2 -translate-y-1/2 text-xs font-mono text-zinc-400 z-10">
-											{req.label}
-										</div>
-
-										<AnimatePresence>
-											{req.status !== "pending" && (
-												<motion.div
-													initial={{ width: 0 }}
-													animate={{
-														width: req.status === "completed" ? "100%" : "60%",
-														opacity: req.status === "completed" ? 0.8 : 1,
-													}}
-													transition={{ duration: 0.4 }}
-													className="absolute inset-y-0 left-0"
-													style={{ backgroundColor: req.color }}
-												/>
-											)}
-										</AnimatePresence>
-
-										{req.status === "in-flight" && (
-											<motion.div
-												className="absolute inset-y-0 right-0 w-2 bg-white"
-												animate={{ opacity: [1, 0.3, 1] }}
-												transition={{
-													duration: 0.8,
-													repeat: Number.POSITIVE_INFINITY,
-												}}
-											/>
-										)}
-									</div>
-
-									<div className="text-xs text-zinc-500 font-mono w-12">
-										{req.bytes}KB
-									</div>
-								</div>
-							))}
-						</div>
-
-						{requests.length > 0 && (
-							<div className="mt-4 pt-4 border-t border-zinc-800 text-sm text-zinc-400">
-								{completedCount === requests.length ? (
-									<span className="text-green-400">
-										✓ All requests completed
-									</span>
-								) : running ? (
-									<span>
-										Loading... ({completedCount}/{requests.length})
-									</span>
-								) : (
-									<span className="text-zinc-500">Ready to simulate</span>
-								)}
-							</div>
-						)}
+						<button
+							type="button"
+							onClick={running ? reset : runAnimation}
+							className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
+								running
+									? "bg-zinc-700 text-zinc-300"
+									: "bg-violet-600 hover:bg-violet-500 text-white"
+							}`}
+						>
+							{running
+								? "⏹ Stop"
+								: requests.length > 0
+									? "↺ Replay"
+									: "▶ Animate"}
+						</button>
 					</div>
 
-					<button
-						type="button"
-						onClick={running ? reset : runAnimation}
-						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
-							running
-								? "bg-zinc-700 text-zinc-300"
-								: "bg-violet-600 hover:bg-violet-500 text-white"
-						}`}
-					>
-						{running
-							? "⏹ Stop"
-							: requests.length > 0
-								? "↺ Replay"
-								: "▶ Animate"}
-					</button>
-				</div>
+					{/* Code example */}
+					<div className="space-y-4">
+						<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+							Implementation
+						</h4>
 
-				{/* Code example */}
-				<div className="space-y-4">
-					<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
-						Implementation
-					</h4>
-
-					{selected === "rest-waterfall" && (
-						<div className="space-y-3">
-							<ShikiCode
-								language="typescript"
-								code={`// Each request depends on previous response
+						{selected === "rest-waterfall" && (
+							<div className="space-y-3">
+								<ShikiCode
+									language="typescript"
+									code={`// Each request depends on previous response
 const user = await fetch('/api/user/123');
 const posts = await fetch(\`/api/users/\${user.id}/posts\`);
 const likes = await fetch(\`/api/posts/\${posts[0].id}/likes\`);
@@ -397,21 +403,21 @@ const authors = await fetch(\`/api/posts/authors?ids=\${posts.map(p => p.authorI
 
 // Total time: 4 × RTT (round-trip time)
 // Problem: N+1 queries, slow, sequential`}
-								showLineNumbers={false}
-								className="text-xs"
-							/>
-							<div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs">
-								⚠️ Each request waits for the previous one. Depth-4 waterfall
-								kills performance.
+									showLineNumbers={false}
+									className="text-xs"
+								/>
+								<div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs">
+									⚠️ Each request waits for the previous one. Depth-4 waterfall
+									kills performance.
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 
-					{selected === "rest-embed" && (
-						<div className="space-y-3">
-							<ShikiCode
-								language="typescript"
-								code={`// Single request with query params
+						{selected === "rest-embed" && (
+							<div className="space-y-3">
+								<ShikiCode
+									language="typescript"
+									code={`// Single request with query params
 const data = await fetch('/api/user/123?embed=posts,likes,authors');
 
 // Returns ALL fields for embedded resources
@@ -424,21 +430,21 @@ const data = await fetch('/api/user/123?embed=posts,likes,authors');
 
 // Total time: 1 × RTT
 // Problem: Over-fetching — 75% of data unused`}
-								showLineNumbers={false}
-								className="text-xs"
-							/>
-							<div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs">
-								⚠️ Fast but wastes bandwidth. Returns 45KB when you only need
-								12KB.
+									showLineNumbers={false}
+									className="text-xs"
+								/>
+								<div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs">
+									⚠️ Fast but wastes bandwidth. Returns 45KB when you only need
+									12KB.
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 
-					{selected === "graphql" && (
-						<div className="space-y-3">
-							<ShikiCode
-								language="graphql"
-								code={`# Request exactly the fields you need
+						{selected === "graphql" && (
+							<div className="space-y-3">
+								<ShikiCode
+									language="graphql"
+									code={`# Request exactly the fields you need
 query GetUserProfile($id: ID!) {
   user(id: $id) {
     name
@@ -456,21 +462,21 @@ query GetUserProfile($id: ID!) {
 
 # Total time: 1 × RTT
 # Returns: 12KB (exactly what you need)`}
-								showLineNumbers={false}
-								className="text-xs"
-							/>
-							<div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs">
-								✓ Solves both over-fetching and under-fetching. Single request,
-								exact data.
+									showLineNumbers={false}
+									className="text-xs"
+								/>
+								<div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs">
+									✓ Solves both over-fetching and under-fetching. Single
+									request, exact data.
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 
-					{selected === "trpc" && (
-						<div className="space-y-3">
-							<ShikiCode
-								language="typescript"
-								code={`// Type-safe RPC call (no codegen needed)
+						{selected === "trpc" && (
+							<div className="space-y-3">
+								<ShikiCode
+									language="typescript"
+									code={`// Type-safe RPC call (no codegen needed)
 const data = await trpc.getUserProfile.query({ userId: '123' });
 //    ^? { name: string, avatar: string, posts: Post[] }
 
@@ -487,17 +493,18 @@ export const appRouter = router({
 });
 
 // Total time: 1 × RTT, 12KB, full type safety`}
-								showLineNumbers={false}
-								className="text-xs"
-							/>
-							<div className="p-3 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-300 text-xs">
-								✓ Perfect for TS monorepos. No GraphQL schema, no codegen. Just
-								functions.
+									showLineNumbers={false}
+									className="text-xs"
+								/>
+								<div className="p-3 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-300 text-xs">
+									✓ Perfect for TS monorepos. No GraphQL schema, no codegen.
+									Just functions.
+								</div>
 							</div>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }

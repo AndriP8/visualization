@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type Answer = "yes" | "no" | null;
@@ -124,197 +125,201 @@ export function DecisionTreeDemo() {
 	const result = finalResult ? RESULTS[finalResult] : null;
 
 	return (
-		<div className="space-y-6">
-			{/* Decision tree visualization */}
-			<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 min-h-[400px] flex flex-col items-center justify-center">
-				<AnimatePresence mode="wait">
-					{!finalResult ? (
-						<motion.div
-							key={currentQuestion}
-							initial={{ opacity: 0, y: 20 }}
-							animate={{ opacity: 1, y: 0 }}
-							exit={{ opacity: 0, y: -20 }}
-							className="w-full max-w-2xl"
-						>
-							{/* Progress breadcrumbs */}
-							<div className="flex items-center justify-center gap-2 mb-8">
-								{Object.keys(QUESTIONS).map((qId, idx) => {
-									const isAnswered = answers[qId] !== undefined;
-									const isCurrent = qId === currentQuestion;
+		<DemoSection
+			title="Demo 5: WebSocket vs SSE Decision Tree"
+			description="Answer 3 questions to find the right real-time pattern for your use case. Get architecture diagrams, code examples, and implementation guidance."
+		>
+			<div className="space-y-6">
+				{/* Decision tree visualization */}
+				<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 min-h-[400px] flex flex-col items-center justify-center">
+					<AnimatePresence mode="wait">
+						{!finalResult ? (
+							<motion.div
+								key={currentQuestion}
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								exit={{ opacity: 0, y: -20 }}
+								className="w-full max-w-2xl"
+							>
+								{/* Progress breadcrumbs */}
+								<div className="flex items-center justify-center gap-2 mb-8">
+									{Object.keys(QUESTIONS).map((qId, idx) => {
+										const isAnswered = answers[qId] !== undefined;
+										const isCurrent = qId === currentQuestion;
 
-									return (
-										<div key={qId} className="flex items-center gap-2">
-											<div
-												className={`w-2 h-2 rounded-full transition-colors ${
-													isAnswered
-														? "bg-green-400"
-														: isCurrent
-															? "bg-violet-400 animate-pulse"
-															: "bg-zinc-600"
-												}`}
-											/>
-											{idx < Object.keys(QUESTIONS).length - 1 && (
-												<div className="w-8 h-0.5 bg-zinc-700" />
+										return (
+											<div key={qId} className="flex items-center gap-2">
+												<div
+													className={`w-2 h-2 rounded-full transition-colors ${
+														isAnswered
+															? "bg-green-400"
+															: isCurrent
+																? "bg-violet-400 animate-pulse"
+																: "bg-zinc-600"
+													}`}
+												/>
+												{idx < Object.keys(QUESTIONS).length - 1 && (
+													<div className="w-8 h-0.5 bg-zinc-700" />
+												)}
+											</div>
+										);
+									})}
+								</div>
+
+								{/* Question */}
+								<div className="text-center mb-8">
+									<h3 className="text-2xl font-semibold text-white mb-2">
+										{question.text}
+									</h3>
+								</div>
+
+								{/* Answer buttons */}
+								<div className="grid grid-cols-2 gap-4">
+									<button
+										type="button"
+										onClick={() => handleAnswer("yes")}
+										className="px-8 py-6 bg-green-500/10 hover:bg-green-500/20 border-2 border-green-500/40 hover:border-green-500/60 rounded-xl text-green-300 font-semibold text-lg transition-all"
+									>
+										✓ Yes
+									</button>
+									<button
+										type="button"
+										onClick={() => handleAnswer("no")}
+										className="px-8 py-6 bg-rose-500/10 hover:bg-rose-500/20 border-2 border-rose-500/40 hover:border-rose-500/60 rounded-xl text-rose-300 font-semibold text-lg transition-all"
+									>
+										✗ No
+									</button>
+								</div>
+							</motion.div>
+						) : (
+							<motion.div
+								key="result"
+								initial={{ opacity: 0, scale: 0.9 }}
+								animate={{ opacity: 1, scale: 1 }}
+								className="w-full max-w-2xl"
+							>
+								{/* Result */}
+								<div className="text-center mb-8">
+									<div className="text-6xl mb-4">{result?.icon}</div>
+									<h3 className="text-3xl font-bold text-white mb-2">
+										{result?.technology}
+									</h3>
+									<p className="text-zinc-400">{result?.description}</p>
+								</div>
+
+								{/* Architecture diagram */}
+								<div className="bg-zinc-800/50 rounded-xl p-6 mb-6">
+									<div className="flex items-center justify-center gap-8">
+										<div className="flex flex-col items-center">
+											<div className="w-16 h-16 bg-violet-500/20 border-2 border-violet-500/40 rounded-lg flex items-center justify-center text-2xl mb-2">
+												💻
+											</div>
+											<span className="text-xs text-zinc-500">Client</span>
+										</div>
+
+										<div className="flex flex-col items-center gap-2">
+											{finalResult === "websocket" ? (
+												<>
+													<div className="flex items-center gap-2">
+														<span className="text-green-400">→</span>
+														<div className="w-24 h-1 bg-green-400 rounded" />
+														<span className="text-green-400">→</span>
+													</div>
+													<div className="flex items-center gap-2">
+														<span className="text-cyan-400">←</span>
+														<div className="w-24 h-1 bg-cyan-400 rounded" />
+														<span className="text-cyan-400">←</span>
+													</div>
+													<span className="text-xs text-zinc-500">
+														Bidirectional
+													</span>
+												</>
+											) : finalResult === "sse" ? (
+												<>
+													<div className="w-24 h-1 bg-zinc-700 rounded" />
+													<div className="flex items-center gap-2">
+														<span className="text-cyan-400">←</span>
+														<div className="w-24 h-1 bg-cyan-400 rounded" />
+														<span className="text-cyan-400">←</span>
+													</div>
+													<span className="text-xs text-zinc-500">
+														Server → Client
+													</span>
+												</>
+											) : (
+												<>
+													<div className="flex items-center gap-2">
+														<span className="text-amber-400">→</span>
+														<div className="w-24 h-1 bg-amber-400 rounded animate-pulse" />
+													</div>
+													<div className="flex items-center gap-2">
+														<span className="text-cyan-400">←</span>
+														<div className="w-24 h-1 bg-cyan-400 rounded animate-pulse" />
+													</div>
+													<span className="text-xs text-zinc-500">
+														Periodic Requests
+													</span>
+												</>
 											)}
 										</div>
-									);
-								})}
-							</div>
 
-							{/* Question */}
-							<div className="text-center mb-8">
-								<h3 className="text-2xl font-semibold text-white mb-2">
-									{question.text}
-								</h3>
-							</div>
-
-							{/* Answer buttons */}
-							<div className="grid grid-cols-2 gap-4">
-								<button
-									type="button"
-									onClick={() => handleAnswer("yes")}
-									className="px-8 py-6 bg-green-500/10 hover:bg-green-500/20 border-2 border-green-500/40 hover:border-green-500/60 rounded-xl text-green-300 font-semibold text-lg transition-all"
-								>
-									✓ Yes
-								</button>
-								<button
-									type="button"
-									onClick={() => handleAnswer("no")}
-									className="px-8 py-6 bg-rose-500/10 hover:bg-rose-500/20 border-2 border-rose-500/40 hover:border-rose-500/60 rounded-xl text-rose-300 font-semibold text-lg transition-all"
-								>
-									✗ No
-								</button>
-							</div>
-						</motion.div>
-					) : (
-						<motion.div
-							key="result"
-							initial={{ opacity: 0, scale: 0.9 }}
-							animate={{ opacity: 1, scale: 1 }}
-							className="w-full max-w-2xl"
-						>
-							{/* Result */}
-							<div className="text-center mb-8">
-								<div className="text-6xl mb-4">{result?.icon}</div>
-								<h3 className="text-3xl font-bold text-white mb-2">
-									{result?.technology}
-								</h3>
-								<p className="text-zinc-400">{result?.description}</p>
-							</div>
-
-							{/* Architecture diagram */}
-							<div className="bg-zinc-800/50 rounded-xl p-6 mb-6">
-								<div className="flex items-center justify-center gap-8">
-									<div className="flex flex-col items-center">
-										<div className="w-16 h-16 bg-violet-500/20 border-2 border-violet-500/40 rounded-lg flex items-center justify-center text-2xl mb-2">
-											💻
+										<div className="flex flex-col items-center">
+											<div className="w-16 h-16 bg-cyan-500/20 border-2 border-cyan-500/40 rounded-lg flex items-center justify-center text-2xl mb-2">
+												🖥️
+											</div>
+											<span className="text-xs text-zinc-500">Server</span>
 										</div>
-										<span className="text-xs text-zinc-500">Client</span>
-									</div>
-
-									<div className="flex flex-col items-center gap-2">
-										{finalResult === "websocket" ? (
-											<>
-												<div className="flex items-center gap-2">
-													<span className="text-green-400">→</span>
-													<div className="w-24 h-1 bg-green-400 rounded" />
-													<span className="text-green-400">→</span>
-												</div>
-												<div className="flex items-center gap-2">
-													<span className="text-cyan-400">←</span>
-													<div className="w-24 h-1 bg-cyan-400 rounded" />
-													<span className="text-cyan-400">←</span>
-												</div>
-												<span className="text-xs text-zinc-500">
-													Bidirectional
-												</span>
-											</>
-										) : finalResult === "sse" ? (
-											<>
-												<div className="w-24 h-1 bg-zinc-700 rounded" />
-												<div className="flex items-center gap-2">
-													<span className="text-cyan-400">←</span>
-													<div className="w-24 h-1 bg-cyan-400 rounded" />
-													<span className="text-cyan-400">←</span>
-												</div>
-												<span className="text-xs text-zinc-500">
-													Server → Client
-												</span>
-											</>
-										) : (
-											<>
-												<div className="flex items-center gap-2">
-													<span className="text-amber-400">→</span>
-													<div className="w-24 h-1 bg-amber-400 rounded animate-pulse" />
-												</div>
-												<div className="flex items-center gap-2">
-													<span className="text-cyan-400">←</span>
-													<div className="w-24 h-1 bg-cyan-400 rounded animate-pulse" />
-												</div>
-												<span className="text-xs text-zinc-500">
-													Periodic Requests
-												</span>
-											</>
-										)}
-									</div>
-
-									<div className="flex flex-col items-center">
-										<div className="w-16 h-16 bg-cyan-500/20 border-2 border-cyan-500/40 rounded-lg flex items-center justify-center text-2xl mb-2">
-											🖥️
-										</div>
-										<span className="text-xs text-zinc-500">Server</span>
 									</div>
 								</div>
-							</div>
 
-							{/* Use cases */}
-							<div className="mb-6">
-								<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">
-									Common Use Cases
-								</h4>
-								<div className="space-y-2">
-									{result?.useCases.map((useCase, idx) => (
-										<motion.div
-											key={useCase}
-											initial={{ opacity: 0, x: -10 }}
-											animate={{ opacity: 1, x: 0 }}
-											transition={{ delay: idx * 0.1 }}
-											className="flex items-center gap-2 text-sm text-zinc-300"
-										>
-											<span className="text-green-400">•</span>
-											<span>{useCase}</span>
-										</motion.div>
-									))}
+								{/* Use cases */}
+								<div className="mb-6">
+									<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">
+										Common Use Cases
+									</h4>
+									<div className="space-y-2">
+										{result?.useCases.map((useCase, idx) => (
+											<motion.div
+												key={useCase}
+												initial={{ opacity: 0, x: -10 }}
+												animate={{ opacity: 1, x: 0 }}
+												transition={{ delay: idx * 0.1 }}
+												className="flex items-center gap-2 text-sm text-zinc-300"
+											>
+												<span className="text-green-400">•</span>
+												<span>{useCase}</span>
+											</motion.div>
+										))}
+									</div>
 								</div>
-							</div>
 
-							<button
-								type="button"
-								onClick={reset}
-								className="w-full py-3 bg-violet-600 hover:bg-violet-500 rounded-lg text-white font-semibold transition-colors"
-							>
-								↺ Start Over
-							</button>
-						</motion.div>
-					)}
-				</AnimatePresence>
-			</div>
+								<button
+									type="button"
+									onClick={reset}
+									className="w-full py-3 bg-violet-600 hover:bg-violet-500 rounded-lg text-white font-semibold transition-colors"
+								>
+									↺ Start Over
+								</button>
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</div>
 
-			{/* Code examples (shown after result) */}
-			{finalResult && result && (
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					className="space-y-4"
-				>
-					<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
-						Implementation Example
-					</h4>
+				{/* Code examples (shown after result) */}
+				{finalResult && result && (
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						className="space-y-4"
+					>
+						<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+							Implementation Example
+						</h4>
 
-					{finalResult === "websocket" && (
-						<ShikiCode
-							language="typescript"
-							code={`// Client
+						{finalResult === "websocket" && (
+							<ShikiCode
+								language="typescript"
+								code={`// Client
 const ws = new WebSocket('ws://localhost:3000');
 
 ws.onopen = () => {
@@ -339,15 +344,15 @@ wss.on('connection', (ws) => {
     });
   });
 });`}
-							showLineNumbers={false}
-							className="text-xs"
-						/>
-					)}
+								showLineNumbers={false}
+								className="text-xs"
+							/>
+						)}
 
-					{finalResult === "sse" && (
-						<ShikiCode
-							language="typescript"
-							code={`// Client
+						{finalResult === "sse" && (
+							<ShikiCode
+								language="typescript"
+								code={`// Client
 const eventSource = new EventSource('/api/notifications');
 
 eventSource.onmessage = (event) => {
@@ -372,15 +377,15 @@ app.get('/api/notifications', (req, res) => {
   // Send updates as they arrive
   notificationEmitter.on('new', sendNotification);
 });`}
-							showLineNumbers={false}
-							className="text-xs"
-						/>
-					)}
+								showLineNumbers={false}
+								className="text-xs"
+							/>
+						)}
 
-					{finalResult === "polling" && (
-						<ShikiCode
-							language="typescript"
-							code={`// Simple polling
+						{finalResult === "polling" && (
+							<ShikiCode
+								language="typescript"
+								code={`// Simple polling
 async function pollForUpdates() {
   try {
     const response = await fetch('/api/status');
@@ -399,43 +404,46 @@ app.get('/api/status', async (req, res) => {
   const status = await db.getStatus();
   res.json(status);
 });`}
-							showLineNumbers={false}
-							className="text-xs"
-						/>
-					)}
-				</motion.div>
-			)}
+								showLineNumbers={false}
+								className="text-xs"
+							/>
+						)}
+					</motion.div>
+				)}
 
-			{/* Decision summary */}
-			{!finalResult && (
-				<div className="bg-zinc-800/30 border border-zinc-700 rounded-lg p-5">
-					<h4 className="text-sm font-semibold text-white mb-3">Quick Guide</h4>
-					<div className="space-y-2 text-sm text-zinc-400">
-						<div className="flex gap-2">
-							<span className="text-green-400">⚡</span>
-							<span>
-								<strong className="text-white">WebSocket:</strong> Chat, gaming,
-								collaborative tools, or any bidirectional real-time
-								communication
-							</span>
-						</div>
-						<div className="flex gap-2">
-							<span className="text-cyan-400">📡</span>
-							<span>
-								<strong className="text-white">SSE:</strong> Notifications,
-								logs, dashboards - when server pushes updates to client only
-							</span>
-						</div>
-						<div className="flex gap-2">
-							<span className="text-amber-400">🔄</span>
-							<span>
-								<strong className="text-white">Polling:</strong> Background
-								sync, email checks - when updates are infrequent (&lt;1/min)
-							</span>
+				{/* Decision summary */}
+				{!finalResult && (
+					<div className="bg-zinc-800/30 border border-zinc-700 rounded-lg p-5">
+						<h4 className="text-sm font-semibold text-white mb-3">
+							Quick Guide
+						</h4>
+						<div className="space-y-2 text-sm text-zinc-400">
+							<div className="flex gap-2">
+								<span className="text-green-400">⚡</span>
+								<span>
+									<strong className="text-white">WebSocket:</strong> Chat,
+									gaming, collaborative tools, or any bidirectional real-time
+									communication
+								</span>
+							</div>
+							<div className="flex gap-2">
+								<span className="text-cyan-400">📡</span>
+								<span>
+									<strong className="text-white">SSE:</strong> Notifications,
+									logs, dashboards - when server pushes updates to client only
+								</span>
+							</div>
+							<div className="flex gap-2">
+								<span className="text-amber-400">🔄</span>
+								<span>
+									<strong className="text-white">Polling:</strong> Background
+									sync, email checks - when updates are infrequent (&lt;1/min)
+								</span>
+							</div>
 						</div>
 					</div>
-				</div>
-			)}
-		</div>
+				)}
+			</div>
+		</DemoSection>
 	);
 }

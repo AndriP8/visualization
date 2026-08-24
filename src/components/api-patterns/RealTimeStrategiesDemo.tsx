@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { match } from "ts-pattern";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type Strategy =
@@ -286,158 +287,164 @@ export function RealTimeStrategiesDemo() {
 	const strategy = STRATEGIES.find((s) => s.id === selected) ?? STRATEGIES[0];
 
 	return (
-		<div className="space-y-6">
-			{/* Strategy selector */}
-			<div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
-				{STRATEGIES.map((s) => {
-					const isSelected = selected === s.id;
-					const className = match({ isSelected, color: s.color })
-						.with(
-							{ isSelected: true, color: "rose" },
-							() => "bg-rose-500/15 text-rose-300 border-rose-500/40",
-						)
-						.with(
-							{ isSelected: true, color: "amber" },
-							() => "bg-amber-500/15 text-amber-300 border-amber-500/40",
-						)
-						.with(
-							{ isSelected: true, color: "cyan" },
-							() => "bg-cyan-500/15 text-cyan-300 border-cyan-500/40",
-						)
-						.with(
-							{ isSelected: true, color: "green" },
-							() => "bg-green-500/15 text-green-300 border-green-500/40",
-						)
-						.with(
-							{ isSelected: true, color: "violet" },
-							() => "bg-violet-500/15 text-violet-300 border-violet-500/40",
-						)
-						.otherwise(
-							() =>
-								"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+		<DemoSection
+			title="Demo 2: Real-Time Update Strategies"
+			description="Watch a live stock price dashboard using 5 different approaches. Compare bandwidth usage, latency, and network activity for each strategy over 60 seconds."
+		>
+			<div className="space-y-6">
+				{/* Strategy selector */}
+				<div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
+					{STRATEGIES.map((s) => {
+						const isSelected = selected === s.id;
+						const className = match({ isSelected, color: s.color })
+							.with(
+								{ isSelected: true, color: "rose" },
+								() => "bg-rose-500/15 text-rose-300 border-rose-500/40",
+							)
+							.with(
+								{ isSelected: true, color: "amber" },
+								() => "bg-amber-500/15 text-amber-300 border-amber-500/40",
+							)
+							.with(
+								{ isSelected: true, color: "cyan" },
+								() => "bg-cyan-500/15 text-cyan-300 border-cyan-500/40",
+							)
+							.with(
+								{ isSelected: true, color: "green" },
+								() => "bg-green-500/15 text-green-300 border-green-500/40",
+							)
+							.with(
+								{ isSelected: true, color: "violet" },
+								() => "bg-violet-500/15 text-violet-300 border-violet-500/40",
+							)
+							.otherwise(
+								() =>
+									"bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-600",
+							);
+
+						return (
+							<button
+								key={s.id}
+								type="button"
+								onClick={() => setSelected(s.id)}
+								className={`px-3 py-2 rounded-lg text-sm font-semibold border transition-all ${className}`}
+							>
+								<div className="text-lg mb-1">{s.icon}</div>
+								<div className="text-xs">{s.label}</div>
+							</button>
 						);
-
-					return (
-						<button
-							key={s.id}
-							type="button"
-							onClick={() => setSelected(s.id)}
-							className={`px-3 py-2 rounded-lg text-sm font-semibold border transition-all ${className}`}
-						>
-							<div className="text-lg mb-1">{s.icon}</div>
-							<div className="text-xs">{s.label}</div>
-						</button>
-					);
-				})}
-			</div>
-
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-				{/* Live dashboard simulation */}
-				<div className="space-y-4">
-					{/* Stock price widget */}
-					<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6">
-						<div className="text-xs text-zinc-500 mb-2">ACME Stock Price</div>
-						<div className="text-4xl font-bold text-white mb-4">
-							${stockPrice}
-						</div>
-						<div className="h-24 bg-zinc-800 rounded flex items-end gap-1 px-2 overflow-hidden">
-							{activities.slice(-20).map((act) => (
-								<motion.div
-									key={act.id}
-									initial={{ height: 0 }}
-									animate={{ height: `${20 + Math.random() * 80}%` }}
-									className="w-2 bg-cyan-400 rounded-t"
-								/>
-							))}
-						</div>
-					</div>
-
-					{/* Metrics */}
-					<div className="grid grid-cols-3 gap-3">
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
-							<div className="text-xs text-zinc-500 mb-1">Latency</div>
-							<div className="text-lg font-bold text-white">
-								{strategy.latency}
-							</div>
-						</div>
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
-							<div className="text-xs text-zinc-500 mb-1">Bandwidth</div>
-							<div className="text-lg font-bold text-white">
-								{strategy.bandwidth}
-							</div>
-						</div>
-						<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
-							<div className="text-xs text-zinc-500 mb-1">Time</div>
-							<div className="text-lg font-bold text-white">{elapsedTime}s</div>
-						</div>
-					</div>
-
-					{/* Network activity log */}
-					<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-4 h-64 overflow-y-auto">
-						<div className="text-xs text-zinc-500 mb-3 font-mono">
-							Network Activity ({totalBytes.toFixed(1)} KB total)
-						</div>
-						<div className="space-y-1">
-							<AnimatePresence>
-								{activities
-									.slice(-15)
-									.reverse()
-									.map((act) => (
-										<motion.div
-											key={act.id}
-											initial={{ opacity: 0, x: -10 }}
-											animate={{ opacity: 1, x: 0 }}
-											exit={{ opacity: 0 }}
-											className="flex items-center gap-2 text-xs font-mono"
-										>
-											<span className="text-zinc-600">
-												{new Date(act.timestamp).toLocaleTimeString()}
-											</span>
-											<span
-												className={match(act.type)
-													.with("request", () => "text-amber-400")
-													.with("response", () => "text-cyan-400")
-													.with("push", () => "text-green-400")
-													.exhaustive()}
-											>
-												{match(act.type)
-													.with("request", () => "→")
-													.with("response", () => "←")
-													.with("push", () => "↓")
-													.exhaustive()}
-											</span>
-											<span className="text-zinc-400">{act.type}</span>
-											<span className="text-zinc-600">{act.bytes}KB</span>
-										</motion.div>
-									))}
-							</AnimatePresence>
-						</div>
-					</div>
-
-					<button
-						type="button"
-						onClick={running ? reset : runAnimation}
-						className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
-							running
-								? "bg-zinc-700 text-zinc-300"
-								: "bg-violet-600 hover:bg-violet-500 text-white"
-						}`}
-					>
-						{running ? "⏹ Stop" : "▶ Start Monitoring"}
-					</button>
+					})}
 				</div>
 
-				{/* Implementation */}
-				<div className="space-y-4">
-					<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
-						Implementation
-					</h4>
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+					{/* Live dashboard simulation */}
+					<div className="space-y-4">
+						{/* Stock price widget */}
+						<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6">
+							<div className="text-xs text-zinc-500 mb-2">ACME Stock Price</div>
+							<div className="text-4xl font-bold text-white mb-4">
+								${stockPrice}
+							</div>
+							<div className="h-24 bg-zinc-800 rounded flex items-end gap-1 px-2 overflow-hidden">
+								{activities.slice(-20).map((act) => (
+									<motion.div
+										key={act.id}
+										initial={{ height: 0 }}
+										animate={{ height: `${20 + Math.random() * 80}%` }}
+										className="w-2 bg-cyan-400 rounded-t"
+									/>
+								))}
+							</div>
+						</div>
 
-					{selected === "polling" && (
-						<div className="space-y-3">
-							<ShikiCode
-								language="typescript"
-								code={`// Client polls server every N seconds
+						{/* Metrics */}
+						<div className="grid grid-cols-3 gap-3">
+							<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
+								<div className="text-xs text-zinc-500 mb-1">Latency</div>
+								<div className="text-lg font-bold text-white">
+									{strategy.latency}
+								</div>
+							</div>
+							<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
+								<div className="text-xs text-zinc-500 mb-1">Bandwidth</div>
+								<div className="text-lg font-bold text-white">
+									{strategy.bandwidth}
+								</div>
+							</div>
+							<div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3">
+								<div className="text-xs text-zinc-500 mb-1">Time</div>
+								<div className="text-lg font-bold text-white">
+									{elapsedTime}s
+								</div>
+							</div>
+						</div>
+
+						{/* Network activity log */}
+						<div className="bg-zinc-900 border border-zinc-700 rounded-xl p-4 h-64 overflow-y-auto">
+							<div className="text-xs text-zinc-500 mb-3 font-mono">
+								Network Activity ({totalBytes.toFixed(1)} KB total)
+							</div>
+							<div className="space-y-1">
+								<AnimatePresence>
+									{activities
+										.slice(-15)
+										.reverse()
+										.map((act) => (
+											<motion.div
+												key={act.id}
+												initial={{ opacity: 0, x: -10 }}
+												animate={{ opacity: 1, x: 0 }}
+												exit={{ opacity: 0 }}
+												className="flex items-center gap-2 text-xs font-mono"
+											>
+												<span className="text-zinc-600">
+													{new Date(act.timestamp).toLocaleTimeString()}
+												</span>
+												<span
+													className={match(act.type)
+														.with("request", () => "text-amber-400")
+														.with("response", () => "text-cyan-400")
+														.with("push", () => "text-green-400")
+														.exhaustive()}
+												>
+													{match(act.type)
+														.with("request", () => "→")
+														.with("response", () => "←")
+														.with("push", () => "↓")
+														.exhaustive()}
+												</span>
+												<span className="text-zinc-400">{act.type}</span>
+												<span className="text-zinc-600">{act.bytes}KB</span>
+											</motion.div>
+										))}
+								</AnimatePresence>
+							</div>
+						</div>
+
+						<button
+							type="button"
+							onClick={running ? reset : runAnimation}
+							className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${
+								running
+									? "bg-zinc-700 text-zinc-300"
+									: "bg-violet-600 hover:bg-violet-500 text-white"
+							}`}
+						>
+							{running ? "⏹ Stop" : "▶ Start Monitoring"}
+						</button>
+					</div>
+
+					{/* Implementation */}
+					<div className="space-y-4">
+						<h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+							Implementation
+						</h4>
+
+						{selected === "polling" && (
+							<div className="space-y-3">
+								<ShikiCode
+									language="typescript"
+									code={`// Client polls server every N seconds
 setInterval(async () => {
   const res = await fetch('/api/stock-price');
   const data = await res.json();
@@ -446,21 +453,21 @@ setInterval(async () => {
 
 // Pros: Simple, works everywhere
 // Cons: Wastes bandwidth, slow updates (5s lag)`}
-								showLineNumbers={false}
-								className="text-xs"
-							/>
-							<div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs">
-								⚠️ High bandwidth waste. Most polls return "no updates". Slow
-								latency.
+									showLineNumbers={false}
+									className="text-xs"
+								/>
+								<div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs">
+									⚠️ High bandwidth waste. Most polls return "no updates". Slow
+									latency.
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 
-					{selected === "long-polling" && (
-						<div className="space-y-3">
-							<ShikiCode
-								language="typescript"
-								code={`// Server holds request until data available
+						{selected === "long-polling" && (
+							<div className="space-y-3">
+								<ShikiCode
+									language="typescript"
+									code={`// Server holds request until data available
 async function longPoll() {
   const res = await fetch('/api/stock-price/subscribe');
   const data = await res.json();
@@ -470,21 +477,21 @@ async function longPoll() {
 
 // Server waits up to 30s before responding
 // Responds immediately when data changes`}
-								showLineNumbers={false}
-								className="text-xs"
-							/>
-							<div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs">
-								Better than polling but still uses HTTP overhead for each
-								update.
+									showLineNumbers={false}
+									className="text-xs"
+								/>
+								<div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs">
+									Better than polling but still uses HTTP overhead for each
+									update.
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 
-					{selected === "sse" && (
-						<div className="space-y-3">
-							<ShikiCode
-								language="typescript"
-								code={`// Server pushes updates over single HTTP connection
+						{selected === "sse" && (
+							<div className="space-y-3">
+								<ShikiCode
+									language="typescript"
+									code={`// Server pushes updates over single HTTP connection
 const eventSource = new EventSource('/api/stock-price/stream');
 
 eventSource.onmessage = (event) => {
@@ -495,21 +502,21 @@ eventSource.onmessage = (event) => {
 // Server sends data as it arrives:
 // data: {"price": 102.5}\\n\\n
 // Auto-reconnects on disconnect`}
-								showLineNumbers={false}
-								className="text-xs"
-							/>
-							<div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs">
-								✓ Simpler than WebSocket. Perfect for server → client updates
-								(logs, notifications).
+									showLineNumbers={false}
+									className="text-xs"
+								/>
+								<div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs">
+									✓ Simpler than WebSocket. Perfect for server → client updates
+									(logs, notifications).
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 
-					{selected === "websocket" && (
-						<div className="space-y-3">
-							<ShikiCode
-								language="typescript"
-								code={`// Full-duplex bidirectional communication
+						{selected === "websocket" && (
+							<div className="space-y-3">
+								<ShikiCode
+									language="typescript"
+									code={`// Full-duplex bidirectional communication
 const ws = new WebSocket('ws://api.example.com/stock');
 
 ws.onopen = () => {
@@ -523,21 +530,21 @@ ws.onmessage = (event) => {
 
 // Lowest latency, minimal overhead
 // Use for: chat, gaming, collaborative editing`}
-								showLineNumbers={false}
-								className="text-xs"
-							/>
-							<div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-300 text-xs">
-								✓ Lowest latency, most efficient. Use when &lt;1s latency
-								required.
+									showLineNumbers={false}
+									className="text-xs"
+								/>
+								<div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-300 text-xs">
+									✓ Lowest latency, most efficient. Use when &lt;1s latency
+									required.
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 
-					{selected === "graphql-sub" && (
-						<div className="space-y-3">
-							<ShikiCode
-								language="graphql"
-								code={`# GraphQL subscription over WebSocket
+						{selected === "graphql-sub" && (
+							<div className="space-y-3">
+								<ShikiCode
+									language="graphql"
+									code={`# GraphQL subscription over WebSocket
 subscription StockPrice($symbol: String!) {
   stockPriceUpdated(symbol: $symbol) {
     price
@@ -551,16 +558,17 @@ const [result] = useSubscription({
   query: StockPriceSubscription,
   variables: { symbol: 'ACME' }
 });`}
-								showLineNumbers={false}
-								className="text-xs"
-							/>
-							<div className="p-3 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-300 text-xs">
-								✓ WebSocket under the hood. GraphQL syntax for subscriptions.
+									showLineNumbers={false}
+									className="text-xs"
+								/>
+								<div className="p-3 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-300 text-xs">
+									✓ WebSocket under the hood. GraphQL syntax for subscriptions.
+								</div>
 							</div>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }
