@@ -80,7 +80,7 @@ export function StateDiagram({
 								y1={from.y}
 								x2={to.x}
 								y2={to.y}
-								stroke={isActive ? "#fb923c" : "#52525b"}
+								stroke={isActive ? "#22d3ee" : "#52525b"}
 								strokeWidth={isActive ? 2 : 1}
 								initial={{ pathLength: 0 }}
 								animate={{ pathLength: 1 }}
@@ -91,7 +91,7 @@ export function StateDiagram({
 							<text
 								x={midX}
 								y={midY - 10}
-								fill={isActive ? "#fb923c" : "#71717a"}
+								fill={isActive ? "#22d3ee" : "#71717a"}
 								fontSize="12"
 								textAnchor="middle"
 								className="font-mono"
@@ -131,12 +131,12 @@ export function StateDiagram({
 								r={40}
 								fill={
 									isCurrent
-										? "rgba(251, 146, 60, 0.2)"
+										? "rgba(34, 211, 238, 0.2)"
 										: isFinal
 											? "rgba(52, 211, 153, 0.2)"
 											: "rgba(39, 39, 42, 1)"
 								}
-								stroke={isCurrent ? "#fb923c" : isFinal ? "#34d399" : "#52525b"}
+								stroke={isCurrent ? "#22d3ee" : isFinal ? "#34d399" : "#52525b"}
 								strokeWidth={isCurrent ? 3 : 2}
 								initial={{ scale: 0 }}
 								animate={{
@@ -156,7 +156,7 @@ export function StateDiagram({
 									cy={pos.y}
 									r={40}
 									fill="none"
-									stroke="#fb923c"
+									stroke="#22d3ee"
 									strokeWidth={2}
 									initial={{ scale: 1, opacity: 0.5 }}
 									animate={{
@@ -174,7 +174,7 @@ export function StateDiagram({
 							<text
 								x={pos.x}
 								y={pos.y}
-								fill={isCurrent ? "#fb923c" : isFinal ? "#34d399" : "#a1a1aa"}
+								fill={isCurrent ? "#22d3ee" : isFinal ? "#34d399" : "#a1a1aa"}
 								fontSize="14"
 								fontWeight={isCurrent ? "bold" : "normal"}
 								textAnchor="middle"
@@ -201,7 +201,7 @@ export function StateDiagram({
 									onEvent(event);
 								}
 							}}
-							className="px-4 py-2 bg-orange-500/20 border border-orange-400 text-orange-300 rounded-lg hover:bg-orange-500/30 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-colors font-mono text-sm"
+							className="px-4 py-2 bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 rounded-lg hover:bg-cyan-500/30 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-colors font-mono text-sm"
 							type="button"
 							aria-label={`Trigger ${event} transition`}
 						>

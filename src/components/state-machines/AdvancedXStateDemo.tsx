@@ -106,7 +106,6 @@ const loginMachine = createMachine(
 				},
 			},
 			success: {
-				type: "final",
 				entry: "logSuccess",
 				on: {
 					RESET: {
@@ -121,7 +120,7 @@ const loginMachine = createMachine(
 		// Actions are side effects that update context or trigger external effects
 		actions: {
 			updateEmail: assign({
-				email: (_, event) => {
+				email: ({ context, event }) => {
 					if (
 						typeof event === "object" &&
 						event &&
@@ -131,11 +130,11 @@ const loginMachine = createMachine(
 					) {
 						return event.value as string;
 					}
-					return "";
+					return context.email;
 				},
 			}),
 			updatePassword: assign({
-				password: (_, event) => {
+				password: ({ context, event }) => {
 					if (
 						typeof event === "object" &&
 						event &&
@@ -145,17 +144,17 @@ const loginMachine = createMachine(
 					) {
 						return event.value as string;
 					}
-					return "";
+					return context.password;
 				},
 			}),
 			clearError: assign({
-				error: null,
+				error: () => null,
 			}),
 			setValidationError: assign({
-				error: "Please enter valid email and password",
+				error: () => "Please enter valid email and password",
 			}),
 			setAPIError: assign({
-				error: (_, event) => {
+				error: ({ context, event }) => {
 					if (
 						typeof event === "object" &&
 						event &&
@@ -165,18 +164,18 @@ const loginMachine = createMachine(
 					) {
 						return event.error as string;
 					}
-					return "Unknown error";
+					return context.error ?? "Unknown error";
 				},
 			}),
 			incrementAttempts: assign({
 				attempts: ({ context }) => context.attempts + 1,
 			}),
-			resetContext: assign({
+			resetContext: assign(() => ({
 				email: "",
 				password: "",
 				error: null,
 				attempts: 0,
-			}),
+			})),
 			logSuccess: ({ context }) => {
 				console.log("✓ Login successful for:", context.email);
 			},
@@ -300,8 +299,8 @@ export function AdvancedXStateDemo() {
 
 	return (
 		<DemoSection
-			title="Advanced XState: Guards, Actions & Context"
-			description="Login form demonstrating guards (validation), actions (side effects), context (data storage), and error/retry patterns"
+			title="Demo 5: Implementation: XState Library"
+			description="Login form demonstrating guards (validation), actions (side effects), context (data storage), and error/retry patterns with XState."
 		>
 			<div className="space-y-8">
 				<StateDiagram
@@ -335,7 +334,7 @@ export function AdvancedXStateDemo() {
 							<button
 								type="button"
 								onClick={() => send({ type: "RESET" })}
-								className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+								className="px-4 py-2 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 rounded-lg hover:bg-cyan-500/30 transition-colors"
 							>
 								Start Over
 							</button>
@@ -362,7 +361,7 @@ export function AdvancedXStateDemo() {
 										send({ type: "UPDATE_EMAIL", value: e.target.value })
 									}
 									disabled={isLoading}
-									className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
+									className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-50"
 								/>
 								{email.length > 0 && !email.includes("@") && (
 									<p className="text-xs text-amber-400">Email must contain @</p>
@@ -385,7 +384,7 @@ export function AdvancedXStateDemo() {
 										send({ type: "UPDATE_PASSWORD", value: e.target.value })
 									}
 									disabled={isLoading}
-									className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
+									className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-50"
 								/>
 								{password.length > 0 && password.length < 6 && (
 									<p className="text-xs text-amber-400">
@@ -424,7 +423,7 @@ export function AdvancedXStateDemo() {
 											<button
 												type="button"
 												onClick={() => send({ type: "RETRY" })}
-												className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+												className="px-4 py-2 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 rounded-lg hover:bg-cyan-500/30 transition-colors"
 											>
 												Retry ({3 - attempts} left)
 											</button>
@@ -443,14 +442,14 @@ export function AdvancedXStateDemo() {
 										type="button"
 										onClick={() => send({ type: "SUBMIT" })}
 										disabled={!isFormValid}
-										className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+										className="px-4 py-2 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 rounded-lg hover:bg-cyan-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 									>
 										Submit
 									</button>
 								)}
 								{isLoading && (
 									<div className="flex items-center gap-2 text-zinc-400">
-										<div className="w-4 h-4 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+										<div className="w-4 h-4 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
 										{currentState === "validating"
 											? "Validating..."
 											: "Logging in..."}
@@ -475,8 +474,8 @@ export function AdvancedXStateDemo() {
 					<ShikiCode language="typescript" code={machineCode} />
 				</div>
 
-				<div className="p-4 bg-violet-500/10 border border-violet-500/30 rounded-lg">
-					<h4 className="text-sm font-semibold text-violet-400 mb-2">
+				<div className="p-4 bg-cyan-950/30 border border-cyan-800/50 rounded-lg">
+					<h4 className="text-sm font-semibold text-cyan-400 mb-2">
 						Advanced XState Features
 					</h4>
 					<ul className="text-sm text-zinc-300 space-y-1 list-disc list-inside">
