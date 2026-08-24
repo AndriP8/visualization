@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useRef, useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 import { getNextWeightedRoundRobin } from "./load-balancing";
 
@@ -126,176 +127,180 @@ export function WeightedRoundRobinDemo() {
 	const maxRequests = Math.max(...servers.map((s) => s.requestCount), 1);
 
 	return (
-		<div className="space-y-8">
-			{/* Controls */}
-			<div className="flex flex-wrap gap-3">
-				<button
-					type="button"
-					onClick={sendRequest}
-					className="px-4 py-2 bg-rose-600 hover:bg-rose-700 rounded-lg font-medium transition-colors"
-				>
-					Send Request
-				</button>
-				<button
-					type="button"
-					onClick={sendBatchRequests}
-					className="px-4 py-2 bg-rose-600/80 hover:bg-rose-700/80 rounded-lg font-medium transition-colors"
-				>
-					Send 15 Requests
-				</button>
-				<button
-					type="button"
-					onClick={reset}
-					className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg font-medium transition-colors"
-				>
-					Reset
-				</button>
-			</div>
-
-			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-8">
-				<div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-					{servers.map((server) => {
-						const activeRequests = requests.filter(
-							(r) => r.targetServerId === server.id,
-						);
-						const expectedRatio = (server.weight / totalWeight) * 100;
-						const actualRatio =
-							servers.reduce((sum, s) => sum + s.requestCount, 0) > 0
-								? (server.requestCount /
-										servers.reduce((sum, s) => sum + s.requestCount, 0)) *
-									100
-								: 0;
-
-						return (
-							<div key={server.id} className="relative">
-								<motion.div className="border-2 border-zinc-700 rounded-lg p-4 bg-zinc-800">
-									<h4 className="font-semibold text-white mb-3">
-										{server.name}
-									</h4>
-
-									<div className="space-y-3">
-										{/* Capacity/Weight Control */}
-										<div>
-											<div className="flex items-center justify-between mb-2">
-												<span className="text-xs text-zinc-400">
-													Capacity Weight
-												</span>
-												<div className="flex items-center gap-1">
-													<button
-														type="button"
-														onClick={() => updateWeight(server.id, -1)}
-														disabled={server.weight <= 1}
-														className="w-6 h-6 bg-zinc-700 hover:bg-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed rounded text-sm font-bold"
-													>
-														−
-													</button>
-													<span className="w-8 text-center font-mono text-rose-400 font-bold">
-														{server.weight}
-													</span>
-													<button
-														type="button"
-														onClick={() => updateWeight(server.id, 1)}
-														disabled={server.weight >= 5}
-														className="w-6 h-6 bg-zinc-700 hover:bg-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed rounded text-sm font-bold"
-													>
-														+
-													</button>
-												</div>
-											</div>
-											<div className="h-2 bg-zinc-900 rounded-full overflow-hidden">
-												<div
-													className="h-full bg-rose-500"
-													style={{ width: `${(server.weight / 5) * 100}%` }}
-												/>
-											</div>
-										</div>
-
-										{/* Request Count */}
-										<div className="flex justify-between text-sm text-zinc-400">
-											<span>Requests:</span>
-											<span className="text-white font-mono">
-												{server.requestCount}
-											</span>
-										</div>
-
-										{/* Distribution Bar */}
-										<div>
-											<div className="flex justify-between text-xs text-zinc-500 mb-1">
-												<span>Actual</span>
-												<span>{actualRatio.toFixed(1)}%</span>
-											</div>
-											<div className="h-3 bg-zinc-900 rounded-full overflow-hidden">
-												<motion.div
-													className="h-full bg-rose-400"
-													initial={{ width: 0 }}
-													animate={{
-														width: `${(server.requestCount / maxRequests) * 100}%`,
-													}}
-													transition={{ duration: 0.3 }}
-												/>
-											</div>
-										</div>
-
-										{/* Expected Ratio */}
-										<div className="text-xs text-zinc-500">
-											Expected: {expectedRatio.toFixed(1)}%
-										</div>
-									</div>
-								</motion.div>
-
-								{/* Animated requests */}
-								<AnimatePresence>
-									{activeRequests.map((req) => (
-										<motion.div
-											key={req.id}
-											className="absolute -top-8 left-1/2 -translate-x-1/2 w-8 h-8 bg-rose-500 rounded-full shadow-lg shadow-rose-500/50"
-											initial={{ y: -60, opacity: 0, scale: 0 }}
-											animate={{ y: 0, opacity: 1, scale: 1 }}
-											exit={{ opacity: 0, scale: 0.5 }}
-											transition={{ duration: 0.6 }}
-										/>
-									))}
-								</AnimatePresence>
-							</div>
-						);
-					})}
+		<DemoSection
+			title="Demo 3: Weighted Round-Robin"
+			description="Extends round-robin by assigning capacity weights to servers. Higher-capacity servers receive proportionally more requests."
+		>
+			<div className="space-y-8">
+				{/* Controls */}
+				<div className="flex flex-wrap gap-3">
+					<button
+						type="button"
+						onClick={sendRequest}
+						className="px-4 py-2 bg-rose-600 hover:bg-rose-700 rounded-lg font-medium transition-colors"
+					>
+						Send Request
+					</button>
+					<button
+						type="button"
+						onClick={sendBatchRequests}
+						className="px-4 py-2 bg-rose-600/80 hover:bg-rose-700/80 rounded-lg font-medium transition-colors"
+					>
+						Send 15 Requests
+					</button>
+					<button
+						type="button"
+						onClick={reset}
+						className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg font-medium transition-colors"
+					>
+						Reset
+					</button>
 				</div>
 
-				{/* Weight Sequence Visualization */}
-				<div className="mt-6 pt-6 border-t border-zinc-800">
-					<div className="text-sm text-zinc-400 mb-3">
-						Request Distribution Sequence (Total Weight: {totalWeight}):
-					</div>
-					<div className="flex flex-wrap gap-2">
-						{buildWeightedSequenceForDisplay().map((item, idx) => {
-							const server = servers.find((s) => s.id === item.serverId);
-							const isCurrent = idx === currentWeightIndex % totalWeight;
+				{/* Visualization */}
+				<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-8">
+					<div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+						{servers.map((server) => {
+							const activeRequests = requests.filter(
+								(r) => r.targetServerId === server.id,
+							);
+							const expectedRatio = (server.weight / totalWeight) * 100;
+							const actualRatio =
+								servers.reduce((sum, s) => sum + s.requestCount, 0) > 0
+									? (server.requestCount /
+											servers.reduce((sum, s) => sum + s.requestCount, 0)) *
+										100
+									: 0;
 
 							return (
-								<motion.div
-									key={item.key}
-									className={`px-3 py-1 rounded text-sm font-medium transition-all ${
-										isCurrent
-											? "bg-rose-500 text-white ring-2 ring-rose-400"
-											: "bg-zinc-800 text-zinc-400"
-									}`}
-									animate={{
-										scale: isCurrent ? 1.1 : 1,
-									}}
-								>
-									{server?.name}
-								</motion.div>
+								<div key={server.id} className="relative">
+									<motion.div className="border-2 border-zinc-700 rounded-lg p-4 bg-zinc-800">
+										<h4 className="font-semibold text-white mb-3">
+											{server.name}
+										</h4>
+
+										<div className="space-y-3">
+											{/* Capacity/Weight Control */}
+											<div>
+												<div className="flex items-center justify-between mb-2">
+													<span className="text-xs text-zinc-400">
+														Capacity Weight
+													</span>
+													<div className="flex items-center gap-1">
+														<button
+															type="button"
+															onClick={() => updateWeight(server.id, -1)}
+															disabled={server.weight <= 1}
+															className="w-6 h-6 bg-zinc-700 hover:bg-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed rounded text-sm font-bold"
+														>
+															−
+														</button>
+														<span className="w-8 text-center font-mono text-rose-400 font-bold">
+															{server.weight}
+														</span>
+														<button
+															type="button"
+															onClick={() => updateWeight(server.id, 1)}
+															disabled={server.weight >= 5}
+															className="w-6 h-6 bg-zinc-700 hover:bg-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed rounded text-sm font-bold"
+														>
+															+
+														</button>
+													</div>
+												</div>
+												<div className="h-2 bg-zinc-900 rounded-full overflow-hidden">
+													<div
+														className="h-full bg-rose-500"
+														style={{ width: `${(server.weight / 5) * 100}%` }}
+													/>
+												</div>
+											</div>
+
+											{/* Request Count */}
+											<div className="flex justify-between text-sm text-zinc-400">
+												<span>Requests:</span>
+												<span className="text-white font-mono">
+													{server.requestCount}
+												</span>
+											</div>
+
+											{/* Distribution Bar */}
+											<div>
+												<div className="flex justify-between text-xs text-zinc-500 mb-1">
+													<span>Actual</span>
+													<span>{actualRatio.toFixed(1)}%</span>
+												</div>
+												<div className="h-3 bg-zinc-900 rounded-full overflow-hidden">
+													<motion.div
+														className="h-full bg-rose-400"
+														initial={{ width: 0 }}
+														animate={{
+															width: `${(server.requestCount / maxRequests) * 100}%`,
+														}}
+														transition={{ duration: 0.3 }}
+													/>
+												</div>
+											</div>
+
+											{/* Expected Ratio */}
+											<div className="text-xs text-zinc-500">
+												Expected: {expectedRatio.toFixed(1)}%
+											</div>
+										</div>
+									</motion.div>
+
+									{/* Animated requests */}
+									<AnimatePresence>
+										{activeRequests.map((req) => (
+											<motion.div
+												key={req.id}
+												className="absolute -top-8 left-1/2 -translate-x-1/2 w-8 h-8 bg-rose-500 rounded-full shadow-lg shadow-rose-500/50"
+												initial={{ y: -60, opacity: 0, scale: 0 }}
+												animate={{ y: 0, opacity: 1, scale: 1 }}
+												exit={{ opacity: 0, scale: 0.5 }}
+												transition={{ duration: 0.6 }}
+											/>
+										))}
+									</AnimatePresence>
+								</div>
 							);
 						})}
 					</div>
-				</div>
-			</div>
 
-			{/* Code Example */}
-			<ShikiCode
-				language="javascript"
-				code={`class WeightedRoundRobinBalancer {
+					{/* Weight Sequence Visualization */}
+					<div className="mt-6 pt-6 border-t border-zinc-800">
+						<div className="text-sm text-zinc-400 mb-3">
+							Request Distribution Sequence (Total Weight: {totalWeight}):
+						</div>
+						<div className="flex flex-wrap gap-2">
+							{buildWeightedSequenceForDisplay().map((item, idx) => {
+								const server = servers.find((s) => s.id === item.serverId);
+								const isCurrent = idx === currentWeightIndex % totalWeight;
+
+								return (
+									<motion.div
+										key={item.key}
+										className={`px-3 py-1 rounded text-sm font-medium transition-all ${
+											isCurrent
+												? "bg-rose-500 text-white ring-2 ring-rose-400"
+												: "bg-zinc-800 text-zinc-400"
+										}`}
+										animate={{
+											scale: isCurrent ? 1.1 : 1,
+										}}
+									>
+										{server?.name}
+									</motion.div>
+								);
+							})}
+						</div>
+					</div>
+				</div>
+
+				{/* Code Example */}
+				<ShikiCode
+					language="javascript"
+					code={`class WeightedRoundRobinBalancer {
   constructor(servers) {
     this.servers = servers; // [{ name, weight }, ...]
     this.currentIndex = 0;
@@ -331,35 +336,36 @@ const balancer = new WeightedRoundRobinBalancer(servers);
 // Sequence: [small, medium, medium, large, large, large]
 // 6 requests distributed as: 1:2:3 ratio
 `}
-				showLineNumbers={true}
-				className="text-sm"
-			/>
+					showLineNumbers={true}
+					className="text-sm"
+				/>
 
-			{/* Use Case Callout */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-				<h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-					<span>🎯</span>
-					When to Use Weighted Round-Robin
-				</h4>
-				<div className="space-y-3 text-sm text-zinc-300">
-					<p>
-						<span className="font-medium text-rose-400">Ideal for:</span>{" "}
-						Heterogeneous server capacities where you know the relative
-						performance of each server ahead of time.
-					</p>
-					<p>
-						<span className="font-medium text-rose-400">Example:</span> A
-						cluster with mixed instance types (e.g., 2 large instances, 3 medium
-						instances, 1 small instance). Assign weights proportional to CPU/RAM
-						capacity.
-					</p>
-					<p>
-						<span className="font-medium text-rose-400">Trade-off:</span> Better
-						than simple round-robin for heterogeneous clusters, but still
-						doesn't adapt to real-time load like Least Connections.
-					</p>
+				{/* Use Case Callout */}
+				<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+					<h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+						<span>🎯</span>
+						When to Use Weighted Round-Robin
+					</h4>
+					<div className="space-y-3 text-sm text-zinc-300">
+						<p>
+							<span className="font-medium text-rose-400">Ideal for:</span>{" "}
+							Heterogeneous server capacities where you know the relative
+							performance of each server ahead of time.
+						</p>
+						<p>
+							<span className="font-medium text-rose-400">Example:</span> A
+							cluster with mixed instance types (e.g., 2 large instances, 3
+							medium instances, 1 small instance). Assign weights proportional
+							to CPU/RAM capacity.
+						</p>
+						<p>
+							<span className="font-medium text-rose-400">Trade-off:</span>{" "}
+							Better than simple round-robin for heterogeneous clusters, but
+							still doesn't adapt to real-time load like Least Connections.
+						</p>
+					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }

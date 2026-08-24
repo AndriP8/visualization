@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { motion } from "motion/react";
 import { ComparisonDemo } from "../components/load-balancing/ComparisonDemo";
 import { ConsistentHashingDemo } from "../components/load-balancing/ConsistentHashingDemo";
 import { LeastConnectionsDemo } from "../components/load-balancing/LeastConnectionsDemo";
 import { RoundRobinDemo } from "../components/load-balancing/RoundRobinDemo";
 import { WeightedRoundRobinDemo } from "../components/load-balancing/WeightedRoundRobinDemo";
-import { DemoSection } from "../components/shared/DemoSection";
 import { PageHeader } from "../components/shared/PageHeader";
 
 export const Route = createFileRoute("/load-balancing")({
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/load-balancing")({
 
 function LoadBalancingPage() {
 	return (
-		<div className="max-w-6xl mx-auto space-y-12 pb-20">
+		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
 				topic={{ label: "System Design", color: "blue" }}
 				title="Load Balancing Strategies"
@@ -53,40 +53,20 @@ function LoadBalancingPage() {
 					),
 				}}
 			/>
-			<DemoSection
-				title="Demo 1: Round-Robin Algorithm"
-				description="Distributes requests sequentially across servers in rotation. Simple and fair, but treats all servers equally regardless of current load."
+
+			{/* Demos */}
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ delay: 0.2, duration: 0.4 }}
+				className="space-y-8"
 			>
 				<RoundRobinDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 2: Least Connections Algorithm"
-				description="Routes requests to the server with the fewest active connections. Handles variable request durations better than round-robin."
-			>
 				<LeastConnectionsDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 3: Weighted Round-Robin"
-				description="Extends round-robin by assigning capacity weights to servers. Higher-capacity servers receive proportionally more requests."
-			>
 				<WeightedRoundRobinDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 4: Consistent Hashing"
-				description="Maps requests to servers using a hash ring. Minimizes cache invalidation when servers are added or removed — only ~1/N keys need remapping."
-			>
 				<ConsistentHashingDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 5: Strategy Comparison"
-				description="See all algorithms side-by-side handling the same traffic patterns. Compare metrics and understand trade-offs."
-			>
 				<ComparisonDemo />
-			</DemoSection>
+			</motion.div>
 		</div>
 	);
 }

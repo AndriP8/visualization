@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useRef, useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 import { getNextRoundRobin } from "./load-balancing";
 
@@ -97,134 +98,142 @@ export function RoundRobinDemo() {
 	};
 
 	return (
-		<div className="space-y-8">
-			{/* Controls */}
-			<div className="flex flex-wrap gap-3">
-				<button
-					type="button"
-					onClick={sendRequest}
-					className="px-4 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg font-medium transition-colors"
-				>
-					Send Request
-				</button>
-				<button
-					type="button"
-					onClick={sendBatchRequests}
-					className="px-4 py-2 bg-violet-600/80 hover:bg-violet-700/80 rounded-lg font-medium transition-colors"
-				>
-					Send 10 Requests
-				</button>
-				<button
-					type="button"
-					onClick={reset}
-					className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg font-medium transition-colors"
-				>
-					Reset
-				</button>
-			</div>
-
-			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-8">
-				<div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-					{servers.map((server, index) => {
-						const isNext = index === currentIndex;
-						const activeRequests = requests.filter(
-							(r) => r.targetServerId === server.id,
-						);
-
-						return (
-							<div key={server.id} className="relative">
-								<motion.div
-									className={`border-2 rounded-lg p-4 transition-all ${
-										server.healthy
-											? "border-emerald-500 bg-zinc-800"
-											: "border-red-500 bg-zinc-800/50"
-									} ${isNext && server.healthy ? "ring-2 ring-violet-400" : ""}`}
-									animate={{
-										scale: isNext && server.healthy ? 1.05 : 1,
-									}}
-								>
-									<div className="flex items-center justify-between mb-3">
-										<h4 className="font-semibold text-white">{server.name}</h4>
-										<button
-											type="button"
-											onClick={() => toggleHealth(server.id)}
-											className={`w-3 h-3 rounded-full transition-colors ${
-												server.healthy ? "bg-emerald-400" : "bg-red-400"
-											}`}
-											title={
-												server.healthy
-													? "Click to mark unhealthy"
-													: "Click to mark healthy"
-											}
-										/>
-									</div>
-
-									<div className="space-y-2 text-sm text-zinc-400">
-										<div className="flex justify-between">
-											<span>Requests:</span>
-											<span className="text-white font-mono">
-												{server.requestCount}
-											</span>
-										</div>
-										<div className="flex justify-between">
-											<span>Status:</span>
-											<span
-												className={
-													server.healthy ? "text-emerald-400" : "text-red-400"
-												}
-											>
-												{server.healthy ? "Healthy" : "Unhealthy"}
-											</span>
-										</div>
-									</div>
-
-									{isNext && server.healthy && (
-										<div className="mt-3 pt-3 border-t border-zinc-700">
-											<span className="text-xs text-violet-400 font-medium">
-												← Next in rotation
-											</span>
-										</div>
-									)}
-								</motion.div>
-
-								{/* Animated requests */}
-								<AnimatePresence>
-									{activeRequests.map((req) => (
-										<motion.div
-											key={req.id}
-											className="absolute -top-8 left-1/2 -translate-x-1/2 w-8 h-8 bg-violet-500 rounded-full shadow-lg shadow-violet-500/50"
-											initial={{ y: -60, opacity: 0, scale: 0 }}
-											animate={{ y: 0, opacity: 1, scale: 1 }}
-											exit={{ opacity: 0, scale: 0.5 }}
-											transition={{ duration: 0.6 }}
-										/>
-									))}
-								</AnimatePresence>
-							</div>
-						);
-					})}
+		<DemoSection
+			title="Demo 1: Round-Robin Algorithm"
+			description="Distributes requests sequentially across servers in rotation. Simple and fair, but treats all servers equally regardless of current load."
+		>
+			<div className="space-y-8">
+				{/* Controls */}
+				<div className="flex flex-wrap gap-3">
+					<button
+						type="button"
+						onClick={sendRequest}
+						className="px-4 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg font-medium transition-colors"
+					>
+						Send Request
+					</button>
+					<button
+						type="button"
+						onClick={sendBatchRequests}
+						className="px-4 py-2 bg-violet-600/80 hover:bg-violet-700/80 rounded-lg font-medium transition-colors"
+					>
+						Send 10 Requests
+					</button>
+					<button
+						type="button"
+						onClick={reset}
+						className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 rounded-lg font-medium transition-colors"
+					>
+						Reset
+					</button>
 				</div>
 
-				{/* Next pointer indicator */}
-				<div className="mt-6 pt-6 border-t border-zinc-800">
-					<div className="flex items-center gap-2 text-sm text-zinc-400">
-						<span className="font-medium text-violet-400">Current Index:</span>
-						<span className="font-mono text-white">{currentIndex}</span>
-						<span className="mx-2">→</span>
-						<span>
-							{servers[currentIndex]?.healthy
-								? servers[currentIndex].name
-								: "Skipping to next healthy server"}
-						</span>
+				{/* Visualization */}
+				<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-8">
+					<div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+						{servers.map((server, index) => {
+							const isNext = index === currentIndex;
+							const activeRequests = requests.filter(
+								(r) => r.targetServerId === server.id,
+							);
+
+							return (
+								<div key={server.id} className="relative">
+									<motion.div
+										className={`border-2 rounded-lg p-4 transition-all ${
+											server.healthy
+												? "border-emerald-500 bg-zinc-800"
+												: "border-red-500 bg-zinc-800/50"
+										} ${isNext && server.healthy ? "ring-2 ring-violet-400" : ""}`}
+										animate={{
+											scale: isNext && server.healthy ? 1.05 : 1,
+										}}
+									>
+										<div className="flex items-center justify-between mb-3">
+											<h4 className="font-semibold text-white">
+												{server.name}
+											</h4>
+											<button
+												type="button"
+												onClick={() => toggleHealth(server.id)}
+												className={`w-3 h-3 rounded-full transition-colors ${
+													server.healthy ? "bg-emerald-400" : "bg-red-400"
+												}`}
+												title={
+													server.healthy
+														? "Click to mark unhealthy"
+														: "Click to mark healthy"
+												}
+											/>
+										</div>
+
+										<div className="space-y-2 text-sm text-zinc-400">
+											<div className="flex justify-between">
+												<span>Requests:</span>
+												<span className="text-white font-mono">
+													{server.requestCount}
+												</span>
+											</div>
+											<div className="flex justify-between">
+												<span>Status:</span>
+												<span
+													className={
+														server.healthy ? "text-emerald-400" : "text-red-400"
+													}
+												>
+													{server.healthy ? "Healthy" : "Unhealthy"}
+												</span>
+											</div>
+										</div>
+
+										{isNext && server.healthy && (
+											<div className="mt-3 pt-3 border-t border-zinc-700">
+												<span className="text-xs text-violet-400 font-medium">
+													← Next in rotation
+												</span>
+											</div>
+										)}
+									</motion.div>
+
+									{/* Animated requests */}
+									<AnimatePresence>
+										{activeRequests.map((req) => (
+											<motion.div
+												key={req.id}
+												className="absolute -top-8 left-1/2 -translate-x-1/2 w-8 h-8 bg-violet-500 rounded-full shadow-lg shadow-violet-500/50"
+												initial={{ y: -60, opacity: 0, scale: 0 }}
+												animate={{ y: 0, opacity: 1, scale: 1 }}
+												exit={{ opacity: 0, scale: 0.5 }}
+												transition={{ duration: 0.6 }}
+											/>
+										))}
+									</AnimatePresence>
+								</div>
+							);
+						})}
+					</div>
+
+					{/* Next pointer indicator */}
+					<div className="mt-6 pt-6 border-t border-zinc-800">
+						<div className="flex items-center gap-2 text-sm text-zinc-400">
+							<span className="font-medium text-violet-400">
+								Current Index:
+							</span>
+							<span className="font-mono text-white">{currentIndex}</span>
+							<span className="mx-2">→</span>
+							<span>
+								{servers[currentIndex]?.healthy
+									? servers[currentIndex].name
+									: "Skipping to next healthy server"}
+							</span>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			{/* Code Example */}
-			<ShikiCode
-				language="javascript"
-				code={`class RoundRobinBalancer {
+				{/* Code Example */}
+				<ShikiCode
+					language="javascript"
+					code={`class RoundRobinBalancer {
   constructor(servers) {
     this.servers = servers;
     this.current = 0;
@@ -249,24 +258,25 @@ export function RoundRobinDemo() {
     throw new Error("No healthy servers available");
   }
 }`}
-				showLineNumbers={true}
-				className="text-sm"
-			/>
+					showLineNumbers={true}
+					className="text-sm"
+				/>
 
-			{/* Insight Box */}
-			<div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-				<div className="flex items-start gap-3">
-					<div className="text-2xl">💡</div>
-					<div>
-						<h4 className="font-semibold text-amber-300 mb-1">Key Insight</h4>
-						<p className="text-sm text-zinc-300">
-							Simple and fair distribution, but ignores server load — all
-							healthy servers are treated equally. A fast server and a slow
-							server receive the same number of requests.
-						</p>
+				{/* Insight Box */}
+				<div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+					<div className="flex items-start gap-3">
+						<div className="text-2xl">💡</div>
+						<div>
+							<h4 className="font-semibold text-amber-300 mb-1">Key Insight</h4>
+							<p className="text-sm text-zinc-300">
+								Simple and fair distribution, but ignores server load — all
+								healthy servers are treated equally. A fast server and a slow
+								server receive the same number of requests.
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }
