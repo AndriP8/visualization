@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DemoSection } from "../components/shared/DemoSection";
+import { motion } from "motion/react";
 import { PageHeader } from "../components/shared/PageHeader";
 import { BlockingDemo } from "../components/web-workers/BlockingDemo";
 import { PostMessageDemo } from "../components/web-workers/PostMessageDemo";
@@ -52,40 +52,20 @@ function WebWorkersPage() {
 					),
 				}}
 			/>
-			<DemoSection
-				title="Demo 1: Main Thread Blocking"
-				description="See the difference between running heavy computations on the main thread vs a worker thread. The FPS counter shows real-time UI responsiveness."
+
+			{/* Demos */}
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ delay: 0.2, duration: 0.4 }}
+				className="space-y-12"
 			>
 				<BlockingDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 2: postMessage Communication"
-				description="How the main thread and worker threads communicate through message passing. Structured cloning determines what data can cross thread boundaries."
-			>
 				<PostMessageDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 3: Transferable Objects (Zero-Copy)"
-				description="Transfer ownership of ArrayBuffers without copying - critical for performance when working with large datasets."
-			>
 				<TransferableDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 4: Real-World Use Cases"
-				description="Practical examples showing when to use Web Workers: image processing, data parsing, and cryptographic operations."
-			>
 				<UseCasesDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 5: Shared Workers (Cross-Tab Communication)"
-				description="Unlike Dedicated Workers, Shared Workers can be accessed from multiple browser tabs/windows - useful for shared state and coordination."
-			>
 				<SharedWorkerDemo />
-			</DemoSection>
+			</motion.div>
 		</div>
 	);
 }

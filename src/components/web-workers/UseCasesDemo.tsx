@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type UseCase = "image" | "csv" | "crypto";
@@ -8,148 +9,155 @@ export function UseCasesDemo() {
 	const [activeCase, setActiveCase] = useState<UseCase>("image");
 
 	return (
-		<div className="space-y-8">
-			{/* Case selector */}
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-				<button
-					type="button"
-					onClick={() => setActiveCase("image")}
-					className={`p-4 rounded-lg border-2 transition-all text-left ${
-						activeCase === "image"
-							? "border-amber-500 bg-amber-500/20 text-amber-200"
-							: "border-zinc-700 bg-zinc-800 hover:border-zinc-600"
-					}`}
-				>
-					<div className="text-lg mb-1">🎨 Image Processing</div>
-					<div className="text-xs text-zinc-400">
-						Apply filters without blocking UI
-					</div>
-				</button>
+		<DemoSection
+			title="Demo 4: Real-World Use Cases"
+			description="Practical examples showing when to use Web Workers: image processing, data parsing, and cryptographic operations."
+		>
+			<div className="space-y-8">
+				{/* Case selector */}
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+					<button
+						type="button"
+						onClick={() => setActiveCase("image")}
+						className={`p-4 rounded-lg border-2 transition-all text-left ${
+							activeCase === "image"
+								? "border-amber-500 bg-amber-500/20 text-amber-200"
+								: "border-zinc-700 bg-zinc-800 hover:border-zinc-600"
+						}`}
+					>
+						<div className="text-lg mb-1">🎨 Image Processing</div>
+						<div className="text-xs text-zinc-400">
+							Apply filters without blocking UI
+						</div>
+					</button>
 
-				<button
-					type="button"
-					onClick={() => setActiveCase("csv")}
-					className={`p-4 rounded-lg border-2 transition-all text-left ${
-						activeCase === "csv"
-							? "border-emerald-500 bg-emerald-500/20"
-							: "border-zinc-700 bg-zinc-800 hover:border-zinc-600"
-					}`}
-				>
-					<div className="text-lg mb-1">📊 Data Parsing</div>
-					<div className="text-xs text-zinc-400">
-						Parse large CSV/JSON in background
-					</div>
-				</button>
+					<button
+						type="button"
+						onClick={() => setActiveCase("csv")}
+						className={`p-4 rounded-lg border-2 transition-all text-left ${
+							activeCase === "csv"
+								? "border-emerald-500 bg-emerald-500/20"
+								: "border-zinc-700 bg-zinc-800 hover:border-zinc-600"
+						}`}
+					>
+						<div className="text-lg mb-1">📊 Data Parsing</div>
+						<div className="text-xs text-zinc-400">
+							Parse large CSV/JSON in background
+						</div>
+					</button>
 
-				<button
-					type="button"
-					onClick={() => setActiveCase("crypto")}
-					className={`p-4 rounded-lg border-2 transition-all text-left ${
-						activeCase === "crypto"
-							? "border-cyan-500 bg-cyan-500/20"
-							: "border-zinc-700 bg-zinc-800 hover:border-zinc-600"
-					}`}
-				>
-					<div className="text-lg mb-1">🔐 Cryptography</div>
-					<div className="text-xs text-zinc-400">
-						Hash passwords without freezing form
-					</div>
-				</button>
-			</div>
-
-			{/* Demo content */}
-			{activeCase === "image" && <ImageProcessingDemo />}
-			{activeCase === "csv" && <CSVParsingDemo />}
-			{activeCase === "crypto" && <CryptoDemo />}
-
-			{/* Decision matrix */}
-			<div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-zinc-300 mb-4">
-					When to Use Web Workers
-				</h4>
-				<div className="overflow-x-auto">
-					<table className="w-full text-sm">
-						<thead>
-							<tr className="border-b border-zinc-800">
-								<th className="text-left py-2 text-zinc-400 font-medium">
-									Task Type
-								</th>
-								<th className="text-center py-2 text-zinc-400 font-medium">
-									Use Worker?
-								</th>
-								<th className="text-left py-2 text-zinc-400 font-medium">
-									Reason
-								</th>
-							</tr>
-						</thead>
-						<tbody className="text-zinc-400">
-							<tr className="border-b border-zinc-800/50">
-								<td className="py-3">Heavy computation (&gt;50ms)</td>
-								<td className="text-center">
-									<span className="text-emerald-400">✅ Yes</span>
-								</td>
-								<td>Prevents UI jank</td>
-							</tr>
-							<tr className="border-b border-zinc-800/50">
-								<td className="py-3">Quick DOM updates</td>
-								<td className="text-center">
-									<span className="text-red-400">❌ No</span>
-								</td>
-								<td>postMessage overhead &gt; task cost</td>
-							</tr>
-							<tr className="border-b border-zinc-800/50">
-								<td className="py-3">Real-time data processing</td>
-								<td className="text-center">
-									<span className="text-emerald-400">✅ Yes</span>
-								</td>
-								<td>Stream processing in background</td>
-							</tr>
-							<tr className="border-b border-zinc-800/50">
-								<td className="py-3">Simple calculations (&lt;16ms)</td>
-								<td className="text-center">
-									<span className="text-red-400">❌ No</span>
-								</td>
-								<td>postMessage overhead exceeds task cost</td>
-							</tr>
-							<tr>
-								<td className="py-3">User input handling</td>
-								<td className="text-center">
-									<span className="text-red-400">❌ No</span>
-								</td>
-								<td>Must happen on main thread</td>
-							</tr>
-						</tbody>
-					</table>
+					<button
+						type="button"
+						onClick={() => setActiveCase("crypto")}
+						className={`p-4 rounded-lg border-2 transition-all text-left ${
+							activeCase === "crypto"
+								? "border-cyan-500 bg-cyan-500/20"
+								: "border-zinc-700 bg-zinc-800 hover:border-zinc-600"
+						}`}
+					>
+						<div className="text-lg mb-1">🔐 Cryptography</div>
+						<div className="text-xs text-zinc-400">
+							Hash passwords without freezing form
+						</div>
+					</button>
 				</div>
-			</div>
 
-			{/* Trade-offs */}
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-				<div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-6">
-					<h4 className="text-sm font-semibold text-emerald-300 mb-3">
-						✅ Advantages
+				{/* Demo content */}
+				{activeCase === "image" && <ImageProcessingDemo />}
+				{activeCase === "csv" && <CSVParsingDemo />}
+				{activeCase === "crypto" && <CryptoDemo />}
+
+				{/* Decision matrix */}
+				<div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-6">
+					<h4 className="text-sm font-semibold text-zinc-300 mb-4">
+						When to Use Web Workers
 					</h4>
-					<ul className="space-y-2 text-sm text-zinc-400">
-						<li>• Non-blocking - better UX</li>
-						<li>• True parallelism on multi-core CPUs</li>
-						<li>• Isolates crashes (worker failure won't crash main thread)</li>
-						<li>• Better perceived performance</li>
-					</ul>
+					<div className="overflow-x-auto">
+						<table className="w-full text-sm">
+							<thead>
+								<tr className="border-b border-zinc-800">
+									<th className="text-left py-2 text-zinc-400 font-medium">
+										Task Type
+									</th>
+									<th className="text-center py-2 text-zinc-400 font-medium">
+										Use Worker?
+									</th>
+									<th className="text-left py-2 text-zinc-400 font-medium">
+										Reason
+									</th>
+								</tr>
+							</thead>
+							<tbody className="text-zinc-400">
+								<tr className="border-b border-zinc-800/50">
+									<td className="py-3">Heavy computation (&gt;50ms)</td>
+									<td className="text-center">
+										<span className="text-emerald-400">✅ Yes</span>
+									</td>
+									<td>Prevents UI jank</td>
+								</tr>
+								<tr className="border-b border-zinc-800/50">
+									<td className="py-3">Quick DOM updates</td>
+									<td className="text-center">
+										<span className="text-red-400">❌ No</span>
+									</td>
+									<td>postMessage overhead &gt; task cost</td>
+								</tr>
+								<tr className="border-b border-zinc-800/50">
+									<td className="py-3">Real-time data processing</td>
+									<td className="text-center">
+										<span className="text-emerald-400">✅ Yes</span>
+									</td>
+									<td>Stream processing in background</td>
+								</tr>
+								<tr className="border-b border-zinc-800/50">
+									<td className="py-3">Simple calculations (&lt;16ms)</td>
+									<td className="text-center">
+										<span className="text-red-400">❌ No</span>
+									</td>
+									<td>postMessage overhead exceeds task cost</td>
+								</tr>
+								<tr>
+									<td className="py-3">User input handling</td>
+									<td className="text-center">
+										<span className="text-red-400">❌ No</span>
+									</td>
+									<td>Must happen on main thread</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 
-				<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-6">
-					<h4 className="text-sm font-semibold text-red-300 mb-3">
-						❌ Trade-offs
-					</h4>
-					<ul className="space-y-2 text-sm text-zinc-400">
-						<li>• No DOM access (must use postMessage)</li>
-						<li>• Serialization overhead for non-transferable data</li>
-						<li>• Debugging complexity (separate contexts)</li>
-						<li>• Memory overhead (separate heap per worker)</li>
-					</ul>
+				{/* Trade-offs */}
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-6">
+						<h4 className="text-sm font-semibold text-emerald-300 mb-3">
+							✅ Advantages
+						</h4>
+						<ul className="space-y-2 text-sm text-zinc-400">
+							<li>• Non-blocking - better UX</li>
+							<li>• True parallelism on multi-core CPUs</li>
+							<li>
+								• Isolates crashes (worker failure won't crash main thread)
+							</li>
+							<li>• Better perceived performance</li>
+						</ul>
+					</div>
+
+					<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-6">
+						<h4 className="text-sm font-semibold text-red-300 mb-3">
+							❌ Trade-offs
+						</h4>
+						<ul className="space-y-2 text-sm text-zinc-400">
+							<li>• No DOM access (must use postMessage)</li>
+							<li>• Serialization overhead for non-transferable data</li>
+							<li>• Debugging complexity (separate contexts)</li>
+							<li>• Memory overhead (separate heap per worker)</li>
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }
 

@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 interface Tab {
@@ -116,176 +117,182 @@ export function SharedWorkerDemo() {
 	};
 
 	return (
-		<div className="space-y-8">
-			{/* Implementation note */}
-			<div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-				<p className="text-xs text-amber-300">
-					<strong>Note:</strong> This demo uses BroadcastChannel for cross-tab
-					communication (works in all modern browsers). In production,
-					SharedWorker provides the same cross-tab coordination with additional
-					capabilities like persistent state and WebSocket sharing. SharedWorker
-					is supported in Chrome, Edge, and Firefox desktop, but NOT in Safari
-					or iOS browsers.
-				</p>
-			</div>
+		<DemoSection
+			title="Demo 5: Shared Workers (Cross-Tab Communication)"
+			description="Unlike Dedicated Workers, Shared Workers can be accessed from multiple browser tabs/windows - useful for shared state and coordination."
+		>
+			<div className="space-y-8">
+				{/* Implementation note */}
+				<div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+					<p className="text-xs text-amber-300">
+						<strong>Note:</strong> This demo uses BroadcastChannel for cross-tab
+						communication (works in all modern browsers). In production,
+						SharedWorker provides the same cross-tab coordination with
+						additional capabilities like persistent state and WebSocket sharing.
+						SharedWorker is supported in Chrome, Edge, and Firefox desktop, but
+						NOT in Safari or iOS browsers.
+					</p>
+				</div>
 
-			{/* Connection status */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-				<div className="flex items-center justify-between">
-					<div className="flex items-center gap-3">
-						<div
-							className={`w-3 h-3 rounded-full ${connected ? "bg-emerald-500 animate-pulse" : "bg-zinc-700"}`}
-						/>
+				{/* Connection status */}
+				<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+					<div className="flex items-center justify-between">
+						<div className="flex items-center gap-3">
+							<div
+								className={`w-3 h-3 rounded-full ${connected ? "bg-emerald-500 animate-pulse" : "bg-zinc-700"}`}
+							/>
+							<div>
+								<h3 className="text-sm font-semibold text-zinc-300">
+									{connected ? "Connected" : "Disconnected"}
+								</h3>
+								<p className="text-xs text-zinc-500">
+									Tab ID: {tabIdRef.current}
+								</p>
+							</div>
+						</div>
+						<div className="text-right">
+							<div className="text-2xl font-bold text-white">{tabs.length}</div>
+							<div className="text-xs text-zinc-400">Active Tabs</div>
+						</div>
+					</div>
+				</div>
+
+				{/* Shared counter */}
+				<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+					<h4 className="text-sm font-semibold text-zinc-300 mb-4">
+						Shared Counter (Across All Tabs)
+					</h4>
+					<div className="flex items-center justify-between">
 						<div>
-							<h3 className="text-sm font-semibold text-zinc-300">
-								{connected ? "Connected" : "Disconnected"}
-							</h3>
-							<p className="text-xs text-zinc-500">
-								Tab ID: {tabIdRef.current}
-							</p>
+							<div className="text-4xl font-bold text-cyan-300">
+								{localCount}
+							</div>
+							<div className="text-xs text-zinc-500 mt-1">
+								Click from any tab to increment
+							</div>
 						</div>
-					</div>
-					<div className="text-right">
-						<div className="text-2xl font-bold text-white">{tabs.length}</div>
-						<div className="text-xs text-zinc-400">Active Tabs</div>
-					</div>
-				</div>
-			</div>
-
-			{/* Shared counter */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-zinc-300 mb-4">
-					Shared Counter (Across All Tabs)
-				</h4>
-				<div className="flex items-center justify-between">
-					<div>
-						<div className="text-4xl font-bold text-cyan-300">{localCount}</div>
-						<div className="text-xs text-zinc-500 mt-1">
-							Click from any tab to increment
-						</div>
-					</div>
-					<button
-						type="button"
-						onClick={handleIncrement}
-						className="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 rounded-lg text-sm font-medium transition-colors"
-					>
-						Increment
-					</button>
-				</div>
-			</div>
-
-			{/* Active tabs visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-zinc-300 mb-4">
-					Active Tabs ({tabs.length})
-				</h4>
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-					<AnimatePresence mode="popLayout">
-						{tabs.map((tab) => (
-							<motion.div
-								key={tab.id}
-								initial={{ scale: 0.8, opacity: 0 }}
-								animate={{ scale: 1, opacity: 1 }}
-								exit={{ scale: 0.8, opacity: 0 }}
-								className={`p-3 rounded-lg border-2 ${
-									tab.id === tabIdRef.current
-										? "border-emerald-500 bg-emerald-500/20"
-										: "border-zinc-700 bg-zinc-800"
-								}`}
-							>
-								<div className="flex items-center gap-2">
-									<div
-										className={`w-2 h-2 rounded-full ${
-											tab.id === tabIdRef.current
-												? "bg-emerald-500"
-												: "bg-zinc-600"
-										}`}
-									/>
-									<div className="text-xs font-mono">
-										{tab.id === tabIdRef.current
-											? `${tab.name} (You)`
-											: tab.name}
-									</div>
-								</div>
-							</motion.div>
-						))}
-					</AnimatePresence>
-
-					{tabs.length <= 1 && (
-						<div className="col-span-full text-center py-4 text-zinc-600 text-sm">
-							Open this page in another tab to see cross-tab communication!
-						</div>
-					)}
-				</div>
-			</div>
-
-			{/* Cross-tab messaging */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-zinc-300 mb-4">
-					Broadcast Messages
-				</h4>
-
-				<div className="space-y-4">
-					<div className="flex gap-2">
-						<input
-							type="text"
-							value={message}
-							onChange={(e) => setMessage(e.target.value)}
-							onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-							placeholder="Type a message to all tabs..."
-							className="flex-1 px-3 py-2 bg-zinc-800 border border-zinc-700 rounded text-sm focus:outline-none focus:border-cyan-500"
-						/>
 						<button
 							type="button"
-							onClick={handleSendMessage}
-							className="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 rounded text-sm font-medium transition-colors"
+							onClick={handleIncrement}
+							className="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 rounded-lg text-sm font-medium transition-colors"
 						>
-							Broadcast
+							Increment
 						</button>
 					</div>
+				</div>
 
-					<div className="space-y-2">
-						{messages.length === 0 ? (
-							<p className="text-zinc-600 text-center py-4 text-xs">
-								No messages yet. Send one above!
-							</p>
-						) : (
-							messages.map((msg) => (
+				{/* Active tabs visualization */}
+				<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+					<h4 className="text-sm font-semibold text-zinc-300 mb-4">
+						Active Tabs ({tabs.length})
+					</h4>
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+						<AnimatePresence mode="popLayout">
+							{tabs.map((tab) => (
 								<motion.div
-									key={`${msg.from}-${msg.timestamp}`}
-									initial={{ opacity: 0, x: -10 }}
-									animate={{ opacity: 1, x: 0 }}
-									className={`p-3 rounded border ${
-										msg.from === tabIdRef.current
-											? "bg-emerald-500/10 border-emerald-500/30"
-											: "bg-violet-500/10 border-violet-500/30"
+									key={tab.id}
+									initial={{ scale: 0.8, opacity: 0 }}
+									animate={{ scale: 1, opacity: 1 }}
+									exit={{ scale: 0.8, opacity: 0 }}
+									className={`p-3 rounded-lg border-2 ${
+										tab.id === tabIdRef.current
+											? "border-emerald-500 bg-emerald-500/20"
+											: "border-zinc-700 bg-zinc-800"
 									}`}
 								>
-									<div className="flex items-center justify-between mb-1">
-										<span className="text-xs font-mono text-zinc-400">
-											{msg.from === tabIdRef.current ? "You" : msg.from}
-										</span>
-										<span className="text-[10px] text-zinc-600">
-											{new Date(msg.timestamp).toLocaleTimeString()}
-										</span>
+									<div className="flex items-center gap-2">
+										<div
+											className={`w-2 h-2 rounded-full ${
+												tab.id === tabIdRef.current
+													? "bg-emerald-500"
+													: "bg-zinc-600"
+											}`}
+										/>
+										<div className="text-xs font-mono">
+											{tab.id === tabIdRef.current
+												? `${tab.name} (You)`
+												: tab.name}
+										</div>
 									</div>
-									<div className="text-sm text-zinc-200">{msg.text}</div>
 								</motion.div>
-							))
+							))}
+						</AnimatePresence>
+
+						{tabs.length <= 1 && (
+							<div className="col-span-full text-center py-4 text-zinc-600 text-sm">
+								Open this page in another tab to see cross-tab communication!
+							</div>
 						)}
 					</div>
 				</div>
-			</div>
 
-			{/* Code examples */}
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-				<div>
-					<h4 className="text-sm font-semibold text-zinc-400 mb-3">
-						Creating Shared Worker
+				{/* Cross-tab messaging */}
+				<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+					<h4 className="text-sm font-semibold text-zinc-300 mb-4">
+						Broadcast Messages
 					</h4>
-					<ShikiCode
-						language="javascript"
-						code={`// main.js (same code in all tabs)
+
+					<div className="space-y-4">
+						<div className="flex gap-2">
+							<input
+								type="text"
+								value={message}
+								onChange={(e) => setMessage(e.target.value)}
+								onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+								placeholder="Type a message to all tabs..."
+								className="flex-1 px-3 py-2 bg-zinc-800 border border-zinc-700 rounded text-sm focus:outline-none focus:border-cyan-500"
+							/>
+							<button
+								type="button"
+								onClick={handleSendMessage}
+								className="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 rounded text-sm font-medium transition-colors"
+							>
+								Broadcast
+							</button>
+						</div>
+
+						<div className="space-y-2">
+							{messages.length === 0 ? (
+								<p className="text-zinc-600 text-center py-4 text-xs">
+									No messages yet. Send one above!
+								</p>
+							) : (
+								messages.map((msg) => (
+									<motion.div
+										key={`${msg.from}-${msg.timestamp}`}
+										initial={{ opacity: 0, x: -10 }}
+										animate={{ opacity: 1, x: 0 }}
+										className={`p-3 rounded border ${
+											msg.from === tabIdRef.current
+												? "bg-emerald-500/10 border-emerald-500/30"
+												: "bg-violet-500/10 border-violet-500/30"
+										}`}
+									>
+										<div className="flex items-center justify-between mb-1">
+											<span className="text-xs font-mono text-zinc-400">
+												{msg.from === tabIdRef.current ? "You" : msg.from}
+											</span>
+											<span className="text-[10px] text-zinc-600">
+												{new Date(msg.timestamp).toLocaleTimeString()}
+											</span>
+										</div>
+										<div className="text-sm text-zinc-200">{msg.text}</div>
+									</motion.div>
+								))
+							)}
+						</div>
+					</div>
+				</div>
+
+				{/* Code examples */}
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+					<div>
+						<h4 className="text-sm font-semibold text-zinc-400 mb-3">
+							Creating Shared Worker
+						</h4>
+						<ShikiCode
+							language="javascript"
+							code={`// main.js (same code in all tabs)
 const worker = new SharedWorker('shared-worker.js');
 
 worker.port.onmessage = (event) => {
@@ -300,17 +307,17 @@ worker.port.onmessage = (event) => {
 worker.port.postMessage({
   type: 'INCREMENT'
 });`}
-						className="text-xs"
-					/>
-				</div>
+							className="text-xs"
+						/>
+					</div>
 
-				<div>
-					<h4 className="text-sm font-semibold text-zinc-400 mb-3">
-						Shared Worker Script
-					</h4>
-					<ShikiCode
-						language="javascript"
-						code={`// shared-worker.js
+					<div>
+						<h4 className="text-sm font-semibold text-zinc-400 mb-3">
+							Shared Worker Script
+						</h4>
+						<ShikiCode
+							language="javascript"
+							code={`// shared-worker.js
 const connections = new Set();
 let counter = 0;
 
@@ -329,146 +336,149 @@ self.onconnect = (event) => {
 function broadcast(message) {
   connections.forEach(port => port.postMessage(message));
 }`}
-						className="text-xs"
-					/>
+							className="text-xs"
+						/>
+					</div>
 				</div>
-			</div>
 
-			{/* Comparison: Dedicated vs Shared */}
-			<div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-zinc-300 mb-4">
-					Dedicated Worker vs Shared Worker
-				</h4>
-				<div className="overflow-x-auto">
-					<table className="w-full text-sm">
-						<thead>
-							<tr className="border-b border-zinc-800">
-								<th className="text-left py-2 text-zinc-400 font-medium">
-									Feature
-								</th>
-								<th className="text-left py-2 text-violet-300 font-medium">
-									Dedicated Worker
-								</th>
-								<th className="text-left py-2 text-emerald-300 font-medium">
-									Shared Worker
-								</th>
-							</tr>
-						</thead>
-						<tbody className="text-zinc-400">
-							<tr className="border-b border-zinc-800/50">
-								<td className="py-3">Scope</td>
-								<td>Single tab/window</td>
-								<td className="text-emerald-400">
-									Multiple tabs/windows (same origin)
-								</td>
-							</tr>
-							<tr className="border-b border-zinc-800/50">
-								<td className="py-3">Communication</td>
-								<td>postMessage</td>
-								<td>port.postMessage</td>
-							</tr>
-							<tr className="border-b border-zinc-800/50">
-								<td className="py-3">Lifetime</td>
-								<td>Terminates when tab closes</td>
-								<td className="text-emerald-400">
-									Persists while any tab is open
-								</td>
-							</tr>
-							<tr className="border-b border-zinc-800/50">
-								<td className="py-3">Use Case</td>
-								<td>Heavy computation</td>
-								<td className="text-emerald-400">Shared state, coordination</td>
-							</tr>
-							<tr>
-								<td className="py-3">Browser Support</td>
-								<td className="text-emerald-400">Excellent (all browsers)</td>
-								<td className="text-amber-400">
-									Chrome, Edge, Firefox — not Safari
-								</td>
-							</tr>
-						</tbody>
-					</table>
+				{/* Comparison: Dedicated vs Shared */}
+				<div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-6">
+					<h4 className="text-sm font-semibold text-zinc-300 mb-4">
+						Dedicated Worker vs Shared Worker
+					</h4>
+					<div className="overflow-x-auto">
+						<table className="w-full text-sm">
+							<thead>
+								<tr className="border-b border-zinc-800">
+									<th className="text-left py-2 text-zinc-400 font-medium">
+										Feature
+									</th>
+									<th className="text-left py-2 text-violet-300 font-medium">
+										Dedicated Worker
+									</th>
+									<th className="text-left py-2 text-emerald-300 font-medium">
+										Shared Worker
+									</th>
+								</tr>
+							</thead>
+							<tbody className="text-zinc-400">
+								<tr className="border-b border-zinc-800/50">
+									<td className="py-3">Scope</td>
+									<td>Single tab/window</td>
+									<td className="text-emerald-400">
+										Multiple tabs/windows (same origin)
+									</td>
+								</tr>
+								<tr className="border-b border-zinc-800/50">
+									<td className="py-3">Communication</td>
+									<td>postMessage</td>
+									<td>port.postMessage</td>
+								</tr>
+								<tr className="border-b border-zinc-800/50">
+									<td className="py-3">Lifetime</td>
+									<td>Terminates when tab closes</td>
+									<td className="text-emerald-400">
+										Persists while any tab is open
+									</td>
+								</tr>
+								<tr className="border-b border-zinc-800/50">
+									<td className="py-3">Use Case</td>
+									<td>Heavy computation</td>
+									<td className="text-emerald-400">
+										Shared state, coordination
+									</td>
+								</tr>
+								<tr>
+									<td className="py-3">Browser Support</td>
+									<td className="text-emerald-400">Excellent (all browsers)</td>
+									<td className="text-amber-400">
+										Chrome, Edge, Firefox — not Safari
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</div>
 
-			{/* Use cases */}
-			<div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-6">
-				<h4 className="text-sm font-semibold text-zinc-300 mb-4">
-					Shared Worker Use Cases
-				</h4>
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-					<div className="space-y-2">
-						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
-							<div>
-								<div className="font-medium text-zinc-300">
-									WebSocket Connection Sharing
+				{/* Use cases */}
+				<div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-6">
+					<h4 className="text-sm font-semibold text-zinc-300 mb-4">
+						Shared Worker Use Cases
+					</h4>
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+						<div className="space-y-2">
+							<div className="flex items-start gap-2">
+								<span className="text-emerald-400">✅</span>
+								<div>
+									<div className="font-medium text-zinc-300">
+										WebSocket Connection Sharing
+									</div>
+									<div className="text-xs text-zinc-500">
+										Single WebSocket shared across tabs
+									</div>
 								</div>
-								<div className="text-xs text-zinc-500">
-									Single WebSocket shared across tabs
+							</div>
+							<div className="flex items-start gap-2">
+								<span className="text-emerald-400">✅</span>
+								<div>
+									<div className="font-medium text-zinc-300">
+										IndexedDB Coordination
+									</div>
+									<div className="text-xs text-zinc-500">
+										Prevent concurrent write conflicts
+									</div>
+								</div>
+							</div>
+							<div className="flex items-start gap-2">
+								<span className="text-emerald-400">✅</span>
+								<div>
+									<div className="font-medium text-zinc-300">
+										Resource Pooling
+									</div>
+									<div className="text-xs text-zinc-500">
+										Share expensive resources (cache, auth tokens)
+									</div>
 								</div>
 							</div>
 						</div>
-						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
-							<div>
-								<div className="font-medium text-zinc-300">
-									IndexedDB Coordination
-								</div>
-								<div className="text-xs text-zinc-500">
-									Prevent concurrent write conflicts
+						<div className="space-y-2">
+							<div className="flex items-start gap-2">
+								<span className="text-emerald-400">✅</span>
+								<div>
+									<div className="font-medium text-zinc-300">
+										Cross-Tab Notifications
+									</div>
+									<div className="text-xs text-zinc-500">
+										Sync state changes between tabs
+									</div>
 								</div>
 							</div>
-						</div>
-						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
-							<div>
-								<div className="font-medium text-zinc-300">
-									Resource Pooling
+							<div className="flex items-start gap-2">
+								<span className="text-emerald-400">✅</span>
+								<div>
+									<div className="font-medium text-zinc-300">
+										Centralized Logging
+									</div>
+									<div className="text-xs text-zinc-500">
+										Aggregate logs from all tabs
+									</div>
 								</div>
-								<div className="text-xs text-zinc-500">
-									Share expensive resources (cache, auth tokens)
+							</div>
+							<div className="flex items-start gap-2">
+								<span className="text-emerald-400">✅</span>
+								<div>
+									<div className="font-medium text-zinc-300">
+										Session Management
+									</div>
+									<div className="text-xs text-zinc-500">
+										Single logout affects all tabs
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className="space-y-2">
-						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
-							<div>
-								<div className="font-medium text-zinc-300">
-									Cross-Tab Notifications
-								</div>
-								<div className="text-xs text-zinc-500">
-									Sync state changes between tabs
-								</div>
-							</div>
-						</div>
-						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
-							<div>
-								<div className="font-medium text-zinc-300">
-									Centralized Logging
-								</div>
-								<div className="text-xs text-zinc-500">
-									Aggregate logs from all tabs
-								</div>
-							</div>
-						</div>
-						<div className="flex items-start gap-2">
-							<span className="text-emerald-400">✅</span>
-							<div>
-								<div className="font-medium text-zinc-300">
-									Session Management
-								</div>
-								<div className="text-xs text-zinc-500">
-									Single logout affects all tabs
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }
