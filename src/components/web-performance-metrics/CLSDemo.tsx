@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type Scenario = "bad-layout" | "reserved-space" | "font-loading";
@@ -63,7 +64,7 @@ const getThresholdColor = (value: number): string => {
 	return "text-rose-400";
 };
 
-export default function CLSDemo() {
+export function CLSDemo() {
 	const [selected, setSelected] = useState<Scenario>("bad-layout");
 	const [running, setRunning] = useState(false);
 	const [phase, setPhase] = useState<Phase>("idle");
@@ -134,221 +135,231 @@ export default function CLSDemo() {
 	const showFontLoading = selected === "font-loading";
 
 	return (
-		<div className="space-y-6">
-			{/* Scenario tabs */}
-			<div className="flex gap-3 flex-wrap">
-				{SCENARIOS.map((scenario) => {
-					const isSelected = selected === scenario.id;
-					return (
-						<button
-							key={scenario.id}
-							type="button"
-							onClick={() => {
-								reset();
-								setSelected(scenario.id);
-							}}
-							className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
-								isSelected
-									? "bg-orange-500/20 text-orange-300 border-orange-500/30"
-									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
-							}`}
-						>
-							{scenario.label}
-						</button>
-					);
-				})}
-			</div>
-
-			{/* Description */}
-			{currentScenario && (
-				<p className="text-sm text-zinc-400">{currentScenario.description}</p>
-			)}
-
-			{/* Control button */}
-			<button
-				type="button"
-				onClick={running ? reset : runScenario}
-				disabled={running}
-				className="px-6 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
-			>
-				{running ? "Running..." : "Run Scenario"}
-			</button>
-
-			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-6">
-				{/* Article mockup */}
-				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400">
-						Article Layout
-					</h4>
-					<div
-						className="relative bg-white rounded-lg overflow-hidden p-6"
-						style={{ maxWidth: "600px" }}
-					>
-						{/* Header */}
-						<div
-							className={
-								showFontLoading && phase === "initial-render"
-									? "font-sans"
-									: "font-serif"
-							}
-						>
-							<motion.h1
-								layout={showFontLoading}
-								className={`text-2xl font-bold text-gray-900 ${
-									phase === "font-swap"
-										? "ring-2 ring-rose-400 ring-offset-2"
-										: ""
+		<DemoSection
+			title="Demo 2: CLS - Cumulative Layout Shift"
+			description="Measures visual stability. CLS quantifies unexpected layout shifts during page load. Good: ≤0.1, Poor: >0.25. Fix with aspect ratios and reserved space."
+		>
+			<div className="space-y-6">
+				{/* Scenario tabs */}
+				<div className="flex gap-3 flex-wrap">
+					{SCENARIOS.map((scenario) => {
+						const isSelected = selected === scenario.id;
+						return (
+							<button
+								key={scenario.id}
+								type="button"
+								onClick={() => {
+									reset();
+									setSelected(scenario.id);
+								}}
+								className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
+									isSelected
+										? "bg-orange-500/20 text-orange-300 border-orange-500/30"
+										: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
 								}`}
 							>
-								Understanding Web Performance
-							</motion.h1>
-						</div>
+								{scenario.label}
+							</button>
+						);
+					})}
+				</div>
 
-						<motion.p layout className="text-gray-600 mt-2 text-sm">
-							Learn how to optimize your website for better user experience
-						</motion.p>
+				{/* Description */}
+				{currentScenario && (
+					<p className="text-sm text-zinc-400">{currentScenario.description}</p>
+				)}
 
-						{/* Ad space */}
-						<div className="mt-4">
-							<AnimatePresence>
-								{phase !== "idle" && phase !== "initial-render" && (
-									<motion.div
-										layout={showBadLayout}
-										initial={
-											showBadLayout ? { height: 0, opacity: 0 } : { opacity: 0 }
-										}
-										animate={
-											showBadLayout
-												? { height: 100, opacity: 1 }
-												: { opacity: 1 }
-										}
-										className={`bg-gradient-to-r from-amber-200 to-orange-300 rounded border-2 border-amber-400 flex items-center justify-center font-bold text-gray-800 ${
-											phase === "ad-load" && showBadLayout
-												? "ring-2 ring-rose-400 ring-offset-2"
-												: ""
-										}`}
-										style={showReservedSpace ? { height: "100px" } : undefined}
-									>
-										Advertisement
-									</motion.div>
-								)}
-								{showReservedSpace && phase === "initial-render" && (
-									<motion.div
-										className="bg-gray-200 rounded animate-pulse"
-										style={{ height: "100px" }}
-									/>
-								)}
-							</AnimatePresence>
-						</div>
+				{/* Control button */}
+				<button
+					type="button"
+					onClick={running ? reset : runScenario}
+					disabled={running}
+					className="px-6 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
+				>
+					{running ? "Running..." : "Run Scenario"}
+				</button>
 
-						{/* Content */}
-						<motion.div layout className="mt-4 space-y-2">
-							<div className="h-3 bg-gray-300 rounded w-full" />
-							<div className="h-3 bg-gray-300 rounded w-5/6" />
-							<div className="h-3 bg-gray-300 rounded w-4/6" />
-						</motion.div>
+				{/* Visualization */}
+				<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-6">
+					{/* Article mockup */}
+					<div className="space-y-3">
+						<h4 className="text-sm font-semibold text-zinc-400">
+							Article Layout
+						</h4>
+						<div
+							className="relative bg-white rounded-lg overflow-hidden p-6"
+							style={{ maxWidth: "600px" }}
+						>
+							{/* Header */}
+							<div
+								className={
+									showFontLoading && phase === "initial-render"
+										? "font-sans"
+										: "font-serif"
+								}
+							>
+								<motion.h1
+									layout={showFontLoading}
+									className={`text-2xl font-bold text-gray-900 ${
+										phase === "font-swap"
+											? "ring-2 ring-rose-400 ring-offset-2"
+											: ""
+									}`}
+								>
+									Understanding Web Performance
+								</motion.h1>
+							</div>
 
-						{/* Image space */}
-						<div className="mt-4">
-							<AnimatePresence>
-								{(phase === "image-load" || phase === "stable") && (
-									<motion.div
-										layout={showBadLayout}
-										initial={
-											showBadLayout ? { height: 0, opacity: 0 } : { opacity: 0 }
-										}
-										animate={
-											showBadLayout
-												? { height: 200, opacity: 1 }
-												: { opacity: 1 }
-										}
-										className={`bg-gradient-to-br from-blue-400 to-purple-500 rounded flex items-center justify-center text-white font-bold ${
-											phase === "image-load" && showBadLayout
-												? "ring-2 ring-rose-400 ring-offset-2"
-												: ""
-										}`}
-										style={
-											showReservedSpace ? { aspectRatio: "16/9" } : undefined
-										}
-									>
-										Article Image
-									</motion.div>
-								)}
-								{showReservedSpace &&
-									phase !== "idle" &&
-									phase !== "image-load" &&
-									phase !== "stable" && (
+							<motion.p layout className="text-gray-600 mt-2 text-sm">
+								Learn how to optimize your website for better user experience
+							</motion.p>
+
+							{/* Ad space */}
+							<div className="mt-4">
+								<AnimatePresence>
+									{phase !== "idle" && phase !== "initial-render" && (
+										<motion.div
+											layout={showBadLayout}
+											initial={
+												showBadLayout
+													? { height: 0, opacity: 0 }
+													: { opacity: 0 }
+											}
+											animate={
+												showBadLayout
+													? { height: 100, opacity: 1 }
+													: { opacity: 1 }
+											}
+											className={`bg-linear-to-r from-amber-200 to-orange-300 rounded border-2 border-amber-400 flex items-center justify-center font-bold text-gray-800 ${
+												phase === "ad-load" && showBadLayout
+													? "ring-2 ring-rose-400 ring-offset-2"
+													: ""
+											}`}
+											style={
+												showReservedSpace ? { height: "100px" } : undefined
+											}
+										>
+											Advertisement
+										</motion.div>
+									)}
+									{showReservedSpace && phase === "initial-render" && (
 										<motion.div
 											className="bg-gray-200 rounded animate-pulse"
-											style={{ aspectRatio: "16/9" }}
+											style={{ height: "100px" }}
 										/>
 									)}
-							</AnimatePresence>
-						</div>
+								</AnimatePresence>
+							</div>
 
-						{/* More content */}
-						<motion.div layout className="mt-4 space-y-2">
-							<div className="h-3 bg-gray-300 rounded w-full" />
-							<div className="h-3 bg-gray-300 rounded w-4/5" />
-						</motion.div>
+							{/* Content */}
+							<motion.div layout className="mt-4 space-y-2">
+								<div className="h-3 bg-gray-300 rounded w-full" />
+								<div className="h-3 bg-gray-300 rounded w-5/6" />
+								<div className="h-3 bg-gray-300 rounded w-4/6" />
+							</motion.div>
+
+							{/* Image space */}
+							<div className="mt-4">
+								<AnimatePresence>
+									{(phase === "image-load" || phase === "stable") && (
+										<motion.div
+											layout={showBadLayout}
+											initial={
+												showBadLayout
+													? { height: 0, opacity: 0 }
+													: { opacity: 0 }
+											}
+											animate={
+												showBadLayout
+													? { height: 200, opacity: 1 }
+													: { opacity: 1 }
+											}
+											className={`bg-linear-to-br from-blue-400 to-purple-500 rounded flex items-center justify-center text-white font-bold ${
+												phase === "image-load" && showBadLayout
+													? "ring-2 ring-rose-400 ring-offset-2"
+													: ""
+											}`}
+											style={
+												showReservedSpace ? { aspectRatio: "16/9" } : undefined
+											}
+										>
+											Article Image
+										</motion.div>
+									)}
+									{showReservedSpace &&
+										phase !== "idle" &&
+										phase !== "image-load" &&
+										phase !== "stable" && (
+											<motion.div
+												className="bg-gray-200 rounded animate-pulse"
+												style={{ aspectRatio: "16/9" }}
+											/>
+										)}
+								</AnimatePresence>
+							</div>
+
+							{/* More content */}
+							<motion.div layout className="mt-4 space-y-2">
+								<div className="h-3 bg-gray-300 rounded w-full" />
+								<div className="h-3 bg-gray-300 rounded w-4/5" />
+							</motion.div>
+						</div>
+					</div>
+
+					{/* CLS Score display */}
+					<div className="flex items-center justify-between p-4 bg-zinc-800 rounded-lg">
+						<div>
+							<div className="text-sm font-semibold text-zinc-300">
+								Cumulative Layout Shift
+							</div>
+							<div className="text-xs text-zinc-500 mt-1">
+								{shifts > 0
+									? `${shifts} layout shift${shifts > 1 ? "s" : ""} detected`
+									: "No shifts detected"}
+							</div>
+						</div>
+						<div className="text-right">
+							<div
+								className={`text-3xl font-bold ${getThresholdColor(clsScore)}`}
+							>
+								{clsScore.toFixed(3)}
+							</div>
+							<div className="text-xs text-zinc-500 mt-1">
+								{clsScore <= 0.1
+									? "Good"
+									: clsScore <= 0.25
+										? "Needs Improvement"
+										: "Poor"}
+							</div>
+						</div>
+					</div>
+
+					{/* Threshold guide */}
+					<div className="flex gap-4 text-xs">
+						<div className="flex items-center gap-2">
+							<div className="w-3 h-3 rounded-full bg-green-500" />
+							<span className="text-zinc-400">Good: ≤0.1</span>
+						</div>
+						<div className="flex items-center gap-2">
+							<div className="w-3 h-3 rounded-full bg-yellow-500" />
+							<span className="text-zinc-400">Needs Improvement: 0.1-0.25</span>
+						</div>
+						<div className="flex items-center gap-2">
+							<div className="w-3 h-3 rounded-full bg-rose-500" />
+							<span className="text-zinc-400">Poor: &gt;0.25</span>
+						</div>
 					</div>
 				</div>
 
-				{/* CLS Score display */}
-				<div className="flex items-center justify-between p-4 bg-zinc-800 rounded-lg">
-					<div>
-						<div className="text-sm font-semibold text-zinc-300">
-							Cumulative Layout Shift
-						</div>
-						<div className="text-xs text-zinc-500 mt-1">
-							{shifts > 0
-								? `${shifts} layout shift${shifts > 1 ? "s" : ""} detected`
-								: "No shifts detected"}
-						</div>
-					</div>
-					<div className="text-right">
-						<div
-							className={`text-3xl font-bold ${getThresholdColor(clsScore)}`}
-						>
-							{clsScore.toFixed(3)}
-						</div>
-						<div className="text-xs text-zinc-500 mt-1">
-							{clsScore <= 0.1
-								? "Good"
-								: clsScore <= 0.25
-									? "Needs Improvement"
-									: "Poor"}
-						</div>
-					</div>
-				</div>
-
-				{/* Threshold guide */}
-				<div className="flex gap-4 text-xs">
-					<div className="flex items-center gap-2">
-						<div className="w-3 h-3 rounded-full bg-green-500" />
-						<span className="text-zinc-400">Good: ≤0.1</span>
-					</div>
-					<div className="flex items-center gap-2">
-						<div className="w-3 h-3 rounded-full bg-yellow-500" />
-						<span className="text-zinc-400">Needs Improvement: 0.1-0.25</span>
-					</div>
-					<div className="flex items-center gap-2">
-						<div className="w-3 h-3 rounded-full bg-rose-500" />
-						<span className="text-zinc-400">Poor: &gt;0.25</span>
-					</div>
-				</div>
-			</div>
-
-			{/* Code examples */}
-			<div className="grid md:grid-cols-2 gap-4">
-				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
-						Before (Causes Shifts)
-					</h4>
-					<ShikiCode
-						language="css"
-						code={`/* No dimensions = layout shift */
+				{/* Code examples */}
+				<div className="grid md:grid-cols-2 gap-4">
+					<div className="space-y-2">
+						<h4 className="text-sm font-semibold text-zinc-400">
+							Before (Causes Shifts)
+						</h4>
+						<ShikiCode
+							language="css"
+							code={`/* No dimensions = layout shift */
 img {
   width: 100%;
 }
@@ -364,16 +375,16 @@ img {
   src: url('font.woff2');
   /* No font-display */
 }`}
-						className="text-xs"
-					/>
-				</div>
-				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
-						After (Prevents Shifts)
-					</h4>
-					<ShikiCode
-						language="css"
-						code={`/* Aspect ratio reserves space */
+							className="text-xs"
+						/>
+					</div>
+					<div className="space-y-2">
+						<h4 className="text-sm font-semibold text-zinc-400">
+							After (Prevents Shifts)
+						</h4>
+						<ShikiCode
+							language="css"
+							code={`/* Aspect ratio reserves space */
 img {
   width: 100%;
   aspect-ratio: 16/9;
@@ -390,10 +401,11 @@ img {
   src: url('font.woff2');
   font-display: optional;
 }`}
-						className="text-xs"
-					/>
+							className="text-xs"
+						/>
+					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }

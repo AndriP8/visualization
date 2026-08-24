@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DemoSection } from "../components/shared/DemoSection";
+import { motion } from "motion/react";
 import { PageHeader } from "../components/shared/PageHeader";
-import CLSDemo from "../components/web-performance-metrics/CLSDemo";
-import FCPDemo from "../components/web-performance-metrics/FCPDemo";
-import INPDemo from "../components/web-performance-metrics/INPDemo";
-import LCPDemo from "../components/web-performance-metrics/LCPDemo";
-import TTFBDemo from "../components/web-performance-metrics/TTFBDemo";
+import { CLSDemo } from "../components/web-performance-metrics/CLSDemo";
+import { FCPDemo } from "../components/web-performance-metrics/FCPDemo";
+import { INPDemo } from "../components/web-performance-metrics/INPDemo";
+import { LCPDemo } from "../components/web-performance-metrics/LCPDemo";
+import { TTFBDemo } from "../components/web-performance-metrics/TTFBDemo";
 
 export const Route = createFileRoute("/web-performance-metrics")({
 	component: WebPerformanceMetricsPage,
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/web-performance-metrics")({
 
 function WebPerformanceMetricsPage() {
 	return (
-		<div className="max-w-6xl mx-auto space-y-12 pb-20">
+		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
 				topic={{ label: "Browser", color: "orange" }}
 				title="Web Performance Metrics"
@@ -53,40 +53,19 @@ function WebPerformanceMetricsPage() {
 					),
 				}}
 			/>
-			<DemoSection
-				title="Demo 1: LCP - Largest Contentful Paint"
-				description="Measures loading performance. LCP marks when the largest visible element renders. Good: ≤2.5s, Poor: >4s. Optimize with preload, priority hints, and SSR."
+
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ delay: 0.2, duration: 0.4 }}
+				className="space-y-8"
 			>
 				<LCPDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 2: CLS - Cumulative Layout Shift"
-				description="Measures visual stability. CLS quantifies unexpected layout shifts during page load. Good: ≤0.1, Poor: >0.25. Fix with aspect ratios and reserved space."
-			>
 				<CLSDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 3: INP - Interaction to Next Paint"
-				description="Measures responsiveness. INP tracks the time from user interaction to visual feedback. Good: ≤200ms, Poor: >500ms. Optimize with debouncing and optimistic UI."
-			>
 				<INPDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 4: FCP - First Contentful Paint"
-				description="Measures when first content appears. FCP marks when the browser renders the first DOM element. Good: ≤1.8s, Poor: >3s. Optimize with critical CSS and deferred JS."
-			>
 				<FCPDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 5: TTFB - Time to First Byte"
-				description="Measures server response time. TTFB is the time between request and first byte received. Good: ≤800ms, Poor: >1800ms. Optimize with CDN, caching, and database indexes."
-			>
 				<TTFBDemo />
-			</DemoSection>
+			</motion.div>
 		</div>
 	);
 }

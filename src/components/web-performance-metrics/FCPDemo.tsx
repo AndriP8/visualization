@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 
 type Scenario = "render-blocking" | "critical-css" | "deferred-js";
@@ -108,7 +109,7 @@ const getThresholdColor = (value: number): string => {
 	return "text-rose-400";
 };
 
-export default function FCPDemo() {
+export function FCPDemo() {
 	const [selected, setSelected] = useState<Scenario>("render-blocking");
 	const [running, setRunning] = useState(false);
 	const [phase, setPhase] = useState<Phase>("idle");
@@ -176,216 +177,220 @@ export default function FCPDemo() {
 	const currentScenario = SCENARIOS.find((s) => s.id === selected);
 
 	return (
-		<div className="space-y-6">
-			{/* Scenario tabs */}
-			<div className="flex gap-3 flex-wrap">
-				{SCENARIOS.map((scenario) => {
-					const isSelected = selected === scenario.id;
-					return (
-						<button
-							key={scenario.id}
-							type="button"
-							onClick={() => {
-								reset();
-								setSelected(scenario.id);
-							}}
-							className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
-								isSelected
-									? "bg-orange-500/20 text-orange-300 border-orange-500/30"
-									: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
-							}`}
-						>
-							{scenario.label}
-						</button>
-					);
-				})}
-			</div>
-
-			{/* Description */}
-			{currentScenario && (
-				<p className="text-sm text-zinc-400">{currentScenario.description}</p>
-			)}
-
-			{/* Control button */}
-			<button
-				type="button"
-				onClick={running ? reset : runScenario}
-				disabled={running}
-				className="px-6 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
-			>
-				{running ? "Running..." : "Run Scenario"}
-			</button>
-
-			{/* Visualization */}
-			<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-6">
-				{/* Network waterfall */}
-				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400">
-						Network Waterfall
-					</h4>
-					<div className="space-y-2">
-						{currentScenario?.resources.map((resource, idx) => {
-							const totalDuration = Math.max(
-								...currentScenario.resources.map((r) => r.start + r.duration),
-							);
-							const startPercent = (resource.start / totalDuration) * 100;
-							const widthPercent = (resource.duration / totalDuration) * 100;
-							const isActive =
-								currentTime >= resource.start &&
-								currentTime <= resource.start + resource.duration;
-							const isComplete =
-								currentTime > resource.start + resource.duration;
-
-							return (
-								<div
-									key={`${resource.name}-${idx}`}
-									className="flex items-center gap-3"
-								>
-									<div
-										className="w-40 text-xs font-mono text-zinc-400 truncate"
-										title={resource.name}
-									>
-										{resource.name}
-									</div>
-									<div className="flex-1 h-8 bg-zinc-800 rounded relative">
-										<AnimatePresence>
-											{(isActive || isComplete) && (
-												<motion.div
-													initial={{ width: 0 }}
-													animate={{ width: `${widthPercent}%` }}
-													className={`absolute h-full rounded ${resource.color} ${isActive ? "opacity-100" : "opacity-60"}`}
-													style={{ left: `${startPercent}%` }}
-												>
-													<div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-white">
-														{resource.duration}ms
-													</div>
-												</motion.div>
-											)}
-										</AnimatePresence>
-									</div>
-								</div>
-							);
-						})}
-					</div>
-
-					{/* Time marker */}
-					{running && (
-						<div className="text-xs text-zinc-500 text-right">
-							Current time: {Math.round(currentTime)}ms
-						</div>
-					)}
-				</div>
-
-				{/* Viewport paint visualization */}
-				<div className="space-y-3">
-					<h4 className="text-sm font-semibold text-zinc-400">Viewport</h4>
-					<div
-						className="relative bg-white rounded-lg overflow-hidden"
-						style={{ aspectRatio: "16/9", maxWidth: "600px" }}
-					>
-						<AnimatePresence>
-							{phase === "idle" && (
-								<div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm">
-									Waiting for content...
-								</div>
-							)}
-
-							{(phase === "fcp" || phase === "done") && (
-								<motion.div
-									initial={{ opacity: 0 }}
-									animate={{ opacity: 1 }}
-									className="absolute inset-0 p-6"
-								>
-									<motion.div
-										initial={{ scale: 0.9 }}
-										animate={{ scale: 1 }}
-										transition={{ duration: 0.3 }}
-									>
-										<h1 className="text-2xl font-bold text-gray-900">
-											First Content!
-										</h1>
-										<p className="text-gray-600 mt-2">
-											This text marks the First Contentful Paint
-										</p>
-										<div className="mt-4 space-y-2">
-											<div className="h-3 bg-gray-300 rounded w-full" />
-											<div className="h-3 bg-gray-300 rounded w-4/5" />
-											<div className="h-3 bg-gray-300 rounded w-3/5" />
-										</div>
-									</motion.div>
-
-									{phase === "fcp" && (
-										<motion.div
-											initial={{ opacity: 0 }}
-											animate={{ opacity: [0, 1, 0] }}
-											transition={{ duration: 0.6, repeat: 2 }}
-											className="absolute inset-0 border-4 border-green-400"
-										/>
-									)}
-								</motion.div>
-							)}
-						</AnimatePresence>
-					</div>
-				</div>
-
-				{/* FCP Score display */}
-				{fcpTime > 0 && (
-					<motion.div
-						initial={{ opacity: 0, y: 10 }}
-						animate={{ opacity: 1, y: 0 }}
-						className="flex items-center justify-between p-4 bg-zinc-800 rounded-lg"
-					>
-						<div>
-							<div className="text-sm font-semibold text-zinc-300">
-								First Contentful Paint
-							</div>
-							<div className="text-xs text-zinc-500 mt-1">
-								Time until first DOM content renders
-							</div>
-						</div>
-						<div className="text-right">
-							<div
-								className={`text-3xl font-bold ${getThresholdColor(fcpTime)}`}
+		<DemoSection
+			title="Demo 4: FCP - First Contentful Paint"
+			description="Measures when first content appears. FCP marks when the browser renders the first DOM element. Good: ≤1.8s, Poor: >3s. Optimize with critical CSS and deferred JS."
+		>
+			<div className="space-y-6">
+				{/* Scenario tabs */}
+				<div className="flex gap-3 flex-wrap">
+					{SCENARIOS.map((scenario) => {
+						const isSelected = selected === scenario.id;
+						return (
+							<button
+								key={scenario.id}
+								type="button"
+								onClick={() => {
+									reset();
+									setSelected(scenario.id);
+								}}
+								className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${
+									isSelected
+										? "bg-orange-500/20 text-orange-300 border-orange-500/30"
+										: "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-zinc-300"
+								}`}
 							>
-								{fcpTime}ms
-							</div>
-							<div className="text-xs text-zinc-500 mt-1">
-								{fcpTime <= 1800
-									? "Good"
-									: fcpTime <= 3000
-										? "Needs Improvement"
-										: "Poor"}
-							</div>
-						</div>
-					</motion.div>
+								{scenario.label}
+							</button>
+						);
+					})}
+				</div>
+
+				{/* Description */}
+				{currentScenario && (
+					<p className="text-sm text-zinc-400">{currentScenario.description}</p>
 				)}
 
-				{/* Threshold guide */}
-				<div className="flex gap-4 text-xs">
-					<div className="flex items-center gap-2">
-						<div className="w-3 h-3 rounded-full bg-green-500" />
-						<span className="text-zinc-400">Good: ≤1.8s</span>
+				{/* Control button */}
+				<button
+					type="button"
+					onClick={running ? reset : runScenario}
+					disabled={running}
+					className="px-6 py-2 rounded-lg bg-violet-500 text-white font-semibold hover:bg-violet-600 disabled:opacity-50 transition-all"
+				>
+					{running ? "Running..." : "Run Scenario"}
+				</button>
+
+				{/* Visualization */}
+				<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 space-y-6">
+					{/* Network waterfall */}
+					<div className="space-y-3">
+						<h4 className="text-sm font-semibold text-zinc-400">
+							Network Waterfall
+						</h4>
+						<div className="space-y-2">
+							{currentScenario?.resources.map((resource, idx) => {
+								const totalDuration = Math.max(
+									...currentScenario.resources.map((r) => r.start + r.duration),
+								);
+								const startPercent = (resource.start / totalDuration) * 100;
+								const widthPercent = (resource.duration / totalDuration) * 100;
+								const isActive =
+									currentTime >= resource.start &&
+									currentTime <= resource.start + resource.duration;
+								const isComplete =
+									currentTime > resource.start + resource.duration;
+
+								return (
+									<div
+										key={`${resource.name}-${idx}`}
+										className="flex items-center gap-3"
+									>
+										<div
+											className="w-40 text-xs font-mono text-zinc-400 truncate"
+											title={resource.name}
+										>
+											{resource.name}
+										</div>
+										<div className="flex-1 h-8 bg-zinc-800 rounded relative">
+											<AnimatePresence>
+												{(isActive || isComplete) && (
+													<motion.div
+														initial={{ width: 0 }}
+														animate={{ width: `${widthPercent}%` }}
+														className={`absolute h-full rounded ${resource.color} ${isActive ? "opacity-100" : "opacity-60"}`}
+														style={{ left: `${startPercent}%` }}
+													>
+														<div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-white">
+															{resource.duration}ms
+														</div>
+													</motion.div>
+												)}
+											</AnimatePresence>
+										</div>
+									</div>
+								);
+							})}
+						</div>
+
+						{/* Time marker */}
+						{running && (
+							<div className="text-xs text-zinc-500 text-right">
+								Current time: {Math.round(currentTime)}ms
+							</div>
+						)}
 					</div>
-					<div className="flex items-center gap-2">
-						<div className="w-3 h-3 rounded-full bg-yellow-500" />
-						<span className="text-zinc-400">Needs Improvement: 1.8-3s</span>
+
+					{/* Viewport paint visualization */}
+					<div className="space-y-3">
+						<h4 className="text-sm font-semibold text-zinc-400">Viewport</h4>
+						<div
+							className="relative bg-white rounded-lg overflow-hidden"
+							style={{ aspectRatio: "16/9", maxWidth: "600px" }}
+						>
+							<AnimatePresence>
+								{phase === "idle" && (
+									<div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm">
+										Waiting for content...
+									</div>
+								)}
+
+								{(phase === "fcp" || phase === "done") && (
+									<motion.div
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										className="absolute inset-0 p-6"
+									>
+										<motion.div
+											initial={{ scale: 0.9 }}
+											animate={{ scale: 1 }}
+											transition={{ duration: 0.3 }}
+										>
+											<h1 className="text-2xl font-bold text-gray-900">
+												First Content!
+											</h1>
+											<p className="text-gray-600 mt-2">
+												This text marks the First Contentful Paint
+											</p>
+											<div className="mt-4 space-y-2">
+												<div className="h-3 bg-gray-300 rounded w-full" />
+												<div className="h-3 bg-gray-300 rounded w-4/5" />
+												<div className="h-3 bg-gray-300 rounded w-3/5" />
+											</div>
+										</motion.div>
+
+										{phase === "fcp" && (
+											<motion.div
+												initial={{ opacity: 0 }}
+												animate={{ opacity: [0, 1, 0] }}
+												transition={{ duration: 0.6, repeat: 2 }}
+												className="absolute inset-0 border-4 border-green-400"
+											/>
+										)}
+									</motion.div>
+								)}
+							</AnimatePresence>
+						</div>
 					</div>
-					<div className="flex items-center gap-2">
-						<div className="w-3 h-3 rounded-full bg-rose-500" />
-						<span className="text-zinc-400">Poor: &gt;3s</span>
+
+					{/* FCP Score display */}
+					{fcpTime > 0 && (
+						<motion.div
+							initial={{ opacity: 0, y: 10 }}
+							animate={{ opacity: 1, y: 0 }}
+							className="flex items-center justify-between p-4 bg-zinc-800 rounded-lg"
+						>
+							<div>
+								<div className="text-sm font-semibold text-zinc-300">
+									First Contentful Paint
+								</div>
+								<div className="text-xs text-zinc-500 mt-1">
+									Time until first DOM content renders
+								</div>
+							</div>
+							<div className="text-right">
+								<div
+									className={`text-3xl font-bold ${getThresholdColor(fcpTime)}`}
+								>
+									{fcpTime}ms
+								</div>
+								<div className="text-xs text-zinc-500 mt-1">
+									{fcpTime <= 1800
+										? "Good"
+										: fcpTime <= 3000
+											? "Needs Improvement"
+											: "Poor"}
+								</div>
+							</div>
+						</motion.div>
+					)}
+
+					{/* Threshold guide */}
+					<div className="flex gap-4 text-xs">
+						<div className="flex items-center gap-2">
+							<div className="w-3 h-3 rounded-full bg-green-500" />
+							<span className="text-zinc-400">Good: ≤1.8s</span>
+						</div>
+						<div className="flex items-center gap-2">
+							<div className="w-3 h-3 rounded-full bg-yellow-500" />
+							<span className="text-zinc-400">Needs Improvement: 1.8-3s</span>
+						</div>
+						<div className="flex items-center gap-2">
+							<div className="w-3 h-3 rounded-full bg-rose-500" />
+							<span className="text-zinc-400">Poor: &gt;3s</span>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			{/* Code examples */}
-			<div className="grid md:grid-cols-2 gap-4">
-				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
-						Before (Blocking)
-					</h4>
-					<ShikiCode
-						language="html"
-						code={`<!DOCTYPE html>
+				{/* Code examples */}
+				<div className="grid md:grid-cols-2 gap-4">
+					<div className="space-y-2">
+						<h4 className="text-sm font-semibold text-zinc-400">
+							Before (Blocking)
+						</h4>
+						<ShikiCode
+							language="html"
+							code={`<!DOCTYPE html>
 <html>
 <head>
   <!-- Blocks rendering -->
@@ -396,16 +401,16 @@ export default function FCPDemo() {
   <h1>Content</h1>
 </body>
 </html>`}
-						className="text-xs"
-					/>
-				</div>
-				<div className="space-y-2">
-					<h4 className="text-sm font-semibold text-zinc-400">
-						After (Optimized)
-					</h4>
-					<ShikiCode
-						language="html"
-						code={`<!DOCTYPE html>
+							className="text-xs"
+						/>
+					</div>
+					<div className="space-y-2">
+						<h4 className="text-sm font-semibold text-zinc-400">
+							After (Optimized)
+						</h4>
+						<ShikiCode
+							language="html"
+							code={`<!DOCTYPE html>
 <html>
 <head>
   <!-- Inline critical CSS -->
@@ -427,10 +432,11 @@ export default function FCPDemo() {
   <h1>Content</h1>
 </body>
 </html>`}
-						className="text-xs"
-					/>
+							className="text-xs"
+						/>
+					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }
