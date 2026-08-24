@@ -1,18 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import BlockingScriptsDemo from "../components/resource-priority/BlockingScriptsDemo";
-import CriticalRequestDepthDemo from "../components/resource-priority/CriticalRequestDepthDemo";
-import PreloadPrefetchDemo from "../components/resource-priority/PreloadPrefetchDemo";
-import PriorityQueueDemo from "../components/resource-priority/PriorityQueueDemo";
-import type { Protocol } from "../components/resource-priority/types";
-import { DemoSection } from "../components/shared/DemoSection";
+import { motion } from "motion/react";
+import { BlockingScriptsDemo } from "../components/resource-priority/BlockingScriptsDemo";
+import { CriticalRequestDepthDemo } from "../components/resource-priority/CriticalRequestDepthDemo";
+import { PreloadPrefetchDemo } from "../components/resource-priority/PreloadPrefetchDemo";
+import { PriorityQueueDemo } from "../components/resource-priority/PriorityQueueDemo";
 import { PageHeader } from "../components/shared/PageHeader";
 
-function ResourcePriorityPage() {
-	const [protocol, setProtocol] = useState<Protocol>("http2");
+export const Route = createFileRoute("/resource-priority")({
+	component: ResourcePriorityPage,
+});
 
+function ResourcePriorityPage() {
 	return (
-		<div className="max-w-6xl mx-auto space-y-12">
+		<div className="max-w-6xl mx-auto space-y-8">
 			<PageHeader
 				topic={{ label: "Browser", color: "orange" }}
 				title="Resource Loading Priority"
@@ -51,63 +51,17 @@ function ResourcePriorityPage() {
 				}}
 			/>
 
-			<div className="flex items-center gap-3 p-4 bg-zinc-900 rounded-lg border border-zinc-800">
-				<span className="text-sm font-medium text-zinc-400">Protocol:</span>
-				<button
-					type="button"
-					onClick={() => setProtocol("http1")}
-					className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-						protocol === "http1"
-							? "bg-violet-500 text-white"
-							: "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
-					}`}
-				>
-					HTTP/1.1 (6 connections)
-				</button>
-				<button
-					type="button"
-					onClick={() => setProtocol("http2")}
-					className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-						protocol === "http2"
-							? "bg-violet-500 text-white"
-							: "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
-					}`}
-				>
-					HTTP/2 (multiplexing)
-				</button>
-			</div>
-
-			<DemoSection
-				title="Demo 1: Priority Queue Simulator"
-				description="Browsers assign priority levels to resources based on type and attributes. Toggle attributes to see how resources move between priority buckets."
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ delay: 0.2, duration: 0.4 }}
+				className="space-y-8"
 			>
-				<PriorityQueueDemo protocol={protocol} />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 2: Blocking vs Non-Blocking Scripts"
-				description="Synchronous scripts block HTML parsing, while async and defer scripts allow parsing to continue. See the impact on page load performance."
-			>
-				<BlockingScriptsDemo protocol={protocol} />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 3: Preload & Prefetch Strategy"
-				description="Resource hints like preload and prefetch let developers optimize loading. See how they affect metrics like LCP and when to use them."
-			>
-				<PreloadPrefetchDemo protocol={protocol} />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 4: Critical Request Depth"
-				description="Dependency chains (e.g., HTML → CSS → @import → font) increase request depth and delay rendering. Learn how to flatten the waterfall."
-			>
-				<CriticalRequestDepthDemo protocol={protocol} />
-			</DemoSection>
+				<PriorityQueueDemo />
+				<BlockingScriptsDemo />
+				<PreloadPrefetchDemo />
+				<CriticalRequestDepthDemo />
+			</motion.div>
 		</div>
 	);
 }
-
-export const Route = createFileRoute("/resource-priority")({
-	component: ResourcePriorityPage,
-});

@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Protocol } from "./types";
+import { DemoSection } from "../shared/DemoSection";
 
 type ScenarioPhase =
 	| "idle"
@@ -18,13 +18,7 @@ interface ScenarioState {
 	domReady: boolean;
 }
 
-interface BlockingScriptsDemoProps {
-	protocol: Protocol;
-}
-
-export default function BlockingScriptsDemo({
-	protocol: _protocol,
-}: BlockingScriptsDemoProps) {
+export function BlockingScriptsDemo() {
 	const [syncState, setSyncState] = useState<ScenarioState>({
 		phase: "idle",
 		htmlProgress: 0,
@@ -237,77 +231,84 @@ export default function BlockingScriptsDemo({
 	}, [reset]);
 
 	return (
-		<div className="space-y-6">
-			{/* Explanation */}
-			<div className="p-4 bg-zinc-900/50 border border-zinc-800 rounded-lg text-sm text-zinc-400">
-				<p>
-					<span className="text-white font-medium">
-						Compare loading behavior:
-					</span>{" "}
-					Watch how sync, async, and defer scripts affect page load time. Sync
-					scripts <span className="text-rose-300">block parsing</span> (slower),
-					while async and defer allow{" "}
-					<span className="text-cyan-300">parallel loading</span> (faster).
-				</p>
-			</div>
-
-			<div className="flex items-center gap-3">
-				<button
-					type="button"
-					onClick={play}
-					disabled={running}
-					className="px-4 py-2 bg-violet-500 text-white rounded-md text-sm font-medium hover:bg-violet-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-				>
-					Play
-				</button>
-				<button
-					type="button"
-					onClick={reset}
-					className="px-4 py-2 bg-zinc-700 text-white rounded-md text-sm font-medium hover:bg-zinc-600 transition-colors"
-				>
-					Reset
-				</button>
-			</div>
-
-			<div className="grid md:grid-cols-3 gap-6">
-				<ScenarioColumn
-					title="Synchronous <script>"
-					state={syncState}
-					color="rose"
-					isBlocking={true}
-				/>
-				<ScenarioColumn
-					title="Async <script async>"
-					state={asyncState}
-					color="cyan"
-					isBlocking={false}
-				/>
-				<ScenarioColumn
-					title="Defer <script defer>"
-					state={deferState}
-					color="amber"
-					isBlocking={false}
-				/>
-			</div>
-
-			{/* Results Summary */}
-			{syncState.domReady && (
-				<div className="grid md:grid-cols-3 gap-4 text-center text-sm">
-					<div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded">
-						<div className="text-rose-300 font-medium">Sync: ~2500ms</div>
-						<div className="text-xs text-zinc-500 mt-1">Slowest (blocked)</div>
-					</div>
-					<div className="p-3 bg-cyan-500/10 border border-cyan-500/30 rounded">
-						<div className="text-cyan-300 font-medium">Async: ~1600ms</div>
-						<div className="text-xs text-zinc-500 mt-1">36% faster</div>
-					</div>
-					<div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded">
-						<div className="text-amber-300 font-medium">Defer: ~1600ms</div>
-						<div className="text-xs text-zinc-500 mt-1">36% faster</div>
-					</div>
+		<DemoSection
+			title="Demo 2: Blocking vs Non-Blocking Scripts"
+			description="Synchronous scripts block HTML parsing, while async and defer scripts allow parsing to continue. See the impact on page load performance."
+		>
+			<div className="space-y-6">
+				{/* Explanation */}
+				<div className="p-4 bg-zinc-900/50 border border-zinc-800 rounded-lg text-sm text-zinc-400">
+					<p>
+						<span className="text-white font-medium">
+							Compare loading behavior:
+						</span>{" "}
+						Watch how sync, async, and defer scripts affect page load time. Sync
+						scripts <span className="text-rose-300">block parsing</span>{" "}
+						(slower), while async and defer allow{" "}
+						<span className="text-cyan-300">parallel loading</span> (faster).
+					</p>
 				</div>
-			)}
-		</div>
+
+				<div className="flex items-center gap-3">
+					<button
+						type="button"
+						onClick={play}
+						disabled={running}
+						className="px-4 py-2 bg-violet-500 text-white rounded-md text-sm font-medium hover:bg-violet-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+					>
+						Play
+					</button>
+					<button
+						type="button"
+						onClick={reset}
+						className="px-4 py-2 bg-zinc-700 text-white rounded-md text-sm font-medium hover:bg-zinc-600 transition-colors"
+					>
+						Reset
+					</button>
+				</div>
+
+				<div className="grid md:grid-cols-3 gap-6">
+					<ScenarioColumn
+						title="Synchronous <script>"
+						state={syncState}
+						color="rose"
+						isBlocking={true}
+					/>
+					<ScenarioColumn
+						title="Async <script async>"
+						state={asyncState}
+						color="cyan"
+						isBlocking={false}
+					/>
+					<ScenarioColumn
+						title="Defer <script defer>"
+						state={deferState}
+						color="amber"
+						isBlocking={false}
+					/>
+				</div>
+
+				{/* Results Summary */}
+				{syncState.domReady && (
+					<div className="grid md:grid-cols-3 gap-4 text-center text-sm">
+						<div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded">
+							<div className="text-rose-300 font-medium">Sync: ~2500ms</div>
+							<div className="text-xs text-zinc-500 mt-1">
+								Slowest (blocked)
+							</div>
+						</div>
+						<div className="p-3 bg-cyan-500/10 border border-cyan-500/30 rounded">
+							<div className="text-cyan-300 font-medium">Async: ~1600ms</div>
+							<div className="text-xs text-zinc-500 mt-1">36% faster</div>
+						</div>
+						<div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded">
+							<div className="text-amber-300 font-medium">Defer: ~1600ms</div>
+							<div className="text-xs text-zinc-500 mt-1">36% faster</div>
+						</div>
+					</div>
+				)}
+			</div>
+		</DemoSection>
 	);
 }
 

@@ -93,6 +93,19 @@ export function getPriorityColor(priority: SimplePriority): string {
 	}
 }
 
+export function getPriorityTextColor(priority: SimplePriority): string {
+	switch (priority) {
+		case "High":
+			return "text-rose-400";
+		case "Medium":
+			return "text-amber-400";
+		case "Low":
+			return "text-cyan-400";
+		case "Lowest":
+			return "text-zinc-400";
+	}
+}
+
 export function getPriorityBg(priority: SimplePriority): string {
 	switch (priority) {
 		case "High":
