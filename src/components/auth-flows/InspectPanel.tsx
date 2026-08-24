@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
+import { ShikiCode } from "../shared/ShikiCode";
 
 interface InspectPanelProps {
 	isOpen: boolean;
@@ -91,9 +92,12 @@ function renderJWT(data: Record<string, unknown>) {
 						Header
 					</h4>
 				</div>
-				<div className="bg-zinc-800 border border-zinc-700 rounded p-4 font-mono text-sm">
-					<pre className="text-zinc-300">{JSON.stringify(header, null, 2)}</pre>
-				</div>
+				<ShikiCode
+					language="json"
+					code={JSON.stringify(header, null, 2)}
+					showLineNumbers={false}
+					className="text-xs"
+				/>
 			</div>
 
 			{/* Payload */}
@@ -104,11 +108,12 @@ function renderJWT(data: Record<string, unknown>) {
 						Payload
 					</h4>
 				</div>
-				<div className="bg-zinc-800 border border-zinc-700 rounded p-4 font-mono text-sm">
-					<pre className="text-zinc-300">
-						{JSON.stringify(payload, null, 2)}
-					</pre>
-				</div>
+				<ShikiCode
+					language="json"
+					code={JSON.stringify(payload, null, 2)}
+					showLineNumbers={false}
+					className="text-xs"
+				/>
 			</div>
 
 			{/* Signature */}

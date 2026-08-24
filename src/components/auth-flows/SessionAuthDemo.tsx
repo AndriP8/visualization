@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { match } from "ts-pattern";
+import { DemoSection } from "../shared/DemoSection";
 import { ShikiCode } from "../shared/ShikiCode";
 import { AuthFlowSequence } from "./AuthFlowSequence";
 import { InspectPanel } from "./InspectPanel";
@@ -222,133 +223,137 @@ export function SessionAuthDemo() {
 				: "text-rose-400";
 
 	return (
-		<div className="space-y-8">
-			{/* Controls */}
-			<div className="flex flex-wrap items-center gap-4">
-				<button
-					type="button"
-					onClick={handleAction}
-					disabled={phase === "logging-in" || phase === "making-request"}
-					className="px-6 py-2.5 rounded-lg bg-violet-500 hover:bg-violet-600 disabled:bg-zinc-700 disabled:text-zinc-500 text-white font-medium transition-colors"
-				>
-					{getButtonLabel()}
-				</button>
-				{phase === "logged-in" && (
-					<motion.button
+		<DemoSection
+			title="Demo 1: Session-Based Authentication"
+			description="Traditional cookie-based auth with server-side session storage"
+		>
+			<div className="space-y-8">
+				{/* Controls */}
+				<div className="flex flex-wrap items-center gap-4">
+					<button
 						type="button"
-						initial={{ opacity: 0, scale: 0.9 }}
-						animate={{ opacity: 1, scale: 1 }}
-						onClick={handleLogout}
-						className="px-6 py-2.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white font-medium transition-colors"
+						onClick={handleAction}
+						disabled={phase === "logging-in" || phase === "making-request"}
+						className="px-6 py-2.5 rounded-lg bg-violet-500 hover:bg-violet-600 disabled:bg-zinc-700 disabled:text-zinc-500 text-white font-medium transition-colors"
 					>
-						Logout
-					</motion.button>
-				)}
-			</div>
-
-			{/* Visual State */}
-			{(phase === "logged-in" || phase === "making-request") && (
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					className="grid md:grid-cols-2 gap-4"
-				>
-					{/* Browser Cookie */}
-					<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
-						<h4 className="text-sm font-semibold text-violet-300 mb-3">
-							Browser (Cookie Storage)
-						</h4>
-						<button
+						{getButtonLabel()}
+					</button>
+					{phase === "logged-in" && (
+						<motion.button
 							type="button"
-							onClick={() => setInspecting(true)}
-							className="w-full text-left bg-zinc-800 border border-violet-500/30 rounded p-3 hover:border-violet-500/50 transition-colors"
+							initial={{ opacity: 0, scale: 0.9 }}
+							animate={{ opacity: 1, scale: 1 }}
+							onClick={handleLogout}
+							className="px-6 py-2.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white font-medium transition-colors"
 						>
-							<div className="text-xs text-zinc-500 mb-1">Cookie</div>
-							<div className="font-mono text-sm text-violet-300 break-all">
-								sessionId={SESSION_ID}
-							</div>
-							<div className="text-xs text-zinc-600 mt-2 space-x-2">
-								<span>HttpOnly</span>
-								<span>•</span>
-								<span>Secure</span>
-								<span>•</span>
-								<span>SameSite=Strict</span>
-							</div>
-						</button>
-						<p className="text-xs text-zinc-500 mt-2">
-							Click to inspect cookie flags
-						</p>
-					</div>
+							Logout
+						</motion.button>
+					)}
+				</div>
 
-					{/* Server Session */}
-					<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
-						<h4 className="text-sm font-semibold text-cyan-300 mb-3">
-							Server (Session Store)
-						</h4>
-						<div className="bg-zinc-800 border border-cyan-500/30 rounded p-3">
-							<div className="text-xs text-zinc-500 mb-1">Session Data</div>
-							<div className="font-mono text-sm text-cyan-300 space-y-1">
-								<div>sessionId: {SESSION_ID}</div>
-								<div>userId: {USER_ID}</div>
-								<div className="flex items-center gap-2">
-									<span>expiresIn:</span>
-									<span className={expiryColor}>{sessionExpiry}s</span>
-									{sessionExpiry <= 10 && (
-										<motion.span
-											animate={{ opacity: [1, 0.5, 1] }}
-											transition={{
-												duration: 1,
-												repeat: Number.POSITIVE_INFINITY,
-											}}
-											className="text-rose-400"
-										>
-											⚠️
-										</motion.span>
-									)}
+				{/* Visual State */}
+				{(phase === "logged-in" || phase === "making-request") && (
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						className="grid md:grid-cols-2 gap-4"
+					>
+						{/* Browser Cookie */}
+						<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
+							<h4 className="text-sm font-semibold text-violet-300 mb-3">
+								Browser (Cookie Storage)
+							</h4>
+							<button
+								type="button"
+								onClick={() => setInspecting(true)}
+								className="w-full text-left bg-zinc-800 border border-violet-500/30 rounded p-3 hover:border-violet-500/50 transition-colors"
+							>
+								<div className="text-xs text-zinc-500 mb-1">Cookie</div>
+								<div className="font-mono text-sm text-violet-300 break-all">
+									sessionId={SESSION_ID}
+								</div>
+								<div className="text-xs text-zinc-600 mt-2 space-x-2">
+									<span>HttpOnly</span>
+									<span>•</span>
+									<span>Secure</span>
+									<span>•</span>
+									<span>SameSite=Strict</span>
+								</div>
+							</button>
+							<p className="text-xs text-zinc-500 mt-2">
+								Click to inspect cookie flags
+							</p>
+						</div>
+
+						{/* Server Session */}
+						<div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
+							<h4 className="text-sm font-semibold text-cyan-300 mb-3">
+								Server (Session Store)
+							</h4>
+							<div className="bg-zinc-800 border border-cyan-500/30 rounded p-3">
+								<div className="text-xs text-zinc-500 mb-1">Session Data</div>
+								<div className="font-mono text-sm text-cyan-300 space-y-1">
+									<div>sessionId: {SESSION_ID}</div>
+									<div>userId: {USER_ID}</div>
+									<div className="flex items-center gap-2">
+										<span>expiresIn:</span>
+										<span className={expiryColor}>{sessionExpiry}s</span>
+										{sessionExpiry <= 10 && (
+											<motion.span
+												animate={{ opacity: [1, 0.5, 1] }}
+												transition={{
+													duration: 1,
+													repeat: Number.POSITIVE_INFINITY,
+												}}
+												className="text-rose-400"
+											>
+												⚠️
+											</motion.span>
+										)}
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</motion.div>
-			)}
+					</motion.div>
+				)}
 
-			{/* Sequence Diagram */}
-			{(phase === "logging-in" ||
-				phase === "making-request" ||
-				phase === "logged-out") && (
-				<motion.div
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden"
-				>
-					<AuthFlowSequence
-						steps={getSteps()}
-						currentStep={currentStep}
-						actors={["browser", "server", "db"]}
-					/>
-				</motion.div>
-			)}
+				{/* Sequence Diagram */}
+				{(phase === "logging-in" ||
+					phase === "making-request" ||
+					phase === "logged-out") && (
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden"
+					>
+						<AuthFlowSequence
+							steps={getSteps()}
+							currentStep={currentStep}
+							actors={["browser", "server", "db"]}
+						/>
+					</motion.div>
+				)}
 
-			{/* Security Callout */}
-			<div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-				<h4 className="text-sm font-semibold text-emerald-300 mb-2">
-					✓ Security Benefits
-				</h4>
-				<p className="text-sm text-emerald-200">
-					Session stored server-side. Stateful but more secure than client-side
-					tokens. HttpOnly cookies prevent XSS attacks. SameSite=Strict protects
-					against CSRF.
-				</p>
-			</div>
+				{/* Security Callout */}
+				<div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
+					<h4 className="text-sm font-semibold text-emerald-300 mb-2">
+						✓ Security Benefits
+					</h4>
+					<p className="text-sm text-emerald-200">
+						Session stored server-side. Stateful but more secure than
+						client-side tokens. HttpOnly cookies prevent XSS attacks.
+						SameSite=Strict protects against CSRF.
+					</p>
+				</div>
 
-			{/* Code Example */}
-			<div>
-				<h4 className="text-sm font-semibold text-white mb-3">
-					Server Implementation
-				</h4>
-				<ShikiCode
-					language="typescript"
-					code={`import { db } from './db'
+				{/* Code Example */}
+				<div>
+					<h4 className="text-sm font-semibold text-white mb-3">
+						Server Implementation
+					</h4>
+					<ShikiCode
+						language="typescript"
+						code={`import { db } from './db'
 import { users, sessions } from './schema'
 import { eq } from 'drizzle-orm'
 
@@ -395,24 +400,25 @@ app.post('/logout', async (req, res) => {
   res.clearCookie('sessionId')
   res.json({ success: true })
 })`}
-					className="text-xs"
+						className="text-xs"
+					/>
+				</div>
+
+				{/* Inspect Panel */}
+				<InspectPanel
+					isOpen={inspecting}
+					onClose={() => setInspecting(false)}
+					type="cookie"
+					title="Session Cookie Inspector"
+					data={{
+						value: SESSION_ID,
+						httpOnly: true,
+						secure: true,
+						sameSite: "Strict",
+						maxAge: 1800,
+					}}
 				/>
 			</div>
-
-			{/* Inspect Panel */}
-			<InspectPanel
-				isOpen={inspecting}
-				onClose={() => setInspecting(false)}
-				type="cookie"
-				title="Session Cookie Inspector"
-				data={{
-					value: SESSION_ID,
-					httpOnly: true,
-					secure: true,
-					sameSite: "Strict",
-					maxAge: 1800,
-				}}
-			/>
-		</div>
+		</DemoSection>
 	);
 }

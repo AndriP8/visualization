@@ -3,7 +3,6 @@ import { ComparisonTableDemo } from "../components/auth-flows/ComparisonTableDem
 import { JWTAuthDemo } from "../components/auth-flows/JWTAuthDemo";
 import { OAuth2PKCEDemo } from "../components/auth-flows/OAuth2PKCEDemo";
 import { SessionAuthDemo } from "../components/auth-flows/SessionAuthDemo";
-import { DemoSection } from "../components/shared/DemoSection";
 import { PageHeader } from "../components/shared/PageHeader";
 
 export const Route = createFileRoute("/auth-flows")({
@@ -52,33 +51,12 @@ function AuthFlowsPage() {
 				}}
 			/>
 
-			<DemoSection
-				title="Demo 1: Session-Based Authentication"
-				description="Traditional cookie-based auth with server-side session storage"
-			>
+			<div className="space-y-12">
 				<SessionAuthDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 2: JSON Web Tokens (JWT)"
-				description="Stateless authentication with signed tokens and refresh token rotation"
-			>
 				<JWTAuthDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 3: OAuth 2.0 + PKCE"
-				description="Delegated authentication with third-party providers (industry standard for web, mobile, and desktop apps)"
-			>
 				<OAuth2PKCEDemo />
-			</DemoSection>
-
-			<DemoSection
-				title="Demo 4: Comparison & Decision Guide"
-				description="When to use each authentication pattern"
-			>
 				<ComparisonTableDemo />
-			</DemoSection>
+			</div>
 		</div>
 	);
 }
