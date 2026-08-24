@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 
 type AnomalyType =
 	| "dirty_read"
@@ -241,168 +242,170 @@ export function AnomaliesSimulatorDemo() {
 			: scenario.steps[0].dataState;
 
 	return (
-		<div className="flex flex-col md:flex-row gap-6">
-			{/* Sidebar Selectors */}
-			<div className="md:w-64 space-y-2">
-				<h4 className="text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-3">
-					Select Anomaly
-				</h4>
-				{(Object.keys(SCENARIOS) as AnomalyType[]).map((key) => (
-					<button
-						key={key}
-						type="button"
-						onClick={() => {
-							setSelected(key);
-							reset();
-						}}
-						className={clsx(
-							"w-full text-left px-4 py-3 rounded-lg text-sm transition-all border",
-							selected === key
-								? "bg-violet-500/10 border-violet-500/50 text-violet-300"
-								: "bg-zinc-800/30 border-zinc-800/50 text-zinc-400 hover:bg-zinc-800",
-						)}
-					>
-						<div className="font-semibold">{SCENARIOS[key].title}</div>
-					</button>
-				))}
-
-				<div className="p-4 mt-4 bg-zinc-900/50 rounded-lg border border-zinc-800/50">
-					<p className="text-sm text-zinc-400">{scenario.desc}</p>
-				</div>
-			</div>
-
-			{/* Timeline Player */}
-			<div className="flex-1 border border-zinc-800 rounded-lg bg-zinc-900/30 p-5 flex flex-col">
-				{/* State Header */}
-				<div className="flex justify-between items-center mb-6">
-					<div className="flex gap-2 bg-zinc-950 p-2 rounded border border-zinc-800">
-						<span className="text-xs text-zinc-500">Database State:</span>
-						<code className="text-xs text-teal-400 font-mono">
-							{JSON.stringify(currentDataState)}
-						</code>
-					</div>
-					<div className="flex gap-2">
+		<DemoSection
+			title="Demo 2: Transaction Anomalies Simulator"
+			description="Interactive timeline showing exactly how concurrent transactions step on each other's toes when isolation is too weak."
+		>
+			<div className="flex flex-col md:flex-row gap-6">
+				{/* Sidebar Selectors */}
+				<div className="md:w-64 space-y-2">
+					<h4 className="text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-3">
+						Select Anomaly
+					</h4>
+					{(Object.keys(SCENARIOS) as AnomalyType[]).map((key) => (
 						<button
-							type="button"
-							onClick={reset}
-							className="px-3 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-xs transition-colors"
-						>
-							Reset
-						</button>
-						<button
+							key={key}
 							type="button"
 							onClick={() => {
-								if (stepIndex >= maxSteps - 1) reset();
-								setIsPlaying(!isPlaying);
+								setSelected(key);
+								reset();
 							}}
-							className="px-4 py-1.5 rounded bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold transition-colors w-20"
+							className={clsx(
+								"w-full text-left px-4 py-3 rounded-lg text-sm transition-all border",
+								selected === key
+									? "bg-emerald-500/10 border-emerald-500/50 text-emerald-300"
+									: "bg-zinc-800/30 border-zinc-800/50 text-zinc-400 hover:bg-zinc-800",
+							)}
 						>
-							{isPlaying
-								? "Pause"
-								: stepIndex >= maxSteps - 1
-									? "Replay"
-									: "Play"}
+							<div className="font-semibold">{SCENARIOS[key].title}</div>
 						</button>
-						<button
-							type="button"
-							onClick={() => setStepIndex((s) => Math.min(s + 1, maxSteps - 1))}
-							disabled={stepIndex >= maxSteps - 1 || isPlaying}
-							className="px-3 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-xs transition-colors disabled:opacity-50"
-						>
-							Step &gt;
-						</button>
+					))}
+
+					<div className="p-4 mt-4 bg-zinc-900/50 rounded-lg border border-zinc-800/50">
+						<p className="text-sm text-zinc-400">{scenario.desc}</p>
 					</div>
 				</div>
 
-				{/* Timeline Columns */}
-				<div className="grid grid-cols-2 gap-4 flex-1 pb-6 pr-2">
-					<div className="border-t-2 border-violet-500/50 pt-2">
-						<h5 className="text-violet-400 font-bold mb-4">Transaction 1</h5>
-						<div className="space-y-3 relative">
-							{scenario.steps.map((step, i) => {
-								if (step.tx !== "T1")
-									return (
-										<div
-											key={`${step.tx}-${i}`}
-											className="h-12 border-l border-zinc-700/30 ml-3"
-										/>
-									);
-								return (
-									<motion.div
-										key={`${step.tx}-motion-${i}`}
-										initial={{ opacity: 0, x: -10 }}
-										animate={{
-											opacity: i <= stepIndex ? 1 : 0.2,
-											filter: i <= stepIndex ? "blur(0px)" : "blur(2px)",
-										}}
-										className={clsx(
-											"p-3 rounded border",
-											i === stepIndex
-												? "bg-violet-900/30 border-violet-500 shadow-[0_0_15px_rgba(139,92,246,0.15)]"
-												: "bg-zinc-900 border-zinc-800",
-											i > stepIndex && "opacity-30 grayscale",
-										)}
-									>
-										<div className="text-xs text-zinc-300 font-mono whitespace-pre-wrap">
-											{step.query}
-										</div>
-										{step.isAnomalyPoint && i <= stepIndex && (
-											<div className="mt-2 text-xs text-red-400 bg-red-500/10 p-2 rounded font-semibold">
-												{step.anomalyMessage}
-											</div>
-										)}
-									</motion.div>
-								);
-							})}
+				{/* Right Side Execution Plane */}
+				<div className="flex-1 space-y-6">
+					{/* State Overview & Controls */}
+					<div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-zinc-900/80 rounded-lg border border-zinc-800">
+						<div>
+							<span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
+								Current DB Row State
+							</span>
+							<div className="text-emerald-400 font-mono text-sm mt-0.5">
+								{JSON.stringify(currentDataState)}
+							</div>
+						</div>
+
+						<div className="flex items-center gap-3">
+							<button
+								type="button"
+								disabled={isPlaying || stepIndex >= maxSteps - 1}
+								onClick={() => setStepIndex((s) => s + 1)}
+								className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 text-zinc-200 text-sm font-semibold rounded transition-colors"
+							>
+								Step Forward ▶
+							</button>
+							<button
+								type="button"
+								disabled={isPlaying || stepIndex >= maxSteps - 1}
+								onClick={() => setIsPlaying(true)}
+								className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white text-sm font-semibold rounded transition-colors shadow-lg shadow-emerald-950/40"
+							>
+								Auto Play ⏩
+							</button>
+							<button
+								type="button"
+								onClick={reset}
+								className="px-3 py-1.5 bg-zinc-800/60 hover:bg-zinc-700/60 text-zinc-400 text-sm font-medium rounded transition-colors"
+							>
+								Reset ↺
+							</button>
 						</div>
 					</div>
 
-					<div className="border-t-2 border-cyan-500/50 pt-2">
-						<h5 className="text-cyan-400 font-bold mb-4">Transaction 2</h5>
-						<div className="space-y-3 relative">
-							{scenario.steps.map((step, i) => {
-								if (step.tx !== "T2")
+					{/* 2-Column Concurrent Timeline */}
+					<div className="grid grid-cols-2 gap-4">
+						<div className="border-t-2 border-emerald-500/50 pt-2">
+							<h5 className="text-emerald-400 font-bold mb-4">Transaction 1</h5>
+							<div className="space-y-3 relative">
+								{scenario.steps.map((step, i) => {
+									if (step.tx !== "T1")
+										return (
+											<div
+												key={`${step.tx}-${i}`}
+												className="h-12 border-l border-zinc-700/30 ml-3"
+											/>
+										);
 									return (
-										<div
-											key={`${step.tx}-${i}`}
-											className="h-12 border-l border-zinc-700/30 ml-3"
-										/>
+										<motion.div
+											key={`${step.tx}-motion-${i}`}
+											initial={{ opacity: 0, x: -10 }}
+											animate={{
+												opacity: i <= stepIndex ? 1 : 0.2,
+												filter: i <= stepIndex ? "blur(0px)" : "blur(2px)",
+											}}
+											className={clsx(
+												"p-3 rounded border",
+												i === stepIndex
+													? "bg-emerald-950/40 border-emerald-500/60 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
+													: "bg-zinc-900 border-zinc-800",
+												i > stepIndex && "opacity-30 grayscale",
+											)}
+										>
+											<div className="text-xs text-zinc-300 font-mono whitespace-pre-wrap">
+												{step.query}
+											</div>
+											{step.isAnomalyPoint && i <= stepIndex && (
+												<div className="mt-2 text-xs text-red-400 bg-red-500/10 p-2 rounded font-semibold">
+													{step.anomalyMessage}
+												</div>
+											)}
+										</motion.div>
 									);
-								return (
-									<motion.div
-										key={`${step.tx}-motion-${i}`}
-										initial={{ opacity: 0, x: 10 }}
-										animate={{
-											opacity: i <= stepIndex ? 1 : 0.2,
-											filter: i <= stepIndex ? "blur(0px)" : "blur(2px)",
-										}}
-										className={clsx(
-											"p-3 rounded border",
-											i === stepIndex
-												? "bg-cyan-900/30 border-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.15)]"
-												: "bg-zinc-900 border-zinc-800",
-											i > stepIndex && "opacity-30 grayscale",
-										)}
-									>
-										<div className="text-xs text-zinc-300 font-mono whitespace-pre-wrap">
-											{step.query}
-										</div>
-										{step.isAnomalyPoint && i <= stepIndex && (
-											<motion.div
-												initial={{ scale: 0.9 }}
-												animate={{ scale: 1 }}
-												className="mt-2 text-xs text-red-400 bg-red-500/10 p-2 rounded font-semibold"
-											>
-												{step.anomalyMessage}
-											</motion.div>
-										)}
-									</motion.div>
-								);
-							})}
+								})}
+							</div>
+						</div>
+
+						<div className="border-t-2 border-cyan-500/50 pt-2">
+							<h5 className="text-cyan-400 font-bold mb-4">Transaction 2</h5>
+							<div className="space-y-3 relative">
+								{scenario.steps.map((step, i) => {
+									if (step.tx !== "T2")
+										return (
+											<div
+												key={`${step.tx}-${i}`}
+												className="h-12 border-l border-zinc-700/30 ml-3"
+											/>
+										);
+									return (
+										<motion.div
+											key={`${step.tx}-motion-${i}`}
+											initial={{ opacity: 0, x: 10 }}
+											animate={{
+												opacity: i <= stepIndex ? 1 : 0.2,
+												filter: i <= stepIndex ? "blur(0px)" : "blur(2px)",
+											}}
+											className={clsx(
+												"p-3 rounded border",
+												i === stepIndex
+													? "bg-cyan-900/30 border-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+													: "bg-zinc-900 border-zinc-800",
+												i > stepIndex && "opacity-30 grayscale",
+											)}
+										>
+											<div className="text-xs text-zinc-300 font-mono whitespace-pre-wrap">
+												{step.query}
+											</div>
+											{step.isAnomalyPoint && i <= stepIndex && (
+												<motion.div
+													initial={{ scale: 0.9 }}
+													animate={{ scale: 1 }}
+													className="mt-2 text-xs text-red-400 bg-red-500/10 p-2 rounded font-semibold"
+												>
+													{step.anomalyMessage}
+												</motion.div>
+											)}
+										</motion.div>
+									);
+								})}
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }

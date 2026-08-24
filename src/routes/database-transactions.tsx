@@ -4,7 +4,6 @@ import { ACIDPropertiesDemo } from "../components/database-transactions/ACIDProp
 import { AnomaliesSimulatorDemo } from "../components/database-transactions/AnomaliesSimulatorDemo";
 import { IsolationLevelsDemo } from "../components/database-transactions/IsolationLevelsDemo";
 import { MVCCAndLockingVisualizerDemo } from "../components/database-transactions/MVCCAndLockingVisualizerDemo";
-import { DemoSection } from "../components/shared/DemoSection";
 import { PageHeader } from "../components/shared/PageHeader";
 
 export const Route = createFileRoute("/database-transactions")({
@@ -61,32 +60,12 @@ function DatabaseTransactionsPage() {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ delay: 0.2, duration: 0.4 }}
-				className="space-y-8 pb-12"
+				className="space-y-8"
 			>
-				<DemoSection
-					title="Demo 1: The ACID Properties"
-					description="The four theoretical pillars that guarantee database transactions are processed reliably."
-				>
-					<ACIDPropertiesDemo />
-				</DemoSection>
-				<DemoSection
-					title="Demo 2: Transaction Anomalies Simulator"
-					description="Interactive timeline showing exactly how concurrent transactions step on each other's toes when isolation is too weak."
-				>
-					<AnomaliesSimulatorDemo />
-				</DemoSection>
-				<DemoSection
-					title="Demo 3: Isolation Levels Comparison"
-					description="How different levels protect against concurrency anomalies. Notice how the ANSI SQL Standard compares to real-world PostgreSQL."
-				>
-					<IsolationLevelsDemo />
-				</DemoSection>
-				<DemoSection
-					title="Demo 4: MVCC & Under-The-Hood Locking"
-					description="How databases physically prevent transactions from corrupting data. Choose a concurrency control method to see how it handles contention."
-				>
-					<MVCCAndLockingVisualizerDemo />
-				</DemoSection>
+				<ACIDPropertiesDemo />
+				<AnomaliesSimulatorDemo />
+				<IsolationLevelsDemo />
+				<MVCCAndLockingVisualizerDemo />
 			</motion.div>
 		</div>
 	);

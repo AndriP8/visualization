@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { DemoSection } from "../shared/DemoSection";
 
 type TabType = "traditional" | "mvcc" | "deadlock";
 
@@ -8,38 +9,43 @@ export function MVCCAndLockingVisualizerDemo() {
 	const [activeTab, setActiveTab] = useState<TabType>("mvcc");
 
 	return (
-		<div className="flex flex-col gap-6">
-			{/* Tabs */}
-			<div className="flex flex-wrap gap-2 border-b border-zinc-800 pb-4">
-				<TabButton
-					active={activeTab === "traditional"}
-					onClick={() => setActiveTab("traditional")}
-				>
-					Traditional Locking
-				</TabButton>
-				<TabButton
-					active={activeTab === "mvcc"}
-					onClick={() => setActiveTab("mvcc")}
-				>
-					MVCC (Modern Snapshot)
-				</TabButton>
-				<TabButton
-					active={activeTab === "deadlock"}
-					onClick={() => setActiveTab("deadlock")}
-				>
-					Deadlocks
-				</TabButton>
-			</div>
+		<DemoSection
+			title="Demo 4: MVCC & Under-The-Hood Locking"
+			description="How databases physically prevent transactions from corrupting data. Choose a concurrency control method to see how it handles contention."
+		>
+			<div className="flex flex-col gap-6">
+				{/* Tabs */}
+				<div className="flex flex-wrap gap-2 border-b border-zinc-800 pb-4">
+					<TabButton
+						active={activeTab === "traditional"}
+						onClick={() => setActiveTab("traditional")}
+					>
+						Traditional Locking
+					</TabButton>
+					<TabButton
+						active={activeTab === "mvcc"}
+						onClick={() => setActiveTab("mvcc")}
+					>
+						MVCC (Modern Snapshot)
+					</TabButton>
+					<TabButton
+						active={activeTab === "deadlock"}
+						onClick={() => setActiveTab("deadlock")}
+					>
+						Deadlocks
+					</TabButton>
+				</div>
 
-			{/* Content area */}
-			<div className="bg-zinc-900/40 border border-zinc-800 rounded-lg p-5 min-h-90 flex flex-col justify-center relative overflow-hidden">
-				<AnimatePresence mode="wait">
-					{activeTab === "traditional" && <TraditionalKey key="trad" />}
-					{activeTab === "mvcc" && <MVCCDemo key="mvcc" />}
-					{activeTab === "deadlock" && <DeadlockDemo key="deadlock" />}
-				</AnimatePresence>
+				{/* Content area */}
+				<div className="bg-zinc-900/40 border border-zinc-800 rounded-lg p-5 min-h-90 flex flex-col justify-center relative overflow-hidden">
+					<AnimatePresence mode="wait">
+						{activeTab === "traditional" && <TraditionalKey key="trad" />}
+						{activeTab === "mvcc" && <MVCCDemo key="mvcc" />}
+						{activeTab === "deadlock" && <DeadlockDemo key="deadlock" />}
+					</AnimatePresence>
+				</div>
 			</div>
-		</div>
+		</DemoSection>
 	);
 }
 
@@ -59,7 +65,7 @@ function TabButton({ active, onClick, children }: TabButtonProps) {
 			className={clsx(
 				"px-4 py-2 rounded-md text-sm font-semibold transition-all",
 				active
-					? "bg-violet-600 text-white shadow-[0_0_15px_rgba(124,58,237,0.3)] border border-violet-500"
+					? "bg-emerald-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)] border border-emerald-500"
 					: "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800",
 			)}
 		>
