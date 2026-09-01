@@ -202,7 +202,8 @@ export function IceNatDemo() {
 						local: `${localCand.address ?? localCand.ip ?? "?"}:${localCand.port}`,
 						remote: `${remoteCand.address ?? remoteCand.ip ?? "?"}:${remoteCand.port}`,
 						localType: (localCand.candidateType as CandidateType) ?? "unknown",
-						remoteType: (remoteCand.candidateType as CandidateType) ?? "unknown",
+						remoteType:
+							(remoteCand.candidateType as CandidateType) ?? "unknown",
 					});
 				}
 				setRunning(false);
