@@ -153,6 +153,30 @@ const CONCEPT_GROUPS: ConceptGroup[] = [
 					"How browsers prioritize resources and how developer hints (preload, prefetch, async, defer) affect the loading waterfall.",
 				tags: ["Preload", "Prefetch", "async", "defer", "Priority"],
 			},
+			{
+				to: "/dom-events",
+				title: "DOM Event Propagation",
+				icon: "🫧",
+				description:
+					"Follow events through capture, target, and bubble phases, and see how stopPropagation and event delegation affect the path.",
+				tags: ["Capture", "Target", "Bubbling", "Delegation"],
+			},
+			{
+				to: "/service-workers",
+				title: "Service Workers & Offline Support",
+				icon: "📴",
+				description:
+					"Explore the install, activate, and fetch lifecycle, cache strategies, page-to-worker messaging, and a background-sync queue that replays offline writes.",
+				tags: ["Lifecycle", "Offline", "Messaging", "Background Sync"],
+			},
+			{
+				to: "/browser-storage",
+				title: "Browser Storage",
+				icon: "💾",
+				description:
+					"Compare cookies, Web Storage, IndexedDB, and Cache API by scope, access pattern, and lifetime.",
+				tags: ["Cookies", "localStorage", "IndexedDB", "Cache API"],
+			},
 		],
 	},
 	{
@@ -168,6 +192,14 @@ const CONCEPT_GROUPS: ConceptGroup[] = [
 				description:
 					"CSR, SSR, SSG, ISR, Streaming SSR — when HTML is generated, where, and when the page becomes interactive.",
 				tags: ["CSR", "SSR", "SSG", "ISR"],
+			},
+			{
+				to: "/web-components",
+				title: "Web Components & Shadow DOM",
+				icon: "🧩",
+				description:
+					"Build reusable custom elements, scope styles with Shadow DOM, and project caller content through slots.",
+				tags: ["Custom Elements", "Shadow DOM", "Slots", "Encapsulation"],
 			},
 		],
 	},
@@ -208,6 +240,14 @@ const CONCEPT_GROUPS: ConceptGroup[] = [
 				description:
 					"How a SQL query travels from raw text through parsing, planning, optimization, and execution to return a result set.",
 				tags: ["Parser", "Planner", "Optimizer", "Executor"],
+			},
+			{
+				to: "/database-exec-plan",
+				title: "Query Execution Plans",
+				icon: "🔬",
+				description:
+					"EXPLAIN ANALYZE turns a query into a measurable pipeline. Read plan nodes, spot bad row estimates, and fix real bottlenecks.",
+				tags: ["EXPLAIN", "Seq Scan", "Hash Join", "Row Estimates"],
 			},
 		],
 	},
@@ -341,6 +381,14 @@ const CONCEPT_GROUPS: ConceptGroup[] = [
 				description:
 					"Text is mapped to points in high-dimensional space where semantic similarity becomes geometric proximity — the foundation of search, RAG, and clustering.",
 				tags: ["Cosine", "Analogy", "Projection"],
+			},
+			{
+				to: "/ai-vector-distance",
+				title: "Vector Distance Metrics",
+				icon: "📏",
+				description:
+					"Compare cosine, dot product, and Euclidean distance for embeddings, with specialized metrics as a quick reference.",
+				tags: ["Cosine", "Dot Product", "Euclidean"],
 			},
 			{
 				to: "/ai-vector-search",
