@@ -15,6 +15,7 @@ import { Route as WebWorkersRouteImport } from './routes/web-workers'
 import { Route as WebPerformanceMetricsRouteImport } from './routes/web-performance-metrics'
 import { Route as StateMachinesRouteImport } from './routes/state-machines'
 import { Route as SqlExecutionOrderRouteImport } from './routes/sql-execution-order'
+import { Route as ServiceWorkersRouteImport } from './routes/service-workers'
 import { Route as ResourcePriorityRouteImport } from './routes/resource-priority'
 import { Route as RenderingStrategiesRouteImport } from './routes/rendering-strategies'
 import { Route as ReconciliationRouteImport } from './routes/reconciliation'
@@ -27,16 +28,19 @@ import { Route as JsMemoryRouteImport } from './routes/js-memory'
 import { Route as HttpVersionsRouteImport } from './routes/http-versions'
 import { Route as HashTablesRouteImport } from './routes/hash-tables'
 import { Route as EventLoopRouteImport } from './routes/event-loop'
+import { Route as DomEventsRouteImport } from './routes/dom-events'
 import { Route as DatabaseTransactionsRouteImport } from './routes/database-transactions'
 import { Route as DatabaseQueryFlowRouteImport } from './routes/database-query-flow'
 import { Route as DatabaseIndexingRouteImport } from './routes/database-indexing'
 import { Route as CriticalRenderingPathRouteImport } from './routes/critical-rendering-path'
 import { Route as ClosureScopeRouteImport } from './routes/closure-scope'
 import { Route as CachingStrategiesRouteImport } from './routes/caching-strategies'
+import { Route as BrowserStorageRouteImport } from './routes/browser-storage'
 import { Route as AuthFlowsRouteImport } from './routes/auth-flows'
 import { Route as AsyncPatternsRouteImport } from './routes/async-patterns'
 import { Route as ApiPatternsRouteImport } from './routes/api-patterns'
 import { Route as AiVectorSearchRouteImport } from './routes/ai-vector-search'
+import { Route as AiVectorDistanceRouteImport } from './routes/ai-vector-distance'
 import { Route as AiToolCallingRouteImport } from './routes/ai-tool-calling'
 import { Route as AiStructuredOutputRouteImport } from './routes/ai-structured-output'
 import { Route as AiStreamingRouteImport } from './routes/ai-streaming'
@@ -79,6 +83,11 @@ const StateMachinesRoute = StateMachinesRouteImport.update({
 const SqlExecutionOrderRoute = SqlExecutionOrderRouteImport.update({
   id: '/sql-execution-order',
   path: '/sql-execution-order',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServiceWorkersRoute = ServiceWorkersRouteImport.update({
+  id: '/service-workers',
+  path: '/service-workers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResourcePriorityRoute = ResourcePriorityRouteImport.update({
@@ -141,6 +150,11 @@ const EventLoopRoute = EventLoopRouteImport.update({
   path: '/event-loop',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DomEventsRoute = DomEventsRouteImport.update({
+  id: '/dom-events',
+  path: '/dom-events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DatabaseTransactionsRoute = DatabaseTransactionsRouteImport.update({
   id: '/database-transactions',
   path: '/database-transactions',
@@ -171,6 +185,11 @@ const CachingStrategiesRoute = CachingStrategiesRouteImport.update({
   path: '/caching-strategies',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrowserStorageRoute = BrowserStorageRouteImport.update({
+  id: '/browser-storage',
+  path: '/browser-storage',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthFlowsRoute = AuthFlowsRouteImport.update({
   id: '/auth-flows',
   path: '/auth-flows',
@@ -189,6 +208,11 @@ const ApiPatternsRoute = ApiPatternsRouteImport.update({
 const AiVectorSearchRoute = AiVectorSearchRouteImport.update({
   id: '/ai-vector-search',
   path: '/ai-vector-search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiVectorDistanceRoute = AiVectorDistanceRouteImport.update({
+  id: '/ai-vector-distance',
+  path: '/ai-vector-distance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AiToolCallingRoute = AiToolCallingRouteImport.update({
@@ -271,16 +295,19 @@ export interface FileRoutesByFullPath {
   '/ai-streaming': typeof AiStreamingRoute
   '/ai-structured-output': typeof AiStructuredOutputRoute
   '/ai-tool-calling': typeof AiToolCallingRoute
+  '/ai-vector-distance': typeof AiVectorDistanceRoute
   '/ai-vector-search': typeof AiVectorSearchRoute
   '/api-patterns': typeof ApiPatternsRoute
   '/async-patterns': typeof AsyncPatternsRoute
   '/auth-flows': typeof AuthFlowsRoute
+  '/browser-storage': typeof BrowserStorageRoute
   '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
   '/database-query-flow': typeof DatabaseQueryFlowRoute
   '/database-transactions': typeof DatabaseTransactionsRoute
+  '/dom-events': typeof DomEventsRoute
   '/event-loop': typeof EventLoopRoute
   '/hash-tables': typeof HashTablesRoute
   '/http-versions': typeof HttpVersionsRoute
@@ -293,6 +320,7 @@ export interface FileRoutesByFullPath {
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
   '/resource-priority': typeof ResourcePriorityRoute
+  '/service-workers': typeof ServiceWorkersRoute
   '/sql-execution-order': typeof SqlExecutionOrderRoute
   '/state-machines': typeof StateMachinesRoute
   '/web-performance-metrics': typeof WebPerformanceMetricsRoute
@@ -314,16 +342,19 @@ export interface FileRoutesByTo {
   '/ai-streaming': typeof AiStreamingRoute
   '/ai-structured-output': typeof AiStructuredOutputRoute
   '/ai-tool-calling': typeof AiToolCallingRoute
+  '/ai-vector-distance': typeof AiVectorDistanceRoute
   '/ai-vector-search': typeof AiVectorSearchRoute
   '/api-patterns': typeof ApiPatternsRoute
   '/async-patterns': typeof AsyncPatternsRoute
   '/auth-flows': typeof AuthFlowsRoute
+  '/browser-storage': typeof BrowserStorageRoute
   '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
   '/database-query-flow': typeof DatabaseQueryFlowRoute
   '/database-transactions': typeof DatabaseTransactionsRoute
+  '/dom-events': typeof DomEventsRoute
   '/event-loop': typeof EventLoopRoute
   '/hash-tables': typeof HashTablesRoute
   '/http-versions': typeof HttpVersionsRoute
@@ -336,6 +367,7 @@ export interface FileRoutesByTo {
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
   '/resource-priority': typeof ResourcePriorityRoute
+  '/service-workers': typeof ServiceWorkersRoute
   '/sql-execution-order': typeof SqlExecutionOrderRoute
   '/state-machines': typeof StateMachinesRoute
   '/web-performance-metrics': typeof WebPerformanceMetricsRoute
@@ -358,16 +390,19 @@ export interface FileRoutesById {
   '/ai-streaming': typeof AiStreamingRoute
   '/ai-structured-output': typeof AiStructuredOutputRoute
   '/ai-tool-calling': typeof AiToolCallingRoute
+  '/ai-vector-distance': typeof AiVectorDistanceRoute
   '/ai-vector-search': typeof AiVectorSearchRoute
   '/api-patterns': typeof ApiPatternsRoute
   '/async-patterns': typeof AsyncPatternsRoute
   '/auth-flows': typeof AuthFlowsRoute
+  '/browser-storage': typeof BrowserStorageRoute
   '/caching-strategies': typeof CachingStrategiesRoute
   '/closure-scope': typeof ClosureScopeRoute
   '/critical-rendering-path': typeof CriticalRenderingPathRoute
   '/database-indexing': typeof DatabaseIndexingRoute
   '/database-query-flow': typeof DatabaseQueryFlowRoute
   '/database-transactions': typeof DatabaseTransactionsRoute
+  '/dom-events': typeof DomEventsRoute
   '/event-loop': typeof EventLoopRoute
   '/hash-tables': typeof HashTablesRoute
   '/http-versions': typeof HttpVersionsRoute
@@ -380,6 +415,7 @@ export interface FileRoutesById {
   '/reconciliation': typeof ReconciliationRoute
   '/rendering-strategies': typeof RenderingStrategiesRoute
   '/resource-priority': typeof ResourcePriorityRoute
+  '/service-workers': typeof ServiceWorkersRoute
   '/sql-execution-order': typeof SqlExecutionOrderRoute
   '/state-machines': typeof StateMachinesRoute
   '/web-performance-metrics': typeof WebPerformanceMetricsRoute
@@ -403,16 +439,19 @@ export interface FileRouteTypes {
     | '/ai-streaming'
     | '/ai-structured-output'
     | '/ai-tool-calling'
+    | '/ai-vector-distance'
     | '/ai-vector-search'
     | '/api-patterns'
     | '/async-patterns'
     | '/auth-flows'
+    | '/browser-storage'
     | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
     | '/database-query-flow'
     | '/database-transactions'
+    | '/dom-events'
     | '/event-loop'
     | '/hash-tables'
     | '/http-versions'
@@ -425,6 +464,7 @@ export interface FileRouteTypes {
     | '/reconciliation'
     | '/rendering-strategies'
     | '/resource-priority'
+    | '/service-workers'
     | '/sql-execution-order'
     | '/state-machines'
     | '/web-performance-metrics'
@@ -446,16 +486,19 @@ export interface FileRouteTypes {
     | '/ai-streaming'
     | '/ai-structured-output'
     | '/ai-tool-calling'
+    | '/ai-vector-distance'
     | '/ai-vector-search'
     | '/api-patterns'
     | '/async-patterns'
     | '/auth-flows'
+    | '/browser-storage'
     | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
     | '/database-query-flow'
     | '/database-transactions'
+    | '/dom-events'
     | '/event-loop'
     | '/hash-tables'
     | '/http-versions'
@@ -468,6 +511,7 @@ export interface FileRouteTypes {
     | '/reconciliation'
     | '/rendering-strategies'
     | '/resource-priority'
+    | '/service-workers'
     | '/sql-execution-order'
     | '/state-machines'
     | '/web-performance-metrics'
@@ -489,16 +533,19 @@ export interface FileRouteTypes {
     | '/ai-streaming'
     | '/ai-structured-output'
     | '/ai-tool-calling'
+    | '/ai-vector-distance'
     | '/ai-vector-search'
     | '/api-patterns'
     | '/async-patterns'
     | '/auth-flows'
+    | '/browser-storage'
     | '/caching-strategies'
     | '/closure-scope'
     | '/critical-rendering-path'
     | '/database-indexing'
     | '/database-query-flow'
     | '/database-transactions'
+    | '/dom-events'
     | '/event-loop'
     | '/hash-tables'
     | '/http-versions'
@@ -511,6 +558,7 @@ export interface FileRouteTypes {
     | '/reconciliation'
     | '/rendering-strategies'
     | '/resource-priority'
+    | '/service-workers'
     | '/sql-execution-order'
     | '/state-machines'
     | '/web-performance-metrics'
@@ -533,16 +581,19 @@ export interface RootRouteChildren {
   AiStreamingRoute: typeof AiStreamingRoute
   AiStructuredOutputRoute: typeof AiStructuredOutputRoute
   AiToolCallingRoute: typeof AiToolCallingRoute
+  AiVectorDistanceRoute: typeof AiVectorDistanceRoute
   AiVectorSearchRoute: typeof AiVectorSearchRoute
   ApiPatternsRoute: typeof ApiPatternsRoute
   AsyncPatternsRoute: typeof AsyncPatternsRoute
   AuthFlowsRoute: typeof AuthFlowsRoute
+  BrowserStorageRoute: typeof BrowserStorageRoute
   CachingStrategiesRoute: typeof CachingStrategiesRoute
   ClosureScopeRoute: typeof ClosureScopeRoute
   CriticalRenderingPathRoute: typeof CriticalRenderingPathRoute
   DatabaseIndexingRoute: typeof DatabaseIndexingRoute
   DatabaseQueryFlowRoute: typeof DatabaseQueryFlowRoute
   DatabaseTransactionsRoute: typeof DatabaseTransactionsRoute
+  DomEventsRoute: typeof DomEventsRoute
   EventLoopRoute: typeof EventLoopRoute
   HashTablesRoute: typeof HashTablesRoute
   HttpVersionsRoute: typeof HttpVersionsRoute
@@ -555,6 +606,7 @@ export interface RootRouteChildren {
   ReconciliationRoute: typeof ReconciliationRoute
   RenderingStrategiesRoute: typeof RenderingStrategiesRoute
   ResourcePriorityRoute: typeof ResourcePriorityRoute
+  ServiceWorkersRoute: typeof ServiceWorkersRoute
   SqlExecutionOrderRoute: typeof SqlExecutionOrderRoute
   StateMachinesRoute: typeof StateMachinesRoute
   WebPerformanceMetricsRoute: typeof WebPerformanceMetricsRoute
@@ -605,6 +657,13 @@ declare module '@tanstack/react-router' {
       path: '/sql-execution-order'
       fullPath: '/sql-execution-order'
       preLoaderRoute: typeof SqlExecutionOrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/service-workers': {
+      id: '/service-workers'
+      path: '/service-workers'
+      fullPath: '/service-workers'
+      preLoaderRoute: typeof ServiceWorkersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/resource-priority': {
@@ -691,6 +750,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventLoopRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dom-events': {
+      id: '/dom-events'
+      path: '/dom-events'
+      fullPath: '/dom-events'
+      preLoaderRoute: typeof DomEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/database-transactions': {
       id: '/database-transactions'
       path: '/database-transactions'
@@ -733,6 +799,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CachingStrategiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/browser-storage': {
+      id: '/browser-storage'
+      path: '/browser-storage'
+      fullPath: '/browser-storage'
+      preLoaderRoute: typeof BrowserStorageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth-flows': {
       id: '/auth-flows'
       path: '/auth-flows'
@@ -759,6 +832,13 @@ declare module '@tanstack/react-router' {
       path: '/ai-vector-search'
       fullPath: '/ai-vector-search'
       preLoaderRoute: typeof AiVectorSearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-vector-distance': {
+      id: '/ai-vector-distance'
+      path: '/ai-vector-distance'
+      fullPath: '/ai-vector-distance'
+      preLoaderRoute: typeof AiVectorDistanceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ai-tool-calling': {
@@ -869,16 +949,19 @@ const rootRouteChildren: RootRouteChildren = {
   AiStreamingRoute: AiStreamingRoute,
   AiStructuredOutputRoute: AiStructuredOutputRoute,
   AiToolCallingRoute: AiToolCallingRoute,
+  AiVectorDistanceRoute: AiVectorDistanceRoute,
   AiVectorSearchRoute: AiVectorSearchRoute,
   ApiPatternsRoute: ApiPatternsRoute,
   AsyncPatternsRoute: AsyncPatternsRoute,
   AuthFlowsRoute: AuthFlowsRoute,
+  BrowserStorageRoute: BrowserStorageRoute,
   CachingStrategiesRoute: CachingStrategiesRoute,
   ClosureScopeRoute: ClosureScopeRoute,
   CriticalRenderingPathRoute: CriticalRenderingPathRoute,
   DatabaseIndexingRoute: DatabaseIndexingRoute,
   DatabaseQueryFlowRoute: DatabaseQueryFlowRoute,
   DatabaseTransactionsRoute: DatabaseTransactionsRoute,
+  DomEventsRoute: DomEventsRoute,
   EventLoopRoute: EventLoopRoute,
   HashTablesRoute: HashTablesRoute,
   HttpVersionsRoute: HttpVersionsRoute,
@@ -891,6 +974,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReconciliationRoute: ReconciliationRoute,
   RenderingStrategiesRoute: RenderingStrategiesRoute,
   ResourcePriorityRoute: ResourcePriorityRoute,
+  ServiceWorkersRoute: ServiceWorkersRoute,
   SqlExecutionOrderRoute: SqlExecutionOrderRoute,
   StateMachinesRoute: StateMachinesRoute,
   WebPerformanceMetricsRoute: WebPerformanceMetricsRoute,

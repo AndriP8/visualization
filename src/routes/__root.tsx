@@ -77,6 +77,21 @@ const NAV_GROUPS = [
 				label: "Resource Priority",
 				icon: "🚦",
 			},
+			{
+				to: "/dom-events" as const,
+				label: "DOM Event Propagation",
+				icon: "🫧",
+			},
+			{
+				to: "/service-workers" as const,
+				label: "Service Workers",
+				icon: "📴",
+			},
+			{
+				to: "/browser-storage" as const,
+				label: "Browser Storage",
+				icon: "💾",
+			},
 		],
 	},
 	{
@@ -196,6 +211,11 @@ const NAV_GROUPS = [
 				to: "/ai-embeddings" as const,
 				label: "Vector Embeddings",
 				icon: "🧭",
+			},
+			{
+				to: "/ai-vector-distance" as const,
+				label: "Vector Distance",
+				icon: "📏",
 			},
 			{
 				to: "/ai-vector-search" as const,
