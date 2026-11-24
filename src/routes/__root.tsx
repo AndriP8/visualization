@@ -152,6 +152,10 @@ const NAV_GROUPS = [
 	{
 		title: "Data Structures",
 		items: [
+			{ to: "/stacks-queues" as const, label: "Stacks & Queues", icon: "📚" },
+			{ to: "/trees" as const, label: "Trees", icon: "🌳" },
+			{ to: "/heaps" as const, label: "Heaps & Priority Queues", icon: "⛰️" },
+			{ to: "/graphs" as const, label: "Graphs", icon: "🕸️" },
 			{
 				to: "/hash-tables" as const,
 				label: "Hash Tables",

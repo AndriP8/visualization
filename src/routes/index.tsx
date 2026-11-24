@@ -343,6 +343,38 @@ const CONCEPT_GROUPS: ConceptGroup[] = [
 		hoverText: "group-hover:text-purple-300",
 		items: [
 			{
+				to: "/stacks-queues",
+				title: "Stacks & Queues",
+				icon: "📚",
+				description:
+					"Compare last-in, first-out stacks with first-in, first-out queues through interactive push, pop, enqueue, and dequeue operations.",
+				tags: ["LIFO", "FIFO", "Push / Pop", "Enqueue / Dequeue"],
+			},
+			{
+				to: "/trees",
+				title: "Trees",
+				icon: "🌳",
+				description:
+					"Explore binary search trees, lookup paths, and sorted in-order traversal.",
+				tags: ["BST", "Traversal", "Search", "Balancing"],
+			},
+			{
+				to: "/heaps",
+				title: "Heaps & Priority Queues",
+				icon: "⛰️",
+				description:
+					"Watch a min-heap preserve priority as values are inserted and removed.",
+				tags: ["Min-Heap", "Heapify", "Priority Queue", "O(log n)"],
+			},
+			{
+				to: "/graphs",
+				title: "Graphs",
+				icon: "🕸️",
+				description:
+					"Compare breadth-first and depth-first search over a graph and its adjacency list.",
+				tags: ["BFS", "DFS", "Adjacency List", "Shortest Path"],
+			},
+			{
 				to: "/hash-tables",
 				title: "Hash Tables",
 				icon: "#️⃣",

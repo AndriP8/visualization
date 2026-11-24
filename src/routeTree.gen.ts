@@ -13,7 +13,9 @@ import { Route as XssCsrfRouteImport } from './routes/xss-csrf'
 import { Route as WebrtcRouteImport } from './routes/webrtc'
 import { Route as WebWorkersRouteImport } from './routes/web-workers'
 import { Route as WebPerformanceMetricsRouteImport } from './routes/web-performance-metrics'
+import { Route as TreesRouteImport } from './routes/trees'
 import { Route as StateMachinesRouteImport } from './routes/state-machines'
+import { Route as StacksQueuesRouteImport } from './routes/stacks-queues'
 import { Route as SqlExecutionOrderRouteImport } from './routes/sql-execution-order'
 import { Route as ServiceWorkersRouteImport } from './routes/service-workers'
 import { Route as ResourcePriorityRouteImport } from './routes/resource-priority'
@@ -26,7 +28,9 @@ import { Route as LoadBalancingRouteImport } from './routes/load-balancing'
 import { Route as LinkedListsRouteImport } from './routes/linked-lists'
 import { Route as JsMemoryRouteImport } from './routes/js-memory'
 import { Route as HttpVersionsRouteImport } from './routes/http-versions'
+import { Route as HeapsRouteImport } from './routes/heaps'
 import { Route as HashTablesRouteImport } from './routes/hash-tables'
+import { Route as GraphsRouteImport } from './routes/graphs'
 import { Route as EventLoopRouteImport } from './routes/event-loop'
 import { Route as DomEventsRouteImport } from './routes/dom-events'
 import { Route as DatabaseTransactionsRouteImport } from './routes/database-transactions'
@@ -75,9 +79,19 @@ const WebPerformanceMetricsRoute = WebPerformanceMetricsRouteImport.update({
   path: '/web-performance-metrics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TreesRoute = TreesRouteImport.update({
+  id: '/trees',
+  path: '/trees',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StateMachinesRoute = StateMachinesRouteImport.update({
   id: '/state-machines',
   path: '/state-machines',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StacksQueuesRoute = StacksQueuesRouteImport.update({
+  id: '/stacks-queues',
+  path: '/stacks-queues',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SqlExecutionOrderRoute = SqlExecutionOrderRouteImport.update({
@@ -140,9 +154,19 @@ const HttpVersionsRoute = HttpVersionsRouteImport.update({
   path: '/http-versions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HeapsRoute = HeapsRouteImport.update({
+  id: '/heaps',
+  path: '/heaps',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HashTablesRoute = HashTablesRouteImport.update({
   id: '/hash-tables',
   path: '/hash-tables',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GraphsRoute = GraphsRouteImport.update({
+  id: '/graphs',
+  path: '/graphs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventLoopRoute = EventLoopRouteImport.update({
@@ -309,7 +333,9 @@ export interface FileRoutesByFullPath {
   '/database-transactions': typeof DatabaseTransactionsRoute
   '/dom-events': typeof DomEventsRoute
   '/event-loop': typeof EventLoopRoute
+  '/graphs': typeof GraphsRoute
   '/hash-tables': typeof HashTablesRoute
+  '/heaps': typeof HeapsRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
   '/linked-lists': typeof LinkedListsRoute
@@ -322,7 +348,9 @@ export interface FileRoutesByFullPath {
   '/resource-priority': typeof ResourcePriorityRoute
   '/service-workers': typeof ServiceWorkersRoute
   '/sql-execution-order': typeof SqlExecutionOrderRoute
+  '/stacks-queues': typeof StacksQueuesRoute
   '/state-machines': typeof StateMachinesRoute
+  '/trees': typeof TreesRoute
   '/web-performance-metrics': typeof WebPerformanceMetricsRoute
   '/web-workers': typeof WebWorkersRoute
   '/webrtc': typeof WebrtcRoute
@@ -356,7 +384,9 @@ export interface FileRoutesByTo {
   '/database-transactions': typeof DatabaseTransactionsRoute
   '/dom-events': typeof DomEventsRoute
   '/event-loop': typeof EventLoopRoute
+  '/graphs': typeof GraphsRoute
   '/hash-tables': typeof HashTablesRoute
+  '/heaps': typeof HeapsRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
   '/linked-lists': typeof LinkedListsRoute
@@ -369,7 +399,9 @@ export interface FileRoutesByTo {
   '/resource-priority': typeof ResourcePriorityRoute
   '/service-workers': typeof ServiceWorkersRoute
   '/sql-execution-order': typeof SqlExecutionOrderRoute
+  '/stacks-queues': typeof StacksQueuesRoute
   '/state-machines': typeof StateMachinesRoute
+  '/trees': typeof TreesRoute
   '/web-performance-metrics': typeof WebPerformanceMetricsRoute
   '/web-workers': typeof WebWorkersRoute
   '/webrtc': typeof WebrtcRoute
@@ -404,7 +436,9 @@ export interface FileRoutesById {
   '/database-transactions': typeof DatabaseTransactionsRoute
   '/dom-events': typeof DomEventsRoute
   '/event-loop': typeof EventLoopRoute
+  '/graphs': typeof GraphsRoute
   '/hash-tables': typeof HashTablesRoute
+  '/heaps': typeof HeapsRoute
   '/http-versions': typeof HttpVersionsRoute
   '/js-memory': typeof JsMemoryRoute
   '/linked-lists': typeof LinkedListsRoute
@@ -417,7 +451,9 @@ export interface FileRoutesById {
   '/resource-priority': typeof ResourcePriorityRoute
   '/service-workers': typeof ServiceWorkersRoute
   '/sql-execution-order': typeof SqlExecutionOrderRoute
+  '/stacks-queues': typeof StacksQueuesRoute
   '/state-machines': typeof StateMachinesRoute
+  '/trees': typeof TreesRoute
   '/web-performance-metrics': typeof WebPerformanceMetricsRoute
   '/web-workers': typeof WebWorkersRoute
   '/webrtc': typeof WebrtcRoute
@@ -453,7 +489,9 @@ export interface FileRouteTypes {
     | '/database-transactions'
     | '/dom-events'
     | '/event-loop'
+    | '/graphs'
     | '/hash-tables'
+    | '/heaps'
     | '/http-versions'
     | '/js-memory'
     | '/linked-lists'
@@ -466,7 +504,9 @@ export interface FileRouteTypes {
     | '/resource-priority'
     | '/service-workers'
     | '/sql-execution-order'
+    | '/stacks-queues'
     | '/state-machines'
+    | '/trees'
     | '/web-performance-metrics'
     | '/web-workers'
     | '/webrtc'
@@ -500,7 +540,9 @@ export interface FileRouteTypes {
     | '/database-transactions'
     | '/dom-events'
     | '/event-loop'
+    | '/graphs'
     | '/hash-tables'
+    | '/heaps'
     | '/http-versions'
     | '/js-memory'
     | '/linked-lists'
@@ -513,7 +555,9 @@ export interface FileRouteTypes {
     | '/resource-priority'
     | '/service-workers'
     | '/sql-execution-order'
+    | '/stacks-queues'
     | '/state-machines'
+    | '/trees'
     | '/web-performance-metrics'
     | '/web-workers'
     | '/webrtc'
@@ -547,7 +591,9 @@ export interface FileRouteTypes {
     | '/database-transactions'
     | '/dom-events'
     | '/event-loop'
+    | '/graphs'
     | '/hash-tables'
+    | '/heaps'
     | '/http-versions'
     | '/js-memory'
     | '/linked-lists'
@@ -560,7 +606,9 @@ export interface FileRouteTypes {
     | '/resource-priority'
     | '/service-workers'
     | '/sql-execution-order'
+    | '/stacks-queues'
     | '/state-machines'
+    | '/trees'
     | '/web-performance-metrics'
     | '/web-workers'
     | '/webrtc'
@@ -595,7 +643,9 @@ export interface RootRouteChildren {
   DatabaseTransactionsRoute: typeof DatabaseTransactionsRoute
   DomEventsRoute: typeof DomEventsRoute
   EventLoopRoute: typeof EventLoopRoute
+  GraphsRoute: typeof GraphsRoute
   HashTablesRoute: typeof HashTablesRoute
+  HeapsRoute: typeof HeapsRoute
   HttpVersionsRoute: typeof HttpVersionsRoute
   JsMemoryRoute: typeof JsMemoryRoute
   LinkedListsRoute: typeof LinkedListsRoute
@@ -608,7 +658,9 @@ export interface RootRouteChildren {
   ResourcePriorityRoute: typeof ResourcePriorityRoute
   ServiceWorkersRoute: typeof ServiceWorkersRoute
   SqlExecutionOrderRoute: typeof SqlExecutionOrderRoute
+  StacksQueuesRoute: typeof StacksQueuesRoute
   StateMachinesRoute: typeof StateMachinesRoute
+  TreesRoute: typeof TreesRoute
   WebPerformanceMetricsRoute: typeof WebPerformanceMetricsRoute
   WebWorkersRoute: typeof WebWorkersRoute
   WebrtcRoute: typeof WebrtcRoute
@@ -645,11 +697,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WebPerformanceMetricsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/trees': {
+      id: '/trees'
+      path: '/trees'
+      fullPath: '/trees'
+      preLoaderRoute: typeof TreesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/state-machines': {
       id: '/state-machines'
       path: '/state-machines'
       fullPath: '/state-machines'
       preLoaderRoute: typeof StateMachinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stacks-queues': {
+      id: '/stacks-queues'
+      path: '/stacks-queues'
+      fullPath: '/stacks-queues'
+      preLoaderRoute: typeof StacksQueuesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sql-execution-order': {
@@ -736,11 +802,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HttpVersionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/heaps': {
+      id: '/heaps'
+      path: '/heaps'
+      fullPath: '/heaps'
+      preLoaderRoute: typeof HeapsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hash-tables': {
       id: '/hash-tables'
       path: '/hash-tables'
       fullPath: '/hash-tables'
       preLoaderRoute: typeof HashTablesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/graphs': {
+      id: '/graphs'
+      path: '/graphs'
+      fullPath: '/graphs'
+      preLoaderRoute: typeof GraphsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/event-loop': {
@@ -963,7 +1043,9 @@ const rootRouteChildren: RootRouteChildren = {
   DatabaseTransactionsRoute: DatabaseTransactionsRoute,
   DomEventsRoute: DomEventsRoute,
   EventLoopRoute: EventLoopRoute,
+  GraphsRoute: GraphsRoute,
   HashTablesRoute: HashTablesRoute,
+  HeapsRoute: HeapsRoute,
   HttpVersionsRoute: HttpVersionsRoute,
   JsMemoryRoute: JsMemoryRoute,
   LinkedListsRoute: LinkedListsRoute,
@@ -976,7 +1058,9 @@ const rootRouteChildren: RootRouteChildren = {
   ResourcePriorityRoute: ResourcePriorityRoute,
   ServiceWorkersRoute: ServiceWorkersRoute,
   SqlExecutionOrderRoute: SqlExecutionOrderRoute,
+  StacksQueuesRoute: StacksQueuesRoute,
   StateMachinesRoute: StateMachinesRoute,
+  TreesRoute: TreesRoute,
   WebPerformanceMetricsRoute: WebPerformanceMetricsRoute,
   WebWorkersRoute: WebWorkersRoute,
   WebrtcRoute: WebrtcRoute,
