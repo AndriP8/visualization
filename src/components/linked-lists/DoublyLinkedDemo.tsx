@@ -66,8 +66,8 @@ export function DoublyLinkedDemo() {
 
 	return (
 		<DemoSection
-			title="Demo 3: Doubly Linked List"
-			description="Each node has prev and next pointers. Bidirectional traversal and O(1) delete when you already have a reference to the node."
+			title="Operations playground: doubly linked"
+			description="Each node holds a link to the previous node and the next one. Walk the links in either direction, and remove a node in one step once you already hold it."
 		>
 			<div className="space-y-5">
 				{/* Controls */}
@@ -94,6 +94,7 @@ export function DoublyLinkedDemo() {
 						value={inputVal}
 						onChange={(e) => setInputVal(e.target.value)}
 						maxLength={3}
+						aria-label="Value to append"
 						className="px-3 py-1.5 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-indigo-500/60 w-20"
 					/>
 					<button
@@ -157,7 +158,7 @@ export function DoublyLinkedDemo() {
 											<button
 												type="button"
 												onClick={() => deleteNode(idx)}
-												className="absolute top-0.5 right-0.5 w-4 h-4 text-xs opacity-0 group-hover:opacity-100 transition-opacity text-zinc-500 hover:text-red-400"
+												className="absolute top-0.5 right-0.5 w-4 h-4 text-xs opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity text-zinc-500 hover:text-red-400 focus-visible:text-red-400"
 											>
 												×
 											</button>
@@ -220,22 +221,25 @@ export function DoublyLinkedDemo() {
 							data + <span className="text-purple-300">2 pointers</span>
 						</div>
 						<div className="text-zinc-600 mt-1">
-							8 + 16 = 24 bytes — plus allocator overhead (often 16–32B extra
-							per node in practice)
+							8 + 16 = 24 bytes — plus allocator overhead: the memory manager's
+							own bookkeeping (often 16–32B extra per node in practice)
 						</div>
 					</div>
 				</div>
 
 				<div className="p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50 text-xs text-zinc-400">
-					<strong className="text-zinc-300">Key advantage:</strong> If you hold
-					a reference to a node (e.g., from a hash map), deletion is{" "}
-					<span className="text-green-300">O(1)</span> — just re-wire prev.next
-					and next.prev. No traversal needed. This is why the{" "}
-					<span className="text-purple-300">LRU cache</span> uses a doubly
-					linked list + hash map: the map gives O(1) lookup to a node reference,
-					and the list handles O(1) move-to-front and eviction.{" "}
+					<strong className="text-zinc-300">
+						Why the extra link pays off:
+					</strong>{" "}
+					when you already hold a node (for example, found it through a hash
+					map), removing it takes one step. You reconnect its two neighbors.
+					This is why an LRU cache pairs a doubly linked list with a hash map.
+					The map finds the node, and the list moves or removes it without a
+					walk. Appending is one step too: a doubly list typically also keeps a
+					tail pointer — the address of the last node — so there is no walk to
+					the end.{" "}
 					<span className="text-zinc-500">
-						Hover any node and click × to see O(1) deletion in action.
+						Hover any node and click × to remove it in place.
 					</span>
 				</div>
 			</div>

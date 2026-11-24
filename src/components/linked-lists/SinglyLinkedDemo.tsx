@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useRef, useState } from "react";
+import { match } from "ts-pattern";
 import { DemoSection } from "../shared/DemoSection";
 
 interface ListNode {
@@ -74,6 +75,27 @@ export function SinglyLinkedDemo() {
 		tick();
 	}
 
+	function deleteMid() {
+		if (nodes.length === 0 || animating) return;
+		const mid = Math.floor(nodes.length / 2);
+		setLastOp(`deleteAt(${mid})`);
+		setAnimating(true);
+		let i = 0;
+		const tick = () => {
+			setTraverseIdx(i);
+			i++;
+			if (i < mid) setTimeout(tick, 300);
+			else {
+				setTimeout(() => {
+					setNodes((prev) => prev.filter((_, idx) => idx !== mid));
+					setTraverseIdx(null);
+					setAnimating(false);
+				}, 300);
+			}
+		};
+		tick();
+	}
+
 	function deleteHead() {
 		if (nodes.length === 0 || animating) return;
 		setLastOp("deleteHead()");
@@ -114,8 +136,8 @@ export function SinglyLinkedDemo() {
 
 	return (
 		<DemoSection
-			title="Demo 2: Singly Linked List Operations"
-			description="Each node holds data and a next pointer. Insert at head is O(1). Insert at tail is O(1) with a cached tail pointer, O(n) without. Delete at tail and mid-list ops are O(n)."
+			title="Operations playground"
+			description="Add and remove nodes at the ends or in the middle, and watch the walk each operation needs."
 		>
 			<div className="space-y-5">
 				{/* Controls */}
@@ -126,31 +148,48 @@ export function SinglyLinkedDemo() {
 						onChange={(e) => setInputVal(e.target.value)}
 						maxLength={3}
 						placeholder="Val…"
+						aria-label="Value to insert"
 						className="px-3 py-1.5 rounded-lg bg-zinc-800 border border-zinc-700 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-indigo-500/60 w-24"
 					/>
-					{[
-						{ label: "Insert Head", fn: insertHead, color: "green" },
-						{ label: "Insert Mid", fn: insertMid, color: "amber" },
-						{ label: "Insert Tail", fn: insertTail, color: "amber" },
-						{ label: "Delete Head", fn: deleteHead, color: "red" },
-						{ label: "Delete Tail", fn: deleteTail, color: "red" },
-					].map(({ label, fn, color }) => (
-						<button
-							key={label}
-							type="button"
-							onClick={fn}
-							disabled={animating}
-							className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors disabled:opacity-50 ${
-								color === "green"
-									? "bg-green-600/20 text-green-300 border-green-500/30 hover:bg-green-600/30"
-									: color === "amber"
-										? "bg-amber-600/20 text-amber-300 border-amber-500/30 hover:bg-amber-600/30"
-										: "bg-red-600/20 text-red-300 border-red-500/30 hover:bg-red-600/30"
-							}`}
-						>
-							{label}
-						</button>
-					))}
+					{(
+						[
+							{ label: "Insert Head", fn: insertHead, color: "green" },
+							{ label: "Insert Mid", fn: insertMid, color: "amber" },
+							{ label: "Insert Tail", fn: insertTail, color: "amber" },
+							{ label: "Delete Head", fn: deleteHead, color: "red" },
+							{ label: "Delete Mid", fn: deleteMid, color: "red" },
+							{ label: "Delete Tail", fn: deleteTail, color: "red" },
+						] as const
+					).map(({ label, fn, color }) => {
+						const colorClass = match(color)
+							.with(
+								"green",
+								() =>
+									"bg-green-600/20 text-green-300 border-green-500/30 hover:bg-green-600/30",
+							)
+							.with(
+								"amber",
+								() =>
+									"bg-amber-600/20 text-amber-300 border-amber-500/30 hover:bg-amber-600/30",
+							)
+							.with(
+								"red",
+								() =>
+									"bg-red-600/20 text-red-300 border-red-500/30 hover:bg-red-600/30",
+							)
+							.exhaustive();
+						return (
+							<button
+								key={label}
+								type="button"
+								onClick={fn}
+								disabled={animating}
+								className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors disabled:opacity-50 ${colorClass}`}
+							>
+								{label}
+							</button>
+						);
+					})}
 					<button
 						type="button"
 						onClick={reset}
@@ -218,8 +257,16 @@ export function SinglyLinkedDemo() {
 
 				{animating && lastOp.startsWith("insertTail") && (
 					<div className="text-xs text-zinc-500 italic">
-						Animating without a tail pointer — traversal is O(n). With a cached
-						tail pointer, this would be O(1).
+						No tail pointer here, so the list walks to the end first. Remember
+						the last node and this step becomes cheap.
+					</div>
+				)}
+
+				{animating && lastOp.startsWith("deleteAt") && (
+					<div className="text-xs text-zinc-500 italic">
+						The walk stops one node early, at the predecessor. Its next link is
+						redirected past the deleted node — that one link change is the whole
+						edit.
 					</div>
 				)}
 
@@ -242,17 +289,15 @@ export function SinglyLinkedDemo() {
 				</div>
 
 				<div className="p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50 text-xs text-zinc-400">
-					<strong className="text-zinc-300">Complexity:</strong> Insert/delete
-					at head <span className="text-green-300">O(1)</span> — just update
-					head pointer. Insert at tail{" "}
-					<span className="text-amber-300">O(1)</span> with a cached tail
-					pointer (most implementations), but{" "}
-					<span className="text-red-300">O(n)</span> without one. Delete at tail
-					is always <span className="text-red-300">O(n)</span> — you must reach
-					the second-to-last node to re-wire it. Insert/delete at middle{" "}
-					<span className="text-red-300">O(n)</span> — must traverse to
-					position. No random access: to reach node i, start from head and
-					follow n pointers.
+					<strong className="text-zinc-300">How much work:</strong> insert or
+					remove at the head takes the same amount of work no matter how long
+					the list is, because only the head pointer changes. Insert at the tail
+					is just as cheap when the list remembers its last node, called the
+					tail pointer. Without that shortcut the list has to walk to the end
+					first (<span className="text-red-300">O(n)</span>). Remove at the tail
+					always walks to the second-to-last node. Any operation in the middle
+					walks from the head, one link at a time. There is no shortcut to node
+					i.
 				</div>
 			</div>
 		</DemoSection>

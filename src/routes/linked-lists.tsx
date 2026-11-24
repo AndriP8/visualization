@@ -2,8 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ComparisonDemo } from "../components/linked-lists/ComparisonDemo";
 import { DoublyLinkedDemo } from "../components/linked-lists/DoublyLinkedDemo";
+import { LinkedListUseCasesDemo } from "../components/linked-lists/LinkedListUseCasesDemo";
 import { SinglyLinkedDemo } from "../components/linked-lists/SinglyLinkedDemo";
-import { UseCasesDemo } from "../components/linked-lists/UseCasesDemo";
+import { TraversalDemo } from "../components/linked-lists/TraversalDemo";
 import { PageHeader } from "../components/shared/PageHeader";
 
 export const Route = createFileRoute("/linked-lists")({
@@ -16,35 +17,38 @@ function LinkedListsPage() {
 			<PageHeader
 				topic={{ label: "Data Structures", color: "purple" }}
 				title="Linked Lists"
-				subtitle="Arrays store elements in contiguous memory — O(1) index access, but O(n) insertions and deletions because elements must shift. Linked lists flip this: O(1) insert/delete at a known position, at the cost of O(n) traversal for random access."
+				subtitle="A linked list keeps its values in separate boxes. Each box also holds the address of the next box, so the boxes can sit anywhere in memory."
 				gradient={{ from: "purple-400", to: "fuchsia-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								Each <span className="text-purple-300 font-medium">node</span>{" "}
-								stores a value and a pointer to the next node — no contiguous
-								memory required. A{" "}
+								The structure is a chain of boxes called{" "}
+								<span className="text-purple-300 font-medium">nodes</span>. Each
+								node holds one value and one address. That address, often called
+								a <span className="text-indigo-300 font-medium">pointer</span>,
+								tells you where the next node is. A singly linked list keeps one
+								address per node. A{" "}
 								<span className="text-indigo-300 font-medium">
 									doubly linked list
 								</span>{" "}
-								adds a prev pointer, enabling O(1) deletion when you already
-								hold a reference to the node. The real trade-off is cache
-								locality: array elements sit next to each other in memory,
-								making sequential reads fast; linked list nodes can be scattered
-								across the heap, causing cache misses on every traversal.
+								adds a second address that points back to the previous node.
 							</p>
 							<p>
-								Linked lists underpin many higher-level structures — LRU caches
-								(hash map + doubly linked list), browser history stacks, OS
-								process queues, and the bucket chains inside hash tables
-								themselves. Knowing when pointer-based structure beats
-								contiguous memory is a recurring systems design question.
+								The rule that always holds is simple. You enter the chain at the
+								front, called the head, and follow the addresses from there.
+								Adding or removing a node is cheap when you already hold that
+								node, because only the nearby addresses change. Finding a node
+								means walking from the head one step at a time. That walk is
+								called a traversal. An array keeps its items side by side, so
+								jumping to item i is instant, but inserting an item slides
+								everything after it. A linked list gives up that instant jump in
+								exchange for cheap edits.
 							</p>
 							<p className="text-zinc-400">
-								The demos below cover singly linked lists, doubly linked lists,
-								array vs linked list performance comparison, and real-world use
-								cases.
+								The demos cover the array and list trade-off, singly and doubly
+								linked operations, the problems a list solves, and real-world
+								use cases.
 							</p>
 						</div>
 					),
@@ -60,7 +64,8 @@ function LinkedListsPage() {
 				<ComparisonDemo />
 				<SinglyLinkedDemo />
 				<DoublyLinkedDemo />
-				<UseCasesDemo />
+				<TraversalDemo />
+				<LinkedListUseCasesDemo />
 			</motion.div>
 		</div>
 	);
