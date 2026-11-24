@@ -15,12 +15,15 @@ function h1(key: string): number {
 	return h;
 }
 
+// Steps coprime with 10, so every key's walk can reach all slots
+const DOUBLE_HASH_STEPS = [1, 3, 7, 9];
+
 function h2(key: string): number {
 	let h = 0;
 	for (let i = 0; i < key.length; i++) {
-		h = (h + key.charCodeAt(i)) % (TABLE_SIZE - 1);
+		h = (h * 31 + key.charCodeAt(i)) % DOUBLE_HASH_STEPS.length;
 	}
-	return 1 + h;
+	return DOUBLE_HASH_STEPS[h];
 }
 
 function probeSequence(key: string, strategy: ProbingStrategy): number[] {
@@ -56,21 +59,23 @@ export function OpenAddressingDemo() {
 	const [lastOp, setLastOp] = useState<"insert" | "search" | "delete" | null>(
 		null,
 	);
+	const [message, setMessage] = useState("");
 
 	function animateProbe(
 		seq: number[],
-		finalIdx: number,
+		finalIdx: number | null,
 		op: "insert" | "search" | "delete",
 	) {
 		setAnimating(true);
 		setFoundSlot(null);
 		setLastOp(op);
-		const targetStep = seq.indexOf(finalIdx);
+		const targetStep =
+			finalIdx === null ? seq.length - 1 : seq.indexOf(finalIdx);
 		let i = 0;
 
 		const tick = () => {
 			setProbeHighlight(seq.slice(0, i + 1));
-			if (seq[i] === finalIdx) {
+			if (finalIdx !== null && seq[i] === finalIdx) {
 				setFoundSlot(finalIdx);
 				setAnimating(false);
 				setTimeout(() => {
@@ -97,9 +102,15 @@ export function OpenAddressingDemo() {
 		const alreadyExists = seq.some(
 			(idx) => table[idx]?.state === "occupied" && table[idx]?.key === inputKey,
 		);
-		if (alreadyExists) return;
+		if (alreadyExists) {
+			setMessage(`"${inputKey}" is already in the table`);
+			return;
+		}
 		const slot = seq.find((idx) => table[idx]?.state !== "occupied");
-		if (slot === undefined) return;
+		if (slot === undefined) {
+			setMessage("table full — no free slot in this walk pattern");
+			return;
+		}
 
 		animateProbe(seq, slot, "insert");
 		setTimeout(
@@ -117,13 +128,28 @@ export function OpenAddressingDemo() {
 	function handleSearch() {
 		if (!inputKey.trim() || animating) return;
 		const seq = probeSequence(inputKey, strategy);
-		const slot = seq.find((idx) => {
-			const s = table[idx];
-			return s?.state === "occupied" && s.key === inputKey;
-		});
-		const target =
-			slot ?? seq.find((idx) => table[idx]?.state === "empty") ?? seq[0] ?? 0;
-		animateProbe(seq, target, "search");
+		const foundIdx = seq.findIndex(
+			(idx) => table[idx]?.state === "occupied" && table[idx]?.key === inputKey,
+		);
+		if (foundIdx >= 0) {
+			setMessage(
+				`Found "${inputKey}" at slot ${seq[foundIdx]} — ${foundIdx + 1} probe${foundIdx === 0 ? "" : "s"} checked`,
+			);
+			animateProbe(seq, seq[foundIdx], "search");
+			return;
+		}
+		const emptyIdx = seq.findIndex((idx) => table[idx]?.state === "empty");
+		if (emptyIdx >= 0) {
+			setMessage(
+				`"${inputKey}" not found — ${emptyIdx + 1} probe${emptyIdx === 0 ? "" : "s"} checked, stopped at the first empty slot`,
+			);
+			animateProbe(seq, seq[emptyIdx], "search");
+			return;
+		}
+		setMessage(
+			`"${inputKey}" not found — the walk checked every slot in its pattern`,
+		);
+		animateProbe(seq, null, "search");
 	}
 
 	function handleDelete() {
@@ -132,7 +158,10 @@ export function OpenAddressingDemo() {
 		const slot = seq.find(
 			(idx) => table[idx]?.state === "occupied" && table[idx]?.key === inputKey,
 		);
-		if (slot === undefined) return;
+		if (slot === undefined) {
+			setMessage(`"${inputKey}" is not in the table`);
+			return;
+		}
 
 		animateProbe(seq, slot, "delete");
 		setTimeout(
@@ -154,6 +183,7 @@ export function OpenAddressingDemo() {
 		setProbeHighlight([]);
 		setFoundSlot(null);
 		setAnimating(false);
+		setMessage("");
 	}
 
 	function slotClass(idx: number): string {
@@ -185,6 +215,9 @@ export function OpenAddressingDemo() {
 
 	const occupied = table.filter((s) => s.state === "occupied").length;
 	const loadFactor = (occupied / TABLE_SIZE).toFixed(2);
+	// Slots were placed with the current strategy's walk pattern, so switching
+	// mid-fill would make existing keys unfindable
+	const tableClear = table.every((s) => s.state === "empty");
 
 	const strategyMeta: Record<
 		ProbingStrategy,
@@ -192,39 +225,53 @@ export function OpenAddressingDemo() {
 	> = {
 		linear: { formula: "h(k) + i", tag: "simple, clusters badly" },
 		quadratic: { formula: "h(k) + i²", tag: "skips ahead, still clusters" },
-		double: { formula: "h1(k) + i·h2(k)", tag: "best spread, no clusters" },
+		double: {
+			formula: "h1(k) + i·h2(k)",
+			tag: "best spread — step must share no factor with size",
+		},
 	};
 
 	return (
 		<DemoSection
-			title="Demo 3: Collision Handling — Open Addressing"
-			description="When a slot is taken, walk the array until a free slot is found — the walk strategy is what differs. All keys stay in the array itself; no linked lists."
+			title="Operations playground: open addressing"
+			description="With open addressing nothing leaves the array. When a slot is taken, the key steps forward by the strategy's amount until it finds a free slot. A search repeats the same steps. Delete leaves a marker called a tombstone, so a later search does not stop early at the empty space it left behind."
 		>
 			<div className="space-y-5">
 				{/* Strategy toggle */}
-				<div className="flex flex-wrap gap-2">
-					{(["linear", "quadratic", "double"] as ProbingStrategy[]).map((s) => {
-						const { formula, tag } = strategyMeta[s];
-						return (
-							<button
-								key={s}
-								type="button"
-								onClick={() => setStrategy(s)}
-								className={`px-3 py-2 rounded-lg text-xs font-medium border transition-colors flex flex-col items-start gap-0.5 ${
-									strategy === s
-										? "bg-purple-600/30 text-purple-300 border-purple-500/50"
-										: "bg-zinc-800/40 text-zinc-400 border-zinc-700/50 hover:bg-zinc-800/70"
-								}`}
-							>
-								<span className="font-mono">{formula}</span>
-								<span
-									className={`text-[10px] font-normal ${strategy === s ? "text-purple-400" : "text-zinc-600"}`}
-								>
-									{tag}
-								</span>
-							</button>
-						);
-					})}
+				<div className="space-y-1.5">
+					<div className="flex flex-wrap gap-2">
+						{(["linear", "quadratic", "double"] as ProbingStrategy[]).map(
+							(s) => {
+								const { formula, tag } = strategyMeta[s];
+								return (
+									<button
+										key={s}
+										type="button"
+										onClick={() => setStrategy(s)}
+										disabled={!tableClear}
+										className={`px-3 py-2 rounded-lg text-xs font-medium border transition-colors flex flex-col items-start gap-0.5 disabled:opacity-50 ${
+											strategy === s
+												? "bg-purple-600/30 text-purple-300 border-purple-500/50"
+												: "bg-zinc-800/40 text-zinc-400 border-zinc-700/50 hover:bg-zinc-800/70"
+										}`}
+									>
+										<span className="font-mono">{formula}</span>
+										<span
+											className={`text-[10px] font-normal ${strategy === s ? "text-purple-400" : "text-zinc-600"}`}
+										>
+											{tag}
+										</span>
+									</button>
+								);
+							},
+						)}
+					</div>
+					{!tableClear && (
+						<p className="text-xs text-amber-400/80">
+							Reset to switch strategy — the current slots were placed using the
+							old walk pattern, so they would be unfindable under a new one.
+						</p>
+					)}
 				</div>
 
 				{/* Input + ops */}
@@ -268,6 +315,10 @@ export function OpenAddressingDemo() {
 					</button>
 				</div>
 
+				<output aria-live="polite" className="block text-sm text-zinc-400">
+					{message}
+				</output>
+
 				{/* Table visualization */}
 				<div>
 					<div className="grid grid-cols-5 gap-2 sm:grid-cols-10">
@@ -299,7 +350,9 @@ export function OpenAddressingDemo() {
 						))}
 					</div>
 					<p className="text-xs text-zinc-600 mt-1.5">
-						Purple numbers = probe attempt order
+						Purple numbers = probe attempt order. Each key's home slot comes
+						from a standard string hash — h = h·31 + char code — folded into a
+						slot with % {TABLE_SIZE}.
 					</p>
 				</div>
 
@@ -314,7 +367,7 @@ export function OpenAddressingDemo() {
 						{
 							color: "bg-zinc-800/30 border-zinc-700/30",
 							label:
-								"Deleted (✕ tombstone — slot is skipped during search, not treated as empty)",
+								"Deleted (✕ tombstone — search keeps walking past it; insert can reuse it)",
 						},
 					].map(({ color, label }) => (
 						<div key={label} className="flex items-center gap-1.5">
@@ -323,6 +376,10 @@ export function OpenAddressingDemo() {
 						</div>
 					))}
 				</div>
+
+				<p className="text-xs text-zinc-600">
+					Real tables periodically rebuild themselves to clear tombstones out.
+				</p>
 
 				<div className="grid grid-cols-2 gap-2 text-xs">
 					<div className="rounded-lg bg-zinc-800/40 border border-zinc-700/50 p-2 text-center">
@@ -369,7 +426,10 @@ export function OpenAddressingDemo() {
 						<span className="text-amber-400">
 							Note: quadratic probing only guarantees visiting all slots when
 							table size is prime and α &lt; 0.5. Size 10 is non-prime, so some
-							slots may be unreachable.
+							slots may be unreachable. Double hashing has the same rule in
+							reverse: its step h2(k) must share no factor with the table size.
+							This demo always picks h2 from 1, 3, 7, or 9 — none share a factor
+							with 10. Real tables get the same guarantee by using a prime size.
 						</span>
 					</p>
 				</div>

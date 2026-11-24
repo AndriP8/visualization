@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ChainingDemo } from "../components/hash-tables/ChainingDemo";
-import { HashFunctionDemo } from "../components/hash-tables/HashFunctionDemo";
+import { HashLayoutDemo } from "../components/hash-tables/HashLayoutDemo";
+import { HashUseCasesDemo } from "../components/hash-tables/HashUseCasesDemo";
 import { OpenAddressingDemo } from "../components/hash-tables/OpenAddressingDemo";
 import { PerformanceDemo } from "../components/hash-tables/PerformanceDemo";
 import { PageHeader } from "../components/shared/PageHeader";
@@ -16,38 +17,40 @@ function HashTablesPage() {
 			<PageHeader
 				topic={{ label: "Data Structures", color: "purple" }}
 				title="Hash Tables"
-				subtitle="Arrays require O(n) linear search, or O(log n) binary search only when sorted. Hash tables map keys directly to array positions via a hash function, achieving O(1) average-case lookup, insert, and delete — the fastest possible for key-value access."
+				subtitle="A hash table stores entries in an array. It computes a slot number from each key, so a lookup jumps straight to the right slot instead of searching through everything."
 				gradient={{ from: "purple-400", to: "fuchsia-400" }}
 				explanation={{
 					content: (
 						<div className="space-y-2 text-sm text-zinc-300">
 							<p>
-								A{" "}
+								The storage is an array of slots. A rule called a{" "}
 								<span className="text-purple-300 font-medium">
 									hash function
 								</span>{" "}
-								converts any key into an integer index — the key is never stored
-								in order, just mapped directly to a bucket. The trade-off is{" "}
-								<span className="text-pink-300 font-medium">collisions</span>:
-								two different keys can produce the same index, degrading O(1) to
-								O(n) in the worst case. Collision resolution strategies
-								(chaining vs open addressing) and the{" "}
-								<span className="text-purple-300 font-medium">load factor</span>{" "}
-								α = n/m determine when to resize and how much performance
-								degrades.
+								turns any key into one slot number. The table never sorts its
+								keys or compares all of them. Each slot holds one entry, or
+								points to a short list of entries that all landed in the same
+								place.
 							</p>
 							<p>
-								Most languages implement hash tables as their default map/dict —
-								JavaScript objects, Python dicts, Java HashMaps — because the
-								average-case performance is unbeatable for key-value workloads.
-								Understanding the internals matters when debugging performance
-								cliffs or choosing between hash indexes and B-Tree indexes in
-								databases.
+								Two different keys can produce the same slot number. That clash
+								is called a{" "}
+								<span className="text-rose-300 font-medium">collision</span>,
+								and it is the only problem the table has to solve. One fix keeps
+								a list of clashing entries attached to the slot, which is called
+								chaining. The other moves the new entry to a later free slot and
+								keeps everything inside the array, which is called open
+								addressing. The load factor is the number of entries divided by
+								the number of slots. It measures how full the table is. When it
+								gets too high, the table is rebuilt larger so lookups stay
+								cheap.
 							</p>
 							<p className="text-zinc-400">
-								The demos below walk through hash function design, chaining and
-								open addressing collision resolution, and how load factor
-								affects performance.
+								The demos start with the two memory layouts and the key-to-slot
+								mapping. Then they show insert, search, and delete under both
+								collision fixes, chart what a full table does to lookup cost,
+								and finish with cache, DNS, duplicate filtering, and
+								rate-limiting examples.
 							</p>
 						</div>
 					),
@@ -60,10 +63,11 @@ function HashTablesPage() {
 				transition={{ delay: 0.2, duration: 0.4 }}
 				className="space-y-8"
 			>
-				<HashFunctionDemo />
+				<HashLayoutDemo />
 				<ChainingDemo />
 				<OpenAddressingDemo />
 				<PerformanceDemo />
+				<HashUseCasesDemo />
 			</motion.div>
 		</div>
 	);

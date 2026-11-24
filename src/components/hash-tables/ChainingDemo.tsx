@@ -1,13 +1,14 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { match } from "ts-pattern";
 import { DemoSection } from "../shared/DemoSection";
 
 const TABLE_SIZE = 6;
 
-function hashKey(key: string): number {
+function hashKey(key: string, capacity: number): number {
 	let h = 0;
 	for (let i = 0; i < key.length; i++) {
-		h = (h + key.charCodeAt(i)) % TABLE_SIZE;
+		h = (h + key.charCodeAt(i)) % capacity;
 	}
 	return h;
 }
@@ -22,7 +23,8 @@ type OpPhase =
 			step: number;
 			found: boolean | null;
 	  }
-	| { type: "deleting"; bucket: number; key: string; found: boolean | null };
+	| { type: "deleting"; bucket: number; key: string; found: boolean | null }
+	| { type: "rehashing"; bucket: number; key: string };
 
 export function ChainingDemo() {
 	const [buckets, setBuckets] = useState<string[][]>(
@@ -30,10 +32,11 @@ export function ChainingDemo() {
 	);
 	const [inputKey, setInputKey] = useState("cat");
 	const [phase, setPhase] = useState<OpPhase>({ type: "idle" });
+	const [message, setMessage] = useState("");
 
 	function handleInsert() {
 		if (!inputKey.trim() || phase.type !== "idle") return;
-		const bucket = hashKey(inputKey);
+		const bucket = hashKey(inputKey, buckets.length);
 		setPhase({ type: "inserting", bucket, key: inputKey });
 		setTimeout(() => {
 			setBuckets((prev) => {
@@ -50,7 +53,7 @@ export function ChainingDemo() {
 
 	function handleSearch() {
 		if (!inputKey.trim() || phase.type !== "idle") return;
-		const bucket = hashKey(inputKey);
+		const bucket = hashKey(inputKey, buckets.length);
 		const chain = buckets[bucket] ?? [];
 		let step = 0;
 
@@ -97,8 +100,12 @@ export function ChainingDemo() {
 
 	function handleDelete() {
 		if (!inputKey.trim() || phase.type !== "idle") return;
-		const bucket = hashKey(inputKey);
+		const bucket = hashKey(inputKey, buckets.length);
 		const found = (buckets[bucket] ?? []).includes(inputKey);
+		if (!found) {
+			setMessage(`"${inputKey}" is not in the table`);
+			return;
+		}
 		setPhase({ type: "deleting", bucket, key: inputKey, found });
 		setTimeout(() => {
 			if (found) {
@@ -115,46 +122,86 @@ export function ChainingDemo() {
 	function handleReset() {
 		setBuckets(Array.from({ length: TABLE_SIZE }, () => []));
 		setPhase({ type: "idle" });
+		setMessage("");
+	}
+
+	function handleGrow() {
+		if (phase.type !== "idle") return;
+		const entries = buckets.flat();
+		const newCapacity = buckets.length * 2;
+		setBuckets(Array.from({ length: newCapacity }, () => []));
+		if (entries.length === 0) {
+			setMessage(`capacity doubled to ${newCapacity} — the table was empty`);
+			return;
+		}
+		setMessage(
+			`rehashing into ${newCapacity} buckets — the modulo changed, so each entry lands in a new bucket`,
+		);
+		stepRehash(entries, 0, newCapacity);
+	}
+
+	function stepRehash(entries: string[], i: number, capacity: number) {
+		if (i >= entries.length) {
+			setPhase({ type: "idle" });
+			setMessage("rehash done — same keys, more buckets, short chains again");
+			return;
+		}
+		const key = entries[i];
+		const bucket = hashKey(key, capacity);
+		setPhase({ type: "rehashing", bucket, key });
+		setBuckets((prev) => {
+			const next = prev.map((b) => [...b]);
+			next[bucket] = [...(next[bucket] ?? []), key];
+			return next;
+		});
+		setTimeout(() => stepRehash(entries, i + 1, capacity), 500);
 	}
 
 	function getNodeStyle(bucketIdx: number, nodeIdx: number): string {
 		const base =
 			"px-2 py-1 rounded border text-xs font-mono transition-all duration-200 ";
+		const key = buckets[bucketIdx]?.[nodeIdx];
+		const plain = `${base}bg-zinc-800/60 border-zinc-700/50 text-zinc-300`;
 
-		if (phase.type === "inserting" && phase.bucket === bucketIdx) {
-			// Highlight head (index 0) — prepend is O(1) and matches real implementations
-			if (nodeIdx === 0)
-				return `${base}bg-purple-500/30 border-purple-400/70 text-purple-300`;
-		}
-		if (phase.type === "searching" && phase.bucket === bucketIdx) {
-			if (nodeIdx === phase.step && phase.found === null)
-				return `${base}bg-amber-500/25 border-amber-400/60 text-amber-300 scale-105`;
-			if (nodeIdx < phase.step)
-				return `${base}bg-zinc-700/30 border-zinc-600/30 text-zinc-500 opacity-50`;
-			if (phase.found && nodeIdx === phase.step)
-				return `${base}bg-green-500/25 border-green-400/60 text-green-300`;
-		}
-		if (
-			phase.type === "deleting" &&
-			phase.bucket === bucketIdx &&
-			phase.found
-		) {
-			const key = buckets[bucketIdx]?.[nodeIdx];
-			if (key === phase.key)
-				return `${base}bg-red-500/25 border-red-400/60 text-red-300 opacity-60`;
-		}
-		return `${base}bg-zinc-800/60 border-zinc-700/50 text-zinc-300`;
+		return match(phase)
+			.with({ type: "inserting", bucket: bucketIdx }, () =>
+				// Highlight head (index 0) — prepend is O(1) and matches real implementations
+				nodeIdx === 0
+					? `${base}bg-purple-500/30 border-purple-400/70 text-purple-300`
+					: plain,
+			)
+			.with({ type: "searching", bucket: bucketIdx }, (p) => {
+				if (nodeIdx === p.step && p.found === null)
+					return `${base}bg-amber-500/25 border-amber-400/60 text-amber-300 scale-105`;
+				if (nodeIdx < p.step)
+					return `${base}bg-zinc-700/30 border-zinc-600/30 text-zinc-500 opacity-50`;
+				if (p.found === true && nodeIdx === p.step)
+					return `${base}bg-green-500/25 border-green-400/60 text-green-300`;
+				return plain;
+			})
+			.with({ type: "deleting", bucket: bucketIdx, found: true }, (p) =>
+				key === p.key
+					? `${base}bg-red-500/25 border-red-400/60 text-red-300 opacity-60`
+					: plain,
+			)
+			.with({ type: "rehashing", bucket: bucketIdx }, (p) =>
+				key === p.key
+					? `${base}bg-purple-500/30 border-purple-400/70 text-purple-300`
+					: plain,
+			)
+			.otherwise(() => plain);
 	}
 
-	const activeBucket = phase.type !== "idle" ? phase.bucket : hashKey(inputKey);
+	const activeBucket =
+		phase.type !== "idle" ? phase.bucket : hashKey(inputKey, buckets.length);
 
 	const totalKeys = buckets.reduce((sum, b) => sum + b.length, 0);
 	const maxChain = Math.max(...buckets.map((b) => b.length));
 
 	return (
 		<DemoSection
-			title="Demo 2: Collision Handling — Chaining"
-			description="Each bucket holds a linked list. Colliding keys are prepended to the chain for O(1) insert. Search traverses the chain until found or exhausted."
+			title="Operations playground: chaining"
+			description="Insert puts a new entry at the front of its slot's chain, which takes the same short work every time (O(1)). Search walks that chain one entry at a time. Delete takes one entry out and reconnects the chain. The chains are the real state of the table, so you can watch a collision turn one lookup into several comparisons."
 		>
 			<div className="space-y-5">
 				{/* Controls */}
@@ -196,12 +243,24 @@ export function ChainingDemo() {
 					>
 						Reset
 					</button>
+					<button
+						type="button"
+						onClick={handleGrow}
+						disabled={phase.type !== "idle"}
+						className="px-3 py-1.5 rounded-lg text-sm font-medium bg-cyan-600/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-600/30 transition-colors disabled:opacity-50"
+					>
+						Grow &amp; rehash
+					</button>
 					{inputKey.trim() && (
 						<span className="text-xs text-zinc-500 font-mono">
 							→ bucket <span className="text-purple-300">{activeBucket}</span>
 						</span>
 					)}
 				</div>
+
+				<output aria-live="polite" className="block text-sm text-zinc-400">
+					{message}
+				</output>
 
 				{/* Bucket visualization */}
 				<div className="space-y-1.5">
@@ -250,12 +309,18 @@ export function ChainingDemo() {
 				</div>
 
 				{/* Stats */}
+				{totalKeys / buckets.length >= 0.75 && phase.type === "idle" && (
+					<p className="text-xs text-amber-300">
+						Load factor high — the chains are getting long. Grow &amp; rehash to
+						spread the same keys across more buckets.
+					</p>
+				)}
 				<div className="grid grid-cols-3 gap-2 text-xs">
 					{[
 						{ label: "Keys", value: totalKeys, color: "text-purple-300" },
 						{
 							label: "Load factor α",
-							value: (totalKeys / TABLE_SIZE).toFixed(2),
+							value: (totalKeys / buckets.length).toFixed(2),
 							color: "text-amber-300",
 						},
 						{ label: "Longest chain", value: maxChain, color: "text-red-300" },
@@ -278,9 +343,11 @@ export function ChainingDemo() {
 					Search/Delete <span className="text-green-300">O(1)</span> avg,{" "}
 					<span className="text-red-300">O(n)</span> worst (all keys in one
 					chain). Chaining tolerates α ≥ 1; typical implementations resize
-					around α = 0.75 as a practical threshold. Java's{" "}
-					<span className="text-purple-300">HashMap</span> converts chains to
-					red-black trees past length 8, bounding worst case to O(log n).
+					around α = 0.75 as a practical threshold — rehashing spreads the same
+					keys across more buckets, so chains stay short and each lookup stays
+					cheap. Java's <span className="text-purple-300">HashMap</span>{" "}
+					converts chains to red-black trees — a self-balancing search tree —
+					past length 8, bounding worst case to O(log n).
 				</div>
 			</div>
 		</DemoSection>

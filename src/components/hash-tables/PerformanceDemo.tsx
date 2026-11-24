@@ -95,8 +95,8 @@ export function PerformanceDemo() {
 
 	return (
 		<DemoSection
-			title="Demo 4: Performance & Load Factor"
-			description="As load factor α = n/m grows, expected probe counts diverge between chaining and open addressing. Open addressing degrades sharply near α = 1."
+			title="Algorithms in the wild: lookups under load"
+			description="The constant-time promise holds on average, when the table has room to spare. The load factor is the number of entries divided by the number of slots, and it is the dial that controls the cost. Chaining adds a few comparisons as the table fills. Open addressing slows down sharply, which is why real implementations resize before the table is full."
 		>
 			<div className="space-y-6">
 				{/* Chart */}
@@ -205,7 +205,8 @@ export function PerformanceDemo() {
 				<div className="p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50 text-xs text-zinc-400">
 					<strong className="text-zinc-300">Rehashing:</strong> When α exceeds
 					the threshold, the table is doubled and all keys are re-inserted —{" "}
-					<span className="text-amber-300">O(n)</span> upfront but amortized{" "}
+					<span className="text-amber-300">O(n)</span> upfront but amortized
+					(the cost averages out over many operations){" "}
 					<span className="text-green-300">O(1)</span> per insert. Typical
 					thresholds differ by strategy: chaining resizes around{" "}
 					<span className="text-purple-300">α = 0.75</span> (chains stay short);
